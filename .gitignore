@@ -9,6 +9,7 @@
 /.clang-format
 /.clang-tidy
 **/.test
+/cjdocs.toml
 /.appanalyzer
 **/cj_res
 **/*.cj.macrocall
