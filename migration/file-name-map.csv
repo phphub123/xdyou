@@ -57,3 +57,4 @@ source/lib/model/pda_service/custom_class.dart,entry/src/main/cangjie/model/pda_
 source/lib/repository/custom_class_service.dart,entry/src/main/cangjie/repository/custom_class_service.cj,CustomClassService,CustomClassRepository,Preferences JSON persistence for local courses,IN_PROGRESS
 source/lib/controller/custom_class_controller.dart,entry/src/main/cangjie/controller/custom_class_controller.cj,CustomClassController,CustomClassController,CRUD validation filtering and stable chronological ordering,IN_PROGRESS
 source/lib/page/classtable/class_add/class_add_window.dart,entry/src/main/cangjie/custom_class_page.cj,ClassAddWindow,CustomClassPage,Local course editor list delete clear and stable IDs,IN_PROGRESS
+N/A-user-approved-preview,entry/src/main/cangjie/index.cj,N/A,LoginWindow.openMockPreview,Temporary in-memory home UI preview with explicit unauthenticated banner,IN_PROGRESS
