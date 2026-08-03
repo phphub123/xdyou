@@ -10,6 +10,7 @@
 /.clang-tidy
 **/.test
 /cjdocs.toml
+/entry/cjpm.toml
 /.appanalyzer
 **/cj_res
 **/*.cj.macrocall
@@ -40,3 +41,4 @@
 /acceptance/harmonyos/
 **/__pycache__/
 *.pyc
+/entry/cjpm.toml
