@@ -197,7 +197,7 @@ class LoginWindow {
                     .height(1.vp)
                     .opacity(0.0)
                     .id("idsCookieBootstrap")
-                Stack { Column { Text("==").fontSize(15.vp).fontWeight(FontWeight.Bold).fontColor(0xFFFFFFFF); Text("XDYou").fontSize(16.vp).fontWeight(FontWeight.Bold).fontStyle(FontStyle.Italic).fontColor(0xFFFFFFFF) }.width(58.vp).height(58.vp).border(width: 3.vp, color: 0xFFFFFFFF, radius: 8.vp).justifyContent(FlexAlign.Center) }.width(88.vp).height(88.vp).backgroundColor(0xFF0796DB).borderRadius(20.vp).align(Alignment.Center).id("loginLogo")
+                Stack { Column { Text("==").fontSize(15.vp).fontWeight(FontWeight.Bold).fontColor(0xFFFFFFFF); Text("XDYOU").fontSize(16.vp).fontWeight(FontWeight.Bold).fontStyle(FontStyle.Italic).fontColor(0xFFFFFFFF) }.width(58.vp).height(58.vp).border(width: 3.vp, color: 0xFFFFFFFF, radius: 8.vp).justifyContent(FlexAlign.Center) }.width(88.vp).height(88.vp).backgroundColor(0xFF0796DB).borderRadius(20.vp).align(Alignment.Center).id("loginLogo")
                 Row {
                     Text("ID").width(30.vp).fontSize(11.vp).fontWeight(FontWeight.Bold).fontColor(0xFF4B5565)
                     TextInput(placeholder: "Student ID", text: this.account).layoutWeight(1).height(38.vp).backgroundColor(0xFFF5F6FB).onChange({ value => this.account = value }).id("loginAccountInput")
@@ -247,7 +247,7 @@ class HomePage {
     func build() {
         Column {
             Row {
-                Text("XDYou").fontSize(24.vp).fontWeight(FontWeight.Bold).layoutWeight(1)
+                Text("XDYOU").fontSize(24.vp).fontWeight(FontWeight.Bold).layoutWeight(1)
                 Text(this.account).fontSize(14.vp).fontColor(0xFF5F6368).id("sessionAccount")
             }.width(100.percent).padding(18.vp)
             if (this.selected == 4) {
@@ -394,7 +394,7 @@ class SettingWindow {
                 TextInput(placeholder: "15", text: this.lowElectricity).width(100.vp).onChange({ value => this.lowElectricity = value }).id("lowElectricityThreshold")
                 Button("保存").margin(left: 8.vp).onClick({ _ => this.saveSettings() }).id("saveLowElectricity")
             }.width(100.percent).height(42.vp).margin(top: 10.vp)
-            Text("关于 XDYou · 仓颉 HarmonyOS 原生版").fontSize(14.vp).margin(top: 14.vp).id("settingsAbout")
+            Text("关于 XDYOU · 仓颉 HarmonyOS 原生版").fontSize(14.vp).margin(top: 14.vp).id("settingsAbout")
             Button("退出登录并清除会话").width(100.percent).height(48.vp).margin(top: 18.vp)
                 .onClick({ _ => this.onLogout() }).id("logoutButton")
             Button("测试上课通知").width(100.percent).height(42.vp).margin(top: 12.vp).onClick({ _ => this.testNotification() }).id("testCourseNotification")
