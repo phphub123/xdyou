@@ -1,0 +1,40 @@
+# Skill and RAG usage
+
+| Skill / source | Command or reference | Adopted conclusion |
+| --- | --- | --- |
+| harmonyos-cangjie-dev | Read complete SKILL.md | Used the required Cangjie incremental migration workflow. |
+| harmonyos-project-bootstrap | Read complete SKILL.md | Preserved the existing DevEco project and both ABI targets. |
+| cangjie-harmonyos-knowledge | `python .agents/skills/cangjie-harmonyos-knowledge/rag/cjdocs.py --config ./cjdocs.toml doctor` | Failed with `OperationalError: unable to open database file`; raw packaged docs were used as fallback. |
+| cangjie-harmonyos-knowledge | `query "ArkUI Button TextInput state onClick"` | Same database failure; no query result was treated as evidence. |
+| Packaged ArkUI touch docs | `rag/docs/API/arkui-cj/cj-common-types.md`, `cj-universal-event-touch.md`, `cj-common-events-touch-screen-event.md` | Used TouchEvent coordinates, changedTouches, event type, and nanosecond timestamps to serialize manual slider tracks. |
+| Packaged NetworkKit docs | `rag/docs/API/NetworkKit/cj-apis-net-http.md`, `Guide/network/cj-http-request.md` | Used HttpRequestOptions, response code, cookies, and response headers for IDS requests. |
+| cangjie-core-reference | Read complete SKILL.md and collection references | Used ArrayList and HashMap with an explicit import to avoid ArkUI Stack namespace ambiguity. |
+| harmonyos-build-run-diagnose | `build_analyzer.py`, `ui_capture.py`, `hilog_capture.py` | Built, installed, foreground-checked, captured screenshot/component tree, and bounded target hilog. |
+| harmonyos-evolution | Read complete SKILL.md | Recorded only verified Phase 1 conclusions in migration and acceptance records. |
+
+No student account, password, cookie, token, API key, or captcha payload is retained in evidence.
+| Phase 2 RAG fallback | doctor and query HTTP JSON date time List Scroll state main thread both returned OperationalError: unable to open database file; read packaged NetworkKit, ArkUI list/refresh, state and stdx JSON docs | Used explicit HTTP timeouts/string response type, main-thread launch, Scroll/List rendering and stdx JSON parsing. |
+| harmonyos-build-run-diagnose | Phase 2 ssembleApp, ui_capture.py, hilog_capture.py | Timetable, score and exam implementation builds and installs; real academic data remains externally blocked. |
+| harmonyos-evolution | Read SKILL.md and verified evidence | Recorded only build/device and external-gate conclusions in phase handoff. |
+| cangjie-core-reference | Packaged `std.time` DateTime and comparison reference | Parsed examination start times and implemented deterministic chronological grouping. |
+| harmonyos-build-run-diagnose | Hvigor build, x86_64 install/cold launch, `ui_capture.py`, `hilog_capture.py` | Verified the exam slice compiles, packages, launches and produces target-process evidence. |
+| Packaged ArkWeb guide | `Guide/web/cj-web-page-loading-with-web-components.md` | Added INTERNET-backed Web component for the seven toolbox destinations. |
+| Packaged ArkWeb API | `cj-apis-webview.md` sections `loadUrl`, `canGoBack`, `goBack` | Added guarded URL navigation and Web history return. |
+| Cangjie SDK declarations and compile probes | NotificationKit, CalendarKit and FormKit searches plus three Hvigor probes | Marked notification, calendar and desktop card `BLOCKED_EXTERNAL` under SDK 6.1. |
+| cangjie-arkts-interop | Read complete SKILL.md plus `cangjie-call-arkts.md`, `hybrid-projects.md`, interop-lib README and packaged `cangjie-load-arkts.md` | Kept the main Ability/UI in Cangjie and isolated unavailable notification/calendar calls behind one JSRuntime bridge. |
+| Packaged AccessToken docs | Read complete `cj-apis-ability_access_ctrl.md`, `cj-request-user-authorization.md`, and `cj-permissions-for-all-user.md` | Declared and dynamically requested both calendar user-grant permissions before calling Calendar Kit. |
+| Cangjie SDK ArkTS declarations | Read `@ohos.calendarManager.d.ts`, `@ohos.app.form.FormExtensionAbility.d.ts`, `@ohos.app.form.formProvider.d.ts`, and UIAbility `toJSValue` declaration | Implemented the actual calendar callback chain and retained desktop card as an independent ArkTS extension boundary. |
+| cangjie-harmonyos-knowledge | Query `Cangjie abilityAccessCtrl requestPermissionsFromUser READ_CALENDAR WRITE_CALENDAR UIAbilityContext` | RAG database again returned `OperationalError`; required packaged documents were read directly instead. |
+| harmonyos-build-run-diagnose | Repeated Hvigor builds, x86_64 install/cold launch, UI tree and bounded hilog capture | IDS fallback, notification/calendar bridge, attendance and public library search produced successful HAPs; latest schoolnet addition awaits build because platform escalation quota was exhausted. |
+| Static integrity follow-up | Strict `ConvertFrom-Json` plus targeted UTF-8/mojibake and placeholder scans | Repaired a corrupted calendar permission resource and schoolnet strings before any later build; existing HAP explicitly predates schoolnet. |
+| cangjie-harmonyos-knowledge | Query `Cangjie ImageSource createPixelMap readPixelsToBuffer image decode base64 PixelMap`; RAG again returned `OperationalError` | Read packaged image decoding and PixelMap operation guides completely and used `Rgba8888`, `getImageInfo`, `readPixelsToBuffer`, and explicit release. |
+| cangjie-core-reference | Complete random, math, and basic data-type references | Ported Flutter random trajectory generation, sigmoid/round operations, numeric conversions, and timed retries. |
+| harmonyos-build-run-diagnose | Repeated Hvigor repair loop plus synthetic UI scenarios and bounded hilog | Latest HAP builds, installs and cold-launches; automatic verification remains server-rejected and is not marked PASS. |
+| Packaged ArkWeb cookie and script APIs | Read complete `cj-apis-webview.md` sections `WebCookieManager` and `runJavaScript`, plus `cj-web-web.md` Web creation and `onPageEnd` | NetworkKit did not expose IDS Set-Cookie headers; retained the custom Cangjie login UI while submitting the official IDS password form inside a hidden ArkWeb session. Credentials cross only in volatile memory and are cleared after submission; no secret is logged or persisted. |
+
+| cangjie-harmonyos-knowledge | Query `Cangjie NetworkKit HttpData ArrayData bytes response Preferences encrypted token secure storage`; RAG returned `OperationalError: unable to open database file`; read packaged `NetworkKit/cj-apis-net-http.md` and `ArkData/cj-apis-preferences.md` | Used ArrayBuffer captcha responses, bounded HTTP timeouts, Preferences flush/delete, and encrypted-at-rest drinking-water tokens. |
+| harmonyos-build-run-diagnose | Dorm-water NetworkKit/Preferences slice: Hvigor dual-ABI build, x86_64 install/launch, `ui_capture.py`, and bounded `hilog_capture.py` | `BUILD SUCCESSFUL in 3 min 1 s 609 ms`; emulator install and PID confirmation passed. Runtime feature interaction remains gated by unavailable IDS home navigation. |
+| Cangjie main-thread runtime diagnosis | Read faultlogger `cjerror-io.github.benderblog.traintime_pda.harmonyos-20020065-20260803144535026.log` and moved ArkWeb callback state mutations into `launch {}` | Removed the reproducible login-button process exit caused by updating `@State` outside the UI thread; post-fix cold launch and component-tree capture are clean. |
+| harmonyos-build-run-diagnose | Replayed the repository synthetic Login-click scenario after the main-thread fix | The UI reached `Working...`, PID 8697 remained alive, and the target faultlogger gained no post-fix crash; this verifies crash removal only, not genuine authentication. |
+| cangjie-core-reference | Read complete `references/cangjie-std/sync/README.md` Timer section | Retained and cancelled `Timer.repeat` across page lifecycle; drinking-water status is polled every 60 seconds and stops after three consecutive idle responses. |
+| harmonyos-build-run-diagnose | Rebuilt and reinstalled the timer-complete dorm-water HAP | `BUILD SUCCESSFUL in 1 min 48 s 780 ms`; emulator process PID 11752 and no new target faultlogger entry. |

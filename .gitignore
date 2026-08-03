@@ -1,0 +1,41 @@
+/node_modules
+/oh_modules
+/local.properties
+/.idea
+**/build
+/.hvigor
+.cxx
+/.clangd
+/.clang-format
+/.clang-tidy
+**/.test
+/.appanalyzer
+**/cj_res
+**/*.cj.macrocall
+**/ability_mainability_entry.cj
+**/module_**_entry.cj
+**/IDL_Dependencies_List~
+**/build-script-cache
+/build.log
+/.tmp
+/.agents/skills/cangjie-harmonyos-knowledge/rag/.cjdocs/
+
+# Local runtime evidence may contain device identifiers or transient form text.
+# Commit reviewed root Markdown summaries, not raw captures or scenarios.
+/evidence/runtime/
+/evidence/**/*.png
+/evidence/**/layout.json
+/evidence/**/diff.json
+/evidence/**/hilog*.txt
+/acceptance/**/hilog*.txt
+/acceptance/harmonyos/**/*.png
+
+# Collaboration baseline retains reviewed root Markdown evidence only.
+/evidence/*/
+/evidence/*.json
+/evidence/*.log
+/evidence/*.txt
+/acceptance/android/
+/acceptance/harmonyos/
+**/__pycache__/
+*.pyc

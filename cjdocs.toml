@@ -1,0 +1,19 @@
+# Portage 生成（设置页 → RAG 知识库）— 勿手改，每次 scaffold/agent 运行前刷新
+# 默认态：向量检索 on / LLM 增强 off（设置页 RAG 分区可开）
+[ai]
+enabled = true
+runtime = true
+
+[llm]
+provider = "openai-compatible"
+base_url = ""
+model = ""
+api_key = ""
+api_key_env = "PORTAGE_LLM_KEY_UNSET"
+
+[embedding]
+provider = "dashscope"
+base_url = "https://dashscope.aliyuncs.com/api/v1/services/embeddings/text-embedding/text-embedding"
+model = "text-embedding-v4"
+api_key = ""
+api_key_env = "PORTAGE_EMBED_KEY_UNSET"

@@ -1,0 +1,18 @@
+slice,suggested_owner,branch,ids_dependency,implementation_without_ids,live_acceptance_without_ids,status,notes
+login-session,owner,fix/owner/ids-login,DIRECT,PARTIAL,NO,IN_PROGRESS,IDS form redirect cookie restoration and role recognition
+academic-core,owner,feature/owner/academic-parity,DIRECT,YES,NO,IN_PROGRESS,Timetable score examination and empty-classroom live parity
+attendance,owner,feature/owner/attendance,DIRECT,YES,NO,IN_PROGRESS,Chaoxing SSO requires IDS session
+campus-card,partner,feature/partner/campus-card,DIRECT,YES,NO,TODO,v8scan OAuth begins from IDS; mask QR evidence
+energy,partner,feature/partner/energy,DIRECT,YES,NO,TODO,Electricity and water use IDS; air-conditioner uses independent IMEI
+library-borrow,owner,feature/owner/library-borrow,DIRECT,YES,NO,TODO,Public catalog is independent but borrowing renewal requires authenticated OPAC flow
+dorm-water,owner,feature/owner/dorm-water,INDEPENDENT,YES,YES,IN_PROGRESS,Independent SMS login; current home shell dependency should be removed for testing
+schoolnet,partner,feature/partner/schoolnet,INDEPENDENT,YES,CONDITIONAL,IN_PROGRESS,Requires campus network and optional independent password rather than IDS
+sports,partner,feature/partner/sports,INDEPENDENT,YES,CONDITIONAL,TODO,Uses separate sport password and service session
+physics-experiment,partner,feature/partner/physics-experiment,INDEPENDENT,YES,CONDITIONAL,TODO,Uses separate experiment credentials and often campus network
+other-experiment,partner,feature/partner/experiment-report,INDEPENDENT,YES,CONDITIONAL,TODO,Separate report-system credentials and image recognition
+ruisi,partner,feature/partner/ruisi,INDEPENDENT,YES,YES,TODO,Independent Ruisi account captcha and forum APIs
+public-content,partner,feature/partner/public-content,INDEPENDENT,YES,YES,TODO,PigHub XDU Planet update notices and announcements
+local-features,owner,feature/owner/local-features,INDEPENDENT,YES,YES,TODO,Custom courses club details themes languages settings and cache actions
+system-capabilities,owner,feature/owner/system-capabilities,DATA_ONLY,YES,PARTIAL,IN_PROGRESS,Notification calendar and widget implementation independent; timetable-backed end-to-end acceptance needs IDS data
+toolbox-web,partner,feature/partner/toolbox-web,MIXED,YES,PARTIAL,IN_PROGRESS,Web shell independent but several Ehall destinations need IDS cookies
+ui-regression,both,feature/shared/ui-regression,DATA_ONLY,YES,PARTIAL,TODO,Login and public pages are independent; authenticated golden pages need real session

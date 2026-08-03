@@ -1,0 +1,13 @@
+flutter_package,source_purpose,harmonyos_replacement,decision,status
+signals;provider;get_it,state and service wiring,Cangjie state macros plus explicit services,self_rewrite,TODO
+dio;talker_dio_logger;talker_flutter,HTTP and logging,NetworkKit HTTP plus Hilog,self_rewrite,TODO
+crypto;pointycastle;encrypter_plus,crypto,HUKS/CryptoArchitectureKit after API lookup,HarmonyOS Kit,TODO
+shared_preferences;path_provider,settings and files,PreferencesKit plus app sandbox,HarmonyOS Kit,TODO
+dio_cookie_manager;cookie_jar,Cookie session,NetworkKit headers plus encrypted persistence,self_rewrite,TODO
+json_annotation;json_serializable,JSON models,stdx.encoding.json with explicit codecs,stdx,TODO
+infinite_scroll_pagination;fluttertoast,lists/toasts,ArkUI LazyForEach and PromptAction,self_rewrite,TODO
+url_launcher;share_plus,external URLs and sharing,AbilityKit Want/Share,HarmonyOS Kit,TODO
+device_calendar_plus;flutter_local_notifications,calendar and notices,Calendar/Notification Kit,HarmonyOS Kit,TODO
+file_picker;permission_handler,files and access,File/AccessTokenKit,HarmonyOS Kit,TODO
+home_widget,desktop course card,FormExtension APIs,HarmonyOS Kit,TODO
+flutter_zxing;flutter_html,scan and rich text,Scan Kit if available; ArkUI renderer,HarmonyOS Kit plus self_rewrite,TODO

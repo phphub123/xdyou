@@ -1,0 +1,20 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "XDYou HarmonyOS module"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "XDYou entry ability"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "XDYou"
+    },
+    {
+      "name": "calendar_permission_reason",
+      "value": "用于将课表课程和考试安排写入系统日历。"
+    }
+  ]
+}

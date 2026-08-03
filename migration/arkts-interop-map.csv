@@ -1,0 +1,4 @@
+capability,cangjie_entry,arkts_or_system_target,direction,reason,status
+course notification,external/SystemCapabilityBridge.publishCourseReminder,@ohos.notificationManager.publish,Cangjie-to-ArkTS-system-module,No SDK 6.1 Cangjie NotificationKit declaration,IN_PROGRESS
+system calendar,external/SystemCapabilityBridge.addCalendarEvent,@ohos.calendarManager.getCalendarManager/getCalendar/addEvent,Cangjie-to-ArkTS-system-module,No SDK 6.1 Cangjie CalendarKit declaration,IN_PROGRESS
+desktop timetable card,TBD,@ohos.app.form.FormExtensionAbility and formProvider,Cangjie-data-to-ArkTS-extension,No SDK 6.1 Cangjie FormKit declaration; independent extension probe pending,BLOCKED_EXTERNAL
