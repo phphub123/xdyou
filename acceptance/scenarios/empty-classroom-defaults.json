@@ -1,0 +1,14 @@
+{
+  "name": "Empty classroom defaults",
+  "description": "Open empty classroom from preview home and verify current-date defaults and building loading state.",
+  "steps": [
+    {"action": "click", "target": {"key": "mockHomePreviewButton"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "homeEmptyClassroom"}, "wait_after": 2},
+    {"action": "snapshot", "label": "01-empty-classroom"}
+  ],
+  "assertions": [
+    {"type": "exists", "target": {"key": "emptyClassroomDateInput"}, "message": "Current date input should be available"},
+    {"type": "exists", "target": {"key": "emptyClassroomSemesterInput"}, "message": "Derived semester input should be available"},
+    {"type": "exists", "target": {"key": "emptyClassroomStatus"}, "message": "Loading or external failure status should be explicit"}
+  ]
+}

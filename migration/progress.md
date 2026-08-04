@@ -97,3 +97,9 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - The page accepts a transient, format-validated IMEI and issues the real independent air-conditioner state request. Electricity/water retain an explicit real IDS/campus-network gate and no balance or usage data is fabricated.
 - Final x86_64 build completed in 47 s 681 ms. The unsigned HAP installed and foreground PID 21096 was confirmed on `127.0.0.1:5557`; `acceptance/runtime/2026-08-04-energy-x86_64/` passed 3/3 boundary assertions.
 - Live campus meters, air-conditioner device data and Flutter pairing remain `BLOCKED_EXTERNAL`; see `evidence/phase-c-energy-slice.md`.
+
+## Phase C empty-classroom defaults (2026-08-04)
+
+- Replaced stale static date/term values with current-date defaults, automatically loads buildings on first appearance, and offers loaded teaching-building selection while keeping the manual code fallback.
+- Current x86_64 HAP built in 48 s 353 ms and `acceptance/runtime/2026-08-04-empty-classroom-defaults-x86_64/` passed 3/3 assertions on PID 4488.
+- Live building/room results and Flutter comparison still require a genuine IDS/Ehall session, so C02 remains `BLOCKED_EXTERNAL`; see `evidence/phase-c-empty-classroom-defaults.md`.

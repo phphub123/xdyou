@@ -90,3 +90,4 @@ source/lib/model/xidian_ids/energy.dart,entry/src/main/cangjie/model/energy.cj,E
 source/lib/repository/aircon_session.dart,entry/src/main/cangjie/repository/aircon_session.cj,AirconSession,AirconSession,Real IMEI-only air-conditioner state request with no persisted IMEI,IN_PROGRESS
 source/lib/controller/energy_controller.dart,entry/src/main/cangjie/controller/energy_controller.cj,EnergyController,EnergyController,Guarded independent air-conditioner refresh,IN_PROGRESS
 source/lib/page/energy/,entry/src/main/cangjie/energy_page.cj,ElectricityReadyView/AirconEnergyCard,EnergyPage,Campus energy boundary plus independent IMEI air-conditioner query and stable IDs,BLOCKED_EXTERNAL
+source/lib/page/empty_classroom/empty_classroom_window.dart,entry/src/main/cangjie/empty_classroom_page.cj,EmptyClassroomWindow,EmptyClassroomPage,Current-date term default automatic building load and selectable buildings while live Ehall results remain session-gated,IN_PROGRESS
