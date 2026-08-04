@@ -12,7 +12,7 @@ physics-experiment,partner,feature/partner/physics-experiment,INDEPENDENT,YES,CO
 other-experiment,partner,feature/partner/other-experiment,DIRECT,YES,NO,TODO,SysjSession extends IDSSession; report-image recognition is a separate credential flow
 ruisi,partner,feature/partner/ruisi,INDEPENDENT,YES,YES,TODO,Independent Ruisi account captcha and forum APIs
 public-content,partner,feature/partner/public-content,INDEPENDENT,YES,YES,TODO,PigHub XDU Planet update notices and announcements
-local-features,owner,feature/owner/local-features,INDEPENDENT,YES,YES,TODO,Custom courses club details themes languages settings and cache actions
+local-features,owner,main,INDEPENDENT,YES,YES,IN_PROGRESS,Custom-course slice merged; follow-up work commits directly to main per user instruction.
 system-capabilities,owner,feature/owner/system-capabilities,DATA_ONLY,YES,PARTIAL,IN_PROGRESS,Notification calendar and widget implementation independent; timetable-backed end-to-end acceptance needs IDS data
 toolbox-web,partner,feature/partner/toolbox-web,MIXED,YES,PARTIAL,IN_PROGRESS,Web shell independent but several Ehall destinations need IDS cookies
 ui-regression,both,feature/shared/ui-regression,DATA_ONLY,YES,PARTIAL,TODO,Login and public pages are independent; authenticated golden pages need real session

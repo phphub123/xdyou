@@ -18,6 +18,7 @@ class LoginWindow {
     @State var passwordVisible: Bool = false
     @State var loading: Bool = false
     @State var showHome: Bool = false
+    @State var mockPreview: Bool = false
     @State var status: String = ""
     @State var captchaImage: String = ""
     @State var captchaPieceImage: String = ""
@@ -176,9 +177,22 @@ class LoginWindow {
             case None => this.status = "Load the IDS slider before verification."
         }
     }
+    func openMockPreview(): Unit {
+        this.mockPreview = true
+        this.password = ""
+        this.showHome = true
+    }
+    func leaveHome(): Unit {
+        if (!this.mockPreview) { this.store().clearSession() }
+        this.password = ""
+        this.showHome = false
+        this.status = if (this.mockPreview) { "已退出 Mock UI 预览。" } else { "Signed out." }
+        this.mockPreview = false
+    }
+
     func build() {
         if (this.showHome) {
-            HomePage(account: this.account, onLogout: { => this.store().clearSession(); this.password = ""; this.showHome = false; this.status = "Signed out." })
+            HomePage(account: if (this.mockPreview) { "Mock UI" } else { this.account }, previewMode: this.mockPreview, onLogout: { => this.leaveHome() })
         } else {
             Column {
                 Web(
@@ -211,6 +225,7 @@ class LoginWindow {
                     Text(if (this.passwordVisible) { "Hide" } else { "View" }).width(44.vp).fontSize(11.vp).fontColor(0xFF4B5565).onClick({ _ => this.passwordVisible = !this.passwordVisible }).id("togglePasswordVisibility")
                 }.width(100.percent).height(40.vp).padding(left: 10.vp, right: 4.vp).margin(top: 10.vp).backgroundColor(0xFFF5F6FB).border(width: 1.vp, color: 0xFF91A6D0, radius: 6.vp)
                 Button(if (this.loading) { "Working..." } else { "Login" }).width(100.percent).height(40.vp).margin(top: 46.vp).fontSize(15.vp).fontWeight(FontWeight.Bold).fontColor(0xFFFFFFFF).backgroundColor(0xFF46699D).borderRadius(7.vp).onClick({ _ => this.validate() }).id("loginSubmitButton")
+                Button("Mock 预览主页（仅 UI，不登录）").width(100.percent).height(36.vp).margin(top: 8.vp).fontSize(12.vp).fontColor(0xFF46699D).backgroundColor(0xFFEAF2FC).borderRadius(7.vp).onClick({ _ => this.openMockPreview() }).id("mockHomePreviewButton")
                 if (this.captchaImage != "") {
                     Text("IDS verification").fontSize(14.vp).fontWeight(FontWeight.Bold).margin(top: 16.vp)
                     Stack {
@@ -232,6 +247,7 @@ class LoginWindow {
 @Component
 class HomePage {
     let account: String
+    let previewMode: Bool
     let onLogout: () -> Unit
     @State var selected: Int64 = 0
     @State var homeFeature: Int64 = 0
@@ -250,6 +266,12 @@ class HomePage {
                 Text("XDYOU").fontSize(24.vp).fontWeight(FontWeight.Bold).layoutWeight(1)
                 Text(this.account).fontSize(14.vp).fontColor(0xFF5F6368).id("sessionAccount")
             }.width(100.percent).padding(18.vp)
+            if (this.previewMode) {
+                Row {
+                    Text("Mock UI 预览：未登录，页面数据不代表真实账号。").fontSize(12.vp).fontColor(0xFF6B4B00).layoutWeight(1).id("mockPreviewBanner")
+                    Button("返回登录").height(32.vp).onClick({ _ => this.onLogout() }).id("mockPreviewExit")
+                }.width(100.percent).padding(left: 18.vp, right: 18.vp, top: 8.vp, bottom: 8.vp).backgroundColor(0xFFFFF3CD)
+            }
             if (this.selected == 4) {
                 SettingWindow(onLogout: this.onLogout)
             } else if (this.selected == 3) {
