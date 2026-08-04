@@ -72,3 +72,7 @@ source/lib/page/schoolcard/school_card_window.dart,entry/src/main/cangjie/school
 UI截图/6.png,entry/src/main/cangjie/aligned_home_page.cj,Pig gallery visual reference,AlignedPigPage,Traditional Chinese header centered hint real image title outlined actions and selected bottom-navigation capsule,PASS
 source/lib/repository/pighub_session.dart,entry/src/main/cangjie/repository/pighub_session.cj,PigHubSession/PigImage,PigHubSession/PigHubImage,Real API JSON cache random selection and immediate-repeat avoidance,PASS
 UI截图/2.png,entry/src/main/cangjie/aligned_home_page.cj,Toolbox visual reference,AlignedToolboxPage/AlignedToolRow,Reference-aligned title seven rows spacing line icons copy and selected navigation capsule,PASS
+source/lib/model/xidian_sport/sport_score.dart,entry/src/main/cangjie/model/xidian_sport/sport.cj,SportScore/SportScoreOfYear/SportItems,SportScore/SportScoreOfYear/SportItem,Physical-test summary year and detail models,IN_PROGRESS
+source/lib/model/xidian_sport/sport_class.dart,entry/src/main/cangjie/model/xidian_sport/sport.cj,SportClassItem,SportClassItem,Sport-class transport model,IN_PROGRESS
+source/lib/repository/xidian_sport_session.dart,entry/src/main/cangjie/repository/xidian_sport_session.cj,SportSession,SportSession,Real RSA MD5 login physical-test detail and class request chain,IN_PROGRESS
+source/lib/page/sport/,entry/src/main/cangjie/sport_page.cj,SportWindow/SportScoreWindow/SportClassWindow,SportPage,Stable-ID score and sport-class UI with secure credential controls,IN_PROGRESS

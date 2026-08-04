@@ -60,3 +60,9 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Added real SSO/OpenID balance transaction and payment-QR chain plus a stable-ID campus page entry.
 - Dual-ABI build and x86_64 offline error-boundary scenario pass; QR payload was not requested or captured.
 - Genuine account data and Flutter pairing remain `BLOCKED_EXTERNAL`; see `evidence/phase-c-school-card-slice.md`.
+## Phase C sports slice (2026-08-04)
+
+- Added the real independent sport login protocol, HUKS-encrypted password storage, physical-test summary/year details and sport-class chain.
+- The campus sport card now opens a stable-ID score/class page with loading, empty and explicit error states.
+- User reported DevEco Studio build and HarmonyOS emulator launch success for the current tree; genuine sport data parity remains `BLOCKED_EXTERNAL`.
+- Evidence: `evidence/phase-c-sport-slice.md`.

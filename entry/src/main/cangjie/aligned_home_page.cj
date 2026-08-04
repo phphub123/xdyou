@@ -41,6 +41,8 @@ public class AlignedHomePage {
                     ClassTablePage()
                 } else if (this.selected == 0 && this.homeFeature == 9) {
                     SchoolCardPage(onBack: { => this.homeFeature = 0 })
+                } else if (this.selected == 0 && this.homeFeature == 10) {
+                    SportPage(onBack: { => this.homeFeature = 0 })
                 } else if (this.selected == 0) {
                     AlignedCampusPage(
                         previewMode: this.previewMode,
@@ -52,7 +54,8 @@ public class AlignedHomePage {
                         onLibrary: { => this.homeFeature = 3 },
                         onSchoolnet: { => this.homeFeature = 4 },
                         onDormWater: { => this.homeFeature = 5 },
-                        onSchoolCard: { => this.homeFeature = 9 }
+                        onSchoolCard: { => this.homeFeature = 9 },
+                        onSport: { => this.homeFeature = 10 }
                     )
                 } else if (this.selected == 1) {
                     AlignedRuisiPage(onOpenToolbox: { => this.selectPage(2) })
@@ -109,6 +112,7 @@ class AlignedCampusPage {
     let onSchoolnet: () -> Unit
     let onDormWater: () -> Unit
     let onSchoolCard: () -> Unit
+    let onSport: () -> Unit
     @State var editMode: Bool = false
 
     func build() {
@@ -156,7 +160,7 @@ class AlignedCampusPage {
                         AlignedSmallCard(icon: @r(app.media.home_network), title: "網絡查詢", onTap: this.onSchoolnet)
                         AlignedSmallCard(icon: @r(app.media.home_water), title: "宿舍水機", onTap: this.onDormWater)
                         AlignedSmallCard(icon: @r(app.media.home_experiment), title: "實驗信息", onTap: { => this.editMode = false })
-                        AlignedSmallCard(icon: @r(app.media.home_sport), title: "體育信息", onTap: { => this.editMode = false })
+                        AlignedSmallCard(icon: @r(app.media.home_sport), title: "體育信息", onTap: this.onSport)
                     }.width(100.percent).height(78.vp).margin(top: 8.vp)
                     if (this.editMode) { Text("日程信息和軟件升級信息不允許編輯").width(100.percent).textAlign(TextAlign.Center).fontSize(12.vp).fontColor(0xFF526070).margin(top: 10.vp) }
                     Blank().height(20.vp)
