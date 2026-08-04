@@ -82,3 +82,11 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Added the real report-service event chain and source-identical RGBA pixel FNV-1a score-image recognition; no score or schedule data is fabricated.
 - Dual-ABI build passed in 4 min 30 s; x86_64 install/launch and experiment-page 4/4 assertions passed with zero app-line FATAL/ERROR entries.
 - Physics live data and other-experiment IDS OAuth remain `BLOCKED_EXTERNAL`/`IN_PROGRESS`; next implementation boundary is `migration/phase-cd-handoff.md`.
+
+## Phase D Sysj other-experiment slice (2026-08-04)
+
+- Added `SysjSession`, which accepts only the HUKS-restored genuine IDS cookie, follows Sysj SSO/OAuth redirects, receives the callback credential in memory, logs into Sysj, and requests weeks 1–25 from `StudentCurrWeekTimetable`.
+- The parser validates the second timetable table and seven dates, accepts only the source course/lab/teacher markers, merges contiguous time cells and duplicate experiment/lab/teacher records, then orders groups by first start time. It fails explicitly on malformed responses rather than treating them as an empty timetable.
+- `ExperimentController` now keeps independent physics/other request guards; the other-experiment tab invokes the real data chain and retains stable status and boundary IDs.
+- x86_64-only build, install, launch and interaction validation passed on `127.0.0.1:5557`: `BUILD SUCCESSFUL in 1 min 30 s 590 ms`, PID `16982`, and experiment scenario assertions passed 4/4. The configured SDK had no `6.1.1(24)` target, so the root target SDK is aligned to installed compatible SDK `6.1.0(23)`.
+- No genuine IDS cookie, campus network, Sysj response body or Flutter paired data was available. C11 is therefore `BLOCKED_EXTERNAL`, not PASS. Evidence: `evidence/phase-d-sysj-other-experiment-slice.md` and `acceptance/runtime/2026-08-04-sysj-other-experiment-x86_64/`.

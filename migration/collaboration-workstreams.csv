@@ -9,7 +9,7 @@ dorm-water,owner,feature/owner/dorm-water,INDEPENDENT,YES,YES,IN_PROGRESS,Indepe
 schoolnet,partner,feature/partner/schoolnet,INDEPENDENT,YES,CONDITIONAL,IN_PROGRESS,Requires campus network and optional independent password rather than IDS
 sports,partner,feature/partner/sports,INDEPENDENT,YES,CONDITIONAL,TODO,Uses separate sport password and service session
 physics-experiment,partner,feature/partner/physics-experiment,INDEPENDENT,YES,CONDITIONAL,TODO,Uses separate experiment credentials and often campus network
-other-experiment,partner,feature/partner/other-experiment,DIRECT,YES,NO,TODO,SysjSession extends IDSSession; report-image recognition is a separate credential flow
+other-experiment,partner,feature/partner/other-experiment,DIRECT,YES,NO,BLOCKED_EXTERNAL,Sysj OAuth and 25-week parser implemented and x86_64 error boundary verified; live data requires genuine IDS session and campus network
 ruisi,partner,feature/partner/ruisi,INDEPENDENT,YES,YES,TODO,Independent Ruisi account captcha and forum APIs
 public-content,partner,feature/partner/public-content,INDEPENDENT,YES,YES,TODO,PigHub XDU Planet update notices and announcements
 local-features,owner,main,INDEPENDENT,YES,YES,IN_PROGRESS,Custom-course slice merged; follow-up work commits directly to main per user instruction.

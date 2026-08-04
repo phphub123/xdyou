@@ -16,7 +16,11 @@
 
 ## First unfinished independent slice
 
-Implement `SysjSession` for other experiments: follow `xidian/test` redirects, reuse only a genuine persisted IDS cookie, complete the OAuth callback, request 25 weekly timetables, merge identical lab/teacher records and sort their time ranges. Do not change the settings page while the UI collaborator owns it.
+Completed on 2026-08-04. `SysjSession` now follows the real persisted-IDS-cookie SSO/OAuth flow, obtains the Sysj callback login credential only in memory, requests all 25 weekly timetables and merges/sorts source-marked experiment rows. The x86_64 offline boundary passed; live verification remains `BLOCKED_EXTERNAL` until a manually authenticated IDS session and campus-network Sysj access are available. See `evidence/phase-d-sysj-other-experiment-slice.md`.
+
+## Next independent slice
+
+Validate the completed Sysj chain against a genuine IDS session and Flutter data, then address experiment cache/semester invalidation and home-arrangement integration as separate slices. Do not change the settings page while the UI collaborator owns it.
 
 ## External gates
 

@@ -6,12 +6,13 @@
     {"action": "click", "target": {"key": "homeExperiment"}, "wait_after": 1},
     {"action": "snapshot", "label": "01-experiment-page"},
     {"action": "click", "target": {"key": "experimentOtherTab"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "experimentRefresh"}, "wait_after": 2},
     {"action": "snapshot", "label": "02-other-experiment-boundary"}
   ],
   "assertions": [
     {"type": "exists", "target": {"key": "experimentPhysicsTab"}, "message": "Physics experiment tab should exist"},
     {"type": "exists", "target": {"key": "experimentOtherTab"}, "message": "Other experiment tab should exist"},
     {"type": "exists", "target": {"key": "experimentStatus"}, "message": "Load/error state should be visible"},
-    {"type": "exists", "target": {"key": "experimentOtherBlocked"}, "message": "IDS-dependent state should stay explicit"}
+    {"type": "exists", "target": {"text": "其他实验需要真实 IDS 会话，请先完成正式登录。"}, "message": "Refresh must expose the real missing-session failure"}
   ]
 }
