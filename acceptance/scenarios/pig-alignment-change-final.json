@@ -1,0 +1,17 @@
+{
+  "name": "PigHub UI alignment and Change A Pig",
+  "description": "Open the PigHub page, capture its aligned UI, change to another real PigHub item, and capture the result.",
+  "steps": [
+    {"action": "click", "target": {"key": "mockHomePreviewButton"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "navTo_pig"}, "wait_after": 8},
+    {"action": "snapshot", "label": "01-before-change"},
+    {"action": "click", "target": {"key": "pigShuffle"}, "wait_after": 4},
+    {"action": "snapshot", "label": "02-after-change"}
+  ],
+  "assertions": [
+    {"type": "exists", "target": {"text": "豬圖鑑賞"}, "message": "Pig gallery title should be visible"},
+    {"type": "exists", "target": {"key": "pigImage"}, "message": "A real PigHub image should remain visible after changing"},
+    {"type": "exists", "target": {"key": "pigTitle"}, "message": "The PigHub image title should remain visible after changing"},
+    {"type": "clickable", "target": {"key": "pigShuffle"}, "message": "Change A Pig should be clickable"}
+  ]
+}

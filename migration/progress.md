@@ -33,6 +33,14 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Final dual-ABI HAP build succeeded, installed on `127.0.0.1:5555`, and launched as PID 4243.
 - `acceptance/runtime/2026-08-04-home-nav-aligned-final/` contains the final screenshot, filtered component tree and a 5/5 reference-key interaction report.
 - Bounded target logging contains 0 FATAL. One non-fatal UIAbility continuation diagnostic was emitted during emulator startup and did not terminate or hide the app.
+
+## Pig gallery screenshot alignment (2026-08-04)
+
+- Aligned `AlignedPigPage` to `UI截图/6.png`: Traditional Chinese header and hint, refresh action, centered 300vp rounded image, title, outlined `Change A Pig` / `Save this Pig` actions, and selected Pig bottom-navigation capsule.
+- Added a real Cangjie `PigHubSession` using the source endpoint, explicit NetworkKit timeouts, stdx JSON parsing, in-memory caching, random selection and immediate-repeat avoidance. Loading, transport, parse and image failures remain visible and retryable.
+- Final HAP reports `BUILD SUCCESSFUL in 6 s 985 ms`, installed on `127.0.0.1:5555`, and launched as PID 25113.
+- The combined scenario passed 4/4 assertions. In one session `Change A Pig` changed `猪猪我呀` to `猪思考(猪撅猪)` and replaced the image; before/after captures are under `acceptance/runtime/2026-08-04-pig-aligned-change-final/`.
+- Bounded target logging contains 0 FATAL, 0 ERROR and 0 WARN app lines.
 ## Phase 2 academic features
 
 - Implemented real Ehall request boundaries for timetable (xskcb), scores (cjcx/xscjcx) and examinations (wdksap), with session gating, timeouts, HTTP/error handling and stdx JSON parsing.
