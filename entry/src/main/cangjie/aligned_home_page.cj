@@ -90,7 +90,7 @@ class AlignedNavItem {
                 Image(this.icon).width(25.vp).height(25.vp).objectFit(ImageFit.Contain)
                     .fillColor(if (this.selectedIndex == this.index) { 0xFFFFFFFF } else { 0xFF4D515B })
             }.width(58.vp).height(34.vp).justifyContent(FlexAlign.Center)
-                .backgroundColor(if (this.selectedIndex == this.index) { 0xFF476FA9 } else { 0x00FFFFFF }).borderRadius(17.vp)
+                .backgroundColor(if (this.selectedIndex == this.index) { 0xFF476FA9 } else { 0xFFF3F3FB }).borderRadius(17.vp)
             Text(this.label).fontSize(12.vp).fontColor(if (this.selectedIndex == this.index) { 0xFF41699F } else { 0xFF3F434C })
                 .fontWeight(if (this.selectedIndex == this.index) { FontWeight.Medium } else { FontWeight.Normal }).margin(top: 4.vp)
         }.layoutWeight(1).height(78.vp).justifyContent(FlexAlign.Center).onClick({ _ => this.onTap() }).id(this.stableId)
@@ -240,49 +240,53 @@ class AlignedToolboxPage {
 
     func open(name: String, url: String): Unit {
         this.title = name
-        this.status = "正在打开${name}…"
+        this.status = "正在開啟${name}…"
         this.showWeb = true
         try { this.webController.loadUrl(url) }
-        catch (e: BusinessException) { this.status = "无法打开${name}：${e.code} ${e.message}" }
+        catch (e: BusinessException) { this.status = "無法開啟${name}：${e.code} ${e.message}" }
     }
 
     func build() {
         Column {
             Row {
                 if (this.showWeb) { Text("‹").fontSize(30.vp).padding(right: 12.vp).onClick({ _ => this.showWeb = false }).id("toolboxBackToList") }
-                Text(if (this.showWeb) { this.title } else { "校园工具箱" }).fontSize(22.vp).fontWeight(FontWeight.Bold).layoutWeight(1)
-            }.width(100.percent).height(58.vp).padding(left: 18.vp, right: 14.vp)
+                Text(if (this.showWeb) { this.title } else { "其他功能" }).fontSize(22.vp).fontWeight(FontWeight.Medium).fontColor(0xFF202229).layoutWeight(1)
+            }.width(100.percent).height(58.vp).padding(left: 20.vp, right: 16.vp)
             if (this.showWeb) {
                 if (this.status != "") { Text(this.status).fontSize(12.vp).fontColor(0xFF526070).padding(left: 16.vp, bottom: 6.vp).id("toolboxStatus") }
-                Web(src: "about:blank", controller: this.webController).onPageEnd({ _ => launch { this.status = "${this.title}加载完成。" } }).width(100.percent).layoutWeight(1).id("toolboxWeb")
+                Web(src: "about:blank", controller: this.webController).onPageEnd({ _ => launch { this.status = "${this.title}載入完成。" } }).width(100.percent).layoutWeight(1).id("toolboxWeb")
             } else {
                 Scroll { Column {
-                    AlignedToolRow(icon: "元", title: "校园缴费", description: "支付电费、网费等校园费用", onTap: { => this.open("校园缴费", "https://xxcapp.xidian.edu.cn/uc/api/oauth/index") })
-                    AlignedToolRow(icon: "水", title: "宿舍订水", description: "打开校园订水服务", onTap: { => this.open("宿舍订水", "https://order.xidian.edu.cn/mobile/thirdoauth/oauth2Xidian/1") })
-                    AlignedToolRow(icon: "修", title: "校园报修", description: "宿舍与校园设施故障报修", onTap: { => this.open("校园报修", "https://repair.xidian.edu.cn") })
-                    AlignedToolRow(icon: "座", title: "图书馆空间预约", description: "预约研讨室与学习空间", onTap: { => this.open("空间预约", "http://libspace.xidian.edu.cn") })
-                    AlignedToolRow(icon: "Wi", title: "校园网络", description: "查询与管理校园网账号", onTap: { => this.open("校园网络", "https://zfw.xidian.edu.cn") })
-                    AlignedToolRow(icon: "Σ", title: "物理实验计算", description: "实验数据计算辅助", onTap: { => this.open("物理实验计算", "https://experiment-helper.wizzstudio.com/#/") })
-                    AlignedToolRow(icon: "◎", title: "睿思导航", description: "发现校内常用站点与服务", onTap: { => this.open("睿思导航", "https://nav.xdruisi.cn/") })
-                    Blank().height(18.vp)
+                    AlignedToolRow(icon: @r(app.media.toolbox_payment), title: "繳費系統", description: "電費該交了吧", stableId: "toolboxPayment", onTap: { => this.open("繳費系統", "https://xxcapp.xidian.edu.cn/uc/api/oauth/index?redirect=https://ignypt.xidian.edu.cn/revenueH5/login?opcode=MPAY&appid=200260318155520600&state=1231231231") })
+                    AlignedToolRow(icon: @r(app.media.toolbox_water), title: "訂水系統", description: "喝水對身體好", stableId: "toolboxWater", onTap: { => this.open("訂水系統", "https://order.xidian.edu.cn/mobile/thirdoauth/oauth2Xidian/1") })
+                    AlignedToolRow(icon: @r(app.media.toolbox_repair), title: "後勤報修", description: "不要漏水斷網", stableId: "toolboxRepair", onTap: { => this.open("後勤報修", "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fids.xidian.edu.cn%2Fauthserver%2Foauth2.0%2FcallbackAuthorize%3Fclient_id%3D869608421533880320%26redirect_uri%3Dhttp%253A%252F%252Frepair.xidian.edu.cn%252Fappsys%252FxidianCasLogin%252FoauthLogin%26response_type%3Dcode%26state%3Dhome%26client_name%3DCasOAuthClient") })
+                    AlignedToolRow(icon: @r(app.media.toolbox_reserve), title: "空間預約", description: "找個地方打牌", stableId: "toolboxReserve", onTap: { => this.open("空間預約", "http://libspace.xidian.edu.cn") })
+                    AlignedToolRow(icon: @r(app.media.toolbox_network), title: "網絡查詢", description: "希望永不收費", stableId: "toolboxNetwork", onTap: { => this.open("網絡查詢", "https://zfw.xidian.edu.cn") })
+                    AlignedToolRow(icon: @r(app.media.toolbox_calculator), title: "物理計算", description: "希望操作順利", stableId: "toolboxPhysics", onTap: { => this.open("物理計算", "https://experiment-helper.wizzstudio.com/#/") })
+                    AlignedToolRow(icon: @r(app.media.toolbox_discover), title: "睿思導航", description: "補充其他功能", stableId: "toolboxDiscover", onTap: { => this.open("睿思導航", "https://nav.xdruisi.cn/") })
+                    Blank().height(12.vp)
                 }.width(100.percent) }.width(100.percent).layoutWeight(1).align(Alignment.TopStart)
             }
-        }.width(100.percent).height(100.percent)
+        }.width(100.percent).height(100.percent).backgroundColor(0xFFFFFFFF)
     }
 }
 
 @Component
 class AlignedToolRow {
-    let icon: String
+    let icon: AppResource
     let title: String
     let description: String
+    let stableId: String
     let onTap: () -> Unit
     func build() {
         Row {
-            Text(this.icon).width(48.vp).height(48.vp).fontSize(18.vp).fontWeight(FontWeight.Bold).fontColor(0xFF3F5F90).textAlign(TextAlign.Center).backgroundColor(0xFFD0E4FF).borderRadius(24.vp)
-            Column { Text(this.title).fontSize(16.vp).fontWeight(FontWeight.Bold); Text(this.description).fontSize(12.vp).fontColor(0xFF526070).margin(top: 5.vp) }.layoutWeight(1).margin(left: 14.vp).alignItems(HorizontalAlign.Start)
-            Text("›").fontSize(24.vp).fontColor(0xFF7B8492)
-        }.width(100.percent).height(76.vp).padding(left: 18.vp, right: 18.vp).backgroundColor(0xFFFFFFFF).border(width: 1.vp, color: 0xFFE8EBF0).onClick({ _ => this.onTap() })
+            Image(this.icon).width(25.vp).height(25.vp).objectFit(ImageFit.Contain).fillColor(0xFF50545E)
+            Column {
+                Text(this.title).fontSize(16.vp).fontWeight(FontWeight.Normal).fontColor(0xFF22242A)
+                Text(this.description).fontSize(14.vp).fontColor(0xFF545965).margin(top: 4.vp)
+            }.layoutWeight(1).margin(left: 16.vp).alignItems(HorizontalAlign.Start)
+        }.width(100.percent).height(72.vp).padding(left: 18.vp, right: 18.vp).backgroundColor(0xFFFFFFFF)
+            .onClick({ _ => this.onTap() }).id(this.stableId)
     }
 }
 

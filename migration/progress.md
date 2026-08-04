@@ -41,6 +41,14 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Final HAP reports `BUILD SUCCESSFUL in 6 s 985 ms`, installed on `127.0.0.1:5555`, and launched as PID 25113.
 - The combined scenario passed 4/4 assertions. In one session `Change A Pig` changed `猪猪我呀` to `猪思考(猪撅猪)` and replaced the image; before/after captures are under `acceptance/runtime/2026-08-04-pig-aligned-change-final/`.
 - Bounded target logging contains 0 FATAL, 0 ERROR and 0 WARN app lines.
+
+## Toolbox screenshot alignment (2026-08-04)
+
+- Aligned `AlignedToolboxPage` and `AlignedToolRow` to `UI截图/2.png`: Traditional Chinese title/copy, seven borderless rows, reference-like vertical rhythm, monochrome line icons and the selected blue Toolbox navigation capsule.
+- Added seven tintable SVG resources and removed the placeholder text badges, row borders, chevrons and unselected white navigation capsules.
+- Preserved the seven real source URLs and ArkWeb opening boundary; stable IDs cover each row.
+- Final HAP reports `BUILD SUCCESSFUL in 7 s 148 ms`, installed on `127.0.0.1:5555`, and launched as PID 30731.
+- `acceptance/runtime/2026-08-04-toolbox-aligned-final/` contains the final screenshot and component tree; all 8 assertions passed. Bounded target app logging contains 0 FATAL, 0 ERROR and 0 WARN.
 ## Phase 2 academic features
 
 - Implemented real Ehall request boundaries for timetable (xskcb), scores (cjcx/xscjcx) and examinations (wdksap), with session gating, timeouts, HTTP/error handling and stdx JSON parsing.

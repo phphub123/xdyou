@@ -62,7 +62,7 @@ source/lib/page/homepage/home.dart,entry/src/main/cangjie/aligned_home_page.cj,H
 source/lib/page/homepage/homepage.dart,entry/src/main/cangjie/aligned_home_page.cj,MainPage,AlignedCampusPage,App bar notice schedule information cards and campus service grid,IN_PROGRESS
 UI截图/0.png,entry/src/main/cangjie/aligned_home_page.cj,Campus home visual reference,AlignedCampusPage/AlignedNavItem,Reference-aligned Traditional Chinese campus cards four-column grid SVG icons and selected navigation capsule,PASS
 source/lib/external/ruisi_flutter/lib/pages/home_page.dart,entry/src/main/cangjie/aligned_home_page.cj,HomePage,AlignedRuisiPage,Forum app bar category tabs and honest unauthenticated state,IN_PROGRESS
-source/lib/page/toolbox/toolbox_page.dart,entry/src/main/cangjie/aligned_home_page.cj,ToolBoxPage,AlignedToolboxPage,Seven source URLs list rows and ArkWeb opening boundary,IN_PROGRESS
+source/lib/page/toolbox/toolbox_page.dart,entry/src/main/cangjie/aligned_home_page.cj,ToolBoxPage,AlignedToolboxPage,Seven source URLs Traditional Chinese borderless rows line icons and ArkWeb opening boundary,PASS
 source/lib/page/pig/pig_page.dart,entry/src/main/cangjie/aligned_home_page.cj,PigPage,AlignedPigPage,Traditional Chinese real PigHub image loading error refresh change and save-hint UI,PASS
 source/lib/page/setting/setting.dart,entry/src/main/cangjie/aligned_home_page.cj,SettingWindow,AlignedSettingsPage,Source-style grouped settings cards with local theme and timeline interactions,IN_PROGRESS
 source/lib/model/xidian_ids/paid_record.dart,entry/src/main/cangjie/model/xidian_ids/school_card.cj,PaidRecord,PaidRecord,Campus-card transaction model,IN_PROGRESS
@@ -71,3 +71,4 @@ source/lib/controller/school_card_controller.dart,entry/src/main/cangjie/control
 source/lib/page/schoolcard/school_card_window.dart,entry/src/main/cangjie/school_card_page.cj,SchoolCardWindow,SchoolCardPage,Balance date-range records and sensitive QR UI,IN_PROGRESS
 UI截图/6.png,entry/src/main/cangjie/aligned_home_page.cj,Pig gallery visual reference,AlignedPigPage,Traditional Chinese header centered hint real image title outlined actions and selected bottom-navigation capsule,PASS
 source/lib/repository/pighub_session.dart,entry/src/main/cangjie/repository/pighub_session.cj,PigHubSession/PigImage,PigHubSession/PigHubImage,Real API JSON cache random selection and immediate-repeat avoidance,PASS
+UI截图/2.png,entry/src/main/cangjie/aligned_home_page.cj,Toolbox visual reference,AlignedToolboxPage/AlignedToolRow,Reference-aligned title seven rows spacing line icons copy and selected navigation capsule,PASS

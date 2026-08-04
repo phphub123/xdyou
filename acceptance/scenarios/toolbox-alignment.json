@@ -1,0 +1,19 @@
+{
+  "name": "Toolbox screenshot alignment",
+  "description": "Open the unauthenticated preview and verify the seven Traditional Chinese toolbox rows.",
+  "steps": [
+    {"action": "click", "target": {"key": "mockHomePreviewButton"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "navTo_toolbox"}, "wait_after": 2},
+    {"action": "snapshot", "label": "01-toolbox-aligned"}
+  ],
+  "assertions": [
+    {"type": "exists", "target": {"text": "其他功能"}, "message": "Toolbox title should be visible"},
+    {"type": "exists", "target": {"key": "toolboxPayment"}, "message": "Payment row should be visible"},
+    {"type": "exists", "target": {"key": "toolboxWater"}, "message": "Water row should be visible"},
+    {"type": "exists", "target": {"key": "toolboxRepair"}, "message": "Repair row should be visible"},
+    {"type": "exists", "target": {"key": "toolboxReserve"}, "message": "Reserve row should be visible"},
+    {"type": "exists", "target": {"key": "toolboxNetwork"}, "message": "Network row should be visible"},
+    {"type": "exists", "target": {"key": "toolboxPhysics"}, "message": "Physics row should be visible"},
+    {"type": "exists", "target": {"key": "toolboxDiscover"}, "message": "Discover row should be visible"}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Change A Pig",
+  "description": "Change the currently displayed PigHub item from the cached real API list.",
+  "steps": [
+    {"action": "click", "target": {"key": "pigShuffle"}, "wait_after": 4},
+    {"action": "snapshot", "label": "02-pig-changed"}
+  ],
+  "assertions": [
+    {"type": "text_changed", "target": {"key": "pigTitle"}, "message": "PigHub title should change after clicking Change A Pig"},
+    {"type": "exists", "target": {"key": "pigImage"}, "message": "Changed PigHub image should remain visible"},
+    {"type": "clickable", "target": {"key": "pigShuffle"}, "message": "Change A Pig should remain clickable"}
+  ]
+}
