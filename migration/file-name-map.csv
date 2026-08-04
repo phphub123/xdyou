@@ -58,3 +58,9 @@ source/lib/repository/custom_class_service.dart,entry/src/main/cangjie/repositor
 source/lib/controller/custom_class_controller.dart,entry/src/main/cangjie/controller/custom_class_controller.cj,CustomClassController,CustomClassController,CRUD validation filtering and stable chronological ordering,IN_PROGRESS
 source/lib/page/classtable/class_add/class_add_window.dart,entry/src/main/cangjie/custom_class_page.cj,ClassAddWindow,CustomClassPage,Local course editor list delete clear and stable IDs,IN_PROGRESS
 N/A-user-approved-preview,entry/src/main/cangjie/index.cj,N/A,LoginWindow.openMockPreview,Temporary in-memory home UI preview with explicit unauthenticated banner,IN_PROGRESS
+source/lib/page/homepage/home.dart,entry/src/main/cangjie/aligned_home_page.cj,HomePageMaster,AlignedHomePage,Source-ordered five-destination shell and Material-style bottom navigation,IN_PROGRESS
+source/lib/page/homepage/homepage.dart,entry/src/main/cangjie/aligned_home_page.cj,MainPage,AlignedCampusPage,App bar notice schedule information cards and campus service grid,IN_PROGRESS
+source/lib/external/ruisi_flutter/lib/pages/home_page.dart,entry/src/main/cangjie/aligned_home_page.cj,HomePage,AlignedRuisiPage,Forum app bar category tabs and honest unauthenticated state,IN_PROGRESS
+source/lib/page/toolbox/toolbox_page.dart,entry/src/main/cangjie/aligned_home_page.cj,ToolBoxPage,AlignedToolboxPage,Seven source URLs list rows and ArkWeb opening boundary,IN_PROGRESS
+source/lib/page/pig/pig_page.dart,entry/src/main/cangjie/aligned_home_page.cj,PigPage,AlignedPigPage,Pig gallery header image-state actions and honest unavailable-data state,IN_PROGRESS
+source/lib/page/setting/setting.dart,entry/src/main/cangjie/aligned_home_page.cj,SettingWindow,AlignedSettingsPage,Source-style grouped settings cards with local theme and timeline interactions,IN_PROGRESS

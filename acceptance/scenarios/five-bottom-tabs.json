@@ -1,0 +1,21 @@
+{
+  "name": "XDYou five bottom tabs",
+  "description": "Enter the local UI preview and capture each Flutter-aligned bottom destination.",
+  "steps": [
+    {"action": "click", "target": {"key": "mockHomePreviewButton"}, "wait_after": 1},
+    {"action": "snapshot", "label": "01-home"},
+    {"action": "click", "target": {"key": "navTo_ruisi"}, "wait_after": 1},
+    {"action": "snapshot", "label": "02-ruisi"},
+    {"action": "click", "target": {"key": "navTo_toolbox"}, "wait_after": 1},
+    {"action": "snapshot", "label": "03-toolbox"},
+    {"action": "click", "target": {"key": "navTo_pig"}, "wait_after": 1},
+    {"action": "snapshot", "label": "04-pig"},
+    {"action": "click", "target": {"key": "navTo_settings"}, "wait_after": 1},
+    {"action": "snapshot", "label": "05-settings"}
+  ],
+  "assertions": [
+    {"type": "exists", "target": {"text": "XDYou"}, "message": "Settings page should show the XDYou heading"},
+    {"type": "exists", "target": {"key": "navTo_home"}, "message": "Bottom navigation should remain visible"},
+    {"type": "page_changed", "message": "Navigation should change the page content"}
+  ]
+}

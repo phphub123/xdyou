@@ -17,6 +17,14 @@
 ## External blocker
 
 Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Automation evidence may not capture the component tree while a real password is populated. No account, password, cookie, token, or captcha payload is stored in repository evidence.
+
+## Five bottom destinations UI alignment (2026-08-04)
+
+- Added a source-ordered Cangjie shell for Campus, Ruisi, Toolbox, Pig gallery and Settings in `aligned_home_page.cj`.
+- Kept existing real feature pages reachable from the campus cards; toolbox list items open their real source URLs through ArkWeb; local navigation, edit-state, forum-tab, pig-state and settings interactions are wired.
+- Two final Hvigor passes reported `BUILD SUCCESSFUL`; the HAP was installed and launched on `127.0.0.1:5555`.
+- `acceptance/runtime/2026-08-04-five-tabs-final/` contains five screenshots, five filtered component trees and a 3/3 interaction report.
+- Android/iOS original-app runtime capture is `BLOCKED_EXTERNAL` because no Android or iOS device is available. The checked-in Flutter source is the visual/semantic reference; paired screenshot parity is not marked PASS.
 ## Phase 2 academic features
 
 - Implemented real Ehall request boundaries for timetable (xskcb), scores (cjcx/xscjcx) and examinations (wdksap), with session gating, timeouts, HTTP/error handling and stdx JSON parsing.

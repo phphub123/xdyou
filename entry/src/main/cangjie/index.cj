@@ -192,7 +192,7 @@ class LoginWindow {
 
     func build() {
         if (this.showHome) {
-            HomePage(account: if (this.mockPreview) { "Mock UI" } else { this.account }, previewMode: this.mockPreview, onLogout: { => this.leaveHome() })
+            AlignedHomePage(account: if (this.mockPreview) { "Mock UI" } else { this.account }, previewMode: this.mockPreview, onLogout: { => this.leaveHome() })
         } else {
             Column {
                 Web(
