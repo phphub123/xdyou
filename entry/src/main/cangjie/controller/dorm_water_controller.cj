@@ -25,6 +25,9 @@ public class DormWaterController {
     public func remove(deviceId: String, success: () -> Unit, failure: (String) -> Unit): Unit {
         this.guard({ => this.session.removeFavorite(deviceId, { => this.done(); success() }, { message => this.done(); failure(message) }) })
     }
+    public func add(deviceId: String, success: () -> Unit, failure: (String) -> Unit): Unit {
+        this.guard({ => this.session.addFavorite(deviceId, { => this.done(); success() }, { message => this.done(); failure(message) }) })
+    }
     public func start(deviceId: String, success: () -> Unit, failure: (String) -> Unit): Unit {
         this.guard({ => this.session.startWater(deviceId, { => this.done(); success() }, { message => this.done(); failure(message) }) })
     }

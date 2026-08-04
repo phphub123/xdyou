@@ -103,3 +103,9 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Replaced stale static date/term values with current-date defaults, automatically loads buildings on first appearance, and offers loaded teaching-building selection while keeping the manual code fallback.
 - Current x86_64 HAP built in 48 s 353 ms and `acceptance/runtime/2026-08-04-empty-classroom-defaults-x86_64/` passed 3/3 assertions on PID 4488.
 - Live building/room results and Flutter comparison still require a genuine IDS/Ehall session, so C02 remains `BLOCKED_EXTERNAL`; see `evidence/phase-c-empty-classroom-defaults.md`.
+
+## Phase C dorm-water favorite completion (2026-08-04)
+
+- Added the real authenticated favorite-device add endpoint and a format-validated manual device-ID entry beside the existing device removal/control flows.
+- QR scanning is explicitly deferred pending a Scan Kit pure-Cangjie probe; no scan result or favorite is manufactured.
+- Latest x86_64 HAP built successfully in 1 min 1 s 909 ms. Runtime service interaction stays `BLOCKED_EXTERNAL` until an independent SMS login is supplied; see `evidence/phase-c-dorm-water-favorite.md`.

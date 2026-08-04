@@ -127,6 +127,10 @@ public class DormWaterSession {
     public func removeFavorite(deviceId: String, success: () -> Unit, failure: (String) -> Unit): Unit {
         this.deviceGet("/api/v1/dev/favo?did=${deviceId}&remove=true", { _ => success() }, failure)
     }
+    public func addFavorite(deviceId: String, success: () -> Unit, failure: (String) -> Unit): Unit {
+        if (!this.validDeviceId(deviceId)) { failure("饮水设备 ID 格式不正确") ; return }
+        this.deviceGet("/api/v1/dev/favo?did=${deviceId}&remove=false", { _ => success() }, failure)
+    }
     public func startWater(deviceId: String, success: () -> Unit, failure: (String) -> Unit): Unit {
         this.deviceGet("/api/v1/dev/start?args=&cnt=1&did=${deviceId}&pip=21&rcp=0&upgrade=1", { _ => success() }, failure)
     }
@@ -196,6 +200,7 @@ public class DormWaterSession {
         return headers
     }
     func validPhone(value: String): Bool { match (Regex("^[0-9]{11}$").find(value)) { case Some(_) => true; case None => false } }
+    func validDeviceId(value: String): Bool { return Regex("^[A-Za-z0-9_-]{1,64}$").matches(value) }
     func validCode(value: String): Bool { match (Regex("^[A-Za-z0-9]{1,12}$").find(value)) { case Some(_) => true; case None => false } }
     func stringOf(value: JsonValue): String {
         match (value.kind()) {
