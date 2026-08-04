@@ -48,6 +48,7 @@ Web、文件或系统 API，都必须先查询知识库再实现。
 ## 三、工程和语言铁律
 
 - 业务实现必须使用仓颉；禁止嵌入 Flutter 运行，禁止用 ArkTS 重写主要业务。
+- 纯仓颉是默认和首选。通知、日历、桌面卡片、扫码等能力必须先完成知识库/原始文档检索、SDK 符号检查和最小纯仓颉编译探针；仅在确认 SDK 缺失能力后，才可调用 `.agents/skills/cangjie-arkts-interop/SKILL.md` 引入最小 ArkTS bridge 或 ExtensionAbility。主 Ability、主要业务和主要 UI 保持仓颉；每项互操作都必须记录 SDK 版本、缺失符号、探针、ArkTS 文件、仓颉调用点、数据边界和回退方案到 `migration/arkts-interop-map.csv`、`migration/file-name-map.csv`、`evidence/skill-and-rag-usage.md`、阶段证据及验收矩阵。
 - 当前工程已经由用户在 DevEco Studio 创建，优先增量修改，禁止重新创建工程。
 - 首次修改前先完成原始空工程构建基线；若基线失败，先诊断环境，不能用改业务代码掩盖。
 - Compatible SDK 固定使用 `6.1.0(23)`；target SDK 沿用工程当前配置，除非构建证据要求调整。

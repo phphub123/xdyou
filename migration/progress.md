@@ -90,3 +90,10 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - `ExperimentController` now keeps independent physics/other request guards; the other-experiment tab invokes the real data chain and retains stable status and boundary IDs.
 - x86_64-only build, install, launch and interaction validation passed on `127.0.0.1:5557`: `BUILD SUCCESSFUL in 1 min 30 s 590 ms`, PID `16982`, and experiment scenario assertions passed 4/4. The configured SDK had no `6.1.1(24)` target, so the root target SDK is aligned to installed compatible SDK `6.1.0(23)`.
 - No genuine IDS cookie, campus network, Sysj response body or Flutter paired data was available. C11 is therefore `BLOCKED_EXTERNAL`, not PASS. Evidence: `evidence/phase-d-sysj-other-experiment-slice.md` and `acceptance/runtime/2026-08-04-sysj-other-experiment-x86_64/`.
+
+## Phase C energy slice (2026-08-04)
+
+- Added pure-Cangjie air-conditioner energy model, NetworkKit session, controller and page; the existing campus energy card now reaches it through stable `homeEnergyInfo` navigation.
+- The page accepts a transient, format-validated IMEI and issues the real independent air-conditioner state request. Electricity/water retain an explicit real IDS/campus-network gate and no balance or usage data is fabricated.
+- Final x86_64 build completed in 47 s 681 ms. The unsigned HAP installed and foreground PID 21096 was confirmed on `127.0.0.1:5557`; `acceptance/runtime/2026-08-04-energy-x86_64/` passed 3/3 boundary assertions.
+- Live campus meters, air-conditioner device data and Flutter pairing remain `BLOCKED_EXTERNAL`; see `evidence/phase-c-energy-slice.md`.

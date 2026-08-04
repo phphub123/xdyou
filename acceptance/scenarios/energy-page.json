@@ -1,0 +1,16 @@
+{
+  "name": "Energy page boundary",
+  "description": "Open the energy card and verify the independent air-conditioner query boundary.",
+  "steps": [
+    {"action": "click", "target": {"key": "mockHomePreviewButton"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "homeEnergyInfo"}, "wait_after": 1},
+    {"action": "snapshot", "label": "01-energy-page"},
+    {"action": "click", "target": {"key": "energyRefresh"}, "wait_after": 1},
+    {"action": "snapshot", "label": "02-empty-imei"}
+  ],
+  "assertions": [
+    {"type": "exists", "target": {"key": "energyCampusBoundary"}, "message": "Campus electricity boundary should remain explicit"},
+    {"type": "exists", "target": {"key": "energyImeiInput"}, "message": "Air-conditioner IMEI input should exist"},
+    {"type": "exists", "target": {"text": "空调设备 IMEI 格式不正确。"}, "message": "Invalid independent query should show a real validation error"}
+  ]
+}

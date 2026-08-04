@@ -45,6 +45,8 @@ public class AlignedHomePage {
                     SportPage(onBack: { => this.homeFeature = 0 })
                 } else if (this.selected == 0 && this.homeFeature == 11) {
                     ExperimentPage(onBack: { => this.homeFeature = 0 })
+                } else if (this.selected == 0 && this.homeFeature == 12) {
+                    EnergyPage(onBack: { => this.homeFeature = 0 })
                 } else if (this.selected == 0) {
                     AlignedCampusPage(
                         previewMode: this.previewMode,
@@ -58,7 +60,8 @@ public class AlignedHomePage {
                         onDormWater: { => this.homeFeature = 5 },
                         onSchoolCard: { => this.homeFeature = 9 },
                         onSport: { => this.homeFeature = 10 },
-                        onExperiment: { => this.homeFeature = 11 }
+                        onExperiment: { => this.homeFeature = 11 },
+                        onEnergy: { => this.homeFeature = 12 }
                     )
                 } else if (this.selected == 1) {
                     AlignedRuisiPage(onOpenToolbox: { => this.selectPage(2) })
@@ -117,6 +120,7 @@ class AlignedCampusPage {
     let onSchoolCard: () -> Unit
     let onSport: () -> Unit
     let onExperiment: () -> Unit
+    let onEnergy: () -> Unit
     @State var editMode: Bool = false
 
     func build() {
@@ -151,7 +155,7 @@ class AlignedCampusPage {
                             .fontColor(0xFF41699F).backgroundColor(0xFFE1E7F4).borderRadius(8.vp).margin(left: 14.vp, right: 14.vp, bottom: 11.vp)
                     }.width(100.percent).height(148.vp).margin(top: 10.vp).backgroundColor(0xFFF6F6FE)
                         .border(width: 1.vp, color: 0xFFDDDDE7).borderRadius(14.vp).id("homeScheduleCard")
-                    AlignedInfoCard(icon: @r(app.media.home_flash), value: "電量查詢失敗", note: "欠費查詢網絡故障", showQr: false, onTap: this.onDormWater, testId: "homeDormWaterInfo")
+                    AlignedInfoCard(icon: @r(app.media.home_flash), value: "电量查询", note: "电费、水费与空调能耗", showQr: false, onTap: this.onEnergy, testId: "homeEnergyInfo")
                     AlignedInfoCard(icon: @r(app.media.home_book), value: if (this.previewMode) { "借書 1 本" } else { "正在獲取借書信息" }, note: if (this.previewMode) { "待歸還 1 本書籍" } else { "正在查詢信息中" }, showQr: false, onTap: this.onLibrary, testId: "homeLibraryInfo")
                     AlignedInfoCard(icon: @r(app.media.home_wallet), value: if (this.previewMode) { "未登錄" } else { "正在獲取校園卡信息" }, note: "查看餘額、流水與付款碼", showQr: true, onTap: this.onSchoolCard, testId: "homeSchoolCard")
                     Row {
