@@ -43,6 +43,8 @@ public class AlignedHomePage {
                     SchoolCardPage(onBack: { => this.homeFeature = 0 })
                 } else if (this.selected == 0 && this.homeFeature == 10) {
                     SportPage(onBack: { => this.homeFeature = 0 })
+                } else if (this.selected == 0 && this.homeFeature == 11) {
+                    ExperimentPage(onBack: { => this.homeFeature = 0 })
                 } else if (this.selected == 0) {
                     AlignedCampusPage(
                         previewMode: this.previewMode,
@@ -55,7 +57,8 @@ public class AlignedHomePage {
                         onSchoolnet: { => this.homeFeature = 4 },
                         onDormWater: { => this.homeFeature = 5 },
                         onSchoolCard: { => this.homeFeature = 9 },
-                        onSport: { => this.homeFeature = 10 }
+                        onSport: { => this.homeFeature = 10 },
+                        onExperiment: { => this.homeFeature = 11 }
                     )
                 } else if (this.selected == 1) {
                     AlignedRuisiPage(onOpenToolbox: { => this.selectPage(2) })
@@ -113,6 +116,7 @@ class AlignedCampusPage {
     let onDormWater: () -> Unit
     let onSchoolCard: () -> Unit
     let onSport: () -> Unit
+    let onExperiment: () -> Unit
     @State var editMode: Bool = false
 
     func build() {
@@ -151,16 +155,16 @@ class AlignedCampusPage {
                     AlignedInfoCard(icon: @r(app.media.home_book), value: if (this.previewMode) { "借書 1 本" } else { "正在獲取借書信息" }, note: if (this.previewMode) { "待歸還 1 本書籍" } else { "正在查詢信息中" }, showQr: false, onTap: this.onLibrary, testId: "homeLibraryInfo")
                     AlignedInfoCard(icon: @r(app.media.home_wallet), value: if (this.previewMode) { "未登錄" } else { "正在獲取校園卡信息" }, note: "查看餘額、流水與付款碼", showQr: true, onTap: this.onSchoolCard, testId: "homeSchoolCard")
                     Row {
-                        AlignedSmallCard(icon: @r(app.media.home_score), title: "成績查詢", onTap: this.onScore)
-                        AlignedSmallCard(icon: @r(app.media.home_exam), title: "考試安排", onTap: this.onExam)
-                        AlignedSmallCard(icon: @r(app.media.home_room), title: "空閒教室", onTap: this.onEmptyClassroom)
-                        AlignedSmallCard(icon: @r(app.media.home_attendance), title: "考勤查詢", onTap: this.onAttendance)
+                        AlignedSmallCard(icon: @r(app.media.home_score), title: "成績查詢", onTap: this.onScore, stableId: "homeScore")
+                        AlignedSmallCard(icon: @r(app.media.home_exam), title: "考試安排", onTap: this.onExam, stableId: "homeExam")
+                        AlignedSmallCard(icon: @r(app.media.home_room), title: "空閒教室", onTap: this.onEmptyClassroom, stableId: "homeEmptyClassroom")
+                        AlignedSmallCard(icon: @r(app.media.home_attendance), title: "考勤查詢", onTap: this.onAttendance, stableId: "homeAttendance")
                     }.width(100.percent).height(78.vp).margin(top: 8.vp)
                     Row {
-                        AlignedSmallCard(icon: @r(app.media.home_network), title: "網絡查詢", onTap: this.onSchoolnet)
-                        AlignedSmallCard(icon: @r(app.media.home_water), title: "宿舍水機", onTap: this.onDormWater)
-                        AlignedSmallCard(icon: @r(app.media.home_experiment), title: "實驗信息", onTap: { => this.editMode = false })
-                        AlignedSmallCard(icon: @r(app.media.home_sport), title: "體育信息", onTap: this.onSport)
+                        AlignedSmallCard(icon: @r(app.media.home_network), title: "網絡查詢", onTap: this.onSchoolnet, stableId: "homeSchoolnet")
+                        AlignedSmallCard(icon: @r(app.media.home_water), title: "宿舍水機", onTap: this.onDormWater, stableId: "homeDormWater")
+                        AlignedSmallCard(icon: @r(app.media.home_experiment), title: "實驗信息", onTap: this.onExperiment, stableId: "homeExperiment")
+                        AlignedSmallCard(icon: @r(app.media.home_sport), title: "體育信息", onTap: this.onSport, stableId: "homeSport")
                     }.width(100.percent).height(78.vp).margin(top: 8.vp)
                     if (this.editMode) { Text("日程信息和軟件升級信息不允許編輯").width(100.percent).textAlign(TextAlign.Center).fontSize(12.vp).fontColor(0xFF526070).margin(top: 10.vp) }
                     Blank().height(20.vp)
@@ -197,12 +201,13 @@ class AlignedSmallCard {
     let icon: AppResource
     let title: String
     let onTap: () -> Unit
+    let stableId: String
     func build() {
         Column {
             Image(this.icon).width(29.vp).height(29.vp).fillColor(0xFF41699F)
             Text(this.title).fontSize(12.vp).fontColor(0xFF3F434C).margin(top: 6.vp).textAlign(TextAlign.Center)
         }.layoutWeight(1).height(78.vp).margin(left: 3.vp, right: 3.vp).justifyContent(FlexAlign.Center).backgroundColor(0xFFF6F6FE)
-            .border(width: 1.vp, color: 0xFFDDDDE7).borderRadius(13.vp).onClick({ _ => this.onTap() })
+            .border(width: 1.vp, color: 0xFFDDDDE7).borderRadius(13.vp).onClick({ _ => this.onTap() }).id(this.stableId)
     }
 }
 
@@ -237,29 +242,24 @@ class AlignedRuisiPage {
 
 @Component
 class AlignedToolboxPage {
-    let webController = WebviewController()
     @State var showWeb: Bool = false
     @State var title: String = ""
-    @State var status: String = ""
+    @State var url: String = ""
 
     func open(name: String, url: String): Unit {
         this.title = name
-        this.status = "正在開啟${name}…"
+        this.url = url
         this.showWeb = true
-        try { this.webController.loadUrl(url) }
-        catch (e: BusinessException) { this.status = "無法開啟${name}：${e.code} ${e.message}" }
     }
 
     func build() {
-        Column {
-            Row {
-                if (this.showWeb) { Text("‹").fontSize(30.vp).padding(right: 12.vp).onClick({ _ => this.showWeb = false }).id("toolboxBackToList") }
-                Text(if (this.showWeb) { this.title } else { "其他功能" }).fontSize(22.vp).fontWeight(FontWeight.Medium).fontColor(0xFF202229).layoutWeight(1)
-            }.width(100.percent).height(58.vp).padding(left: 20.vp, right: 16.vp)
-            if (this.showWeb) {
-                if (this.status != "") { Text(this.status).fontSize(12.vp).fontColor(0xFF526070).padding(left: 16.vp, bottom: 6.vp).id("toolboxStatus") }
-                Web(src: "about:blank", controller: this.webController).onPageEnd({ _ => launch { this.status = "${this.title}載入完成。" } }).width(100.percent).layoutWeight(1).id("toolboxWeb")
-            } else {
+        if (this.showWeb) {
+            ToolboxWebPage(title: this.title, url: this.url, onClose: { => this.showWeb = false })
+        } else {
+            Column {
+                Row {
+                    Text("其他功能").fontSize(22.vp).fontWeight(FontWeight.Medium).fontColor(0xFF202229).layoutWeight(1)
+                }.width(100.percent).height(58.vp).padding(left: 20.vp, right: 16.vp)
                 Scroll { Column {
                     AlignedToolRow(icon: @r(app.media.toolbox_payment), title: "繳費系統", description: "電費該交了吧", stableId: "toolboxPayment", onTap: { => this.open("繳費系統", "https://xxcapp.xidian.edu.cn/uc/api/oauth/index?redirect=https://ignypt.xidian.edu.cn/revenueH5/login?opcode=MPAY&appid=200260318155520600&state=1231231231") })
                     AlignedToolRow(icon: @r(app.media.toolbox_water), title: "訂水系統", description: "喝水對身體好", stableId: "toolboxWater", onTap: { => this.open("訂水系統", "https://order.xidian.edu.cn/mobile/thirdoauth/oauth2Xidian/1") })
@@ -270,11 +270,10 @@ class AlignedToolboxPage {
                     AlignedToolRow(icon: @r(app.media.toolbox_discover), title: "睿思導航", description: "補充其他功能", stableId: "toolboxDiscover", onTap: { => this.open("睿思導航", "https://nav.xdruisi.cn/") })
                     Blank().height(12.vp)
                 }.width(100.percent) }.width(100.percent).layoutWeight(1).align(Alignment.TopStart)
-            }
-        }.width(100.percent).height(100.percent).backgroundColor(0xFFFFFFFF)
+            }.width(100.percent).height(100.percent).backgroundColor(0xFFFFFFFF)
+        }
     }
 }
-
 @Component
 class AlignedToolRow {
     let icon: AppResource

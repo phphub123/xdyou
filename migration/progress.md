@@ -66,3 +66,10 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - The campus sport card now opens a stable-ID score/class page with loading, empty and explicit error states.
 - User reported DevEco Studio build and HarmonyOS emulator launch success for the current tree; genuine sport data parity remains `BLOCKED_EXTERNAL`.
 - Evidence: `evidence/phase-c-sport-slice.md`.
+## Toolbox Web and experiment slice (2026-08-04)
+
+- Added real ArkWeb load state, Web-history back, explicit list return, timeout, retry and visible controller-error handling for all seven source URLs; 4/4 runtime assertions passed.
+- Added the physics experiment source chain with encrypted independent password, dynamic ASP.NET login fields, real schedule parsing and chronological ongoing/upcoming/finished groups.
+- Added the real report-service event chain and source-identical RGBA pixel FNV-1a score-image recognition; no score or schedule data is fabricated.
+- Dual-ABI build passed in 4 min 30 s; x86_64 install/launch and experiment-page 4/4 assertions passed with zero app-line FATAL/ERROR entries.
+- Physics live data and other-experiment IDS OAuth remain `BLOCKED_EXTERNAL`/`IN_PROGRESS`; next implementation boundary is `migration/phase-cd-handoff.md`.

@@ -1,0 +1,17 @@
+{
+  "name": "Experiment page navigation and groups",
+  "description": "Open preview home and verify the real physics/other experiment boundary without entering credentials.",
+  "steps": [
+    {"action": "click", "target": {"key": "mockHomePreviewButton"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "homeExperiment"}, "wait_after": 1},
+    {"action": "snapshot", "label": "01-experiment-page"},
+    {"action": "click", "target": {"key": "experimentOtherTab"}, "wait_after": 1},
+    {"action": "snapshot", "label": "02-other-experiment-boundary"}
+  ],
+  "assertions": [
+    {"type": "exists", "target": {"key": "experimentPhysicsTab"}, "message": "Physics experiment tab should exist"},
+    {"type": "exists", "target": {"key": "experimentOtherTab"}, "message": "Other experiment tab should exist"},
+    {"type": "exists", "target": {"key": "experimentStatus"}, "message": "Load/error state should be visible"},
+    {"type": "exists", "target": {"key": "experimentOtherBlocked"}, "message": "IDS-dependent state should stay explicit"}
+  ]
+}

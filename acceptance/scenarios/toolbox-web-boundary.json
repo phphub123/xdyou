@@ -1,0 +1,16 @@
+{
+  "name": "Toolbox Web navigation boundary",
+  "description": "Open the public physics helper from preview mode and verify Web loading, history back and list-return controls.",
+  "steps": [
+    {"action": "click", "target": {"key": "mockHomePreviewButton"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "navTo_toolbox"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "toolboxPhysics"}, "wait_after": 6},
+    {"action": "snapshot", "label": "01-toolbox-web"}
+  ],
+  "assertions": [
+    {"type": "exists", "target": {"key": "toolboxWeb"}, "message": "ArkWeb should be mounted"},
+    {"type": "exists", "target": {"key": "toolboxStatus"}, "message": "Loading or completion status should be visible"},
+    {"type": "exists", "target": {"key": "toolboxWebBack"}, "message": "Web-history back should be available"},
+    {"type": "exists", "target": {"key": "toolboxBackToList"}, "message": "Explicit list return should be available"}
+  ]
+}
