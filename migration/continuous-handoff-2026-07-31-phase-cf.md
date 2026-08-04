@@ -90,3 +90,8 @@ Continue Phase C with campus card balance/transactions/QR while keeping QR paylo
 
 - Dorm-water now polls the active device every 60 seconds, requires three consecutive idle responses before ending monitoring, and cancels the Timer on manual stop, logout and page disappearance.
 - Final rebuild: `BUILD SUCCESSFUL in 1 min 48 s 780 ms`; latest HAP installed and EntryAbility PID 11752 confirmed. QR device scanning is the remaining source behavior for this slice.
+## 2026-08-04 campus-card continuation
+
+- Campus-card balance transactions and real-time QR are implemented in a separate model/repository/controller/page chain and wired as `homeSchoolCard`.
+- Final merged-tree build: `BUILD SUCCESSFUL in 3 min 35 s 945 ms`; emulator offline boundary: 4/4 PASS.
+- Real campus-card SSO verification is `BLOCKED_EXTERNAL`; no QR payload or authenticated response was saved.

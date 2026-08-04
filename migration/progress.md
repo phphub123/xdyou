@@ -39,3 +39,8 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Added authenticated Tools pages with refresh, loading, empty/error state and scrollable course, score and examination list layouts.
 - Build, x86_64 installation, launch, screenshots, component trees and bounded hilog are recorded under evidence/phase2-*.
 - Status is BLOCKED_EXTERNAL: no real IDS slider verification succeeded, so no cookie, response data, paired Android screenshot or fake-success test was used.
+## Phase C campus-card slice (2026-08-04)
+
+- Added real SSO/OpenID balance transaction and payment-QR chain plus a stable-ID campus page entry.
+- Dual-ABI build and x86_64 offline error-boundary scenario pass; QR payload was not requested or captured.
+- Genuine account data and Flutter pairing remain `BLOCKED_EXTERNAL`; see `evidence/phase-c-school-card-slice.md`.
