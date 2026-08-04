@@ -1,0 +1,1286 @@
+{
+  "nodes_added": [
+    {
+      "id": "type:Column#8",
+      "type": "Column",
+      "text": "",
+      "bounds": "[272,1413][1212,1554]"
+    },
+    {
+      "id": "type:Image#0",
+      "type": "Image",
+      "text": "",
+      "bounds": "[1177,196][1261,280]"
+    },
+    {
+      "id": "type:Column#4",
+      "type": "Column",
+      "text": "",
+      "bounds": "[56,377][1264,517]"
+    },
+    {
+      "id": "type:Text#14",
+      "type": "Text",
+      "text": "考試安排",
+      "bounds": "[425,2069][594,2118]"
+    },
+    {
+      "id": "type:Image#14",
+      "type": "Image",
+      "text": "",
+      "bounds": "[99,2533][187,2621]"
+    },
+    {
+      "id": "key:navTo_settings",
+      "type": "Column",
+      "text": "",
+      "bounds": "[1048,2471][1307,2744]"
+    },
+    {
+      "id": "type:Image#7",
+      "type": "Image",
+      "text": "",
+      "bounds": "[458,1947][560,2049]"
+    },
+    {
+      "id": "type:Text#23",
+      "type": "Text",
+      "text": "其他功能",
+      "bounds": "[576,2650][745,2699]"
+    },
+    {
+      "id": "type:Text#17",
+      "type": "Text",
+      "text": "網絡查詢",
+      "bounds": "[123,2370][292,2419]"
+    },
+    {
+      "id": "type:Row#15",
+      "type": "Row",
+      "text": "",
+      "bounds": "[49,55][1271,136]"
+    },
+    {
+      "id": "key:mockPreviewBanner",
+      "type": "Column",
+      "text": "",
+      "bounds": "[56,377][1264,517]"
+    },
+    {
+      "id": "type:Column#19",
+      "type": "Column",
+      "text": "",
+      "bounds": "[272,2471][531,2744]"
+    },
+    {
+      "id": "text:網絡查詢",
+      "type": "Text",
+      "text": "網絡查詢",
+      "bounds": "[123,2370][292,2419]"
+    },
+    {
+      "id": "type:Text#27",
+      "type": "Text",
+      "text": ":",
+      "bounds": "[111,71][126,124]"
+    },
+    {
+      "id": "text:欠費查詢網絡故障",
+      "type": "Text",
+      "text": "欠費查詢網絡故障",
+      "bounds": "[272,1235][637,1288]"
+    },
+    {
+      "id": "key:navTo_pig",
+      "type": "Column",
+      "text": "",
+      "bounds": "[789,2471][1048,2744]"
+    },
+    {
+      "id": "type:Column#6",
+      "type": "Column",
+      "text": "",
+      "bounds": "[272,750][1261,888]"
+    },
+    {
+      "id": "type:Text#21",
+      "type": "Text",
+      "text": "校園信息",
+      "bounds": "[58,2650][227,2699]"
+    },
+    {
+      "id": "type:Image#15",
+      "type": "Image",
+      "text": "",
+      "bounds": "[358,2533][446,2621]"
+    },
+    {
+      "id": "key:navTo_toolbox",
+      "type": "Column",
+      "text": "",
+      "bounds": "[531,2471][790,2744]"
+    },
+    {
+      "id": "type:Text#25",
+      "type": "Text",
+      "text": "設置",
+      "bounds": "[1135,2650][1220,2699]"
+    },
+    {
+      "id": "type:Image#1",
+      "type": "Image",
+      "text": "",
+      "bounds": "[115,767][220,872]"
+    },
+    {
+      "id": "type:Image#17",
+      "type": "Image",
+      "text": "",
+      "bounds": "[875,2533][963,2621]"
+    },
+    {
+      "id": "type:Text#15",
+      "type": "Text",
+      "text": "空閒教室",
+      "bounds": "[727,2069][896,2118]"
+    },
+    {
+      "id": "type:Text#22",
+      "type": "Text",
+      "text": "睿思論壇",
+      "bounds": "[317,2650][486,2699]"
+    },
+    {
+      "id": "text:待歸還 1 本書籍",
+      "type": "Text",
+      "text": "待歸還 1 本書籍",
+      "bounds": "[272,1501][596,1554]"
+    },
+    {
+      "id": "type:Text#24",
+      "type": "Text",
+      "text": "豬圖鑑賞",
+      "bounds": "[834,2650][1003,2699]"
+    },
+    {
+      "id": "type:Column#7",
+      "type": "Column",
+      "text": "",
+      "bounds": "[272,1147][1212,1288]"
+    },
+    {
+      "id": "key:navTo_ruisi",
+      "type": "Column",
+      "text": "",
+      "bounds": "[272,2471][531,2744]"
+    },
+    {
+      "id": "key:homeEditLayout",
+      "type": "Image",
+      "text": "",
+      "bounds": "[1177,196][1261,280]"
+    },
+    {
+      "id": "type:Text#13",
+      "type": "Text",
+      "text": "成績查詢",
+      "bounds": "[123,2069][292,2118]"
+    },
+    {
+      "id": "type:Row#19",
+      "type": "Row",
+      "text": "",
+      "bounds": "[1002,55][1079,136]"
+    },
+    {
+      "id": "type:Row#12",
+      "type": "Row",
+      "text": "",
+      "bounds": "[559,2517][762,2636]"
+    },
+    {
+      "id": "type:Row#20",
+      "type": "Row",
+      "text": "",
+      "bounds": "[1086,55][1166,136]"
+    },
+    {
+      "id": "type:Image#10",
+      "type": "Image",
+      "text": "",
+      "bounds": "[156,2248][258,2350]"
+    },
+    {
+      "id": "text:體育信息",
+      "type": "Text",
+      "text": "體育信息",
+      "bounds": "[1029,2370][1198,2419]"
+    },
+    {
+      "id": "text:其他功能",
+      "type": "Text",
+      "text": "其他功能",
+      "bounds": "[576,2650][745,2699]"
+    },
+    {
+      "id": "text:今日安排完成",
+      "type": "Text",
+      "text": "今日安排完成",
+      "bounds": "[272,750][692,832]"
+    },
+    {
+      "id": "text:借書 1 本",
+      "type": "Text",
+      "text": "借書 1 本",
+      "bounds": "[272,1413][546,1491]"
+    },
+    {
+      "id": "type:Image#12",
+      "type": "Image",
+      "text": "",
+      "bounds": "[760,2248][862,2350]"
+    },
+    {
+      "id": "key:homeScheduleCard",
+      "type": "Column",
+      "text": "",
+      "bounds": "[56,552][1264,1070]"
+    },
+    {
+      "id": "type:Row#13",
+      "type": "Row",
+      "text": "",
+      "bounds": "[817,2517][1020,2636]"
+    },
+    {
+      "id": "type:Row#14",
+      "type": "Row",
+      "text": "",
+      "bounds": "[1076,2517][1279,2636]"
+    },
+    {
+      "id": "type:Row#10",
+      "type": "Row",
+      "text": "",
+      "bounds": "[41,2517][244,2636]"
+    },
+    {
+      "id": "type:Row#21",
+      "type": "Row",
+      "text": "",
+      "bounds": "[1173,55][1271,136]"
+    },
+    {
+      "id": "type:Image#5",
+      "type": "Image",
+      "text": "",
+      "bounds": "[1109,1716][1176,1783]"
+    },
+    {
+      "id": "type:Image#16",
+      "type": "Image",
+      "text": "",
+      "bounds": "[617,2533][705,2621]"
+    },
+    {
+      "id": "text:校園信息",
+      "type": "Text",
+      "text": "校園信息",
+      "bounds": "[58,2650][227,2699]"
+    },
+    {
+      "id": "type:Image#2",
+      "type": "Image",
+      "text": "",
+      "bounds": "[108,1165][213,1270]"
+    },
+    {
+      "id": "type:Row#18",
+      "type": "Row",
+      "text": "",
+      "bounds": "[49,66][126,128]"
+    },
+    {
+      "id": "type:Column#21",
+      "type": "Column",
+      "text": "",
+      "bounds": "[789,2471][1048,2744]"
+    },
+    {
+      "id": "type:Image#9",
+      "type": "Image",
+      "text": "",
+      "bounds": "[1062,1947][1164,2049]"
+    },
+    {
+      "id": "type:Column#9",
+      "type": "Column",
+      "text": "",
+      "bounds": "[272,1679][1072,1820]"
+    },
+    {
+      "id": "type:Text#16",
+      "type": "Text",
+      "text": "考勤查詢",
+      "bounds": "[1029,2069][1198,2118]"
+    },
+    {
+      "id": "type:Column#16",
+      "type": "Column",
+      "text": "",
+      "bounds": "[670,2197][952,2450]"
+    },
+    {
+      "id": "type:Image#18",
+      "type": "Image",
+      "text": "",
+      "bounds": "[1134,2533][1222,2621]"
+    },
+    {
+      "id": "text:考試安排",
+      "type": "Text",
+      "text": "考試安排",
+      "bounds": "[425,2069][594,2118]"
+    },
+    {
+      "id": "type:Column#2",
+      "type": "Column",
+      "text": "",
+      "bounds": "[0,137][1320,2450]"
+    },
+    {
+      "id": "type:Row#17",
+      "type": "Row",
+      "text": "",
+      "bounds": "[49,55][188,136]"
+    },
+    {
+      "id": "text:成績查詢",
+      "type": "Text",
+      "text": "成績查詢",
+      "bounds": "[123,2069][292,2118]"
+    },
+    {
+      "id": "type:Column#18",
+      "type": "Column",
+      "text": "",
+      "bounds": "[13,2471][272,2744]"
+    },
+    {
+      "id": "text:豬圖鑑賞",
+      "type": "Text",
+      "text": "豬圖鑑賞",
+      "bounds": "[834,2650][1003,2699]"
+    },
+    {
+      "id": "text:電量查詢失敗",
+      "type": "Text",
+      "text": "電量查詢失敗",
+      "bounds": "[272,1147][671,1225]"
+    },
+    {
+      "id": "type:Column#15",
+      "type": "Column",
+      "text": "",
+      "bounds": "[368,2197][650,2450]"
+    },
+    {
+      "id": "type:Text#20",
+      "type": "Text",
+      "text": "體育信息",
+      "bounds": "[1029,2370][1198,2419]"
+    },
+    {
+      "id": "type:Column#22",
+      "type": "Column",
+      "text": "",
+      "bounds": "[1048,2471][1307,2744]"
+    },
+    {
+      "id": "text:卡里 0.00 元",
+      "type": "Text",
+      "text": "卡里 0.00 元",
+      "bounds": "[272,1679][637,1757]"
+    },
+    {
+      "id": "type:Column#3",
+      "type": "Column",
+      "text": "",
+      "bounds": "[0,339][1320,2450]"
+    },
+    {
+      "id": "type:Column#14",
+      "type": "Column",
+      "text": "",
+      "bounds": "[66,2197][348,2450]"
+    },
+    {
+      "id": "type:Text#19",
+      "type": "Text",
+      "text": "實驗信息",
+      "bounds": "[727,2370][896,2419]"
+    },
+    {
+      "id": "text:正在加載日程",
+      "type": "Text",
+      "text": "正在加載日程",
+      "bounds": "[59,916][1261,1035]"
+    },
+    {
+      "id": "type:Image#6",
+      "type": "Image",
+      "text": "",
+      "bounds": "[156,1947][258,2049]"
+    },
+    {
+      "id": "text:目前您正在運行測試版",
+      "type": "Text",
+      "text": "目前您正在運行測試版",
+      "bounds": "[415,419][906,476]"
+    },
+    {
+      "id": "type:Column#11",
+      "type": "Column",
+      "text": "",
+      "bounds": "[368,1896][650,2169]"
+    },
+    {
+      "id": "type:Image#13",
+      "type": "Image",
+      "text": "",
+      "bounds": "[1062,2248][1164,2350]"
+    },
+    {
+      "id": "text:設置",
+      "type": "Text",
+      "text": "設置",
+      "bounds": "[1135,2650][1220,2699]"
+    },
+    {
+      "id": "text:正在加載",
+      "type": "Text",
+      "text": "正在加載",
+      "bounds": "[272,835][455,888]"
+    },
+    {
+      "id": "text:宿舍水機",
+      "type": "Text",
+      "text": "宿舍水機",
+      "bounds": "[425,2370][594,2419]"
+    },
+    {
+      "id": "type:Column#17",
+      "type": "Column",
+      "text": "",
+      "bounds": "[972,2197][1254,2450]"
+    },
+    {
+      "id": "text:實驗信息",
+      "type": "Text",
+      "text": "實驗信息",
+      "bounds": "[727,2370][896,2419]"
+    },
+    {
+      "id": "type:Text#18",
+      "type": "Text",
+      "text": "宿舍水機",
+      "bounds": "[425,2370][594,2419]"
+    },
+    {
+      "id": "type:Row#16",
+      "type": "Row",
+      "text": "",
+      "bounds": "[0,0][1320,136]"
+    },
+    {
+      "id": "type:Column#12",
+      "type": "Column",
+      "text": "",
+      "bounds": "[670,1896][952,2169]"
+    },
+    {
+      "id": "type:Column#5",
+      "type": "Column",
+      "text": "",
+      "bounds": "[56,552][1264,1070]"
+    },
+    {
+      "id": "type:Image#8",
+      "type": "Image",
+      "text": "",
+      "bounds": "[760,1947][862,2049]"
+    },
+    {
+      "id": "type:Image#4",
+      "type": "Image",
+      "text": "",
+      "bounds": "[108,1697][213,1802]"
+    },
+    {
+      "id": "text:其他實驗加載失敗",
+      "type": "Text",
+      "text": "其他實驗加載失敗",
+      "bounds": "[613,587][1054,692]"
+    },
+    {
+      "id": "text:睿思論壇",
+      "type": "Text",
+      "text": "睿思論壇",
+      "bounds": "[317,2650][486,2699]"
+    },
+    {
+      "id": "key:navTo_home",
+      "type": "Column",
+      "text": "",
+      "bounds": "[13,2471][272,2744]"
+    },
+    {
+      "id": "type:Text#29",
+      "type": "Text",
+      "text": "100",
+      "bounds": "[1182,75][1252,120]"
+    },
+    {
+      "id": "type:Text#12",
+      "type": "Text",
+      "text": "查詢一卡通流水",
+      "bounds": "[272,1767][591,1820]"
+    },
+    {
+      "id": "type:Column#13",
+      "type": "Column",
+      "text": "",
+      "bounds": "[972,1896][1254,2169]"
+    },
+    {
+      "id": "text:校園信息查詢",
+      "type": "Text",
+      "text": "校園信息查詢",
+      "bounds": "[70,193][1177,283]"
+    },
+    {
+      "id": "text:部分加載中",
+      "type": "Text",
+      "text": "部分加載中",
+      "bounds": "[267,587][582,692]"
+    },
+    {
+      "id": "type:Image#3",
+      "type": "Image",
+      "text": "",
+      "bounds": "[108,1431][213,1536]"
+    },
+    {
+      "id": "text:查詢一卡通流水",
+      "type": "Text",
+      "text": "查詢一卡通流水",
+      "bounds": "[272,1767][591,1820]"
+    },
+    {
+      "id": "type:Text#26",
+      "type": "Text",
+      "text": "10",
+      "bounds": "[49,66][111,128]"
+    },
+    {
+      "id": "text:空閒教室",
+      "type": "Text",
+      "text": "空閒教室",
+      "bounds": "[727,2069][896,2118]"
+    },
+    {
+      "id": "type:Column#10",
+      "type": "Column",
+      "text": "",
+      "bounds": "[66,1896][348,2169]"
+    },
+    {
+      "id": "text:考勤查詢",
+      "type": "Text",
+      "text": "考勤查詢",
+      "bounds": "[1029,2069][1198,2118]"
+    },
+    {
+      "id": "type:Column#20",
+      "type": "Column",
+      "text": "",
+      "bounds": "[531,2471][790,2744]"
+    },
+    {
+      "id": "type:Row#11",
+      "type": "Row",
+      "text": "",
+      "bounds": "[300,2517][503,2636]"
+    },
+    {
+      "id": "type:Image#11",
+      "type": "Image",
+      "text": "",
+      "bounds": "[458,2248][560,2350]"
+    },
+    {
+      "id": "type:Text#28",
+      "type": "Text",
+      "text": "46",
+      "bounds": "[126,66][188,128]"
+    },
+    {
+      "id": "type:Scroll#0",
+      "type": "Scroll",
+      "text": "",
+      "bounds": "[0,339][1320,2450]"
+    }
+  ],
+  "nodes_removed": [
+    {
+      "id": "type:TextInput#1",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[258,935][1034,1068]"
+    },
+    {
+      "id": "text:View",
+      "type": "Text",
+      "text": "View",
+      "bounds": "[1034,979][1188,1024]"
+    },
+    {
+      "id": "key:loginAccountInput",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[258,760][1174,893]"
+    },
+    {
+      "id": "key:mockHomePreviewButton",
+      "type": "Button",
+      "text": "Mock 预览主页（仅 UI，不登录）",
+      "bounds": "[115,1400][1205,1526]"
+    },
+    {
+      "id": "type:Stack#13",
+      "type": "Stack",
+      "text": "",
+      "bounds": "[520,48][800,136]"
+    },
+    {
+      "id": "text:IDS Login password",
+      "type": "Text",
+      "text": "IDS Login password",
+      "bounds": "[258,935][1034,1068]"
+    },
+    {
+      "id": "type:genericContainer#0",
+      "type": "genericContainer",
+      "text": "",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "type:Web#0",
+      "type": "Web",
+      "text": "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "key:idsCookieBootstrap",
+      "type": "Web",
+      "text": "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "type:rootWebArea#0",
+      "type": "rootWebArea",
+      "text": "",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "key:loginPasswordInput",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[258,935][1034,1068]"
+    },
+    {
+      "id": "text:PW",
+      "type": "Text",
+      "text": "PW",
+      "bounds": "[153,981][258,1022]"
+    },
+    {
+      "id": "key:loginLogo",
+      "type": "Stack",
+      "text": "",
+      "bounds": "[506,343][814,651]"
+    },
+    {
+      "id": "text:XDYOU",
+      "type": "Text",
+      "text": "XDYOU",
+      "bounds": "[583,468][739,600]"
+    },
+    {
+      "id": "type:Button#0",
+      "type": "Button",
+      "text": "Login",
+      "bounds": "[115,1232][1205,1372]"
+    },
+    {
+      "id": "key:loginPasswordMask",
+      "type": "Text",
+      "text": "IDS Login password",
+      "bounds": "[258,935][1034,1068]"
+    },
+    {
+      "id": "type:TextInput#0",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[258,760][1174,893]"
+    },
+    {
+      "id": "text:View network interaction",
+      "type": "Text",
+      "text": "View network interaction",
+      "bounds": "[581,1589][1020,1634]"
+    },
+    {
+      "id": "type:Button#1",
+      "type": "Button",
+      "text": "Mock 预览主页（仅 UI，不登录）",
+      "bounds": "[115,1400][1205,1526]"
+    },
+    {
+      "id": "text:Clear cache",
+      "type": "Text",
+      "text": "Clear cache",
+      "bounds": "[300,1589][504,1634]"
+    },
+    {
+      "id": "text:Login",
+      "type": "Button",
+      "text": "Login",
+      "bounds": "[115,1232][1205,1372]"
+    },
+    {
+      "id": "type:genericContainer#1",
+      "type": "genericContainer",
+      "text": "",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "key:viewNetworkInteraction",
+      "type": "Text",
+      "text": "View network interaction",
+      "bounds": "[581,1589][1020,1634]"
+    },
+    {
+      "id": "key:loginSubmitButton",
+      "type": "Button",
+      "text": "Login",
+      "bounds": "[115,1232][1205,1372]"
+    },
+    {
+      "id": "type:Stack#14",
+      "type": "Stack",
+      "text": "",
+      "bounds": "[520,48][800,136]"
+    },
+    {
+      "id": "key:togglePasswordVisibility",
+      "type": "Text",
+      "text": "View",
+      "bounds": "[1034,979][1188,1024]"
+    },
+    {
+      "id": "key:clearSessionButton",
+      "type": "Text",
+      "text": "Clear cache",
+      "bounds": "[300,1589][504,1634]"
+    },
+    {
+      "id": "text:https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
+      "type": "Web",
+      "text": "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "text:Mock 预览主页（仅 UI，不登录）",
+      "type": "Button",
+      "text": "Mock 预览主页（仅 UI，不登录）",
+      "bounds": "[115,1400][1205,1526]"
+    },
+    {
+      "id": "text:==",
+      "type": "Text",
+      "text": "==",
+      "bounds": "[629,406][692,468]"
+    },
+    {
+      "id": "text:ID",
+      "type": "Text",
+      "text": "ID",
+      "bounds": "[153,804][258,849]"
+    }
+  ],
+  "attrs_changed": [
+    {
+      "node_id": "type:Text#4",
+      "attr": "text",
+      "before": "IDS Login password",
+      "after": "今日安排完成"
+    },
+    {
+      "node_id": "type:Text#4",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#4",
+      "attr": "bounds",
+      "before": "[258,935][1034,1068]",
+      "after": "[272,750][692,832]"
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "text",
+      "before": "View network interaction",
+      "after": "電量查詢失敗"
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "bounds",
+      "before": "[581,1589][1020,1634]",
+      "after": "[272,1147][671,1225]"
+    },
+    {
+      "node_id": "type:Text#5",
+      "attr": "text",
+      "before": "View",
+      "after": "正在加載"
+    },
+    {
+      "node_id": "type:Text#5",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#5",
+      "attr": "bounds",
+      "before": "[1034,979][1188,1024]",
+      "after": "[272,835][455,888]"
+    },
+    {
+      "node_id": "type:Row#9",
+      "attr": "bounds",
+      "before": "[1173,55][1271,136]",
+      "after": "[0,2450][1320,2758]"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "text",
+      "before": ":",
+      "after": "借書 1 本"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "bounds",
+      "before": "[111,71][126,124]",
+      "after": "[272,1413][546,1491]"
+    },
+    {
+      "node_id": "type:Row#7",
+      "attr": "bounds",
+      "before": "[1002,55][1079,136]",
+      "after": "[56,1896][1264,2169]"
+    },
+    {
+      "node_id": "type:Stack#10",
+      "attr": "bounds",
+      "before": "[1166,55][1271,136]",
+      "after": "[1173,69][1271,125]"
+    },
+    {
+      "node_id": "type:Stack#8",
+      "attr": "bounds",
+      "before": "[1079,55][1166,136]",
+      "after": "[1166,55][1271,136]"
+    },
+    {
+      "node_id": "type:Row#6",
+      "attr": "bounds",
+      "before": "[49,66][126,128]",
+      "after": "[1072,1679][1212,1819]"
+    },
+    {
+      "node_id": "type:Row#4",
+      "attr": "clickable",
+      "before": "false",
+      "after": "true"
+    },
+    {
+      "node_id": "type:Row#4",
+      "attr": "bounds",
+      "before": "[0,0][1320,136]",
+      "after": "[56,1364][1264,1602]"
+    },
+    {
+      "node_id": "type:Text#2",
+      "attr": "text",
+      "before": "ID",
+      "after": "部分加載中"
+    },
+    {
+      "node_id": "type:Text#2",
+      "attr": "bounds",
+      "before": "[153,804][258,849]",
+      "after": "[267,587][582,692]"
+    },
+    {
+      "node_id": "type:Stack#1",
+      "attr": "bounds",
+      "before": "[258,935][1034,1068]",
+      "after": "[0,0][1320,136]"
+    },
+    {
+      "node_id": "type:Row#3",
+      "attr": "clickable",
+      "before": "false",
+      "after": "true"
+    },
+    {
+      "node_id": "type:Row#3",
+      "attr": "bounds",
+      "before": "[49,55][1271,136]",
+      "after": "[56,1098][1264,1336]"
+    },
+    {
+      "node_id": "type:Stack#7",
+      "attr": "bounds",
+      "before": "[995,55][1079,136]",
+      "after": "[1086,69][1166,125]"
+    },
+    {
+      "node_id": "type:Stack#4",
+      "attr": "bounds",
+      "before": "[0,0][1320,136]",
+      "after": "[49,55][188,136]"
+    },
+    {
+      "node_id": "type:Row#1",
+      "attr": "bounds",
+      "before": "[115,931][1205,1071]",
+      "after": "[59,555][1261,723]"
+    },
+    {
+      "node_id": "type:Row#8",
+      "attr": "bounds",
+      "before": "[1086,55][1166,136]",
+      "after": "[56,2197][1264,2450]"
+    },
+    {
+      "node_id": "type:Stack#3",
+      "attr": "bounds",
+      "before": "[0,0][1320,136]",
+      "after": "[49,55][1320,136]"
+    },
+    {
+      "node_id": "type:Text#10",
+      "attr": "text",
+      "before": "46",
+      "after": "待歸還 1 本書籍"
+    },
+    {
+      "node_id": "type:Text#10",
+      "attr": "bounds",
+      "before": "[126,66][188,128]",
+      "after": "[272,1501][596,1554]"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "text",
+      "before": "Clear cache",
+      "after": "正在加載日程"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "bounds",
+      "before": "[300,1589][504,1634]",
+      "after": "[59,916][1261,1035]"
+    },
+    {
+      "node_id": "type:Text#8",
+      "attr": "text",
+      "before": "10",
+      "after": "欠費查詢網絡故障"
+    },
+    {
+      "node_id": "type:Text#8",
+      "attr": "bounds",
+      "before": "[49,66][111,128]",
+      "after": "[272,1235][637,1288]"
+    },
+    {
+      "node_id": "type:Row#5",
+      "attr": "clickable",
+      "before": "false",
+      "after": "true"
+    },
+    {
+      "node_id": "type:Row#5",
+      "attr": "bounds",
+      "before": "[49,55][188,136]",
+      "after": "[56,1630][1264,1868]"
+    },
+    {
+      "node_id": "type:Stack#5",
+      "attr": "bounds",
+      "before": "[49,55][1320,136]",
+      "after": "[995,55][1079,136]"
+    },
+    {
+      "node_id": "type:Stack#11",
+      "attr": "bounds",
+      "before": "[1173,69][1271,125]",
+      "after": "[520,48][800,136]"
+    },
+    {
+      "node_id": "type:Text#0",
+      "attr": "text",
+      "before": "==",
+      "after": "校園信息查詢"
+    },
+    {
+      "node_id": "type:Text#0",
+      "attr": "bounds",
+      "before": "[629,406][692,468]",
+      "after": "[70,193][1177,283]"
+    },
+    {
+      "node_id": "type:Stack#9",
+      "attr": "bounds",
+      "before": "[1086,69][1166,125]",
+      "after": "[1173,69][1271,125]"
+    },
+    {
+      "node_id": "type:Text#1",
+      "attr": "text",
+      "before": "XDYOU",
+      "after": "目前您正在運行測試版"
+    },
+    {
+      "node_id": "type:Text#1",
+      "attr": "bounds",
+      "before": "[583,468][739,600]",
+      "after": "[415,419][906,476]"
+    },
+    {
+      "node_id": "type:Column#1",
+      "attr": "bounds",
+      "before": "[559,396][762,599]",
+      "after": "[0,137][1320,2450]"
+    },
+    {
+      "node_id": "type:Stack#6",
+      "attr": "bounds",
+      "before": "[49,55][188,136]",
+      "after": "[1079,55][1166,136]"
+    },
+    {
+      "node_id": "type:Row#0",
+      "attr": "bounds",
+      "before": "[115,756][1205,896]",
+      "after": "[0,137][1320,339]"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "text",
+      "before": "100",
+      "after": "卡里 0.00 元"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "bounds",
+      "before": "[1182,75][1252,120]",
+      "after": "[272,1679][637,1757]"
+    },
+    {
+      "node_id": "type:Row#2",
+      "attr": "clickable",
+      "before": "false",
+      "after": "true"
+    },
+    {
+      "node_id": "type:Row#2",
+      "attr": "bounds",
+      "before": "[300,1589][1020,1634]",
+      "after": "[59,723][1261,916]"
+    },
+    {
+      "node_id": "type:Stack#0",
+      "attr": "bounds",
+      "before": "[506,343][814,651]",
+      "after": "[0,0][1320,136]"
+    },
+    {
+      "node_id": "type:Stack#12",
+      "attr": "bounds",
+      "before": "[1173,69][1271,125]",
+      "after": "[520,48][800,136]"
+    },
+    {
+      "node_id": "type:Text#3",
+      "attr": "text",
+      "before": "PW",
+      "after": "其他實驗加載失敗"
+    },
+    {
+      "node_id": "type:Text#3",
+      "attr": "bounds",
+      "before": "[153,981][258,1022]",
+      "after": "[613,587][1054,692]"
+    }
+  ],
+  "text_changes": [
+    {
+      "node_id": "type:Text#4",
+      "attr": "text",
+      "before": "IDS Login password",
+      "after": "今日安排完成"
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "text",
+      "before": "View network interaction",
+      "after": "電量查詢失敗"
+    },
+    {
+      "node_id": "type:Text#5",
+      "attr": "text",
+      "before": "View",
+      "after": "正在加載"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "text",
+      "before": ":",
+      "after": "借書 1 本"
+    },
+    {
+      "node_id": "type:Text#2",
+      "attr": "text",
+      "before": "ID",
+      "after": "部分加載中"
+    },
+    {
+      "node_id": "type:Text#10",
+      "attr": "text",
+      "before": "46",
+      "after": "待歸還 1 本書籍"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "text",
+      "before": "Clear cache",
+      "after": "正在加載日程"
+    },
+    {
+      "node_id": "type:Text#8",
+      "attr": "text",
+      "before": "10",
+      "after": "欠費查詢網絡故障"
+    },
+    {
+      "node_id": "type:Text#0",
+      "attr": "text",
+      "before": "==",
+      "after": "校園信息查詢"
+    },
+    {
+      "node_id": "type:Text#1",
+      "attr": "text",
+      "before": "XDYOU",
+      "after": "目前您正在運行測試版"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "text",
+      "before": "100",
+      "after": "卡里 0.00 元"
+    },
+    {
+      "node_id": "type:Text#3",
+      "attr": "text",
+      "before": "PW",
+      "after": "其他實驗加載失敗"
+    }
+  ],
+  "count_changes": {
+    "genericContainer": {
+      "before": 2,
+      "after": 0,
+      "delta": -2
+    },
+    "TextInput": {
+      "before": 2,
+      "after": 0,
+      "delta": -2
+    },
+    "Column": {
+      "before": 2,
+      "after": 23,
+      "delta": 21
+    },
+    "rootWebArea": {
+      "before": 1,
+      "after": 0,
+      "delta": -1
+    },
+    "Row": {
+      "before": 10,
+      "after": 22,
+      "delta": 12
+    },
+    "Scroll": {
+      "before": 0,
+      "after": 1,
+      "delta": 1
+    },
+    "Web": {
+      "before": 1,
+      "after": 0,
+      "delta": -1
+    },
+    "Image": {
+      "before": 0,
+      "after": 19,
+      "delta": 19
+    },
+    "Button": {
+      "before": 2,
+      "after": 0,
+      "delta": -2
+    },
+    "Text": {
+      "before": 12,
+      "after": 30,
+      "delta": 18
+    },
+    "Stack": {
+      "before": 15,
+      "after": 13,
+      "delta": -2
+    }
+  },
+  "summary": "新增 105 个节点; 移除 31 个节点; 文本变化 12 处; 属性变化 55 处; 数量变化: genericContainer: 2→0, TextInput: 2→0, Column: 2→23, rootWebArea: 1→0, Row: 10→22, Scroll: 0→1, Web: 1→0, Image: 0→19, Button: 2→0, Text: 12→30, Stack: 15→13"
+}

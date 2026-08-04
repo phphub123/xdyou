@@ -1,0 +1,15 @@
+{
+  "name": "Campus home and bottom navigation alignment",
+  "description": "Open the local preview and verify the UI keys visible in UI截图/0.png.",
+  "steps": [
+    {"action": "click", "target": {"key": "mockHomePreviewButton"}, "wait_after": 1},
+    {"action": "snapshot", "label": "01-home-aligned"}
+  ],
+  "assertions": [
+    {"type": "exists", "target": {"text": "校園信息查詢"}, "message": "Reference title should be visible"},
+    {"type": "exists", "target": {"text": "目前您正在運行測試版"}, "message": "Reference beta card should be visible"},
+    {"type": "exists", "target": {"text": "其他實驗加載失敗"}, "message": "Schedule failure chip should be visible"},
+    {"type": "exists", "target": {"text": "卡里 0.00 元"}, "message": "School card preview should be visible"},
+    {"type": "exists", "target": {"key": "navTo_home"}, "message": "Bottom navigation should remain visible"}
+  ]
+}

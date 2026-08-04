@@ -25,6 +25,14 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Two final Hvigor passes reported `BUILD SUCCESSFUL`; the HAP was installed and launched on `127.0.0.1:5555`.
 - `acceptance/runtime/2026-08-04-five-tabs-final/` contains five screenshots, five filtered component trees and a 3/3 interaction report.
 - Android/iOS original-app runtime capture is `BLOCKED_EXTERNAL` because no Android or iOS device is available. The checked-in Flutter source is the visual/semantic reference; paired screenshot parity is not marked PASS.
+
+## Campus home screenshot alignment (2026-08-04)
+
+- Aligned `AlignedCampusPage` and `AlignedNavItem` directly to `UI截图/0.png`: Traditional Chinese labels, beta banner, schedule loading/failure chips, energy/library/campus-card rows, QR affordance, two four-column tool rows and the five-item selected blue capsule.
+- Added tintable local SVG resources for all visible campus and bottom-navigation icons; existing feature callbacks and stable navigation IDs remain connected.
+- Final dual-ABI HAP build succeeded, installed on `127.0.0.1:5555`, and launched as PID 4243.
+- `acceptance/runtime/2026-08-04-home-nav-aligned-final/` contains the final screenshot, filtered component tree and a 5/5 reference-key interaction report.
+- Bounded target logging contains 0 FATAL. One non-fatal UIAbility continuation diagnostic was emitted during emulator startup and did not terminate or hide the app.
 ## Phase 2 academic features
 
 - Implemented real Ehall request boundaries for timetable (xskcb), scores (cjcx/xscjcx) and examinations (wdksap), with session gating, timeouts, HTTP/error handling and stdx JSON parsing.

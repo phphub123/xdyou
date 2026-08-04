@@ -1,0 +1,1220 @@
+{
+  "nodes_added": [
+    {
+      "id": "text:›",
+      "type": "Text",
+      "text": "›",
+      "bounds": "[1189,2420][1205,2450]"
+    },
+    {
+      "id": "type:Column#12",
+      "type": "Column",
+      "text": "",
+      "bounds": "[272,2471][531,2744]"
+    },
+    {
+      "id": "type:Text#28",
+      "type": "Text",
+      "text": "豬圖鑑賞",
+      "bounds": "[834,2650][1003,2699]"
+    },
+    {
+      "id": "type:Column#4",
+      "type": "Column",
+      "text": "",
+      "bounds": "[115,604][1189,732]"
+    },
+    {
+      "id": "type:Text#29",
+      "type": "Text",
+      "text": "設置",
+      "bounds": "[1135,2650][1220,2699]"
+    },
+    {
+      "id": "text:当前版本 1.0.0",
+      "type": "Text",
+      "text": "当前版本 1.0.0",
+      "bounds": "[115,921][386,970]"
+    },
+    {
+      "id": "type:Text#15",
+      "type": "Text",
+      "text": "日 夜",
+      "bounds": "[1093,1530][1205,1587]"
+    },
+    {
+      "id": "text:XDYou",
+      "type": "Text",
+      "text": "XDYou",
+      "bounds": "[56,199][302,289]"
+    },
+    {
+      "id": "type:Text#17",
+      "type": "Text",
+      "text": "精简显示课程节次",
+      "bounds": "[115,1811][452,1860]"
+    },
+    {
+      "id": "text:跟随系统",
+      "type": "Text",
+      "text": "跟随系统",
+      "bounds": "[115,1573][284,1622]"
+    },
+    {
+      "id": "type:Row#17",
+      "type": "Row",
+      "text": "",
+      "bounds": "[1002,55][1079,136]"
+    },
+    {
+      "id": "key:navTo_ruisi",
+      "type": "Column",
+      "text": "",
+      "bounds": "[272,2471][531,2744]"
+    },
+    {
+      "id": "text:亮度设置",
+      "type": "Text",
+      "text": "亮度设置",
+      "bounds": "[115,1494][326,1556]"
+    },
+    {
+      "id": "type:Column#10",
+      "type": "Column",
+      "text": "",
+      "bounds": "[115,2384][1189,2450]"
+    },
+    {
+      "id": "type:Column#7",
+      "type": "Column",
+      "text": "",
+      "bounds": "[115,1494][1093,1622]"
+    },
+    {
+      "id": "type:Text#18",
+      "type": "Text",
+      "text": "开",
+      "bounds": "[1155,1768][1205,1825]"
+    },
+    {
+      "id": "type:Row#13",
+      "type": "Row",
+      "text": "",
+      "bounds": "[49,55][1271,136]"
+    },
+    {
+      "id": "text:开",
+      "type": "Text",
+      "text": "开",
+      "bounds": "[1155,1768][1205,1825]"
+    },
+    {
+      "id": "type:Image#2",
+      "type": "Image",
+      "text": "",
+      "bounds": "[617,2533][705,2621]"
+    },
+    {
+      "id": "text:日 夜",
+      "type": "Text",
+      "text": "日 夜",
+      "bounds": "[1093,1530][1205,1587]"
+    },
+    {
+      "id": "type:Text#22",
+      "type": "Text",
+      "text": "›",
+      "bounds": "[1189,2182][1205,2239]"
+    },
+    {
+      "id": "type:Text#24",
+      "type": "Text",
+      "text": "›",
+      "bounds": "[1189,2420][1205,2450]"
+    },
+    {
+      "id": "type:Text#19",
+      "type": "Text",
+      "text": "课程表设置",
+      "bounds": "[56,1964][1264,2091]"
+    },
+    {
+      "id": "type:Text#21",
+      "type": "Text",
+      "text": "当前学期 2026-1",
+      "bounds": "[115,2225][435,2274]"
+    },
+    {
+      "id": "type:Row#16",
+      "type": "Row",
+      "text": "",
+      "bounds": "[49,66][126,128]"
+    },
+    {
+      "id": "text:其他功能",
+      "type": "Text",
+      "text": "其他功能",
+      "bounds": "[576,2650][745,2699]"
+    },
+    {
+      "id": "type:Text#25",
+      "type": "Text",
+      "text": "校園信息",
+      "bounds": "[58,2650][227,2699]"
+    },
+    {
+      "id": "text:44",
+      "type": "Text",
+      "text": "44",
+      "bounds": "[126,66][188,128]"
+    },
+    {
+      "id": "text:精简显示课程节次",
+      "type": "Text",
+      "text": "精简显示课程节次",
+      "bounds": "[115,1811][452,1860]"
+    },
+    {
+      "id": "type:Column#13",
+      "type": "Column",
+      "text": "",
+      "bounds": "[531,2471][790,2744]"
+    },
+    {
+      "id": "type:Column#6",
+      "type": "Column",
+      "text": "",
+      "bounds": "[115,1256][1189,1384]"
+    },
+    {
+      "id": "type:Row#19",
+      "type": "Row",
+      "text": "",
+      "bounds": "[1173,55][1271,136]"
+    },
+    {
+      "id": "type:Column#14",
+      "type": "Column",
+      "text": "",
+      "bounds": "[789,2471][1048,2744]"
+    },
+    {
+      "id": "type:Row#12",
+      "type": "Row",
+      "text": "",
+      "bounds": "[1076,2517][1279,2636]"
+    },
+    {
+      "id": "text:界面设置",
+      "type": "Text",
+      "text": "界面设置",
+      "bounds": "[56,1074][1264,1201]"
+    },
+    {
+      "id": "text:课程表设置",
+      "type": "Text",
+      "text": "课程表设置",
+      "bounds": "[56,1964][1264,2091]"
+    },
+    {
+      "id": "type:Column#9",
+      "type": "Column",
+      "text": "",
+      "bounds": "[115,2146][1189,2274]"
+    },
+    {
+      "id": "text:当前学期 2026-1",
+      "type": "Text",
+      "text": "当前学期 2026-1",
+      "bounds": "[115,2225][435,2274]"
+    },
+    {
+      "id": "type:Text#32",
+      "type": "Text",
+      "text": "44",
+      "bounds": "[126,66][188,128]"
+    },
+    {
+      "id": "text:默认蓝色",
+      "type": "Text",
+      "text": "默认蓝色",
+      "bounds": "[115,1335][284,1384]"
+    },
+    {
+      "id": "type:Text#16",
+      "type": "Text",
+      "text": "简化课程时间轴",
+      "bounds": "[115,1732][483,1794]"
+    },
+    {
+      "id": "text:上课提醒",
+      "type": "Text",
+      "text": "上课提醒",
+      "bounds": "[115,2384][326,2446]"
+    },
+    {
+      "id": "type:Text#20",
+      "type": "Text",
+      "text": "切换学期",
+      "bounds": "[115,2146][326,2208]"
+    },
+    {
+      "id": "type:Text#27",
+      "type": "Text",
+      "text": "其他功能",
+      "bounds": "[576,2650][745,2699]"
+    },
+    {
+      "id": "text:检查更新",
+      "type": "Text",
+      "text": "检查更新",
+      "bounds": "[115,842][326,904]"
+    },
+    {
+      "id": "text:简化课程时间轴",
+      "type": "Text",
+      "text": "简化课程时间轴",
+      "bounds": "[115,1732][483,1794]"
+    },
+    {
+      "id": "type:Row#10",
+      "type": "Row",
+      "text": "",
+      "bounds": "[559,2517][762,2636]"
+    },
+    {
+      "id": "key:navTo_pig",
+      "type": "Column",
+      "text": "",
+      "bounds": "[789,2471][1048,2744]"
+    },
+    {
+      "id": "type:Text#26",
+      "type": "Text",
+      "text": "睿思論壇",
+      "bounds": "[317,2650][486,2699]"
+    },
+    {
+      "id": "key:navTo_settings",
+      "type": "Column",
+      "text": "",
+      "bounds": "[1048,2471][1307,2744]"
+    },
+    {
+      "id": "type:Text#33",
+      "type": "Text",
+      "text": "100",
+      "bounds": "[1182,75][1252,120]"
+    },
+    {
+      "id": "type:Text#14",
+      "type": "Text",
+      "text": "跟随系统",
+      "bounds": "[115,1573][284,1622]"
+    },
+    {
+      "id": "type:Text#12",
+      "type": "Text",
+      "text": "›",
+      "bounds": "[1189,1292][1205,1349]"
+    },
+    {
+      "id": "type:Column#2",
+      "type": "Column",
+      "text": "",
+      "bounds": "[0,137][1320,2450]"
+    },
+    {
+      "id": "text:設置",
+      "type": "Text",
+      "text": "設置",
+      "bounds": "[1135,2650][1220,2699]"
+    },
+    {
+      "id": "type:Text#13",
+      "type": "Text",
+      "text": "亮度设置",
+      "bounds": "[115,1494][326,1556]"
+    },
+    {
+      "id": "key:navTo_toolbox",
+      "type": "Column",
+      "text": "",
+      "bounds": "[531,2471][790,2744]"
+    },
+    {
+      "id": "type:Image#1",
+      "type": "Image",
+      "text": "",
+      "bounds": "[358,2533][446,2621]"
+    },
+    {
+      "id": "type:Row#11",
+      "type": "Row",
+      "text": "",
+      "bounds": "[817,2517][1020,2636]"
+    },
+    {
+      "id": "type:Text#30",
+      "type": "Text",
+      "text": "10",
+      "bounds": "[49,66][111,128]"
+    },
+    {
+      "id": "type:Text#23",
+      "type": "Text",
+      "text": "上课提醒",
+      "bounds": "[115,2384][326,2446]"
+    },
+    {
+      "id": "type:Row#18",
+      "type": "Row",
+      "text": "",
+      "bounds": "[1086,55][1166,136]"
+    },
+    {
+      "id": "text:关于",
+      "type": "Text",
+      "text": "关于",
+      "bounds": "[56,422][1264,549]"
+    },
+    {
+      "id": "type:Column#5",
+      "type": "Column",
+      "text": "",
+      "bounds": "[115,842][1189,970]"
+    },
+    {
+      "id": "type:Column#15",
+      "type": "Column",
+      "text": "",
+      "bounds": "[1048,2471][1307,2744]"
+    },
+    {
+      "id": "type:Scroll#0",
+      "type": "Scroll",
+      "text": "",
+      "bounds": "[0,137][1320,2450]"
+    },
+    {
+      "id": "text:关于本程序",
+      "type": "Text",
+      "text": "关于本程序",
+      "bounds": "[115,604][378,666]"
+    },
+    {
+      "id": "text:Written by BenderBlog Rodriguez and contributors",
+      "type": "Text",
+      "text": "Written by BenderBlog Rodriguez and contributors",
+      "bounds": "[56,303][1032,352]"
+    },
+    {
+      "id": "type:Column#3",
+      "type": "Column",
+      "text": "",
+      "bounds": "[0,137][1320,2450]"
+    },
+    {
+      "id": "text:校園信息",
+      "type": "Text",
+      "text": "校園信息",
+      "bounds": "[58,2650][227,2699]"
+    },
+    {
+      "id": "text:豬圖鑑賞",
+      "type": "Text",
+      "text": "豬圖鑑賞",
+      "bounds": "[834,2650][1003,2699]"
+    },
+    {
+      "id": "text:10, :, 44",
+      "type": "Flex",
+      "text": "10, :, 44",
+      "bounds": "[49,55][188,136]"
+    },
+    {
+      "id": "type:Row#15",
+      "type": "Row",
+      "text": "",
+      "bounds": "[49,55][188,136]"
+    },
+    {
+      "id": "type:Image#3",
+      "type": "Image",
+      "text": "",
+      "bounds": "[875,2533][963,2621]"
+    },
+    {
+      "id": "type:Text#31",
+      "type": "Text",
+      "text": ":",
+      "bounds": "[111,71][126,124]"
+    },
+    {
+      "id": "text:切换学期",
+      "type": "Text",
+      "text": "切换学期",
+      "bounds": "[115,2146][326,2208]"
+    },
+    {
+      "id": "text:主题配色",
+      "type": "Text",
+      "text": "主题配色",
+      "bounds": "[115,1256][326,1318]"
+    },
+    {
+      "id": "type:Image#0",
+      "type": "Image",
+      "text": "",
+      "bounds": "[99,2533][187,2621]"
+    },
+    {
+      "id": "type:Column#8",
+      "type": "Column",
+      "text": "",
+      "bounds": "[115,1732][1155,1860]"
+    },
+    {
+      "id": "text:XDYou 仓颉 HarmonyOS 原生版",
+      "type": "Text",
+      "text": "XDYou 仓颉 HarmonyOS 原生版",
+      "bounds": "[115,683][718,732]"
+    },
+    {
+      "id": "type:Column#11",
+      "type": "Column",
+      "text": "",
+      "bounds": "[13,2471][272,2744]"
+    },
+    {
+      "id": "text:睿思論壇",
+      "type": "Text",
+      "text": "睿思論壇",
+      "bounds": "[317,2650][486,2699]"
+    },
+    {
+      "id": "type:Row#14",
+      "type": "Row",
+      "text": "",
+      "bounds": "[0,0][1320,136]"
+    },
+    {
+      "id": "key:navTo_home",
+      "type": "Column",
+      "text": "",
+      "bounds": "[13,2471][272,2744]"
+    },
+    {
+      "id": "type:Image#4",
+      "type": "Image",
+      "text": "",
+      "bounds": "[1134,2533][1222,2621]"
+    }
+  ],
+  "nodes_removed": [
+    {
+      "id": "text:Clear cache",
+      "type": "Text",
+      "text": "Clear cache",
+      "bounds": "[300,1589][504,1634]"
+    },
+    {
+      "id": "key:mockHomePreviewButton",
+      "type": "Button",
+      "text": "Mock 预览主页（仅 UI，不登录）",
+      "bounds": "[115,1400][1205,1526]"
+    },
+    {
+      "id": "type:Stack#14",
+      "type": "Stack",
+      "text": "",
+      "bounds": "[520,48][800,136]"
+    },
+    {
+      "id": "type:rootWebArea#0",
+      "type": "rootWebArea",
+      "text": "",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "text:IDS Login password",
+      "type": "Text",
+      "text": "IDS Login password",
+      "bounds": "[258,935][1034,1068]"
+    },
+    {
+      "id": "key:loginLogo",
+      "type": "Stack",
+      "text": "",
+      "bounds": "[506,343][814,651]"
+    },
+    {
+      "id": "type:Web#0",
+      "type": "Web",
+      "text": "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "text:XDYOU",
+      "type": "Text",
+      "text": "XDYOU",
+      "bounds": "[583,468][739,600]"
+    },
+    {
+      "id": "text:View",
+      "type": "Text",
+      "text": "View",
+      "bounds": "[1034,979][1188,1024]"
+    },
+    {
+      "id": "key:idsCookieBootstrap",
+      "type": "Web",
+      "text": "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "text:https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
+      "type": "Web",
+      "text": "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "type:Stack#13",
+      "type": "Stack",
+      "text": "",
+      "bounds": "[520,48][800,136]"
+    },
+    {
+      "id": "text:View network interaction",
+      "type": "Text",
+      "text": "View network interaction",
+      "bounds": "[581,1589][1020,1634]"
+    },
+    {
+      "id": "type:genericContainer#1",
+      "type": "genericContainer",
+      "text": "",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "key:togglePasswordVisibility",
+      "type": "Text",
+      "text": "View",
+      "bounds": "[1034,979][1188,1024]"
+    },
+    {
+      "id": "type:TextInput#0",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[258,760][1174,893]"
+    },
+    {
+      "id": "text:ID",
+      "type": "Text",
+      "text": "ID",
+      "bounds": "[153,804][258,849]"
+    },
+    {
+      "id": "key:loginPasswordInput",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[258,935][1034,1068]"
+    },
+    {
+      "id": "key:loginPasswordMask",
+      "type": "Text",
+      "text": "IDS Login password",
+      "bounds": "[258,935][1034,1068]"
+    },
+    {
+      "id": "key:loginSubmitButton",
+      "type": "Button",
+      "text": "Login",
+      "bounds": "[115,1232][1205,1372]"
+    },
+    {
+      "id": "text:43",
+      "type": "Text",
+      "text": "43",
+      "bounds": "[126,66][188,128]"
+    },
+    {
+      "id": "key:loginAccountInput",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[258,760][1174,893]"
+    },
+    {
+      "id": "type:genericContainer#0",
+      "type": "genericContainer",
+      "text": "",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "type:TextInput#1",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[258,935][1034,1068]"
+    },
+    {
+      "id": "key:viewNetworkInteraction",
+      "type": "Text",
+      "text": "View network interaction",
+      "bounds": "[581,1589][1020,1634]"
+    },
+    {
+      "id": "type:Button#1",
+      "type": "Button",
+      "text": "Mock 预览主页（仅 UI，不登录）",
+      "bounds": "[115,1400][1205,1526]"
+    },
+    {
+      "id": "key:clearSessionButton",
+      "type": "Text",
+      "text": "Clear cache",
+      "bounds": "[300,1589][504,1634]"
+    },
+    {
+      "id": "type:Button#0",
+      "type": "Button",
+      "text": "Login",
+      "bounds": "[115,1232][1205,1372]"
+    },
+    {
+      "id": "text:10, :, 43",
+      "type": "Flex",
+      "text": "10, :, 43",
+      "bounds": "[49,55][188,136]"
+    },
+    {
+      "id": "text:==",
+      "type": "Text",
+      "text": "==",
+      "bounds": "[629,406][692,468]"
+    },
+    {
+      "id": "text:Login",
+      "type": "Button",
+      "text": "Login",
+      "bounds": "[115,1232][1205,1372]"
+    },
+    {
+      "id": "text:PW",
+      "type": "Text",
+      "text": "PW",
+      "bounds": "[153,981][258,1022]"
+    },
+    {
+      "id": "text:Mock 预览主页（仅 UI，不登录）",
+      "type": "Button",
+      "text": "Mock 预览主页（仅 UI，不登录）",
+      "bounds": "[115,1400][1205,1526]"
+    }
+  ],
+  "attrs_changed": [
+    {
+      "node_id": "type:Text#6",
+      "attr": "text",
+      "before": "Clear cache",
+      "after": "检查更新"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "bounds",
+      "before": "[300,1589][504,1634]",
+      "after": "[115,842][326,904]"
+    },
+    {
+      "node_id": "type:Stack#12",
+      "attr": "bounds",
+      "before": "[1173,69][1271,125]",
+      "after": "[520,48][800,136]"
+    },
+    {
+      "node_id": "type:Text#10",
+      "attr": "text",
+      "before": "43",
+      "after": "主题配色"
+    },
+    {
+      "node_id": "type:Text#10",
+      "attr": "bounds",
+      "before": "[126,66][188,128]",
+      "after": "[115,1256][326,1318]"
+    },
+    {
+      "node_id": "type:Stack#9",
+      "attr": "bounds",
+      "before": "[1086,69][1166,125]",
+      "after": "[1173,69][1271,125]"
+    },
+    {
+      "node_id": "type:Row#9",
+      "attr": "bounds",
+      "before": "[1173,55][1271,136]",
+      "after": "[300,2517][503,2636]"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "text",
+      "before": ":",
+      "after": "界面设置"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "bounds",
+      "before": "[111,71][126,124]",
+      "after": "[56,1074][1264,1201]"
+    },
+    {
+      "node_id": "type:Row#2",
+      "attr": "clickable",
+      "before": "false",
+      "after": "true"
+    },
+    {
+      "node_id": "type:Row#2",
+      "attr": "bounds",
+      "before": "[300,1589][1020,1634]",
+      "after": "[56,1201][1264,1439]"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "text",
+      "before": "100",
+      "after": "默认蓝色"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "bounds",
+      "before": "[1182,75][1252,120]",
+      "after": "[115,1335][284,1384]"
+    },
+    {
+      "node_id": "type:Stack#1",
+      "attr": "bounds",
+      "before": "[258,935][1034,1068]",
+      "after": "[0,0][1320,136]"
+    },
+    {
+      "node_id": "type:Stack#11",
+      "attr": "bounds",
+      "before": "[1173,69][1271,125]",
+      "after": "[520,48][800,136]"
+    },
+    {
+      "node_id": "type:Row#4",
+      "attr": "clickable",
+      "before": "false",
+      "after": "true"
+    },
+    {
+      "node_id": "type:Row#4",
+      "attr": "bounds",
+      "before": "[0,0][1320,136]",
+      "after": "[56,1677][1264,1915]"
+    },
+    {
+      "node_id": "type:Text#5",
+      "attr": "text",
+      "before": "View",
+      "after": "›"
+    },
+    {
+      "node_id": "type:Text#5",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#5",
+      "attr": "bounds",
+      "before": "[1034,979][1188,1024]",
+      "after": "[1189,640][1205,697]"
+    },
+    {
+      "node_id": "type:Row#6",
+      "attr": "clickable",
+      "before": "false",
+      "after": "true"
+    },
+    {
+      "node_id": "type:Row#6",
+      "attr": "bounds",
+      "before": "[49,66][126,128]",
+      "after": "[56,2329][1264,2450]"
+    },
+    {
+      "node_id": "type:Row#0",
+      "attr": "clickable",
+      "before": "false",
+      "after": "true"
+    },
+    {
+      "node_id": "type:Row#0",
+      "attr": "bounds",
+      "before": "[115,756][1205,896]",
+      "after": "[56,549][1264,787]"
+    },
+    {
+      "node_id": "type:Stack#4",
+      "attr": "bounds",
+      "before": "[0,0][1320,136]",
+      "after": "[49,55][188,136]"
+    },
+    {
+      "node_id": "key:ClockStatusView",
+      "attr": "text",
+      "before": "10, :, 43",
+      "after": "10, :, 44"
+    },
+    {
+      "node_id": "type:Row#3",
+      "attr": "clickable",
+      "before": "false",
+      "after": "true"
+    },
+    {
+      "node_id": "type:Row#3",
+      "attr": "bounds",
+      "before": "[49,55][1271,136]",
+      "after": "[56,1439][1264,1677]"
+    },
+    {
+      "node_id": "type:Text#3",
+      "attr": "text",
+      "before": "PW",
+      "after": "关于本程序"
+    },
+    {
+      "node_id": "type:Text#3",
+      "attr": "bounds",
+      "before": "[153,981][258,1022]",
+      "after": "[115,604][378,666]"
+    },
+    {
+      "node_id": "type:Row#5",
+      "attr": "clickable",
+      "before": "false",
+      "after": "true"
+    },
+    {
+      "node_id": "type:Row#5",
+      "attr": "bounds",
+      "before": "[49,55][188,136]",
+      "after": "[56,2091][1264,2329]"
+    },
+    {
+      "node_id": "type:Row#7",
+      "attr": "bounds",
+      "before": "[1002,55][1079,136]",
+      "after": "[0,2450][1320,2758]"
+    },
+    {
+      "node_id": "type:Stack#5",
+      "attr": "bounds",
+      "before": "[49,55][1320,136]",
+      "after": "[995,55][1079,136]"
+    },
+    {
+      "node_id": "type:Text#2",
+      "attr": "text",
+      "before": "ID",
+      "after": "关于"
+    },
+    {
+      "node_id": "type:Text#2",
+      "attr": "bounds",
+      "before": "[153,804][258,849]",
+      "after": "[56,422][1264,549]"
+    },
+    {
+      "node_id": "type:Flex#0",
+      "attr": "text",
+      "before": "10, :, 43",
+      "after": "10, :, 44"
+    },
+    {
+      "node_id": "type:Text#0",
+      "attr": "text",
+      "before": "==",
+      "after": "XDYou"
+    },
+    {
+      "node_id": "type:Text#0",
+      "attr": "bounds",
+      "before": "[629,406][692,468]",
+      "after": "[56,199][302,289]"
+    },
+    {
+      "node_id": "type:Stack#10",
+      "attr": "bounds",
+      "before": "[1166,55][1271,136]",
+      "after": "[1173,69][1271,125]"
+    },
+    {
+      "node_id": "type:Stack#3",
+      "attr": "bounds",
+      "before": "[0,0][1320,136]",
+      "after": "[49,55][1320,136]"
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "text",
+      "before": "View network interaction",
+      "after": "当前版本 1.0.0"
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "bounds",
+      "before": "[581,1589][1020,1634]",
+      "after": "[115,921][386,970]"
+    },
+    {
+      "node_id": "type:Stack#0",
+      "attr": "bounds",
+      "before": "[506,343][814,651]",
+      "after": "[0,0][1320,136]"
+    },
+    {
+      "node_id": "type:Text#8",
+      "attr": "text",
+      "before": "10",
+      "after": "›"
+    },
+    {
+      "node_id": "type:Text#8",
+      "attr": "bounds",
+      "before": "[49,66][111,128]",
+      "after": "[1189,878][1205,935]"
+    },
+    {
+      "node_id": "type:Text#4",
+      "attr": "text",
+      "before": "IDS Login password",
+      "after": "XDYou 仓颉 HarmonyOS 原生版"
+    },
+    {
+      "node_id": "type:Text#4",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#4",
+      "attr": "bounds",
+      "before": "[258,935][1034,1068]",
+      "after": "[115,683][718,732]"
+    },
+    {
+      "node_id": "type:Stack#6",
+      "attr": "bounds",
+      "before": "[49,55][188,136]",
+      "after": "[1079,55][1166,136]"
+    },
+    {
+      "node_id": "type:Stack#7",
+      "attr": "bounds",
+      "before": "[995,55][1079,136]",
+      "after": "[1086,69][1166,125]"
+    },
+    {
+      "node_id": "type:Row#8",
+      "attr": "bounds",
+      "before": "[1086,55][1166,136]",
+      "after": "[41,2517][244,2636]"
+    },
+    {
+      "node_id": "type:Stack#8",
+      "attr": "bounds",
+      "before": "[1079,55][1166,136]",
+      "after": "[1166,55][1271,136]"
+    },
+    {
+      "node_id": "type:Column#1",
+      "attr": "bounds",
+      "before": "[559,396][762,599]",
+      "after": "[0,137][1320,2450]"
+    },
+    {
+      "node_id": "type:Row#1",
+      "attr": "clickable",
+      "before": "false",
+      "after": "true"
+    },
+    {
+      "node_id": "type:Row#1",
+      "attr": "bounds",
+      "before": "[115,931][1205,1071]",
+      "after": "[56,787][1264,1025]"
+    },
+    {
+      "node_id": "type:Text#1",
+      "attr": "text",
+      "before": "XDYOU",
+      "after": "Written by BenderBlog Rodriguez and contributors"
+    },
+    {
+      "node_id": "type:Text#1",
+      "attr": "bounds",
+      "before": "[583,468][739,600]",
+      "after": "[56,303][1032,352]"
+    }
+  ],
+  "text_changes": [
+    {
+      "node_id": "type:Text#6",
+      "attr": "text",
+      "before": "Clear cache",
+      "after": "检查更新"
+    },
+    {
+      "node_id": "type:Text#10",
+      "attr": "text",
+      "before": "43",
+      "after": "主题配色"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "text",
+      "before": ":",
+      "after": "界面设置"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "text",
+      "before": "100",
+      "after": "默认蓝色"
+    },
+    {
+      "node_id": "type:Text#5",
+      "attr": "text",
+      "before": "View",
+      "after": "›"
+    },
+    {
+      "node_id": "key:ClockStatusView",
+      "attr": "text",
+      "before": "10, :, 43",
+      "after": "10, :, 44"
+    },
+    {
+      "node_id": "type:Text#3",
+      "attr": "text",
+      "before": "PW",
+      "after": "关于本程序"
+    },
+    {
+      "node_id": "type:Text#2",
+      "attr": "text",
+      "before": "ID",
+      "after": "关于"
+    },
+    {
+      "node_id": "type:Flex#0",
+      "attr": "text",
+      "before": "10, :, 43",
+      "after": "10, :, 44"
+    },
+    {
+      "node_id": "type:Text#0",
+      "attr": "text",
+      "before": "==",
+      "after": "XDYou"
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "text",
+      "before": "View network interaction",
+      "after": "当前版本 1.0.0"
+    },
+    {
+      "node_id": "type:Text#8",
+      "attr": "text",
+      "before": "10",
+      "after": "›"
+    },
+    {
+      "node_id": "type:Text#4",
+      "attr": "text",
+      "before": "IDS Login password",
+      "after": "XDYou 仓颉 HarmonyOS 原生版"
+    },
+    {
+      "node_id": "type:Text#1",
+      "attr": "text",
+      "before": "XDYOU",
+      "after": "Written by BenderBlog Rodriguez and contributors"
+    }
+  ],
+  "count_changes": {
+    "Button": {
+      "before": 2,
+      "after": 0,
+      "delta": -2
+    },
+    "Row": {
+      "before": 10,
+      "after": 20,
+      "delta": 10
+    },
+    "Column": {
+      "before": 2,
+      "after": 16,
+      "delta": 14
+    },
+    "Text": {
+      "before": 12,
+      "after": 34,
+      "delta": 22
+    },
+    "Scroll": {
+      "before": 0,
+      "after": 1,
+      "delta": 1
+    },
+    "Stack": {
+      "before": 15,
+      "after": 13,
+      "delta": -2
+    },
+    "TextInput": {
+      "before": 2,
+      "after": 0,
+      "delta": -2
+    },
+    "Image": {
+      "before": 0,
+      "after": 5,
+      "delta": 5
+    },
+    "rootWebArea": {
+      "before": 1,
+      "after": 0,
+      "delta": -1
+    },
+    "Web": {
+      "before": 1,
+      "after": 0,
+      "delta": -1
+    },
+    "genericContainer": {
+      "before": 2,
+      "after": 0,
+      "delta": -2
+    }
+  },
+  "summary": "新增 85 个节点; 移除 33 个节点; 文本变化 14 处; 属性变化 60 处; 数量变化: Button: 2→0, Row: 10→20, Column: 2→16, Text: 12→34, Scroll: 0→1, Stack: 15→13, TextInput: 2→0, Image: 0→5, rootWebArea: 1→0, Web: 1→0, genericContainer: 2→0"
+}

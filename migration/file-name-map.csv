@@ -60,6 +60,7 @@ source/lib/page/classtable/class_add/class_add_window.dart,entry/src/main/cangji
 N/A-user-approved-preview,entry/src/main/cangjie/index.cj,N/A,LoginWindow.openMockPreview,Temporary in-memory home UI preview with explicit unauthenticated banner,IN_PROGRESS
 source/lib/page/homepage/home.dart,entry/src/main/cangjie/aligned_home_page.cj,HomePageMaster,AlignedHomePage,Source-ordered five-destination shell and Material-style bottom navigation,IN_PROGRESS
 source/lib/page/homepage/homepage.dart,entry/src/main/cangjie/aligned_home_page.cj,MainPage,AlignedCampusPage,App bar notice schedule information cards and campus service grid,IN_PROGRESS
+UI截图/0.png,entry/src/main/cangjie/aligned_home_page.cj,Campus home visual reference,AlignedCampusPage/AlignedNavItem,Reference-aligned Traditional Chinese campus cards four-column grid SVG icons and selected navigation capsule,PASS
 source/lib/external/ruisi_flutter/lib/pages/home_page.dart,entry/src/main/cangjie/aligned_home_page.cj,HomePage,AlignedRuisiPage,Forum app bar category tabs and honest unauthenticated state,IN_PROGRESS
 source/lib/page/toolbox/toolbox_page.dart,entry/src/main/cangjie/aligned_home_page.cj,ToolBoxPage,AlignedToolboxPage,Seven source URLs list rows and ArkWeb opening boundary,IN_PROGRESS
 source/lib/page/pig/pig_page.dart,entry/src/main/cangjie/aligned_home_page.cj,PigPage,AlignedPigPage,Pig gallery header image-state actions and honest unavailable-data state,IN_PROGRESS

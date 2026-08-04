@@ -4,6 +4,7 @@ import kit.ArkUI.*
 import kit.ArkWeb.*
 import ohos.arkui.state_macro_manage.*
 import ohos.business_exception.*
+import ohos.resource.*
 
 @Component
 public class AlignedHomePage {
@@ -60,33 +61,34 @@ public class AlignedHomePage {
                 }
             }.width(100.percent).layoutWeight(1)
             Row {
-                Column {
-                    Text("◉").fontSize(21.vp).fontColor(if (this.selected == 0) { 0xFF253A5E } else { 0xFF526070 })
-                        .width(56.vp).height(32.vp).textAlign(TextAlign.Center).backgroundColor(if (this.selected == 0) { 0xFFD0E4FF } else { 0x00FFFFFF }).borderRadius(18.vp)
-                    Text("校园信息").fontSize(11.vp).fontWeight(if (this.selected == 0) { FontWeight.Bold } else { FontWeight.Normal }).margin(top: 2.vp)
-                }.layoutWeight(1).height(68.vp).justifyContent(FlexAlign.Center).onClick({ _ => this.selectPage(0) }).id("navTo_home")
-                Column {
-                    Text("▣").fontSize(21.vp).fontColor(if (this.selected == 1) { 0xFF253A5E } else { 0xFF526070 })
-                        .width(56.vp).height(32.vp).textAlign(TextAlign.Center).backgroundColor(if (this.selected == 1) { 0xFFD0E4FF } else { 0x00FFFFFF }).borderRadius(18.vp)
-                    Text("睿思论坛").fontSize(11.vp).fontWeight(if (this.selected == 1) { FontWeight.Bold } else { FontWeight.Normal }).margin(top: 2.vp)
-                }.layoutWeight(1).height(68.vp).justifyContent(FlexAlign.Center).onClick({ _ => this.selectPage(1) }).id("navTo_ruisi")
-                Column {
-                    Text("⚒").fontSize(21.vp).fontColor(if (this.selected == 2) { 0xFF253A5E } else { 0xFF526070 })
-                        .width(56.vp).height(32.vp).textAlign(TextAlign.Center).backgroundColor(if (this.selected == 2) { 0xFFD0E4FF } else { 0x00FFFFFF }).borderRadius(18.vp)
-                    Text("工具箱").fontSize(11.vp).fontWeight(if (this.selected == 2) { FontWeight.Bold } else { FontWeight.Normal }).margin(top: 2.vp)
-                }.layoutWeight(1).height(68.vp).justifyContent(FlexAlign.Center).onClick({ _ => this.selectPage(2) }).id("navTo_toolbox")
-                Column {
-                    Text("♥").fontSize(21.vp).fontColor(if (this.selected == 3) { 0xFF253A5E } else { 0xFF526070 })
-                        .width(56.vp).height(32.vp).textAlign(TextAlign.Center).backgroundColor(if (this.selected == 3) { 0xFFD0E4FF } else { 0x00FFFFFF }).borderRadius(18.vp)
-                    Text("猪图鉴赏").fontSize(11.vp).fontWeight(if (this.selected == 3) { FontWeight.Bold } else { FontWeight.Normal }).margin(top: 2.vp)
-                }.layoutWeight(1).height(68.vp).justifyContent(FlexAlign.Center).onClick({ _ => this.selectPage(3) }).id("navTo_pig")
-                Column {
-                    Text("●").fontSize(21.vp).fontColor(if (this.selected == 4) { 0xFF253A5E } else { 0xFF526070 })
-                        .width(56.vp).height(32.vp).textAlign(TextAlign.Center).backgroundColor(if (this.selected == 4) { 0xFFD0E4FF } else { 0x00FFFFFF }).borderRadius(18.vp)
-                    Text("设置").fontSize(11.vp).fontWeight(if (this.selected == 4) { FontWeight.Bold } else { FontWeight.Normal }).margin(top: 2.vp)
-                }.layoutWeight(1).height(68.vp).justifyContent(FlexAlign.Center).onClick({ _ => this.selectPage(4) }).id("navTo_settings")
-            }.width(100.percent).height(76.vp).padding(left: 4.vp, right: 4.vp, top: 4.vp, bottom: 4.vp).backgroundColor(0xFFF1F4F9).border(width: 1.vp, color: 0xFFE1E5EC)
-        }.width(100.percent).height(100.percent).backgroundColor(0xFFF8FAFD)
+                AlignedNavItem(icon: @r(app.media.nav_school), label: "校園信息", selected: this.selected == 0, onTap: { => this.selectPage(0) }, stableId: "navTo_home")
+                AlignedNavItem(icon: @r(app.media.nav_forum), label: "睿思論壇", selected: this.selected == 1, onTap: { => this.selectPage(1) }, stableId: "navTo_ruisi")
+                AlignedNavItem(icon: @r(app.media.nav_tools), label: "其他功能", selected: this.selected == 2, onTap: { => this.selectPage(2) }, stableId: "navTo_toolbox")
+                AlignedNavItem(icon: @r(app.media.nav_pig), label: "豬圖鑑賞", selected: this.selected == 3, onTap: { => this.selectPage(3) }, stableId: "navTo_pig")
+                AlignedNavItem(icon: @r(app.media.nav_user), label: "設置", selected: this.selected == 4, onTap: { => this.selectPage(4) }, stableId: "navTo_settings")
+            }.width(100.percent).height(88.vp).padding(left: 3.vp, right: 3.vp, top: 5.vp, bottom: 3.vp)
+                .backgroundColor(0xFFF3F3FB).border(width: 1.vp, color: 0xFFE1E1EA)
+        }.width(100.percent).height(100.percent).backgroundColor(0xFFFAF9FF)
+    }
+}
+
+@Component
+class AlignedNavItem {
+    let icon: AppResource
+    let label: String
+    let selected: Bool
+    let onTap: () -> Unit
+    let stableId: String
+    func build() {
+        Column {
+            Row {
+                Image(this.icon).width(25.vp).height(25.vp).objectFit(ImageFit.Contain)
+                    .fillColor(if (this.selected) { 0xFFFFFFFF } else { 0xFF4D515B })
+            }.width(58.vp).height(34.vp).justifyContent(FlexAlign.Center)
+                .backgroundColor(if (this.selected) { 0xFF476FA9 } else { 0x00FFFFFF }).borderRadius(17.vp)
+            Text(this.label).fontSize(12.vp).fontColor(if (this.selected) { 0xFF41699F } else { 0xFF3F434C })
+                .fontWeight(if (this.selected) { FontWeight.Medium } else { FontWeight.Normal }).margin(top: 4.vp)
+        }.layoutWeight(1).height(78.vp).justifyContent(FlexAlign.Center).onClick({ _ => this.onTap() }).id(this.stableId)
     }
 }
 
@@ -102,79 +104,95 @@ class AlignedCampusPage {
     let onSchoolnet: () -> Unit
     let onDormWater: () -> Unit
     @State var editMode: Bool = false
+    @State var schoolCardNotice: Bool = false
 
     func build() {
         Column {
             Row {
-                Text("校园信息查询").fontSize(22.vp).fontWeight(FontWeight.Bold).layoutWeight(1)
-                Text(if (this.editMode) { "完成" } else { "编辑" }).fontSize(14.vp).fontColor(0xFF3F5F90)
-                    .padding(10.vp).onClick({ _ => this.editMode = !this.editMode }).id("homeEditLayout")
-            }.width(100.percent).height(58.vp).padding(left: 18.vp, right: 10.vp)
-            if (this.previewMode) {
-                Text("Mock UI 预览：未登录，页面数据不代表真实账号。").width(100.percent).fontSize(12.vp).fontColor(0xFF6B4B00)
-                    .padding(left: 16.vp, right: 16.vp, top: 9.vp, bottom: 9.vp).backgroundColor(0xFFFFF3CD).id("mockPreviewBanner")
-            }
+                Text("校園信息查詢").fontSize(22.vp).fontWeight(FontWeight.Medium).fontColor(0xFF202229).layoutWeight(1)
+                Image(if (this.editMode) { @r(app.media.action_check) } else { @r(app.media.action_edit) })
+                    .width(24.vp).height(24.vp).fillColor(0xFF3E424B).padding(6.vp)
+                    .onClick({ _ => this.editMode = !this.editMode }).id("homeEditLayout")
+            }.width(100.percent).height(58.vp).padding(left: 20.vp, right: 17.vp)
             Scroll {
                 Column {
                     Column {
-                        Row { Text("应用信息").fontSize(14.vp).fontWeight(FontWeight.Bold).fontColor(0xFFFFFFFF).layoutWeight(1); Text("刷新").fontSize(12.vp).fontColor(0xFFFFFFFF) }
-                            .width(100.percent).padding(left: 16.vp, right: 16.vp, top: 12.vp, bottom: 10.vp).backgroundColor(0xFF3F5F90)
-                        Text("目前没有获取应用公告，请刷新").width(100.percent).fontSize(14.vp).padding(16.vp)
-                    }.width(100.percent).backgroundColor(0xFFFFFFFF).borderRadius(14.vp).clip(true).id("homeNoticeCard")
+                        Text("目前您正在運行測試版").fontSize(14.vp).fontColor(0xFF454953)
+                    }.width(100.percent).height(40.vp).justifyContent(FlexAlign.Center).backgroundColor(0xFFF6F6FE)
+                        .border(width: 1.vp, color: 0xFFDDDDE7).borderRadius(14.vp).id("mockPreviewBanner")
                     Column {
-                        Row { Text("课程表").fontSize(14.vp).fontWeight(FontWeight.Bold).fontColor(0xFFFFFFFF).layoutWeight(1); Text("暂无日程").fontSize(12.vp).fontColor(0xFFFFFFFF) }
-                            .width(100.percent).padding(left: 16.vp, right: 16.vp, top: 12.vp, bottom: 10.vp).backgroundColor(0xFF3F5F90)
-                        Row { Text("今日课程与日程").fontSize(16.vp).layoutWeight(1); Text("第 1 周  ›").fontSize(13.vp).fontColor(0xFF526070) }.width(100.percent).padding(16.vp)
-                    }.width(100.percent).margin(top: 10.vp).backgroundColor(0xFFFFFFFF).borderRadius(14.vp).clip(true).onClick({ _ => this.onSchedule() }).id("homeScheduleCard")
-                    AlignedInfoCard(icon: "⚡", title: "水电信息", value: "正在获取信息", note: "查看宿舍电量与用水记录", onTap: this.onDormWater)
-                    AlignedInfoCard(icon: "▤", title: "图书借阅", value: "正在查询信息", note: "查看借阅到期时间与馆藏", onTap: this.onLibrary)
+                        Row {
+                            Text("部分加載中").fontSize(12.vp).fontWeight(FontWeight.Bold).fontColor(0xFFD6E4FF)
+                                .padding(left: 15.vp, right: 15.vp, top: 8.vp, bottom: 8.vp).backgroundColor(0xFF476FA9).borderRadius(12.vp)
+                            Text("其他實驗加載失敗").fontSize(12.vp).fontWeight(FontWeight.Bold).fontColor(0xFFFFFFFF)
+                                .padding(left: 15.vp, right: 15.vp, top: 8.vp, bottom: 8.vp).margin(left: 9.vp).backgroundColor(0xFFD51F1F).borderRadius(12.vp)
+                        }.width(100.percent).height(48.vp).justifyContent(FlexAlign.Center)
+                        Row {
+                            Image(@r(app.media.home_calendar)).width(30.vp).height(30.vp).fillColor(0xFF41699F).margin(left: 16.vp, right: 15.vp)
+                            Column {
+                                Text("今日安排完成").fontSize(20.vp).fontColor(0xFF474B55)
+                                Text("正在加載").fontSize(13.vp).fontColor(0xFF454953).margin(top: 1.vp)
+                            }.layoutWeight(1).alignItems(HorizontalAlign.Start)
+                        }.width(100.percent).height(55.vp).onClick({ _ => this.onSchedule() })
+                        Text("正在加載日程").width(100.percent).height(34.vp).textAlign(TextAlign.Center).fontSize(14.vp).fontWeight(FontWeight.Medium)
+                            .fontColor(0xFF41699F).backgroundColor(0xFFE1E7F4).borderRadius(8.vp).margin(left: 14.vp, right: 14.vp, bottom: 11.vp)
+                    }.width(100.percent).height(148.vp).margin(top: 10.vp).backgroundColor(0xFFF6F6FE)
+                        .border(width: 1.vp, color: 0xFFDDDDE7).borderRadius(14.vp).id("homeScheduleCard")
+                    AlignedInfoCard(icon: @r(app.media.home_flash), value: "電量查詢失敗", note: "欠費查詢網絡故障", showQr: false, onTap: this.onDormWater)
+                    AlignedInfoCard(icon: @r(app.media.home_book), value: if (this.previewMode) { "借書 1 本" } else { "正在獲取借書信息" }, note: if (this.previewMode) { "待歸還 1 本書籍" } else { "正在查詢信息中" }, showQr: false, onTap: this.onLibrary)
+                    AlignedInfoCard(icon: @r(app.media.home_wallet), value: if (this.previewMode) { "卡里 0.00 元" } else { "正在獲取校園卡信息" }, note: if (this.schoolCardNotice) { "校園卡流水功能尚未接通" } else { "查詢一卡通流水" }, showQr: true, onTap: { => this.schoolCardNotice = true })
                     Row {
-                        AlignedSmallCard(icon: "A+", title: "成绩查询", onTap: this.onScore)
-                        AlignedSmallCard(icon: "日", title: "考试安排", onTap: this.onExam)
-                        AlignedSmallCard(icon: "室", title: "空闲教室", onTap: this.onEmptyClassroom)
-                        AlignedSmallCard(icon: "签", title: "考勤查询", onTap: this.onAttendance)
-                    }.width(100.percent).height(92.vp).margin(top: 10.vp)
+                        AlignedSmallCard(icon: @r(app.media.home_score), title: "成績查詢", onTap: this.onScore)
+                        AlignedSmallCard(icon: @r(app.media.home_exam), title: "考試安排", onTap: this.onExam)
+                        AlignedSmallCard(icon: @r(app.media.home_room), title: "空閒教室", onTap: this.onEmptyClassroom)
+                        AlignedSmallCard(icon: @r(app.media.home_attendance), title: "考勤查詢", onTap: this.onAttendance)
+                    }.width(100.percent).height(78.vp).margin(top: 8.vp)
                     Row {
-                        AlignedSmallCard(icon: "Wi", title: "校园网", onTap: this.onSchoolnet)
-                        AlignedSmallCard(icon: "水", title: "宿舍水机", onTap: this.onDormWater)
-                        AlignedSmallCard(icon: "实", title: "实验信息", onTap: { => () })
-                        AlignedSmallCard(icon: "体", title: "体育信息", onTap: { => () })
-                    }.width(100.percent).height(92.vp).margin(top: 8.vp)
-                    if (this.editMode) { Text("按住卡片可调整布局，点击完成保存。").width(100.percent).textAlign(TextAlign.Center).fontSize(12.vp).fontColor(0xFF526070).margin(top: 12.vp) }
+                        AlignedSmallCard(icon: @r(app.media.home_network), title: "網絡查詢", onTap: this.onSchoolnet)
+                        AlignedSmallCard(icon: @r(app.media.home_water), title: "宿舍水機", onTap: this.onDormWater)
+                        AlignedSmallCard(icon: @r(app.media.home_experiment), title: "實驗信息", onTap: { => this.editMode = false })
+                        AlignedSmallCard(icon: @r(app.media.home_sport), title: "體育信息", onTap: { => this.editMode = false })
+                    }.width(100.percent).height(78.vp).margin(top: 8.vp)
+                    if (this.editMode) { Text("日程信息和軟件升級信息不允許編輯").width(100.percent).textAlign(TextAlign.Center).fontSize(12.vp).fontColor(0xFF526070).margin(top: 10.vp) }
                     Blank().height(20.vp)
-                }.width(100.percent).padding(left: 10.vp, right: 10.vp, top: 8.vp).alignItems(HorizontalAlign.Start)
+                }.width(100.percent).padding(left: 16.vp, right: 16.vp, top: 11.vp).alignItems(HorizontalAlign.Start)
             }.width(100.percent).layoutWeight(1).align(Alignment.TopStart)
-        }.width(100.percent).height(100.percent)
+        }.width(100.percent).height(100.percent).backgroundColor(0xFFFAF9FF)
     }
 }
 
 @Component
 class AlignedInfoCard {
-    let icon: String
-    let title: String
+    let icon: AppResource
     let value: String
     let note: String
+    let showQr: Bool
     let onTap: () -> Unit
     func build() {
         Row {
-            Text(this.icon).width(42.vp).fontSize(27.vp).fontColor(0xFF3F5F90).textAlign(TextAlign.Center)
-            Column { Text(this.value).fontSize(17.vp).fontWeight(FontWeight.Bold); Text(this.note).fontSize(12.vp).fontColor(0xFF526070).margin(top: 5.vp) }
+            Image(this.icon).width(30.vp).height(30.vp).fillColor(0xFF41699F).margin(left: 14.vp, right: 17.vp)
+            Column { Text(this.value).fontSize(19.vp).fontColor(0xFF474B55); Text(this.note).fontSize(13.vp).fontColor(0xFF454953).margin(top: 3.vp) }
                 .layoutWeight(1).alignItems(HorizontalAlign.Start)
-            Text("›").fontSize(24.vp).fontColor(0xFF7B8492)
-        }.width(100.percent).height(82.vp).padding(left: 12.vp, right: 14.vp).margin(top: 10.vp).backgroundColor(0xFFFFFFFF).borderRadius(14.vp).onClick({ _ => this.onTap() })
+            if (this.showQr) {
+                Row { Image(@r(app.media.home_qr)).width(19.vp).height(19.vp).fillColor(0xFF4D5565) }
+                    .width(40.vp).height(40.vp).justifyContent(FlexAlign.Center).backgroundColor(0xFFF1F4FD).borderRadius(20.vp)
+            }
+        }.width(100.percent).height(68.vp).padding(right: 14.vp).margin(top: 8.vp).backgroundColor(0xFFF6F6FE)
+            .border(width: 1.vp, color: 0xFFDDDDE7).borderRadius(14.vp).onClick({ _ => this.onTap() })
     }
 }
 
 @Component
 class AlignedSmallCard {
-    let icon: String
+    let icon: AppResource
     let title: String
     let onTap: () -> Unit
     func build() {
         Column {
-            Text(this.icon).fontSize(20.vp).fontWeight(FontWeight.Bold).fontColor(0xFF3F5F90)
-            Text(this.title).fontSize(11.vp).margin(top: 8.vp).textAlign(TextAlign.Center)
-        }.layoutWeight(1).height(92.vp).margin(left: 3.vp, right: 3.vp).justifyContent(FlexAlign.Center).backgroundColor(0xFFFFFFFF).borderRadius(13.vp).onClick({ _ => this.onTap() })
+            Image(this.icon).width(29.vp).height(29.vp).fillColor(0xFF41699F)
+            Text(this.title).fontSize(12.vp).fontColor(0xFF3F434C).margin(top: 6.vp).textAlign(TextAlign.Center)
+        }.layoutWeight(1).height(78.vp).margin(left: 3.vp, right: 3.vp).justifyContent(FlexAlign.Center).backgroundColor(0xFFF6F6FE)
+            .border(width: 1.vp, color: 0xFFDDDDE7).borderRadius(13.vp).onClick({ _ => this.onTap() })
     }
 }
 
