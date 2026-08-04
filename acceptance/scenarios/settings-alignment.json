@@ -1,0 +1,21 @@
+{
+  "name": "XDYou settings reference alignment",
+  "description": "Enter local preview, open settings, capture the reference-aligned first screen, then scroll through every settings group.",
+  "steps": [
+    {"action": "click", "target": {"key": "mockHomePreviewButton"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "navTo_settings"}, "wait_after": 1},
+    {"action": "snapshot", "label": "01-settings-top"},
+    {"action": "swipe", "from": {"x": 660, "y": 2200}, "to": {"x": 660, "y": 500}, "speed": 800, "wait_after": 1},
+    {"action": "snapshot", "label": "02-settings-middle"},
+    {"action": "swipe", "from": {"x": 660, "y": 2200}, "to": {"x": 660, "y": 500}, "speed": 800, "wait_after": 1},
+    {"action": "snapshot", "label": "03-settings-lower"},
+    {"action": "swipe", "from": {"x": 660, "y": 2200}, "to": {"x": 660, "y": 500}, "speed": 800, "wait_after": 1},
+    {"action": "snapshot", "label": "04-settings-bottom"}
+  ],
+  "assertions": [
+    {"type": "exists", "target": {"text": "緩存登錄設置"}, "message": "The final settings group should be reachable by scrolling"},
+    {"type": "exists", "target": {"text": "退出登錄並重啟應用"}, "message": "The real logout action should remain present"},
+    {"type": "exists", "target": {"key": "navTo_settings"}, "message": "The fixed selected settings navigation item should remain visible"},
+    {"type": "page_changed", "message": "Opening and scrolling settings should change the page state"}
+  ]
+}

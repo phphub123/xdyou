@@ -382,29 +382,147 @@ class AlignedPigPage {
 class AlignedSettingsPage {
     let account: String
     let onLogout: () -> Unit
-    @State var theme: String = "跟随系统"
-    @State var timeline: Bool = true
+    @State var theme: String = "跟隨系統"
+    @State var colorName: String = "默認顏色"
+    @State var timeline: Bool = false
+    @State var lowElectricityWarning: Bool = true
+    @State var lowElectricityThreshold: String = "20"
+    @State var language: String = "繁體中文"
+    @State var semester: String = "使用學期"
+    @State var migrationHint: String = ""
+
+    protected override func aboutToAppear(): Unit {
+        let store = SessionStore()
+        this.theme = match (store.restoreTheme()) {
+            case "Light" => "白天模式"
+            case "Dark" => "黑夜模式"
+            case _ => "跟隨系統"
+        }
+        let storedColor = store.restoreSetting("color", defaultValue: "默認顏色")
+        this.colorName = match (storedColor) {
+            case "默认颜色" => "默認顏色"
+            case "聪明蓝" => "聰明藍"
+            case "春风绿" => "春風綠"
+            case _ => storedColor
+        }
+        this.timeline = store.restoreSetting("timeline", defaultValue: "关闭") == "开启"
+        this.lowElectricityWarning = store.restoreSetting("lowElectricityEnabled", defaultValue: "开启") == "开启"
+        this.lowElectricityThreshold = store.restoreSetting("lowElectricity", defaultValue: "20")
+        this.language = "繁體中文"
+        store.saveDisplaySettings("Traditional Chinese", store.restoreTheme())
+        this.semester = store.restoreSetting("semester", defaultValue: "使用學期")
+    }
+
+    func saveTheme(value: String): Unit {
+        this.theme = value
+        let stored = if (value == "白天模式") { "Light" } else if (value == "黑夜模式") { "Dark" } else { "System" }
+        SessionStore().saveDisplaySettings(this.storedLanguage(), stored)
+    }
+
+    func storedLanguage(): String {
+        return if (this.language == "繁體中文") { "Traditional Chinese" } else if (this.language == "English") { "English" } else { "Chinese" }
+    }
+
+    func toggleTimeline(value: Bool): Unit {
+        this.timeline = value
+        SessionStore().saveSetting("timeline", if (value) { "开启" } else { "关闭" })
+    }
+
+    func toggleLowElectricity(value: Bool): Unit {
+        this.lowElectricityWarning = value
+        SessionStore().saveSetting("lowElectricityEnabled", if (value) { "开启" } else { "关闭" })
+    }
+
+    func cycleColor(): Unit {
+        this.colorName = if (this.colorName == "默認顏色") { "聰明藍" } else if (this.colorName == "聰明藍") { "春風綠" } else if (this.colorName == "春風綠") { "明日香橙" } else { "默認顏色" }
+        SessionStore().saveSetting("color", this.colorName)
+    }
+
+    func cycleLanguage(): Unit {
+        this.language = if (this.language == "繁體中文") { "English" } else if (this.language == "English") { "簡體中文" } else { "繁體中文" }
+        SessionStore().saveDisplaySettings(this.storedLanguage(), if (this.theme == "白天模式") { "Light" } else if (this.theme == "黑夜模式") { "Dark" } else { "System" })
+    }
+
+    func cycleThreshold(): Unit {
+        this.lowElectricityThreshold = if (this.lowElectricityThreshold == "20") { "15" } else if (this.lowElectricityThreshold == "15") { "10" } else { "20" }
+        SessionStore().saveSetting("lowElectricity", this.lowElectricityThreshold)
+    }
+
+    func unavailable(name: String): Unit {
+        this.migrationHint = "${name}功能遷移中"
+    }
+
     func build() {
         Column {
-            Scroll { Column {
-                Text("XDYou").fontSize(22.vp).fontWeight(FontWeight.Bold)
-                Text("Written by BenderBlog Rodriguez and contributors").fontSize(12.vp).fontColor(0xFF526070).margin(top: 4.vp)
-                Text("关于").width(100.percent).textAlign(TextAlign.Center).fontSize(14.vp).fontWeight(FontWeight.Bold).fontColor(0xFFFFFFFF).padding(10.vp).margin(top: 20.vp).backgroundColor(0xFF3F5F90).borderRadius(topLeft: 14.vp, topRight: 14.vp)
-                AlignedSettingRow(title: "关于本程序", subtitle: "XDYou 仓颉 HarmonyOS 原生版", value: "›", onTap: { => () })
-                AlignedSettingRow(title: "检查更新", subtitle: "当前版本 1.0.0", value: "›", onTap: { => () })
-                Text("界面设置").width(100.percent).textAlign(TextAlign.Center).fontSize(14.vp).fontWeight(FontWeight.Bold).fontColor(0xFFFFFFFF).padding(10.vp).margin(top: 14.vp).backgroundColor(0xFF3F5F90).borderRadius(topLeft: 14.vp, topRight: 14.vp)
-                AlignedSettingRow(title: "主题配色", subtitle: "默认蓝色", value: "›", onTap: { => () })
-                AlignedSettingRow(title: "亮度设置", subtitle: this.theme, value: "日 夜", onTap: { => this.theme = if (this.theme == "跟随系统") { "浅色" } else if (this.theme == "浅色") { "深色" } else { "跟随系统" } })
-                AlignedSettingRow(title: "简化课程时间轴", subtitle: "精简显示课程节次", value: if (this.timeline) { "开" } else { "关" }, onTap: { => this.timeline = !this.timeline })
-                Text("课程表设置").width(100.percent).textAlign(TextAlign.Center).fontSize(14.vp).fontWeight(FontWeight.Bold).fontColor(0xFFFFFFFF).padding(10.vp).margin(top: 14.vp).backgroundColor(0xFF3F5F90).borderRadius(topLeft: 14.vp, topRight: 14.vp)
-                AlignedSettingRow(title: "切换学期", subtitle: "当前学期 2026-1", value: "›", onTap: { => () })
-                AlignedSettingRow(title: "上课提醒", subtitle: "通知与系统日历设置", value: "›", onTap: { => () })
-                Text("账户与数据").width(100.percent).textAlign(TextAlign.Center).fontSize(14.vp).fontWeight(FontWeight.Bold).fontColor(0xFFFFFFFF).padding(10.vp).margin(top: 14.vp).backgroundColor(0xFF3F5F90).borderRadius(topLeft: 14.vp, topRight: 14.vp)
-                AlignedSettingRow(title: "当前账号", subtitle: this.account, value: "", onTap: { => () })
-                AlignedSettingRow(title: "退出登录", subtitle: "清除本地会话信息", value: "›", onTap: this.onLogout)
-                Blank().height(22.vp)
-            }.width(100.percent).padding(left: 16.vp, right: 16.vp, top: 18.vp).alignItems(HorizontalAlign.Start) }.width(100.percent).height(100.percent).align(Alignment.TopStart)
-        }.width(100.percent).height(100.percent)
+            Scroll {
+                Column {
+                    AlignedSettingsSectionHeader(title: "關於")
+                    Column {
+                        AlignedSettingRow(title: "關於本程序", subtitle: "版本號：1.0.0+1", showDivider: true, onTap: { => this.unavailable("關於本程序") })
+                        AlignedSettingRow(title: "檢查軟件更新", subtitle: "最新版本：等待獲取", showDivider: false, onTap: { => this.unavailable("軟件更新") })
+                    }.width(100.percent).backgroundColor(0xFFF7F7FF).borderRadius(bottomLeft: 14.vp, bottomRight: 14.vp)
+
+                    Column {
+                        AlignedSettingsSectionHeader(title: "界面設置")
+                        Column {
+                            AlignedSettingRow(title: "顏色設置", subtitle: this.colorName, showDivider: true, onTap: { => this.cycleColor() })
+                            AlignedBrightnessRow(theme: this.theme, onSystem: { => this.saveTheme("跟隨系統") }, onLight: { => this.saveTheme("白天模式") }, onDark: { => this.saveTheme("黑夜模式") })
+                            AlignedSettingToggleRow(title: "簡化日程時間軸", subtitle: "沒有日程時 減少空間佔用", isOn: this.timeline, showDivider: true, stableId: "settingsTimelineToggle", onChange: { value => this.toggleTimeline(value) })
+                            AlignedSettingToggleRow(title: "低電量卡片變色提醒", subtitle: "電量小於閾值時 電量卡片變色提醒", isOn: this.lowElectricityWarning, showDivider: true, stableId: "settingsLowElectricityToggle", onChange: { value => this.toggleLowElectricity(value) })
+                            AlignedSettingRow(title: "低電量閾值", subtitle: "目前為 ${this.lowElectricityThreshold} 度", showDivider: true, onTap: { => this.cycleThreshold() })
+                            AlignedSettingRow(title: "修改語言", subtitle: this.language, showDivider: false, onTap: { => this.cycleLanguage() })
+                        }.width(100.percent).backgroundColor(0xFFF7F7FF).borderRadius(bottomLeft: 14.vp, bottomRight: 14.vp)
+                    }.width(100.percent).margin(top: 8.vp)
+
+                    Column {
+                        AlignedSettingsSectionHeader(title: "賬號設置")
+                        Column {
+                            AlignedSettingRow(title: "體育系統密碼設置", subtitle: "", showDivider: true, onTap: { => this.unavailable("體育系統密碼設置") })
+                            AlignedSettingRow(title: "物理實驗系統密碼設置", subtitle: "", showDivider: true, onTap: { => this.unavailable("物理實驗系統密碼設置") })
+                            AlignedSettingRow(title: "校園網帳號密碼設置", subtitle: "不設置查看不了網費", showDivider: true, onTap: { => this.unavailable("校園網帳號密碼設置") })
+                            AlignedSettingRow(title: "空調用電數據源", subtitle: "未設置，電費頁不顯示空調用電", showDivider: false, onTap: { => this.unavailable("空調用電數據源") })
+                        }.width(100.percent).backgroundColor(0xFFF7F7FF).borderRadius(bottomLeft: 14.vp, bottomRight: 14.vp)
+                    }.width(100.percent).margin(top: 8.vp)
+
+                    Column {
+                        AlignedSettingsSectionHeader(title: "課表相關設置")
+                        Column {
+                            AlignedSettingToggleRow(title: "開啟課表背景圖", subtitle: "", isOn: false, showDivider: true, stableId: "settingsBackgroundToggle", onChange: { _: Bool => this.unavailable("課表背景圖") })
+                            AlignedSettingRow(title: "課表背景圖選擇", subtitle: "", showDivider: true, onTap: { => this.unavailable("課表背景圖選擇") })
+                            AlignedSettingRow(title: "清除所有用戶添加課程", subtitle: "", showDivider: true, onTap: { => this.unavailable("清除用戶課程") })
+                            AlignedSettingRow(title: "強制刷新課表", subtitle: "", showDivider: true, onTap: { => this.unavailable("強制刷新課表") })
+                            AlignedSettingRow(title: "課程偏移設置", subtitle: "正數錯後開學日期 負數提前開學日期\n目前為 0", showDivider: true, onTap: { => this.unavailable("課程偏移設置") })
+                            AlignedSettingRow(title: "修改學期", subtitle: this.semester, showDivider: false, onTap: { => this.unavailable("修改學期") })
+                        }.width(100.percent).backgroundColor(0xFFF7F7FF).borderRadius(bottomLeft: 14.vp, bottomRight: 14.vp)
+                    }.width(100.percent).margin(top: 8.vp)
+
+                    Column {
+                        AlignedSettingsSectionHeader(title: "緩存登錄設置")
+                        Column {
+                            AlignedSettingRow(title: "查看網絡攔截器和日誌", subtitle: "", showDivider: true, onTap: { => this.unavailable("日誌查看") })
+                            AlignedSettingRow(title: "清除緩存後重啟", subtitle: "", showDivider: true, onTap: { => this.unavailable("緩存清理") })
+                            AlignedSettingRow(title: "退出登錄並重啟應用", subtitle: "", showDivider: false, onTap: this.onLogout)
+                        }.width(100.percent).backgroundColor(0xFFF7F7FF).borderRadius(bottomLeft: 14.vp, bottomRight: 14.vp)
+                    }.width(100.percent).margin(top: 8.vp)
+                    if (this.migrationHint != "") {
+                        Text(this.migrationHint).width(100.percent).textAlign(TextAlign.Center).fontSize(12.vp).fontColor(0xFF5B6370)
+                            .padding(top: 10.vp, bottom: 10.vp).id("settingsMigrationHint")
+                    }
+                    Blank().height(12.vp)
+                }.width(100.percent).padding(left: 17.vp, right: 17.vp).alignItems(HorizontalAlign.Start)
+            }.width(100.percent).height(100.percent).align(Alignment.TopStart)
+        }.width(100.percent).height(100.percent).backgroundColor(0xFFFFFFFF)
+    }
+}
+
+@Component
+class AlignedSettingsSectionHeader {
+    let title: String
+    func build() {
+        Row {
+            Text(this.title).fontSize(16.vp).fontWeight(FontWeight.Bold).fontColor(0xFFFFFFFF)
+        }.width(100.percent).height(44.vp).justifyContent(FlexAlign.Center).backgroundColor(0xFF476FA9)
+            .borderRadius(topLeft: 14.vp, topRight: 14.vp)
     }
 }
 
@@ -412,12 +530,72 @@ class AlignedSettingsPage {
 class AlignedSettingRow {
     let title: String
     let subtitle: String
-    let value: String
+    let showDivider: Bool
     let onTap: () -> Unit
     func build() {
-        Row {
-            Column { Text(this.title).fontSize(15.vp).fontWeight(FontWeight.Bold); Text(this.subtitle).fontSize(12.vp).fontColor(0xFF526070).margin(top: 5.vp) }.layoutWeight(1).alignItems(HorizontalAlign.Start)
-            Text(this.value).fontSize(14.vp).fontColor(0xFF3F5F90)
-        }.width(100.percent).height(68.vp).padding(left: 16.vp, right: 16.vp).backgroundColor(0xFFFFFFFF).border(width: 1.vp, color: 0xFFE8EBF0).onClick({ _ => this.onTap() })
+        Column {
+            Row {
+                Column {
+                    Text(this.title).fontSize(16.vp).fontColor(0xFF202229)
+                    if (this.subtitle != "") { Text(this.subtitle).fontSize(14.vp).fontColor(0xFF565C67).margin(top: 3.vp) }
+                }.layoutWeight(1).alignItems(HorizontalAlign.Start)
+                Text("›").fontSize(30.vp).fontColor(0xFF4F5662).margin(left: 8.vp)
+            }.width(100.percent).height(if (this.subtitle.contains("\n")) { 94.vp } else { 82.vp }).padding(left: 20.vp, right: 28.vp)
+                .onClick({ _ => this.onTap() })
+            if (this.showDivider) { Divider().color(0xFFD9DAE2).strokeWidth(1.vp).margin(left: 14.vp, right: 14.vp) }
+        }.width(100.percent)
+    }
+}
+
+@Component
+class AlignedSettingToggleRow {
+    let title: String
+    let subtitle: String
+    let isOn: Bool
+    let showDivider: Bool
+    let stableId: String
+    let onChange: (Bool) -> Unit
+    func build() {
+        Column {
+            Row {
+                Column {
+                    Text(this.title).fontSize(16.vp).fontColor(0xFF202229)
+                    if (this.subtitle != "") { Text(this.subtitle).fontSize(14.vp).fontColor(0xFF565C67).margin(top: 3.vp) }
+                }.layoutWeight(1).alignItems(HorizontalAlign.Start)
+                Toggle(ToggleType.Switch, isOn: this.isOn).width(56.vp).height(34.vp).selectedColor(0xFF476FA9)
+                    .switchPointColor(0xFFFFFFFF).onChange({ value => this.onChange(value) }).margin(left: 10.vp, right: 18.vp).id(this.stableId)
+            }.width(100.percent).height(82.vp).padding(left: 20.vp)
+            if (this.showDivider) { Divider().color(0xFFD9DAE2).strokeWidth(1.vp).margin(left: 14.vp, right: 14.vp) }
+        }.width(100.percent)
+    }
+}
+
+@Component
+class AlignedBrightnessRow {
+    let theme: String
+    let onSystem: () -> Unit
+    let onLight: () -> Unit
+    let onDark: () -> Unit
+    func build() {
+        Column {
+            Row {
+                Column {
+                    Text("設置深淺色").fontSize(16.vp).fontColor(0xFF202229)
+                    Text(this.theme).fontSize(14.vp).fontColor(0xFF565C67).margin(top: 3.vp)
+                }.layoutWeight(1).alignItems(HorizontalAlign.Start)
+                Row {
+                    Text("▯").width(38.vp).height(38.vp).textAlign(TextAlign.Center).fontSize(21.vp)
+                        .fontColor(if (this.theme == "跟隨系統") { 0xFFFFFFFF } else { 0xFF476FA9 })
+                        .backgroundColor(if (this.theme == "跟隨系統") { 0xFF476FA9 } else { 0xFFF7F7FF }).onClick({ _ => this.onSystem() }).id("settingsThemeSystem")
+                    Text("☼").width(38.vp).height(38.vp).textAlign(TextAlign.Center).fontSize(20.vp)
+                        .fontColor(if (this.theme == "白天模式") { 0xFFFFFFFF } else { 0xFF476FA9 })
+                        .backgroundColor(if (this.theme == "白天模式") { 0xFF476FA9 } else { 0xFFF7F7FF }).onClick({ _ => this.onLight() }).id("settingsThemeLight")
+                    Text("◕").width(38.vp).height(38.vp).textAlign(TextAlign.Center).fontSize(18.vp)
+                        .fontColor(if (this.theme == "黑夜模式") { 0xFFFFFFFF } else { 0xFF476FA9 })
+                        .backgroundColor(if (this.theme == "黑夜模式") { 0xFF476FA9 } else { 0xFFF7F7FF }).onClick({ _ => this.onDark() }).id("settingsThemeDark")
+                }.height(38.vp).border(width: 1.vp, color: 0xFF476FA9).borderRadius(19.vp).clip(true).margin(right: 18.vp)
+            }.width(100.percent).height(82.vp).padding(left: 20.vp)
+            Divider().color(0xFFD9DAE2).strokeWidth(1.vp).margin(left: 14.vp, right: 14.vp)
+        }.width(100.percent)
     }
 }

@@ -49,6 +49,15 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Preserved the seven real source URLs and ArkWeb opening boundary; stable IDs cover each row.
 - Final HAP reports `BUILD SUCCESSFUL in 7 s 148 ms`, installed on `127.0.0.1:5555`, and launched as PID 30731.
 - `acceptance/runtime/2026-08-04-toolbox-aligned-final/` contains the final screenshot and component tree; all 8 assertions passed. Bounded target app logging contains 0 FATAL, 0 ERROR and 0 WARN.
+
+## Settings simulator alignment (2026-08-04)
+
+- Captured the emulator-installed Traintime PDA `1.6.3+47` settings page from top to bottom and preserved the reference/reference-scroll component trees and screenshots.
+- Aligned the Cangjie page to the five blue-header/lavender-body cards, reference row order, dividers, chevrons, brightness selector, switches and fixed selected settings navigation capsule.
+- Persisted the already-supported visual preferences and retained real logout; unsupported child pages show an explicit migration message and remain `IN_PROGRESS`.
+- Final HAP reports `BUILD SUCCESSFUL in 7 s 853 ms`, installed on `127.0.0.1:5555`, and launched as PID 15098.
+- `acceptance/runtime/2026-08-04-settings-traditional-final/` passed 9/9 steps and 4/4 assertions. Bounded target app logging contains 0 FATAL, 0 ERROR and 0 WARN.
+- Follow-up: all settings copy now uses the source `zh_TW` wording, the selected language is persisted as Traditional Chinese, and `acceptance/runtime/2026-08-04-settings-traditional-final/` again passes 9/9 steps and 4/4 assertions with clean target-app logging.
 ## Phase 2 academic features
 
 - Implemented real Ehall request boundaries for timetable (xskcb), scores (cjcx/xscjcx) and examinations (wdksap), with session gating, timeouts, HTTP/error handling and stdx JSON parsing.
