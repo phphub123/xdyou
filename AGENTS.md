@@ -5,7 +5,7 @@
 本目录本身就是 DevEco Studio 创建的仓颉 HarmonyOS 工程根目录，不得再创建
 `harmonyos-app/` 子工程，也不得覆盖或重新脚手架化现有工程。
 
-- Flutter 迁移源：`source/`
+- Flutter 迁移源：`source_2.0/`
 - 仓颉目标代码：`entry/src/main/cangjie/`
 - HarmonyOS 资源：`entry/src/main/resources/`
 - 迁移记录：`migration/`
