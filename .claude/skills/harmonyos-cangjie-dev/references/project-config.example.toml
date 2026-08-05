@@ -1,0 +1,26 @@
+# Copy to the project-local config path used by your agent setup.
+# Keep secrets out of project config.
+
+# [new_project] is only for creating a new project from the packaged templates.
+# Most work happens in existing HarmonyOS projects; in that case leave this
+# section commented and let tools detect bundle/module/ability/build outputs
+# from the project files.
+#
+# [new_project]
+# app_name = "Cangjie App"
+# bundle_name = "com.example.myapplication"
+# package_name = "ohos_app_cangjie_entry"
+# module_name = "entry"
+# vendor = "example"
+# sdk_version = "6.1.0(23)"
+# model_version = "6.1.0"
+
+[rag]
+version = "default"
+
+# Advanced runtime overrides. Leave unset unless auto-detection is ambiguous.
+# [runtime]
+# bundle = "com.example.myapplication"
+# ability = "EntryAbility"
+# module = "entry"
+# hap = "entry/build/default/outputs/default/entry-default-unsigned.hap"

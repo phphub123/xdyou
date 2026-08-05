@@ -1,0 +1,19 @@
+# Copy to ~/.harmonyos-cangjie/config.toml for machine-local settings.
+# Do not put real API keys in this file; use api_key_env and set the environment variable.
+
+[toolchain]
+# deveco_home = "C:/Program Files/Huawei/DevEco Studio"
+# cangjie_sdk = "~/.cangjie-sdk/6.0/cangjie"
+# hdc = "C:/Program Files/Huawei/DevEco Studio/sdk/default/openharmony/toolchains/hdc.exe"
+ohpm_registry = "https://ohpm.openharmony.cn/ohpm/"
+strict_ssl = true
+
+[device]
+target = "127.0.0.1:5555"
+
+[rag]
+ai_provider = "aliyun"
+api_key_env = "DASHSCOPE_API_KEY"
+llm_model = "deepseek-v4-pro"
+embedding_model = "text-embedding-v4"
+embedding_batch_size = 10

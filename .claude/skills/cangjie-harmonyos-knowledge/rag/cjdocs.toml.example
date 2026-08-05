@@ -1,0 +1,21 @@
+[docs]
+version = "default"
+
+[ai]
+enabled = true
+preprocess = true
+preprocess_llm = false
+preprocess_embedding = true
+runtime = true
+provider = "aliyun"
+api_key_env = "DASHSCOPE_API_KEY"  # 密钥经环境变量注入，绝不明文落文件
+
+[llm]
+model = "deepseek-v4-pro"
+
+[embedding]
+model = "text-embedding-v4"
+batch_size = 10
+
+# 进阶可配（[llm]/[embedding] 段均支持）：timeout = 60 / max_retries = 2 / batch_size = 16
+# provider/model/base_url 均为示例值 — 以平台设置页（RAG 分区）为准
