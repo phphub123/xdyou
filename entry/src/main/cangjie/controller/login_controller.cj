@@ -11,6 +11,7 @@ public class LoginViewModel {
     var pendingAccount: String = ""
     var pendingPassword: String = ""
 
+    // 校验账号密码，请求IDS登录表单，并开始自动滑块验证流程
     public func beginLogin(
         account: String,
         password: String,
@@ -30,6 +31,7 @@ public class LoginViewModel {
         }, { error => this.fail(error, onState) })
     }
 
+    // 请求滑块验证码并基于识别结果计算初始位移后尝试自动验证，失败则转人工验证
     func beginAutomaticCaptcha(
         page: IDSLoginPage,
         round: Int64,
@@ -47,6 +49,7 @@ public class LoginViewModel {
         }, { error => this.fail(error, onState) })
     }
 
+    // 依次尝试一组位移偏移量进行自动滑块验证，全部失败则刷新验证码重试或转人工
     func tryAutomaticMoves(
         page: IDSLoginPage,
         captcha: SliderCaptcha,
@@ -86,11 +89,13 @@ public class LoginViewModel {
         })
     }
 
+    // 通知外部展示滑块验证码，等待用户手动完成
     func showManualCaptcha(captcha: SliderCaptcha, reason: String, onState: (SessionState, String) -> Unit, onCaptcha: (SliderCaptcha) -> Unit): Unit {
         onCaptcha(captcha)
         onState(SessionState.CaptchaRequired, "${reason}. Complete the slider manually.")
     }
 
+    // 提交账号密码完成登录；若服务端再次要求验证码则重新加载滑块验证
     func submit(
         page: IDSLoginPage,
         cookie: String,
@@ -113,6 +118,7 @@ public class LoginViewModel {
         }, { error => this.fail(error, onState) })
     }
 
+    // 校验用户手动完成的滑块验证结果，通过后提交登录
     public func verifyCaptcha(captcha: SliderCaptcha, move: Int64, tracks: String, onState: (SessionState, String) -> Unit, onAuthenticated: (String) -> Unit): Unit {
         onState(SessionState.Authenticating, "Verifying the IDS captcha...")
         this.ids.verifySlider(captcha, move, tracks, { accepted, cookie =>
@@ -125,6 +131,7 @@ public class LoginViewModel {
         }, { error => this.fail(error, onState) })
     }
 
+    // 清空敏感密码并将登录状态标记为失败
     func fail(message: String, onState: (SessionState, String) -> Unit): Unit {
         this.pendingPassword = ""
         onState(SessionState.Failed, message)

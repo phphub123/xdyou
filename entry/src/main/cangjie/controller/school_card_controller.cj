@@ -8,6 +8,7 @@ public class SchoolCardController {
     private let session = SchoolCardSession()
     private var loading = false
 
+    // 获取校园卡账户概览信息（防止重复请求）
     public func overview(success: (SchoolCardOverview) -> Unit, failure: (String) -> Unit): Unit {
         if (this.loading) { return }
         this.loading = true
@@ -15,6 +16,7 @@ public class SchoolCardController {
             { message => this.loading = false; failure(message) })
     }
 
+    // 按时间范围查询校园卡消费记录（防止重复请求）
     public func records(begin: String, end: String, success: (ArrayList<PaidRecord>) -> Unit, failure: (String) -> Unit): Unit {
         if (this.loading) { return }
         this.loading = true
@@ -22,6 +24,7 @@ public class SchoolCardController {
             { message => this.loading = false; failure(message) })
     }
 
+    // 获取校园卡付款二维码（防止重复请求）
     public func qrCode(success: (String) -> Unit, failure: (String) -> Unit): Unit {
         if (this.loading) { return }
         this.loading = true

@@ -15,6 +15,7 @@ public class ClassAttendanceController {
     private var loading: Bool = false
     private let session = LearningSession()
 
+    // 刷新课堂考勤数据（防止重复请求），成功后按状态分组返回
     public func reload(success: (ArrayList<ClassAttendance>, AttendanceGroups) -> Unit,
         failure: (String) -> Unit): Unit {
         if (this.loading) { return }
@@ -25,11 +26,13 @@ public class ClassAttendanceController {
         }, { message => this.loading = false; failure(message) })
     }
 
+    // 分页加载指定课程的考勤明细
     public func loadDetails(course: ClassAttendance, page: Int64, pageSize: Int64,
         success: (ArrayList<ClassAttendanceDetail>) -> Unit, failure: (String) -> Unit): Unit {
         this.session.loadAttendanceDetail(course, page, pageSize, success, failure)
     }
 
+    // 按考勤状态（不合格/预警/合格/未知）对课程分组
     public func group(courses: ArrayList<ClassAttendance>): AttendanceGroups {
         let groups = AttendanceGroups()
         for (course in courses) {
