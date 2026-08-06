@@ -5,7 +5,7 @@
 - Workspace: `C:\Users\21768\Desktop\XDYou-Cangjie-Codex-Workspace`.
 - Phase 1 is `BLOCKED_EXTERNAL`: the live school IDS rejected two manual slider-verification attempts. Do not claim real login, session restoration, logout, clear-data-after-login, or any real academic data as PASS unless a real IDS login succeeds.
 - Never recover credentials from prior screenshots; no account, password, Cookie, token, or captcha payload is stored in the workspace.
-- Existing Cangjie entry: `entry/src/main/cangjie/index.cj`; sessions: `repository/ids_session.cj`, `ids_password_cipher.cj`, `session_store.cj`.
+- Existing Cangjie entry: `entry/src/main/cangjie/page/login/login_page.cj`; sessions: `repository/ids_session.cj`, `ids_password_cipher.cj`, `session_store.cj`.
 - Existing HomePage is only an authenticated five-tab shell.
 
 ## Read before coding

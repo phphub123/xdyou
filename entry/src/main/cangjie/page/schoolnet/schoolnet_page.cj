@@ -1,4 +1,4 @@
-package ohos_app_cangjie_entry
+package ohos_app_cangjie_entry.page.schoolnet
 
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*

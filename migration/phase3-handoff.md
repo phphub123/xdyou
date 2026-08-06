@@ -10,7 +10,7 @@
 
 ## Current Cangjie layout
 
-- App entry and authenticated shell: `entry/src/main/cangjie/index.cj`.
+- App entry and authenticated shell: `entry/src/main/cangjie/page/login/login_page.cj` and `entry/src/main/cangjie/page/homepage/aligned_home_page.cj`.
 - Real IDS/session persistence: `entry/src/main/cangjie/repository/ids_session.cj`, `repository/session_store.cj`.
 - Phase 2 models and Ehall client: `model/xidian_ids/academic.cj`, `repository/xidian_ids/academic_session.cj`.
 - Phase 2 UI: `classtable_page.cj`, `academic_pages.cj`; the existing **Tools** tab opens `AcademicHub`.

@@ -1,4 +1,4 @@
-package ohos_app_cangjie_entry
+package ohos_app_cangjie_entry.page.login
 
 import kit.ArkUI.*
 import kit.ArkWeb.*
@@ -10,9 +10,10 @@ import ohos_app_cangjie_entry.repository.*
 import ohos_app_cangjie_entry.controller.*
 import ohos_app_cangjie_entry.external.*
 
+import ohos_app_cangjie_entry.page.homepage.*
 @Entry
 @Component
-class LoginWindow {
+public class LoginWindow {
     @State var account: String = ""
     @State var password: String = ""
     @State var passwordVisible: Bool = false
@@ -242,186 +243,5 @@ class LoginWindow {
                 if (this.status != "") { Text(this.status).fontSize(11.vp).fontColor(0xFF68758A).margin(top: 12.vp).id("loginStatus") }
             }.width(100.percent).height(100.percent).padding(left: 33.vp, right: 33.vp, top: 58.vp).alignItems(HorizontalAlign.Center)
         }
-    }
-}
-@Component
-class HomePage {
-    let account: String
-    let previewMode: Bool
-    let onLogout: () -> Unit
-    @State var selected: Int64 = 0
-    @State var homeFeature: Int64 = 0
-
-    func pageTitle(): String {
-        if (this.selected == 0) { return "Home" }
-        else if (this.selected == 1) { return "Ruisi" }
-        else if (this.selected == 2) { return "工具箱" }
-        else if (this.selected == 3) { return "教务" }
-        else { return "Settings" }
-    }
-
-    func build() {
-        Column {
-            Row {
-                Text("XDYOU").fontSize(24.vp).fontWeight(FontWeight.Bold).layoutWeight(1)
-                Text(this.account).fontSize(14.vp).fontColor(0xFF5F6368).id("sessionAccount")
-            }.width(100.percent).padding(18.vp)
-            if (this.previewMode) {
-                Row {
-                    Text("Mock UI 预览：未登录，页面数据不代表真实账号。").fontSize(12.vp).fontColor(0xFF6B4B00).layoutWeight(1).id("mockPreviewBanner")
-                    Button("返回登录").height(32.vp).onClick({ _ => this.onLogout() }).id("mockPreviewExit")
-                }.width(100.percent).padding(left: 18.vp, right: 18.vp, top: 8.vp, bottom: 8.vp).backgroundColor(0xFFFFF3CD)
-            }
-            if (this.selected == 4) {
-                SettingWindow(onLogout: this.onLogout)
-            } else if (this.selected == 3) {
-                AcademicHub()
-            } else if (this.selected == 2) {
-                ToolboxPage()
-            } else if (this.selected == 0 && this.homeFeature == 1) {
-                ClassAttendancePage(onBack: { => this.homeFeature = 0 })
-            } else if (this.selected == 0 && this.homeFeature == 2) {
-                EmptyClassroomPage()
-            } else if (this.selected == 0 && this.homeFeature == 3) {
-                LibraryPage(onBack: { => this.homeFeature = 0 })
-            } else if (this.selected == 0 && this.homeFeature == 4) {
-                SchoolnetPage(onBack: { => this.homeFeature = 0 })
-            } else if (this.selected == 0 && this.homeFeature == 5) {
-                DormWaterPage(onBack: { => this.homeFeature = 0 })
-            } else if (this.selected == 0) {
-                CampusHomePage(onAttendance: { => this.homeFeature = 1 }, onEmptyClassroom: { => this.homeFeature = 2 }, onLibrary: { => this.homeFeature = 3 }, onSchoolnet: { => this.homeFeature = 4 }, onDormWater: { => this.homeFeature = 5 })
-            } else {
-                Column {
-                    Text(this.pageTitle()).fontSize(28.vp).fontWeight(FontWeight.Bold)
-                    Text("睿思社区").fontSize(18.vp).fontWeight(FontWeight.Bold).margin(top: 12.vp)
-                    Text("正在连接独立睿思会话；请使用工具箱中的睿思入口完成网页登录。")
-                        .fontSize(14.vp).fontColor(0xFF5F6368).margin(top: 10.vp)
-                }.width(100.percent).layoutWeight(1).padding(24.vp).alignItems(HorizontalAlign.Start)
-            }
-            Row {
-                Button("首页").layoutWeight(1).onClick({ _ => this.selected = 0; this.homeFeature = 0 }).id("navTo_home")
-                Button("睿思").layoutWeight(1).onClick({ _ => this.selected = 1 }).id("navTo_ruisi")
-                Button("工具").layoutWeight(1).onClick({ _ => this.selected = 2 }).id("navTo_toolbox")
-                Button("教务").layoutWeight(1).onClick({ _ => this.selected = 3 }).id("navTo_dashboard")
-                Button("设置").layoutWeight(1).onClick({ _ => this.selected = 4 }).id("navTo_settings")
-            }.width(100.percent).padding(8.vp)
-        }.width(100.percent).height(100.percent).backgroundColor(0xFFF7F9FC)
-    }
-}
-
-@Component
-class CampusHomePage {
-    let onAttendance: () -> Unit
-    let onEmptyClassroom: () -> Unit
-    let onLibrary: () -> Unit
-    let onSchoolnet: () -> Unit
-    let onDormWater: () -> Unit
-    func build() {
-        Scroll { Column {
-            Text("校园服务").fontSize(28.vp).fontWeight(FontWeight.Bold)
-            Text("查询结果来自学校与校园服务的实时接口").fontSize(13.vp).fontColor(0xFF65738A).margin(top: 5.vp)
-            Row {
-                Column { Text("课堂考勤").fontSize(18.vp).fontWeight(FontWeight.Bold); Text("学习通考勤、预警与签到明细").fontSize(12.vp).fontColor(0xFF65738A).margin(top: 8.vp) }
-                    .layoutWeight(1).height(120.vp).padding(14.vp).backgroundColor(0xFFFFFFFF).borderRadius(14.vp).onClick({ _ => this.onAttendance() }).id("homeClassAttendance")
-                Column { Text("空闲教室").fontSize(18.vp).fontWeight(FontWeight.Bold); Text("按日期、教学楼和节次查询").fontSize(12.vp).fontColor(0xFF65738A).margin(top: 8.vp) }
-                    .layoutWeight(1).height(120.vp).padding(14.vp).margin(left: 10.vp).backgroundColor(0xFFFFFFFF).borderRadius(14.vp).onClick({ _ => this.onEmptyClassroom() }).id("homeEmptyClassroom")
-            }.width(100.percent).margin(top: 18.vp)
-            Column { Text("图书馆").fontSize(18.vp).fontWeight(FontWeight.Bold); Text("馆藏检索、图书详情与馆藏位置").fontSize(12.vp).fontColor(0xFF65738A).margin(top: 8.vp) }
-                .width(100.percent).height(105.vp).padding(14.vp).margin(top: 10.vp).backgroundColor(0xFFFFFFFF).borderRadius(14.vp).onClick({ _ => this.onLibrary() }).id("homeLibrary")
-            Column { Text("校园网").fontSize(18.vp).fontWeight(FontWeight.Bold); Text("当前在线账号、流量、余额与设备").fontSize(12.vp).fontColor(0xFF65738A).margin(top: 8.vp) }
-                .width(100.percent).height(105.vp).padding(14.vp).margin(top: 10.vp).backgroundColor(0xFFFFFFFF).borderRadius(14.vp).onClick({ _ => this.onSchoolnet() }).id("homeSchoolnet")
-            Column { Text("宿舍饮水").fontSize(18.vp).fontWeight(FontWeight.Bold); Text("短信登录、收藏设备与启停供水").fontSize(12.vp).fontColor(0xFF65738A).margin(top: 8.vp) }
-                .width(100.percent).height(105.vp).padding(14.vp).margin(top: 10.vp).backgroundColor(0xFFFFFFFF).borderRadius(14.vp).onClick({ _ => this.onDormWater() }).id("homeDormWater")
-            Row {
-                Column { Text("教务中心").fontSize(18.vp).fontWeight(FontWeight.Bold); Text("课表、成绩、考试").fontSize(12.vp).fontColor(0xFF65738A).margin(top: 8.vp) }
-                    .layoutWeight(1).height(110.vp).padding(14.vp).backgroundColor(0xFFEAF2FF).borderRadius(14.vp).id("homeAcademicSummary")
-                Column { Text("校园工具").fontSize(18.vp).fontWeight(FontWeight.Bold); Text("缴费、订水、报修、预约与网络").fontSize(12.vp).fontColor(0xFF65738A).margin(top: 8.vp) }
-                    .layoutWeight(1).height(110.vp).padding(14.vp).margin(left: 10.vp).backgroundColor(0xFFEAF2FF).borderRadius(14.vp).id("homeToolboxSummary")
-            }.width(100.percent).margin(top: 10.vp)
-        }.width(100.percent).padding(20.vp).alignItems(HorizontalAlign.Start) }.width(100.percent).layoutWeight(1)
-    }
-}
-
-@Component
-class SettingWindow {
-    let onLogout: () -> Unit
-    @State var language: String = "Chinese"
-    @State var color: String = "蓝色"
-    @State var semester: String = "2026-1"
-    @State var week: String = "1"
-    @State var lowElectricity: String = "15"
-    @State var timeline: String = "开启"
-    @State var systemStatus: String = ""
-    @State var theme: String = "System"
-
-    protected override func aboutToAppear(): Unit {
-        let store = SessionStore(); this.language = store.restoreLanguage(); this.theme = store.restoreTheme()
-        this.color = store.restoreSetting("color", defaultValue: "蓝色")
-        this.semester = store.restoreSetting("semester", defaultValue: "2026-1")
-        this.week = store.restoreSetting("week", defaultValue: "1")
-        this.lowElectricity = store.restoreSetting("lowElectricity", defaultValue: "15")
-        this.timeline = store.restoreSetting("timeline", defaultValue: "开启")
-    }
-    func saveSettings(): Unit {
-        let store = SessionStore(); store.saveDisplaySettings(this.language, this.theme)
-        store.saveSetting("color", this.color)
-        store.saveSetting("semester", this.semester)
-        store.saveSetting("week", this.week)
-        store.saveSetting("lowElectricity", this.lowElectricity)
-        store.saveSetting("timeline", this.timeline)
-    }
-    func testNotification(): Unit {
-        this.systemStatus = "正在发送测试通知…"
-        SystemCapabilityBridge.getInstance().publishCourseReminder(91001, "XDYou 上课提醒", "系统通知互操作测试", { ok, message =>
-            launch { this.systemStatus = if (ok) { "测试通知已发布。" } else { "通知发布失败：${message}" } }
-        })
-    }
-    func testCalendar(): Unit {
-        this.systemStatus = "正在申请权限并写入测试日程…"
-        let startTime = DateTime.now().toUnixTimeStamp().toMilliseconds() + 3600000
-        SystemCapabilityBridge.getInstance().addCalendarEvent("XDYou 课程日历测试", startTime, startTime + 3600000, { ok, message =>
-            launch { this.systemStatus = if (ok) { "测试日程已写入系统日历（${message}）。" } else { "日历写入失败：${message}" } }
-        })
-    }
-    func build() {
-        Column {
-            Text("设置").fontSize(28.vp).fontWeight(FontWeight.Bold)
-            Text("语言").fontSize(16.vp).margin(top: 18.vp)
-            Row {
-                Button("简体中文").onClick({ _ => this.language = "Chinese"; this.saveSettings() }).id("languageZhCn")
-                Button("繁體中文").margin(left: 8.vp).onClick({ _ => this.language = "Traditional Chinese"; this.saveSettings() }).id("languageZhTw")
-                Button("English").margin(left: 8.vp).onClick({ _ => this.language = "English"; this.saveSettings() }).id("languageEnUs")
-            }.margin(top: 10.vp)
-            Text("当前语言：${this.language}").fontSize(13.vp).margin(top: 8.vp)
-            Text("外观").fontSize(16.vp).margin(top: 14.vp)
-            Row {
-                Button("跟随系统").onClick({ _ => this.theme = "System"; this.saveSettings() }).id("themeSystem")
-                Button("浅色").margin(left: 8.vp).onClick({ _ => this.theme = "Light"; this.saveSettings() }).id("themeLight")
-                Button("深色").margin(left: 8.vp).onClick({ _ => this.theme = "Dark"; this.saveSettings() }).id("themeDark")
-            }.margin(top: 10.vp)
-            Row {
-                Button("蓝色").onClick({ _ => this.color = "蓝色"; this.saveSettings() }).id("colorBlue")
-                Button("绿色").margin(left: 8.vp).onClick({ _ => this.color = "绿色"; this.saveSettings() }).id("colorGreen")
-                Button("橙色").margin(left: 8.vp).onClick({ _ => this.color = "橙色"; this.saveSettings() }).id("colorOrange")
-                Button("时间轴：${this.timeline}").margin(left: 8.vp).onClick({ _ => this.timeline = if (this.timeline == "开启") { "关闭" } else { "开启" }; this.saveSettings() }).id("timelineToggle")
-            }.margin(top: 8.vp)
-            Text("学期与课表").fontSize(16.vp).margin(top: 14.vp)
-            Row {
-                TextInput(placeholder: "学期代码", text: this.semester).layoutWeight(2).onChange({ value => this.semester = value }).id("settingSemester")
-                TextInput(placeholder: "当前周", text: this.week).layoutWeight(1).margin(left: 8.vp).onChange({ value => this.week = value }).id("settingWeek")
-                Button("保存").margin(left: 8.vp).onClick({ _ => this.saveSettings() }).id("saveAcademicSettings")
-            }.width(100.percent).height(42.vp).margin(top: 8.vp)
-            Row {
-                Text("低电量阈值 (%)").layoutWeight(1)
-                TextInput(placeholder: "15", text: this.lowElectricity).width(100.vp).onChange({ value => this.lowElectricity = value }).id("lowElectricityThreshold")
-                Button("保存").margin(left: 8.vp).onClick({ _ => this.saveSettings() }).id("saveLowElectricity")
-            }.width(100.percent).height(42.vp).margin(top: 10.vp)
-            Text("关于 XDYOU · 仓颉 HarmonyOS 原生版").fontSize(14.vp).margin(top: 14.vp).id("settingsAbout")
-            Button("退出登录并清除会话").width(100.percent).height(48.vp).margin(top: 18.vp)
-                .onClick({ _ => this.onLogout() }).id("logoutButton")
-            Button("测试上课通知").width(100.percent).height(42.vp).margin(top: 12.vp).onClick({ _ => this.testNotification() }).id("testCourseNotification")
-            Button("测试系统日历").width(100.percent).height(42.vp).margin(top: 8.vp).onClick({ _ => this.testCalendar() }).id("testSystemCalendar")
-            if (this.systemStatus != "") { Text(this.systemStatus).fontSize(12.vp).fontColor(0xFF5F6368).margin(top: 6.vp).id("systemCapabilityStatus") }
-        }.width(100.percent).layoutWeight(1).padding(24.vp).alignItems(HorizontalAlign.Start)
     }
 }

@@ -1,4 +1,4 @@
-package ohos_app_cangjie_entry
+package ohos_app_cangjie_entry.page.library
 
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
@@ -53,7 +53,7 @@ public class LibraryPage {
 }
 
 @Component
-class LibraryBookHeader {
+public class LibraryBookHeader {
     let book: BookInfo
     func build() {
         Column {

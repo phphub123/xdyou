@@ -1,4 +1,4 @@
-package ohos_app_cangjie_entry
+package ohos_app_cangjie_entry.page.class_attendance
 
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
@@ -106,7 +106,7 @@ public class ClassAttendancePage {
 }
 
 @Component
-class AttendanceCourseCard {
+public class AttendanceCourseCard {
     let course: ClassAttendance
     let color: UInt32
     let onOpen: () -> Unit

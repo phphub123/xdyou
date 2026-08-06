@@ -7,6 +7,7 @@ import kit.AbilityKit.LaunchParam
 import kit.AbilityKit.LaunchReason
 import kit.ArkUI.WindowStage
 import ohos_app_cangjie_entry.common.*
+import ohos_app_cangjie_entry.page.login.*
 
 
 class MainAbility <: UIAbility {
