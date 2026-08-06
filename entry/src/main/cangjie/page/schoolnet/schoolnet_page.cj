@@ -4,6 +4,7 @@ import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import ohos_app_cangjie_entry.controller.*
 import ohos_app_cangjie_entry.model.*
+import ohos_app_cangjie_entry.components.*
 
 @Component
 public class SchoolnetPage {
@@ -51,13 +52,13 @@ public class SchoolnetPage {
         return "${value / 1000000000} GB"
     }
 
+    @Builder func headerTrailing() {
+        Button(if (this.loading) { "刷新中" } else { "刷新" }).height(40.vp).onClick({ _ => this.reload() }).id("schoolnetRefresh")
+    }
+
     func build() {
         Column {
-            Row {
-                Button("‹").width(44.vp).height(40.vp).onClick({ _ => this.onBack() }).id("schoolnetBack")
-                Text("校园网").fontSize(24.vp).fontWeight(FontWeight.Bold).layoutWeight(1).margin(left: 8.vp)
-                Button(if (this.loading) { "刷新中" } else { "刷新" }).height(40.vp).onClick({ _ => this.reload() }).id("schoolnetRefresh")
-            }.width(100.percent)
+            PageHeader(title: "校园网", onBack: this.onBack, backId: "schoolnetBack", trailing: this.headerTrailing)
             Text(this.status).fontSize(12.vp).fontColor(0xFF65738A).margin(top: 8.vp).id("schoolnetStatus")
             if (this.loaded) {
                 Scroll {

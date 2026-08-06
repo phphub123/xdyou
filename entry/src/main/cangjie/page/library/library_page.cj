@@ -5,6 +5,7 @@ import ohos.arkui.state_macro_manage.*
 import std.collection.*
 import ohos_app_cangjie_entry.controller.*
 import ohos_app_cangjie_entry.model.xidian_ids.*
+import ohos_app_cangjie_entry.components.*
 
 @Component
 public class LibraryPage {
@@ -34,9 +35,15 @@ public class LibraryPage {
         this.controller.locations(this.books[index], { items => launch { this.locations = items; this.loading = false; this.status = "共 ${items.size} 个馆藏位置。" } },
             { message => launch { this.loading = false; this.status = message } })
     }
+    func headerBack(): Unit {
+        if (this.selectedIndex >= 0) { this.selectedIndex = -1; this.status = "已加载 ${this.books.size} 条结果。" } else { this.onBack() }
+    }
+    func headerTitle(): String {
+        return if (this.selectedIndex >= 0) { this.books[this.selectedIndex].bookName } else { "图书馆" }
+    }
     func build() {
         Column {
-            Row { Button("‹").width(44.vp).height(40.vp).onClick({ _ => if (this.selectedIndex >= 0) { this.selectedIndex = -1; this.status = "已加载 ${this.books.size} 条结果。" } else { this.onBack() } }).id("libraryBack"); Text(if (this.selectedIndex >= 0) { this.books[this.selectedIndex].bookName } else { "图书馆" }).fontSize(24.vp).fontWeight(FontWeight.Bold).layoutWeight(1).margin(left: 8.vp) }.width(100.percent)
+            PageHeader(title: this.headerTitle(), onBack: this.headerBack, backId: "libraryBack")
             if (this.selectedIndex < 0) {
                 Row { TextInput(placeholder: "搜索馆藏", text: this.keyword).layoutWeight(1).onChange({ value => this.keyword = value }).id("librarySearchInput"); Button(if (this.loading) { "检索中" } else { "搜索" }).margin(left: 8.vp).onClick({ _ => this.search(true) }).id("librarySearchButton") }.width(100.percent).height(44.vp).margin(top: 12.vp)
                 Row { Button("任意词").layoutWeight(1).onClick({ _ => this.field = "keyWord" }).id("libraryFieldKeyword"); Button("题名").layoutWeight(1).onClick({ _ => this.field = "title" }).id("libraryFieldTitle"); Button("作者").layoutWeight(1).onClick({ _ => this.field = "author" }).id("libraryFieldAuthor"); Button("ISBN").layoutWeight(1).onClick({ _ => this.field = "isbn" }).id("libraryFieldIsbn") }.width(100.percent).height(38.vp).margin(top: 6.vp)

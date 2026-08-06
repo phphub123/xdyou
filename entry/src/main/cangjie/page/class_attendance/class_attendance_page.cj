@@ -5,6 +5,7 @@ import ohos.arkui.state_macro_manage.*
 import std.collection.*
 import ohos_app_cangjie_entry.controller.*
 import ohos_app_cangjie_entry.model.xidian_ids.*
+import ohos_app_cangjie_entry.components.*
 
 @Component
 public class ClassAttendancePage {
@@ -71,13 +72,19 @@ public class ClassAttendancePage {
         }
     }
 
+    func headerBack(): Unit {
+        if (this.selectedIndex >= 0) { this.selectedIndex = -1; this.details.clear(); this.status = "共 ${this.courses.size} 门课程。" } else { this.onBack() }
+    }
+    func headerTitle(): String {
+        return if (this.selectedIndex >= 0) { "${this.selectedCourse().courseName} · 签到明细" } else { "课堂考勤" }
+    }
+    @Builder func headerTrailing() {
+        if (this.selectedIndex < 0) { Button("刷新").height(40.vp).onClick({ _ => this.reload() }).id("attendanceRefresh") }
+    }
+
     func build() {
         Column {
-            Row {
-                Button("‹").width(44.vp).height(40.vp).onClick({ _ => if (this.selectedIndex >= 0) { this.selectedIndex = -1; this.details.clear(); this.status = "共 ${this.courses.size} 门课程。" } else { this.onBack() } }).id("attendanceBack")
-                Text(if (this.selectedIndex >= 0) { "${this.selectedCourse().courseName} · 签到明细" } else { "课堂考勤" }).fontSize(24.vp).fontWeight(FontWeight.Bold).layoutWeight(1).margin(left: 8.vp)
-                if (this.selectedIndex < 0) { Button("刷新").height(40.vp).onClick({ _ => this.reload() }).id("attendanceRefresh") }
-            }.width(100.percent)
+            PageHeader(title: this.headerTitle(), onBack: this.headerBack, backId: "attendanceBack", trailing: this.headerTrailing)
             Text(this.status).fontSize(12.vp).fontColor(0xFF65738A).margin(top: 8.vp).id("attendanceStatus")
             if (this.selectedIndex >= 0) {
                 Scroll { Column {

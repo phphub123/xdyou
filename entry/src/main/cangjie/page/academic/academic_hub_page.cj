@@ -6,12 +6,12 @@ import std.collection.ArrayList
 import ohos_app_cangjie_entry.repository.xidian_ids.*
 import ohos_app_cangjie_entry.model.xidian_ids.*
 import ohos_app_cangjie_entry.controller.*
-
 import ohos_app_cangjie_entry.page.score.*
 import ohos_app_cangjie_entry.page.exam.*
 import ohos_app_cangjie_entry.page.classtable.*
 import ohos_app_cangjie_entry.page.custom_class.*
 import ohos_app_cangjie_entry.page.empty_classroom.*
+
 @Component
 public class AcademicHub {
     @State var tab: Int64 = 0

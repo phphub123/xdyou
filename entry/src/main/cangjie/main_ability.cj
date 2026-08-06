@@ -10,7 +10,6 @@ import ohos_app_cangjie_entry.common.*
 import ohos_app_cangjie_entry.page.login.*
 import ohos_app_cangjie_entry.themes.*
 
-
 class MainAbility <: UIAbility {
     public init() {
         super()

@@ -5,6 +5,7 @@ import ohos.arkui.state_macro_manage.*
 import std.collection.*
 import ohos_app_cangjie_entry.controller.*
 import ohos_app_cangjie_entry.model.pda_service.*
+import ohos_app_cangjie_entry.components.*
 
 @Component
 public class CustomClassPage {
@@ -32,9 +33,17 @@ public class CustomClassPage {
     func removeClass(index: Int64): Unit { this.classes = this.controller.remove(this.classes, index); this.status = "自定义课程已删除。" }
     func clearAll(): Unit { this.classes = this.controller.clear(); this.editing = false; this.status = "已清空全部自定义课程。" }
 
+    func headerTitle(): String {
+        return if (this.editing) { if (this.selectedIndex < 0) { "新增自定义课程" } else { "编辑自定义课程" } } else { "自定义课程" }
+    }
+    @Builder func headerTrailing() {
+        if (this.editing) { Button("取消").onClick({ _ => this.editing = false }).id("customClassCancel") }
+        else { Button("新增").onClick({ _ => this.startAdd() }).id("customClassAdd") }
+    }
+
     func build() {
         Column {
-            Row { Button("‹").width(42.vp).onClick({ _ => this.onBack() }).id("customClassBack"); Text(if (this.editing) { if (this.selectedIndex < 0) { "新增自定义课程" } else { "编辑自定义课程" } } else { "自定义课程" }).fontSize(24.vp).fontWeight(FontWeight.Bold).layoutWeight(1); if (this.editing) { Button("取消").onClick({ _ => this.editing = false }).id("customClassCancel") } else { Button("新增").onClick({ _ => this.startAdd() }).id("customClassAdd") } }.width(100.percent)
+            PageHeader(title: this.headerTitle(), onBack: this.onBack, backId: "customClassBack", trailing: this.headerTrailing)
             Text(this.status).fontSize(12.vp).fontColor(0xFF65738A).margin(top: 8.vp).id("customClassStatus")
             if (this.editing) {
                 Scroll { Column {

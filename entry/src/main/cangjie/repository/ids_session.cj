@@ -168,7 +168,6 @@ public class IDSSession {
         match (accepted.find(body)) { case Some(_) => return true; case None => return false }
     }
 
-
     public func submitCredentials(
         page: IDSLoginPage,
         verifiedCookie: String,
@@ -319,7 +318,6 @@ public class IDSSession {
         let lower = html.toAsciiLower()
         return lower.contains("openslidercaptcha") && lower.contains("verifyslidercaptcha")
     }
-
 
     func isEhallPage(html: String): Bool {
         let lower = html.toAsciiLower()

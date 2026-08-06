@@ -7,6 +7,7 @@ import std.convert.*
 import std.time.*
 import ohos_app_cangjie_entry.controller.*
 import ohos_app_cangjie_entry.model.xidian_ids.*
+import ohos_app_cangjie_entry.components.*
 
 @Component
 public class SchoolCardPage {
@@ -91,14 +92,14 @@ public class SchoolCardPage {
         return if (sum < 0.0) { "支出 ${(-sum).format(".2")} 元" } else { "收入 ${sum.format(".2")} 元" }
     }
 
+    @Builder func headerTrailing() {
+        Button(if (this.loading) { "刷新中" } else { "刷新" }).enabled(!this.loading).onClick({ _ => this.refreshAll() }).id("schoolCardRefresh")
+    }
+
     func build() {
         Stack {
             Column {
-                Row {
-                    Button("‹").width(44.vp).height(40.vp).onClick({ _ => this.onBack() }).id("schoolCardBack")
-                    Text("校园卡").fontSize(24.vp).fontWeight(FontWeight.Bold).layoutWeight(1).margin(left: 8.vp)
-                    Button(if (this.loading) { "刷新中" } else { "刷新" }).enabled(!this.loading).onClick({ _ => this.refreshAll() }).id("schoolCardRefresh")
-                }.width(100.percent)
+                PageHeader(title: "校园卡", onBack: this.onBack, backId: "schoolCardBack", trailing: this.headerTrailing)
                 Row {
                     Column {
                         Text("校园卡余额").fontSize(13.vp).fontColor(0xFF65738A)

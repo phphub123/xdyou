@@ -4,6 +4,7 @@ import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import ohos_app_cangjie_entry.controller.*
 import ohos_app_cangjie_entry.model.*
+import ohos_app_cangjie_entry.components.*
 
 @Component
 public class EnergyPage {
@@ -30,13 +31,13 @@ public class EnergyPage {
         } }, { message => launch { this.loading = false; this.status = message } })
     }
 
+    @Builder func headerTrailing() {
+        Button(if (this.loading) { "查询中" } else { "查询" }).height(40.vp).onClick({ _ => this.reloadAircon() }).id("energyRefresh")
+    }
+
     func build() {
         Column {
-            Row {
-                Button("‹").width(44.vp).height(40.vp).onClick({ _ => this.onBack() }).id("energyBack")
-                Text("电量与能耗").fontSize(24.vp).fontWeight(FontWeight.Bold).layoutWeight(1).margin(left: 8.vp)
-                Button(if (this.loading) { "查询中" } else { "查询" }).height(40.vp).onClick({ _ => this.reloadAircon() }).id("energyRefresh")
-            }.width(100.percent)
+            PageHeader(title: "电量与能耗", onBack: this.onBack, backId: "energyBack", trailing: this.headerTrailing)
             Text(this.status).fontSize(12.vp).fontColor(0xFF65738A).margin(top: 8.vp).id("energyStatus")
             Scroll { Column {
                 Column {

@@ -6,6 +6,7 @@ import std.collection.ArrayList
 import std.time.*
 import ohos_app_cangjie_entry.controller.*
 import ohos_app_cangjie_entry.model.xidian_ids.*
+import ohos_app_cangjie_entry.components.*
 
 @Component
 public class ExperimentPage {
@@ -50,9 +51,12 @@ public class ExperimentPage {
         }
         return result
     }
+    @Builder func headerTrailing() {
+        Button(if(this.loading){"加载中"}else{"刷新"}).height(40.vp).onClick({_=>this.reload()}).id("experimentRefresh")
+    }
     func build() {
         Column {
-            Row { Button("‹").width(44.vp).height(40.vp).onClick({_=>this.onBack()}).id("experimentBack"); Text("实验信息").fontSize(24.vp).fontWeight(FontWeight.Bold).layoutWeight(1).margin(left:8.vp); Button(if(this.loading){"加载中"}else{"刷新"}).height(40.vp).onClick({_=>this.reload()}).id("experimentRefresh") }.width(100.percent)
+            PageHeader(title: "实验信息", onBack: this.onBack, backId: "experimentBack", trailing: this.headerTrailing)
             Text(this.status).fontSize(12.vp).fontColor(0xFF65738A).margin(top:8.vp).id("experimentStatus")
             Row {
                 Button("物理实验").layoutWeight(1).height(38.vp).backgroundColor(if(this.selectedType==0){0xFF476FA9}else{0xFFE8EDF6}).fontColor(if(this.selectedType==0){0xFFFFFFFF}else{0xFF41699F}).onClick({_=>this.selectedType=0}).id("experimentPhysicsTab")

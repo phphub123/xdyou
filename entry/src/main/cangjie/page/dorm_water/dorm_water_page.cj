@@ -7,6 +7,7 @@ import std.sync.*
 import std.time.*
 import ohos_app_cangjie_entry.controller.*
 import ohos_app_cangjie_entry.model.*
+import ohos_app_cangjie_entry.components.*
 
 @Component
 public class DormWaterPage {
@@ -97,9 +98,12 @@ public class DormWaterPage {
         if (this.activeDevice != "") { this.status = "请先停止正在运行的饮水设备。"; return }
         this.stopPolling(); this.controller.logout(); this.loggedIn = false; this.devices = ArrayList<DormWaterDevice>(); this.status = "已退出饮水服务。"; this.loadCaptcha()
     }
+    @Builder func headerTrailing() {
+        if (this.loggedIn) { Button("退出").onClick({ _ => this.logout() }).id("dormWaterLogout") }
+    }
     func build() {
         Column {
-            Row { Button("‹").width(44.vp).height(40.vp).onClick({ _ => this.onBack() }).id("dormWaterBack"); Text("宿舍饮水").fontSize(24.vp).fontWeight(FontWeight.Bold).layoutWeight(1).margin(left: 8.vp); if (this.loggedIn) { Button("退出").onClick({ _ => this.logout() }).id("dormWaterLogout") } }.width(100.percent)
+            PageHeader(title: "宿舍饮水", onBack: this.onBack, backId: "dormWaterBack", trailing: this.headerTrailing)
             Text(this.status).fontSize(12.vp).fontColor(0xFF65738A).margin(top: 8.vp).id("dormWaterStatus")
             if (!this.loggedIn) {
                 TextInput(placeholder: "手机号", text: this.phone).width(100.percent).height(44.vp).margin(top: 16.vp).onChange({ value => this.phone = value }).id("dormWaterPhone")
