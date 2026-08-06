@@ -67,7 +67,11 @@ Web、文件或系统 API，都必须先查询知识库再实现。
 `entry/src/main/cangjie/<area>/x.cj`
 
 保留 `controller`、`model`、`repository`、`page`、`routing`、`themes`、
-`external` 等分区。每个路径或符号例外都登记到
+`external` 等分区。页面代码统一放在 `page/<feature>/`，一个功能模块一个目录；
+`controller/` 下的文件统一使用 `<feature>_controller.cj` 命名。每个页面子目录使用
+对应子包名，跨页面模块引用时需显式 `import` 并将被引用组件声明为 `public`。
+
+每个路径或符号例外都登记到
 `migration/file-name-map.csv`，包含源路径、目标路径、源符号、目标符号、
 理由和状态。
 
