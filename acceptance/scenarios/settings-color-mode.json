@@ -1,0 +1,21 @@
+{
+  "name": "XDYou settings color mode",
+  "description": "Verify that the migrated Flutter brightness preference updates the running Cangjie settings shell and remains available across navigation.",
+  "steps": [
+    {"action": "click", "target": {"key": "mockHomePreviewButton"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "navTo_settings"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "settingsThemeDark"}, "wait_after": 1},
+    {"action": "snapshot", "label": "01-settings-dark"},
+    {"action": "click", "target": {"key": "navTo_home"}, "wait_after": 1},
+    {"action": "snapshot", "label": "02-home-dark"},
+    {"action": "click", "target": {"key": "navTo_settings"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "settingsThemeLight"}, "wait_after": 1},
+    {"action": "snapshot", "label": "03-settings-light"}
+  ],
+  "assertions": [
+    {"type": "exists", "target": {"key": "settingsThemeDark"}, "message": "Dark mode selector remains reachable"},
+    {"type": "exists", "target": {"key": "settingsThemeLight"}, "message": "Light mode selector remains reachable"},
+    {"type": "exists", "target": {"key": "navTo_home"}, "message": "Home navigation remains available after a theme change"},
+    {"type": "page_changed", "message": "Theme and navigation interaction changes the rendered page"}
+  ]
+}

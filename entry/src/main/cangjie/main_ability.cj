@@ -8,6 +8,7 @@ import kit.AbilityKit.LaunchReason
 import kit.ArkUI.WindowStage
 import ohos_app_cangjie_entry.common.*
 import ohos_app_cangjie_entry.page.login.*
+import ohos_app_cangjie_entry.themes.*
 
 
 class MainAbility <: UIAbility {
@@ -28,6 +29,7 @@ class MainAbility <: UIAbility {
     public override func onWindowStageCreate(windowStage: WindowStage): Unit {
         Hilog.info(1, "Cangjie", "MainAbility onWindowStageCreate.")
         AppContext.initialize(this.context)
+        AppTheme.bootstrap()
         windowStage.loadContent("LoginWindow")
     }
 }

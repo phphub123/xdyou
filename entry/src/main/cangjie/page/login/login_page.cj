@@ -9,6 +9,7 @@ import ohos.business_exception.*
 import ohos_app_cangjie_entry.repository.*
 import ohos_app_cangjie_entry.controller.*
 import ohos_app_cangjie_entry.external.*
+import ohos_app_cangjie_entry.themes.*
 
 import ohos_app_cangjie_entry.page.homepage.*
 @Entry
@@ -26,6 +27,8 @@ public class LoginWindow {
     @State var sliderOffset: Float64 = 0.0
     @State var webReady: Bool = false
     @State var webLoginSubmitting: Bool = false
+    @StorageProp["xdyouThemePreference"] let themePreference: String = "System"
+    @StorageProp["colorMode"] let systemColorMode: ColorMode = ColorMode.Light
     let idsBootstrapController = WebviewController()
     let idsCookieBootstrapEnabled: Unit = WebCookieManager.setAcceptCookiesEnabled(true)
     var sliderTrackX: ArrayList<Int64> = ArrayList<Int64>()
@@ -37,6 +40,8 @@ public class LoginWindow {
     var sessionStore: ?SessionStore = None
     var viewModel: LoginViewModel = LoginViewModel()
     var currentCaptcha: ?SliderCaptcha = None
+
+    func darkMode(): Bool { return AppTheme.isDark(this.themePreference, this.systemColorMode) }
 
     protected override func aboutToAppear(): Unit {
         this.sessionStore = Some(SessionStore())
@@ -214,19 +219,19 @@ public class LoginWindow {
                     .id("idsCookieBootstrap")
                 Stack { Column { Text("==").fontSize(15.vp).fontWeight(FontWeight.Bold).fontColor(0xFFFFFFFF); Text("XDYOU").fontSize(16.vp).fontWeight(FontWeight.Bold).fontStyle(FontStyle.Italic).fontColor(0xFFFFFFFF) }.width(58.vp).height(58.vp).border(width: 3.vp, color: 0xFFFFFFFF, radius: 8.vp).justifyContent(FlexAlign.Center) }.width(88.vp).height(88.vp).backgroundColor(0xFF0796DB).borderRadius(20.vp).align(Alignment.Center).id("loginLogo")
                 Row {
-                    Text("ID").width(30.vp).fontSize(11.vp).fontWeight(FontWeight.Bold).fontColor(0xFF4B5565)
-                    TextInput(placeholder: "Student ID", text: this.account).layoutWeight(1).height(38.vp).backgroundColor(0xFFF5F6FB).onChange({ value => this.account = value }).id("loginAccountInput")
-                }.width(100.percent).height(40.vp).padding(left: 10.vp, right: 8.vp).margin(top: 30.vp).backgroundColor(0xFFF5F6FB).border(width: 1.vp, color: 0xFF91A6D0, radius: 6.vp)
+                    Text("ID").width(30.vp).fontSize(11.vp).fontWeight(FontWeight.Bold).fontColor(ThemePalette.textSecondary(this.darkMode()))
+                    TextInput(placeholder: "Student ID", text: this.account).layoutWeight(1).height(38.vp).backgroundColor(ThemePalette.inputSurface(this.darkMode())).onChange({ value => this.account = value }).id("loginAccountInput")
+                }.width(100.percent).height(40.vp).padding(left: 10.vp, right: 8.vp).margin(top: 30.vp).backgroundColor(ThemePalette.inputSurface(this.darkMode())).border(width: 1.vp, color: ThemePalette.primary(this.darkMode()), radius: 6.vp)
                 Row {
-                    Text("PW").width(30.vp).fontSize(10.vp).fontWeight(FontWeight.Bold).fontColor(0xFF4B5565)
+                    Text("PW").width(30.vp).fontSize(10.vp).fontWeight(FontWeight.Bold).fontColor(ThemePalette.textSecondary(this.darkMode()))
                     Stack {
-                        TextInput(placeholder: if (this.passwordVisible) { "IDS Login password" } else { "" }, text: this.password).width(100.percent).height(38.vp).opacity(if (this.passwordVisible) { 1.0 } else { 0.0 }).selectionMenuHidden(!this.passwordVisible).backgroundColor(0xFFF5F6FB).onChange({ value => this.password = value }).id("loginPasswordInput")
-                        if (!this.passwordVisible) { Text(if (this.password == "") { "IDS Login password" } else { "********" }).width(100.percent).height(38.vp).fontSize(14.vp).fontColor(if (this.password == "") { 0xFF8A94A6 } else { 0xFF1F2937 }).onClick({ _ => FocusControl.requestFocus("loginPasswordInput") }).id("loginPasswordMask") }
+                        TextInput(placeholder: if (this.passwordVisible) { "IDS Login password" } else { "" }, text: this.password).width(100.percent).height(38.vp).opacity(if (this.passwordVisible) { 1.0 } else { 0.0 }).selectionMenuHidden(!this.passwordVisible).backgroundColor(ThemePalette.inputSurface(this.darkMode())).onChange({ value => this.password = value }).id("loginPasswordInput")
+                        if (!this.passwordVisible) { Text(if (this.password == "") { "IDS Login password" } else { "********" }).width(100.percent).height(38.vp).fontSize(14.vp).fontColor(if (this.password == "") { ThemePalette.textSecondary(this.darkMode()) } else { ThemePalette.textPrimary(this.darkMode()) }).onClick({ _ => FocusControl.requestFocus("loginPasswordInput") }).id("loginPasswordMask") }
                     }.layoutWeight(1).height(38.vp)
-                    Text(if (this.passwordVisible) { "Hide" } else { "View" }).width(44.vp).fontSize(11.vp).fontColor(0xFF4B5565).onClick({ _ => this.passwordVisible = !this.passwordVisible }).id("togglePasswordVisibility")
-                }.width(100.percent).height(40.vp).padding(left: 10.vp, right: 4.vp).margin(top: 10.vp).backgroundColor(0xFFF5F6FB).border(width: 1.vp, color: 0xFF91A6D0, radius: 6.vp)
-                Button(if (this.loading) { "Working..." } else { "Login" }).width(100.percent).height(40.vp).margin(top: 46.vp).fontSize(15.vp).fontWeight(FontWeight.Bold).fontColor(0xFFFFFFFF).backgroundColor(0xFF46699D).borderRadius(7.vp).onClick({ _ => this.validate() }).id("loginSubmitButton")
-                Button("Mock 预览主页（仅 UI，不登录）").width(100.percent).height(36.vp).margin(top: 8.vp).fontSize(12.vp).fontColor(0xFF46699D).backgroundColor(0xFFEAF2FC).borderRadius(7.vp).onClick({ _ => this.openMockPreview() }).id("mockHomePreviewButton")
+                    Text(if (this.passwordVisible) { "Hide" } else { "View" }).width(44.vp).fontSize(11.vp).fontColor(ThemePalette.textSecondary(this.darkMode())).onClick({ _ => this.passwordVisible = !this.passwordVisible }).id("togglePasswordVisibility")
+                }.width(100.percent).height(40.vp).padding(left: 10.vp, right: 4.vp).margin(top: 10.vp).backgroundColor(ThemePalette.inputSurface(this.darkMode())).border(width: 1.vp, color: ThemePalette.primary(this.darkMode()), radius: 6.vp)
+                Button(if (this.loading) { "Working..." } else { "Login" }).width(100.percent).height(40.vp).margin(top: 46.vp).fontSize(15.vp).fontWeight(FontWeight.Bold).fontColor(ThemePalette.primaryText()).backgroundColor(ThemePalette.primary(this.darkMode())).borderRadius(7.vp).onClick({ _ => this.validate() }).id("loginSubmitButton")
+                Button("Mock 预览主页（仅 UI，不登录）").width(100.percent).height(36.vp).margin(top: 8.vp).fontSize(12.vp).fontColor(ThemePalette.primary(this.darkMode())).backgroundColor(ThemePalette.primaryContainer(this.darkMode())).borderRadius(7.vp).onClick({ _ => this.openMockPreview() }).id("mockHomePreviewButton")
                 if (this.captchaImage != "") {
                     Text("IDS verification").fontSize(14.vp).fontWeight(FontWeight.Bold).margin(top: 16.vp)
                     Stack {
@@ -241,7 +246,7 @@ public class LoginWindow {
                     Text("View network interaction").fontSize(11.vp).fontColor(0xFF7C8DAA).margin(left: 22.vp).onClick({ _ => this.status = "IDS network status is shown below; sensitive request data is never persisted." }).id("viewNetworkInteraction")
                 }.margin(top: 18.vp)
                 if (this.status != "") { Text(this.status).fontSize(11.vp).fontColor(0xFF68758A).margin(top: 12.vp).id("loginStatus") }
-            }.width(100.percent).height(100.percent).padding(left: 33.vp, right: 33.vp, top: 58.vp).alignItems(HorizontalAlign.Center)
+            }.width(100.percent).height(100.percent).padding(left: 33.vp, right: 33.vp, top: 58.vp).alignItems(HorizontalAlign.Center).backgroundColor(ThemePalette.pageBackground(this.darkMode()))
         }
     }
 }

@@ -58,7 +58,12 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Final HAP reports `BUILD SUCCESSFUL in 7 s 853 ms`, installed on `127.0.0.1:5555`, and launched as PID 15098.
 - `acceptance/runtime/2026-08-04-settings-traditional-final/` passed 9/9 steps and 4/4 assertions. Bounded target app logging contains 0 FATAL, 0 ERROR and 0 WARN.
 - Follow-up: all settings copy now uses the source `zh_TW` wording, the selected language is persisted as Traditional Chinese, and `acceptance/runtime/2026-08-04-settings-traditional-final/` again passes 9/9 steps and 4/4 assertions with clean target-app logging.
-## Phase 2 academic features
+## 设置深浅色迁移（2026-08-06）
+
+- 对照 `source_2.0` 的 `Preference.brightness`、`ThemeController.updateTheme()`、`DefaultColor.light/dark` 迁移了纯仓颉全局外观状态。
+- 新增 `themes/app_theme.cj`，启动时读取 `SessionStore` 的 `System`/`Light`/`Dark` 偏好并通过 `Environment → AppStorage → @StorageProp` 分发；设置页点击后立即更新运行中的设置页、首页壳、底部导航和登录输入区。
+- `BUILD SUCCESSFUL in 11 s 680 ms`；x86_64 HAP 安装启动成功。`settings-color-mode.json` 的 Dark → Home → Light 场景通过 4/4 断言，截图、控件树和 bounded hilog 见 `acceptance/runtime/2026-08-06-settings-color-mode-retry/`。
+- 当前只完成源项目的 brightness/system 三态迁移；源项目六项 `ColorSeed` 颜色选择器及所有独立功能页的完整暗色细节仍需后续切片，不标记为完全主题一致。
 
 - Implemented real Ehall request boundaries for timetable (xskcb), scores (cjcx/xscjcx) and examinations (wdksap), with session gating, timeouts, HTTP/error handling and stdx JSON parsing.
 - Added authenticated Tools pages with refresh, loading, empty/error state and scrollable course, score and examination list layouts.

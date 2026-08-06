@@ -6,6 +6,7 @@ import ohos.arkui.state_macro_manage.*
 import ohos.business_exception.*
 import ohos.resource.*
 import ohos_app_cangjie_entry.repository.*
+import ohos_app_cangjie_entry.themes.*
 
 import ohos_app_cangjie_entry.page.class_attendance.*
 import ohos_app_cangjie_entry.page.classtable.*
@@ -29,6 +30,10 @@ public class AlignedHomePage {
     let onLogout: () -> Unit
     @State var selected: Int64 = 0
     @State var homeFeature: Int64 = 0
+    @StorageProp["xdyouThemePreference"] let themePreference: String = "System"
+    @StorageProp["colorMode"] let systemColorMode: ColorMode = ColorMode.Light
+
+    func darkMode(): Bool { return AppTheme.isDark(this.themePreference, this.systemColorMode) }
 
     func selectPage(index: Int64): Unit {
         this.selected = index
@@ -95,8 +100,8 @@ public class AlignedHomePage {
                 AlignedNavItem(icon: @r(app.media.nav_pig), label: "豬圖鑑賞", index: 3, selectedIndex: this.selected, onTap: { => this.selectPage(3) }, stableId: "navTo_pig")
                 AlignedNavItem(icon: @r(app.media.nav_user), label: "設置", index: 4, selectedIndex: this.selected, onTap: { => this.selectPage(4) }, stableId: "navTo_settings")
             }.width(100.percent).height(88.vp).padding(left: 3.vp, right: 3.vp, top: 5.vp, bottom: 3.vp)
-                .backgroundColor(0xFFF3F3FB).border(width: 1.vp, color: 0xFFE1E1EA)
-        }.width(100.percent).height(100.percent).backgroundColor(0xFFFAF9FF)
+                .backgroundColor(ThemePalette.navSurface(this.darkMode())).border(width: 1.vp, color: ThemePalette.border(this.darkMode()))
+        }.width(100.percent).height(100.percent).backgroundColor(ThemePalette.pageBackground(this.darkMode()))
     }
 }
 
@@ -108,14 +113,17 @@ public class AlignedNavItem {
     @Prop var selectedIndex: Int64
     let onTap: () -> Unit
     let stableId: String
+    @StorageProp["xdyouThemePreference"] let themePreference: String = "System"
+    @StorageProp["colorMode"] let systemColorMode: ColorMode = ColorMode.Light
+    func darkMode(): Bool { return AppTheme.isDark(this.themePreference, this.systemColorMode) }
     func build() {
         Column {
             Row {
                 Image(this.icon).width(25.vp).height(25.vp).objectFit(ImageFit.Contain)
-                    .fillColor(if (this.selectedIndex == this.index) { 0xFFFFFFFF } else { 0xFF4D515B })
+                    .fillColor(if (this.selectedIndex == this.index) { ThemePalette.primaryText() } else { ThemePalette.textSecondary(this.darkMode()) })
             }.width(58.vp).height(34.vp).justifyContent(FlexAlign.Center)
-                .backgroundColor(if (this.selectedIndex == this.index) { 0xFF476FA9 } else { 0xFFF3F3FB }).borderRadius(17.vp)
-            Text(this.label).fontSize(12.vp).fontColor(if (this.selectedIndex == this.index) { 0xFF41699F } else { 0xFF3F434C })
+                .backgroundColor(if (this.selectedIndex == this.index) { ThemePalette.primary(this.darkMode()) } else { ThemePalette.navSurface(this.darkMode()) }).borderRadius(17.vp)
+            Text(this.label).fontSize(12.vp).fontColor(if (this.selectedIndex == this.index) { ThemePalette.primary(this.darkMode()) } else { ThemePalette.textSecondary(this.darkMode()) })
                 .fontWeight(if (this.selectedIndex == this.index) { FontWeight.Medium } else { FontWeight.Normal }).margin(top: 4.vp)
         }.layoutWeight(1).height(78.vp).justifyContent(FlexAlign.Center).onClick({ _ => this.onTap() }).id(this.stableId)
     }
@@ -137,6 +145,9 @@ public class AlignedCampusPage {
     let onExperiment: () -> Unit
     let onEnergy: () -> Unit
     @State var editMode: Bool = false
+    @StorageProp["xdyouThemePreference"] let themePreference: String = "System"
+    @StorageProp["colorMode"] let systemColorMode: ColorMode = ColorMode.Light
+    func darkMode(): Bool { return AppTheme.isDark(this.themePreference, this.systemColorMode) }
 
     func build() {
         Column {
@@ -189,7 +200,7 @@ public class AlignedCampusPage {
                     Blank().height(20.vp)
                 }.width(100.percent).padding(left: 16.vp, right: 16.vp, top: 11.vp).alignItems(HorizontalAlign.Start)
             }.width(100.percent).layoutWeight(1).align(Alignment.TopStart)
-        }.width(100.percent).height(100.percent).backgroundColor(0xFFFAF9FF)
+        }.width(100.percent).height(100.percent).backgroundColor(ThemePalette.pageBackground(this.darkMode()))
     }
 }
 
