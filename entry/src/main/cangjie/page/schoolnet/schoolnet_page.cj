@@ -22,38 +22,59 @@ public class SchoolnetPage {
     @State var balance: Int64 = 0
     let controller = SchoolnetController()
 
-    protected override func aboutToAppear(): Unit { this.reload() }
+    protected override func aboutToAppear(): Unit {
+        this.reload()
+    }
 
     func reload(): Unit {
         this.loading = true
         this.status = "正在确认校园网并读取在线账号…"
         this.controller.reload(
-            { info => launch {
-                this.loading = false
-                this.loaded = true
-                this.userName = info.userName
-                this.realName = info.realName
-                this.product = info.productsName
-                this.ip = info.onlineIp
-                this.devices = info.onlineDeviceTotal
-                this.used = info.sumBytes
-                this.remain = info.remainBytes
-                this.balance = info.userBalance
-                this.status = "在线账号信息已更新。"
-            } },
-            { message => launch { this.loading = false; this.loaded = false; this.status = message } }
+            {
+                info => launch {
+                    this.loading = false
+                    this.loaded = true
+                    this.userName = info.userName
+                    this.realName = info.realName
+                    this.product = info.productsName
+                    this.ip = info.onlineIp
+                    this.devices = info.onlineDeviceTotal
+                    this.used = info.sumBytes
+                    this.remain = info.remainBytes
+                    this.balance = info.userBalance
+                    this.status = "在线账号信息已更新。"
+                }
+            },
+            {
+                message => launch {
+                    this.loading = false
+                    this.loaded = false
+                    this.status = message
+                }
+            }
         )
     }
 
     func formatBytes(value: Int64): String {
-        if (value < 1000) { return "${value} B" }
-        if (value < 1000000) { return "${value / 1000} KB" }
-        if (value < 1000000000) { return "${value / 1000000} MB" }
+        if (value < 1000) {
+            return "${value} B"
+        }
+        if (value < 1000000) {
+            return "${value / 1000} KB"
+        }
+        if (value < 1000000000) {
+            return "${value / 1000000} MB"
+        }
         return "${value / 1000000000} GB"
     }
 
-    @Builder func headerTrailing() {
-        Button(if (this.loading) { "刷新中" } else { "刷新" }).height(40.vp).onClick({ _ => this.reload() }).id("schoolnetRefresh")
+    @Builder
+    func headerTrailing() {
+        Button(if (this.loading) {
+            "刷新中"
+        } else {
+            "刷新"
+        }).height(40.vp).onClick({_ => this.reload()}).id("schoolnetRefresh")
     }
 
     func build() {
@@ -69,20 +90,46 @@ public class SchoolnetPage {
                             Text("姓名：${this.realName}").fontSize(14.vp).margin(top: 6.vp)
                             Text("套餐：${this.product}").fontSize(14.vp).margin(top: 6.vp)
                             Text("余额：¥${this.balance}").fontSize(14.vp).fontColor(0xFF2D8B66).margin(top: 6.vp)
-                        }.width(100.percent).padding(16.vp).margin(top: 14.vp).backgroundColor(0xFFFFFFFF).borderRadius(13.vp).alignItems(HorizontalAlign.Start)
+                        }
+                            .width(100.percent)
+                            .padding(16.vp)
+                            .margin(top: 14.vp)
+                            .backgroundColor(0xFFFFFFFF)
+                            .borderRadius(13.vp)
+                            .alignItems(HorizontalAlign.Start)
                         Column {
                             Text("流量使用").fontSize(18.vp).fontWeight(FontWeight.Bold)
                             Text("已用：${this.formatBytes(this.used)}").fontSize(14.vp).margin(top: 10.vp)
-                            Text("剩余：${this.formatBytes(this.remain)}").fontSize(14.vp).fontColor(0xFF2D8B66).margin(top: 6.vp)
-                        }.width(100.percent).padding(16.vp).margin(top: 10.vp).backgroundColor(0xFFFFFFFF).borderRadius(13.vp).alignItems(HorizontalAlign.Start)
+                            Text("剩余：${this.formatBytes(this.remain)}")
+                                .fontSize(14.vp)
+                                .fontColor(0xFF2D8B66)
+                                .margin(top: 6.vp)
+                        }
+                            .width(100.percent)
+                            .padding(16.vp)
+                            .margin(top: 10.vp)
+                            .backgroundColor(0xFFFFFFFF)
+                            .borderRadius(13.vp)
+                            .alignItems(HorizontalAlign.Start)
                         Column {
                             Text("在线设备").fontSize(18.vp).fontWeight(FontWeight.Bold)
                             Text("当前 IP：${this.ip}").fontSize(14.vp).margin(top: 10.vp)
                             Text("在线设备数：${this.devices}").fontSize(14.vp).margin(top: 6.vp)
-                        }.width(100.percent).padding(16.vp).margin(top: 10.vp).backgroundColor(0xFFFFFFFF).borderRadius(13.vp).alignItems(HorizontalAlign.Start)
+                        }
+                            .width(100.percent)
+                            .padding(16.vp)
+                            .margin(top: 10.vp)
+                            .backgroundColor(0xFFFFFFFF)
+                            .borderRadius(13.vp)
+                            .alignItems(HorizontalAlign.Start)
                     }.width(100.percent)
                 }.width(100.percent).layoutWeight(1)
             }
-        }.width(100.percent).height(100.percent).padding(18.vp).backgroundColor(0xFFF7F9FC).alignItems(HorizontalAlign.Start)
+        }
+            .width(100.percent)
+            .height(100.percent)
+            .padding(18.vp)
+            .backgroundColor(0xFFF7F9FC)
+            .alignItems(HorizontalAlign.Start)
     }
 }

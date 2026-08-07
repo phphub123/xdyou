@@ -21,44 +21,113 @@ public class EnergyPage {
     func reloadAircon(): Unit {
         this.loading = true
         this.status = "正在查询空调设备能耗…"
-        this.controller.reloadAircon(this.imei, { value => launch {
-            this.loading = false
-            this.hasResult = true
-            this.resultImei = value.imei
-            this.resultAmount = value.electricAmount
-            this.resultTime = value.stateTime.toString()
-            this.status = "空调设备状态已更新。"
-        } }, { message => launch { this.loading = false; this.status = message } })
+        this.controller.reloadAircon(this.imei, {
+            value => launch {
+                this.loading = false
+                this.hasResult = true
+                this.resultImei = value.imei
+                this.resultAmount = value.electricAmount
+                this.resultTime = value.stateTime.toString()
+                this.status = "空调设备状态已更新。"
+            }
+        }, {
+            message => launch {
+                this.loading = false
+                this.status = message
+            }
+        })
     }
 
-    @Builder func headerTrailing() {
-        Button(if (this.loading) { "查询中" } else { "查询" }).height(40.vp).onClick({ _ => this.reloadAircon() }).id("energyRefresh")
+    @Builder
+    func headerTrailing() {
+        Button(if (this.loading) {
+            "查询中"
+        } else {
+            "查询"
+        }).height(40.vp).onClick({_ => this.reloadAircon()}).id("energyRefresh")
     }
 
     func build() {
         Column {
-            PageHeader(title: "电量与能耗", onBack: this.onBack, backId: "energyBack", trailing: this.headerTrailing)
+            PageHeader(
+                title: "电量与能耗",
+                onBack: this.onBack,
+                backId: "energyBack",
+                trailing: this.headerTrailing
+            )
             Text(this.status).fontSize(12.vp).fontColor(0xFF65738A).margin(top: 8.vp).id("energyStatus")
-            Scroll { Column {
+            Scroll {
                 Column {
-                    Text("宿舍电费与水费").fontSize(18.vp).fontWeight(FontWeight.Bold)
-                    Text("该查询仅在校园网和真实 IDS 会话可用；未满足条件时会保留真实错误，不显示演示余额。")
-                        .fontSize(13.vp).fontColor(0xFF65738A).margin(top: 8.vp)
-                }.width(100.percent).padding(14.vp).margin(top: 14.vp).backgroundColor(0xFFFFFFFF).borderRadius(12.vp).alignItems(HorizontalAlign.Start).id("energyCampusBoundary")
-                Column {
-                    Text("空调能耗").fontSize(18.vp).fontWeight(FontWeight.Bold)
-                    TextInput(placeholder: "输入空调设备 IMEI", text: this.imei).width(100.percent).height(42.vp).margin(top: 10.vp)
-                        .onChange({ value => this.imei = value }).id("energyImeiInput")
-                    Button("使用 IMEI 查询").width(100.percent).height(40.vp).margin(top: 9.vp).onClick({ _ => this.reloadAircon() }).id("energyAirconQuery")
-                    if (this.hasResult) { Column {
-                        Text("设备：${this.resultImei}").fontSize(14.vp)
-                        Text("累计电量：${this.resultAmount}").fontSize(16.vp).fontColor(0xFF2D8B66).margin(top: 7.vp)
-                        Text("设备状态时间：${this.resultTime}").fontSize(12.vp).fontColor(0xFF65738A).margin(top: 7.vp)
-                    }.width(100.percent).margin(top: 12.vp).alignItems(HorizontalAlign.Start).id("energyAirconResult")
-                    } else { Text("尚未查询空调设备；IMEI 不会被持久化或写入日志。").fontSize(12.vp).fontColor(0xFF65738A).margin(top: 10.vp).id("energyAirconEmpty") }
-                }.width(100.percent).padding(14.vp).margin(top: 10.vp).backgroundColor(0xFFFFFFFF).borderRadius(12.vp).alignItems(HorizontalAlign.Start).id("energyAirconCard")
-                Blank().height(20.vp)
-            }.width(100.percent) }.width(100.percent).layoutWeight(1).align(Alignment.TopStart)
-        }.width(100.percent).height(100.percent).padding(18.vp).backgroundColor(0xFFF7F9FC).alignItems(HorizontalAlign.Start)
+                    Column {
+                        Text("宿舍电费与水费").fontSize(18.vp).fontWeight(FontWeight.Bold)
+                        Text(
+                            "该查询仅在校园网和真实 IDS 会话可用；" +
+                            "未满足条件时会保留真实错误，不显示演示余额。"
+                        )
+                            .fontSize(13.vp)
+                            .fontColor(0xFF65738A)
+                            .margin(top: 8.vp)
+                    }
+                        .width(100.percent)
+                        .padding(14.vp)
+                        .margin(top: 14.vp)
+                        .backgroundColor(0xFFFFFFFF)
+                        .borderRadius(12.vp)
+                        .alignItems(HorizontalAlign.Start)
+                        .id("energyCampusBoundary")
+                    Column {
+                        Text("空调能耗").fontSize(18.vp).fontWeight(FontWeight.Bold)
+                        TextInput(placeholder: "输入空调设备 IMEI", text: this.imei)
+                            .width(100.percent)
+                            .height(42.vp)
+                            .margin(top: 10.vp)
+                            .onChange({value => this.imei = value})
+                            .id("energyImeiInput")
+                        Button("使用 IMEI 查询")
+                            .width(100.percent)
+                            .height(40.vp)
+                            .margin(top: 9.vp)
+                            .onClick({_ => this.reloadAircon()})
+                            .id("energyAirconQuery")
+                        if (this.hasResult) {
+                            Column {
+                                Text("设备：${this.resultImei}").fontSize(14.vp)
+                                Text("累计电量：${this.resultAmount}")
+                                    .fontSize(16.vp)
+                                    .fontColor(0xFF2D8B66)
+                                    .margin(top: 7.vp)
+                                Text("设备状态时间：${this.resultTime}")
+                                    .fontSize(12.vp)
+                                    .fontColor(0xFF65738A)
+                                    .margin(top: 7.vp)
+                            }
+                                .width(100.percent)
+                                .margin(top: 12.vp)
+                                .alignItems(HorizontalAlign.Start)
+                                .id("energyAirconResult")
+                        } else {
+                            Text("尚未查询空调设备；IMEI 不会被持久化或写入日志。")
+                                .fontSize(12.vp)
+                                .fontColor(0xFF65738A)
+                                .margin(top: 10.vp)
+                                .id("energyAirconEmpty")
+                        }
+                    }
+                        .width(100.percent)
+                        .padding(14.vp)
+                        .margin(top: 10.vp)
+                        .backgroundColor(0xFFFFFFFF)
+                        .borderRadius(12.vp)
+                        .alignItems(HorizontalAlign.Start)
+                        .id("energyAirconCard")
+                    Blank().height(20.vp)
+                }.width(100.percent)
+            }.width(100.percent).layoutWeight(1).align(Alignment.TopStart)
+        }
+            .width(100.percent)
+            .height(100.percent)
+            .padding(18.vp)
+            .backgroundColor(0xFFF7F9FC)
+            .alignItems(HorizontalAlign.Start)
     }
 }

@@ -3,10 +3,8 @@
 // SPDX-License-Identifier: MPL-2.0
 
 import 'dart:convert';
-import 'package:cookie_jar/cookie_jar.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
-import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:encrypter_plus/encrypter_plus.dart';
 import 'package:synchronized/synchronized.dart';
 import 'package:watermeter/model/fetch_result.dart';
@@ -19,7 +17,7 @@ import 'package:watermeter/repository/preference.dart' as preference;
 
 /// Get data from Xidian Sport.
 /// Notice that it use separate cookie jar
-class SportSession with NetworkClient {
+class SportSession {
   static final _lock = Lock();
   static const _cacheHintMissingPasswordKey =
       "sport.cache_hint_missing_password";
@@ -41,11 +39,6 @@ class SportSession with NetworkClient {
     "token失效",
     "重新登录",
   };
-
-  final PersistCookieJar sportCookieJar = PersistCookieJar(
-    persistSession: true,
-    storage: FileStorage("${supportPath.path}/cookie/sport/"),
-  );
 
   static SportScore? _scoreCache;
   static DateTime _scoreCacheFetchTime = DateTime.now();
@@ -227,8 +220,6 @@ class SportSession with NetworkClient {
 
   static var token = '';
 
-  final baseURL = 'http://tybjxgl.xidian.edu.cn/app/';
-
   final rsaKey = """-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAq4l
 aolA7zAk7jzsqDb3Oa5pS/uCPlZfASK8Soh/NzEmry77QDZ
@@ -364,7 +355,7 @@ awb4B45zUwIDAQAB
     /// Clear Auth State
     userId = '';
     token = '';
-    await sportCookieJar.deleteAll();
+    await NetworkCookieJars.sport.deleteAll();
 
     await _ensureAuthenticated(force: true);
 
@@ -410,25 +401,12 @@ awb4B45zUwIDAQAB
     return toReturn;
   }
 
-  /// Maybe I wrote how to store the data is better.
-  Dio get _dio {
-    Dio toReturn = Dio(
-      BaseOptions(
-        baseUrl: baseURL,
-        contentType: Headers.formUrlEncodedContentType,
-      ),
-    );
-    toReturn.interceptors.add(CookieManager(sportCookieJar));
-    toReturn.interceptors.add(logDioAdapter);
-    return toReturn;
-  }
-
   Future<Map<String, dynamic>> require({
     required String subWebsite,
     required Map<String, dynamic> body,
     bool isForce = false,
   }) async {
-    var response = await _dio.post(
+    var response = await NetworkClients.sportDio.post(
       subWebsite,
       data: body,
       options: Options(headers: _getHead(body)),

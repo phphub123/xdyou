@@ -1,274 +1,10 @@
 {
   "nodes_added": [
     {
-      "id": "type:Column#7",
-      "type": "Column",
-      "text": "",
-      "bounds": "[59,581][1261,868]"
-    },
-    {
-      "id": "type:Toggle#0",
-      "type": "Toggle",
-      "text": "",
-      "bounds": "[1002,1715][1198,1834]"
-    },
-    {
-      "id": "key:settingsLowElectricityToggle",
-      "type": "Toggle",
-      "text": "",
-      "bounds": "[1002,2006][1198,2125]"
-    },
-    {
-      "id": "key:settingsThemeSystem",
+      "id": "text:界面設置",
       "type": "Text",
-      "text": "▯",
-      "bounds": "[796,1418][929,1551]"
-    },
-    {
-      "id": "type:Row#21",
-      "type": "Row",
-      "text": "",
-      "bounds": "[1086,55][1166,136]"
-    },
-    {
-      "id": "text:◕",
-      "type": "Text",
-      "text": "◕",
-      "bounds": "[1062,1418][1195,1551]"
-    },
-    {
-      "id": "type:Column#10",
-      "type": "Column",
-      "text": "",
-      "bounds": "[59,1050][1261,2450]"
-    },
-    {
-      "id": "type:Row#13",
-      "type": "Row",
-      "text": "",
-      "bounds": "[559,2517][762,2636]"
-    },
-    {
-      "id": "type:Row#11",
-      "type": "Row",
-      "text": "",
-      "bounds": "[41,2517][244,2636]"
-    },
-    {
-      "id": "key:settingsTimelineToggle",
-      "type": "Toggle",
-      "text": "",
-      "bounds": "[1002,1715][1198,1834]"
-    },
-    {
-      "id": "type:Text#12",
-      "type": "Text",
-      "text": "黑夜模式",
-      "bounds": "[129,1494][326,1551]"
-    },
-    {
-      "id": "type:Text#19",
-      "type": "Text",
-      "text": "電量小於閾值時 電量卡片變色提醒",
-      "bounds": "[129,2075][878,2132]"
-    },
-    {
-      "id": "type:Column#15",
-      "type": "Column",
-      "text": "",
-      "bounds": "[59,1631][1261,1922]"
-    },
-    {
-      "id": "type:Image#0",
-      "type": "Image",
-      "text": "",
-      "bounds": "[99,2533][187,2621]"
-    },
-    {
-      "id": "text:設置深淺色",
-      "type": "Text",
-      "text": "設置深淺色",
-      "bounds": "[129,1418][409,1484]"
-    },
-    {
-      "id": "type:Column#24",
-      "type": "Column",
-      "text": "",
-      "bounds": "[789,2471][1048,2744]"
-    },
-    {
-      "id": "type:Row#12",
-      "type": "Row",
-      "text": "",
-      "bounds": "[300,2517][503,2636]"
-    },
-    {
-      "id": "type:Column#17",
-      "type": "Column",
-      "text": "",
-      "bounds": "[59,1922][1261,2213]"
-    },
-    {
-      "id": "type:Column#18",
-      "type": "Column",
-      "text": "",
-      "bounds": "[129,1999][967,2132]"
-    },
-    {
-      "id": "text:沒有日程時 減少空間佔用",
-      "type": "Text",
-      "text": "沒有日程時 減少空間佔用",
-      "bounds": "[129,1784][682,1841]"
-    },
-    {
-      "id": "text:低電量卡片變色提醒",
-      "type": "Text",
-      "text": "低電量卡片變色提醒",
-      "bounds": "[129,1999][633,2065]"
-    },
-    {
-      "id": "type:Image#2",
-      "type": "Image",
-      "text": "",
-      "bounds": "[617,2533][705,2621]"
-    },
-    {
-      "id": "text:設置",
-      "type": "Text",
-      "text": "設置",
-      "bounds": "[1135,2650][1220,2699]"
-    },
-    {
-      "id": "type:Column#6",
-      "type": "Column",
-      "text": "",
-      "bounds": "[129,367][1101,500]"
-    },
-    {
-      "id": "type:Divider#0",
-      "type": "Divider",
-      "text": "",
-      "bounds": "[108,577][1212,581]"
-    },
-    {
-      "id": "type:Text#28",
-      "type": "Text",
-      "text": "11",
-      "bounds": "[49,66][111,128]"
-    },
-    {
-      "id": "type:Column#20",
-      "type": "Column",
-      "text": "",
-      "bounds": "[129,2289][1101,2422]"
-    },
-    {
-      "id": "type:Column#2",
-      "type": "Column",
-      "text": "",
-      "bounds": "[0,137][1320,2450]"
-    },
-    {
-      "id": "text:☼",
-      "type": "Text",
-      "text": "☼",
-      "bounds": "[929,1418][1062,1551]"
-    },
-    {
-      "id": "type:Text#29",
-      "type": "Text",
-      "text": ":",
-      "bounds": "[111,71][126,124]"
-    },
-    {
-      "id": "text:最新版本：等待獲取",
-      "type": "Text",
-      "text": "最新版本：等待獲取",
-      "bounds": "[129,734][571,791]"
-    },
-    {
-      "id": "type:Divider#3",
-      "type": "Divider",
-      "text": "",
-      "bounds": "[108,1918][1212,1922]"
-    },
-    {
-      "id": "type:Column#9",
-      "type": "Column",
-      "text": "",
-      "bounds": "[59,896][1261,2450]"
-    },
-    {
-      "id": "type:Divider#1",
-      "type": "Divider",
-      "text": "",
-      "bounds": "[108,1337][1212,1341]"
-    },
-    {
-      "id": "text:關於本程序",
-      "type": "Text",
-      "text": "關於本程序",
-      "bounds": "[129,367][409,433]"
-    },
-    {
-      "id": "type:Row#17",
-      "type": "Row",
-      "text": "",
-      "bounds": "[0,0][1320,136]"
-    },
-    {
-      "id": "type:Column#12",
-      "type": "Column",
-      "text": "",
-      "bounds": "[129,1127][1101,1260]"
-    },
-    {
-      "id": "text:▯",
-      "type": "Text",
-      "text": "▯",
-      "bounds": "[796,1418][929,1551]"
-    },
-    {
-      "id": "text:顏色設置",
-      "type": "Text",
-      "text": "顏色設置",
-      "bounds": "[129,1127][353,1193]"
-    },
-    {
-      "id": "type:Column#13",
-      "type": "Column",
-      "text": "",
-      "bounds": "[59,1341][1261,1632]"
-    },
-    {
-      "id": "text:黑夜模式",
-      "type": "Text",
-      "text": "黑夜模式",
-      "bounds": "[129,1494][326,1551]"
-    },
-    {
-      "id": "type:Text#16",
-      "type": "Text",
-      "text": "簡化日程時間軸",
-      "bounds": "[129,1708][521,1774]"
-    },
-    {
-      "id": "type:Text#27",
-      "type": "Text",
-      "text": "設置",
-      "bounds": "[1135,2650][1220,2699]"
-    },
-    {
-      "id": "type:Text#26",
-      "type": "Text",
-      "text": "豬圖鑑賞",
-      "bounds": "[834,2650][1003,2699]"
-    },
-    {
-      "id": "type:Column#21",
-      "type": "Column",
-      "text": "",
-      "bounds": "[13,2471][272,2744]"
+      "text": "界面設置",
+      "bounds": "[548,940][772,1006]"
     },
     {
       "id": "text:電量小於閾值時 電量卡片變色提醒",
@@ -277,94 +13,10 @@
       "bounds": "[129,2075][878,2132]"
     },
     {
-      "id": "type:Image#1",
-      "type": "Image",
-      "text": "",
-      "bounds": "[358,2533][446,2621]"
-    },
-    {
-      "id": "type:Column#11",
-      "type": "Column",
-      "text": "",
-      "bounds": "[59,1050][1261,1341]"
-    },
-    {
-      "id": "type:Text#14",
-      "type": "Text",
-      "text": "☼",
-      "bounds": "[929,1418][1062,1551]"
-    },
-    {
-      "id": "type:Toggle#1",
-      "type": "Toggle",
-      "text": "",
-      "bounds": "[1002,2006][1198,2125]"
-    },
-    {
-      "id": "type:Row#19",
-      "type": "Row",
-      "text": "",
-      "bounds": "[49,66][126,128]"
-    },
-    {
-      "id": "key:settingsThemeDark",
-      "type": "Text",
-      "text": "◕",
-      "bounds": "[1062,1418][1195,1551]"
-    },
-    {
-      "id": "key:navTo_pig",
-      "type": "Column",
-      "text": "",
-      "bounds": "[789,2471][1048,2744]"
-    },
-    {
-      "id": "type:Text#31",
-      "type": "Text",
-      "text": "100",
-      "bounds": "[1182,75][1252,120]"
-    },
-    {
-      "id": "text:界面設置",
-      "type": "Text",
-      "text": "界面設置",
-      "bounds": "[548,940][772,1006]"
-    },
-    {
-      "id": "type:Text#22",
-      "type": "Text",
-      "text": "›",
-      "bounds": "[1129,2294][1163,2417]"
-    },
-    {
-      "id": "type:Row#18",
-      "type": "Row",
-      "text": "",
-      "bounds": "[49,55][188,136]"
-    },
-    {
-      "id": "type:Text#23",
+      "id": "text:校園信息",
       "type": "Text",
       "text": "校園信息",
       "bounds": "[58,2650][227,2699]"
-    },
-    {
-      "id": "text:簡化日程時間軸",
-      "type": "Text",
-      "text": "簡化日程時間軸",
-      "bounds": "[129,1708][521,1774]"
-    },
-    {
-      "id": "type:Text#20",
-      "type": "Text",
-      "text": "低電量閾值",
-      "bounds": "[129,2289][409,2355]"
-    },
-    {
-      "id": "key:navTo_toolbox",
-      "type": "Column",
-      "text": "",
-      "bounds": "[531,2471][790,2744]"
     },
     {
       "id": "type:Column#3",
@@ -373,64 +25,88 @@
       "bounds": "[0,137][1320,2450]"
     },
     {
-      "id": "key:navTo_home",
-      "type": "Column",
-      "text": "",
-      "bounds": "[13,2471][272,2744]"
-    },
-    {
-      "id": "text:春風綠",
-      "type": "Text",
-      "text": "春風綠",
-      "bounds": "[129,1203][277,1260]"
-    },
-    {
-      "id": "type:Image#3",
-      "type": "Image",
-      "text": "",
-      "bounds": "[875,2533][963,2621]"
-    },
-    {
       "id": "type:Column#8",
       "type": "Column",
       "text": "",
       "bounds": "[129,658][1101,791]"
     },
     {
-      "id": "type:Image#4",
-      "type": "Image",
-      "text": "",
-      "bounds": "[1134,2533][1222,2621]"
-    },
-    {
-      "id": "type:Column#5",
+      "id": "type:Column#23",
       "type": "Column",
       "text": "",
-      "bounds": "[59,290][1261,581]"
+      "bounds": "[531,2471][790,2744]"
     },
     {
-      "id": "type:Text#15",
+      "id": "text:睿思論壇",
       "type": "Text",
-      "text": "◕",
-      "bounds": "[1062,1418][1195,1551]"
+      "text": "睿思論壇",
+      "bounds": "[317,2650][486,2699]"
     },
     {
-      "id": "type:Divider#2",
+      "id": "text:低電量卡片變色提醒",
+      "type": "Text",
+      "text": "低電量卡片變色提醒",
+      "bounds": "[129,1999][633,2065]"
+    },
+    {
+      "id": "type:Column#12",
+      "type": "Column",
+      "text": "",
+      "bounds": "[129,1127][1101,1260]"
+    },
+    {
+      "id": "type:Divider#0",
       "type": "Divider",
       "text": "",
-      "bounds": "[108,1628][1212,1632]"
+      "bounds": "[108,577][1212,581]"
     },
     {
-      "id": "text:06",
+      "id": "type:Row#16",
+      "type": "Row",
+      "text": "",
+      "bounds": "[49,55][1271,136]"
+    },
+    {
+      "id": "type:Text#13",
       "type": "Text",
-      "text": "06",
+      "text": "▯",
+      "bounds": "[796,1418][929,1551]"
+    },
+    {
+      "id": "type:Image#2",
+      "type": "Image",
+      "text": "",
+      "bounds": "[617,2533][705,2621]"
+    },
+    {
+      "id": "type:Image#0",
+      "type": "Image",
+      "text": "",
+      "bounds": "[99,2533][187,2621]"
+    },
+    {
+      "id": "key:settingsTimelineToggle",
+      "type": "Toggle",
+      "text": "",
+      "bounds": "[1002,1715][1198,1834]"
+    },
+    {
+      "id": "text:25",
+      "type": "Text",
+      "text": "25",
       "bounds": "[126,66][188,128]"
     },
     {
-      "id": "type:Column#14",
+      "id": "type:Image#1",
+      "type": "Image",
+      "text": "",
+      "bounds": "[358,2533][446,2621]"
+    },
+    {
+      "id": "type:Column#16",
       "type": "Column",
       "text": "",
-      "bounds": "[129,1418][793,1551]"
+      "bounds": "[129,1708][967,1841]"
     },
     {
       "id": "text:目前為 15 度",
@@ -439,10 +115,244 @@
       "bounds": "[129,2365][408,2422]"
     },
     {
-      "id": "type:Column#23",
+      "id": "type:Column#19",
       "type": "Column",
       "text": "",
-      "bounds": "[531,2471][790,2744]"
+      "bounds": "[59,2212][1261,2450]"
+    },
+    {
+      "id": "key:settingsThemeLight",
+      "type": "Text",
+      "text": "☼",
+      "bounds": "[929,1418][1062,1551]"
+    },
+    {
+      "id": "text:白天模式",
+      "type": "Text",
+      "text": "白天模式",
+      "bounds": "[129,1494][326,1551]"
+    },
+    {
+      "id": "text:設置",
+      "type": "Text",
+      "text": "設置",
+      "bounds": "[1135,2650][1220,2699]"
+    },
+    {
+      "id": "type:Text#18",
+      "type": "Text",
+      "text": "低電量卡片變色提醒",
+      "bounds": "[129,1999][633,2065]"
+    },
+    {
+      "id": "type:Text#12",
+      "type": "Text",
+      "text": "白天模式",
+      "bounds": "[129,1494][326,1551]"
+    },
+    {
+      "id": "type:Column#17",
+      "type": "Column",
+      "text": "",
+      "bounds": "[59,1922][1261,2213]"
+    },
+    {
+      "id": "type:Toggle#0",
+      "type": "Toggle",
+      "text": "",
+      "bounds": "[1002,1715][1198,1834]"
+    },
+    {
+      "id": "type:Column#20",
+      "type": "Column",
+      "text": "",
+      "bounds": "[129,2289][1101,2422]"
+    },
+    {
+      "id": "type:Column#4",
+      "type": "Column",
+      "text": "",
+      "bounds": "[59,290][1261,868]"
+    },
+    {
+      "id": "type:Column#22",
+      "type": "Column",
+      "text": "",
+      "bounds": "[272,2471][531,2744]"
+    },
+    {
+      "id": "type:Text#16",
+      "type": "Text",
+      "text": "簡化日程時間軸",
+      "bounds": "[129,1708][521,1774]"
+    },
+    {
+      "id": "key:navTo_home",
+      "type": "Column",
+      "text": "",
+      "bounds": "[13,2471][272,2744]"
+    },
+    {
+      "id": "type:Text#28",
+      "type": "Text",
+      "text": "07",
+      "bounds": "[49,66][111,128]"
+    },
+    {
+      "id": "text:簡化日程時間軸",
+      "type": "Text",
+      "text": "簡化日程時間軸",
+      "bounds": "[129,1708][521,1774]"
+    },
+    {
+      "id": "type:Text#25",
+      "type": "Text",
+      "text": "其他功能",
+      "bounds": "[576,2650][745,2699]"
+    },
+    {
+      "id": "text:豬圖鑑賞",
+      "type": "Text",
+      "text": "豬圖鑑賞",
+      "bounds": "[834,2650][1003,2699]"
+    },
+    {
+      "id": "type:Text#19",
+      "type": "Text",
+      "text": "電量小於閾值時 電量卡片變色提醒",
+      "bounds": "[129,2075][878,2132]"
+    },
+    {
+      "id": "type:Row#18",
+      "type": "Row",
+      "text": "",
+      "bounds": "[49,55][188,136]"
+    },
+    {
+      "id": "key:settingsLowElectricityToggle",
+      "type": "Toggle",
+      "text": "",
+      "bounds": "[1002,2006][1198,2125]"
+    },
+    {
+      "id": "type:Toggle#1",
+      "type": "Toggle",
+      "text": "",
+      "bounds": "[1002,2006][1198,2125]"
+    },
+    {
+      "id": "type:Column#14",
+      "type": "Column",
+      "text": "",
+      "bounds": "[129,1418][793,1551]"
+    },
+    {
+      "id": "type:Text#21",
+      "type": "Text",
+      "text": "目前為 15 度",
+      "bounds": "[129,2365][408,2422]"
+    },
+    {
+      "id": "text:低電量閾值",
+      "type": "Text",
+      "text": "低電量閾值",
+      "bounds": "[129,2289][409,2355]"
+    },
+    {
+      "id": "text:設置深淺色",
+      "type": "Text",
+      "text": "設置深淺色",
+      "bounds": "[129,1418][409,1484]"
+    },
+    {
+      "id": "type:Text#22",
+      "type": "Text",
+      "text": "›",
+      "bounds": "[1129,2294][1163,2417]"
+    },
+    {
+      "id": "text:最新版本：等待獲取",
+      "type": "Text",
+      "text": "最新版本：等待獲取",
+      "bounds": "[129,734][571,791]"
+    },
+    {
+      "id": "type:Row#11",
+      "type": "Row",
+      "text": "",
+      "bounds": "[41,2517][244,2636]"
+    },
+    {
+      "id": "type:Text#17",
+      "type": "Text",
+      "text": "沒有日程時 減少空間佔用",
+      "bounds": "[129,1784][682,1841]"
+    },
+    {
+      "id": "type:Column#9",
+      "type": "Column",
+      "text": "",
+      "bounds": "[59,896][1261,2450]"
+    },
+    {
+      "id": "type:Text#29",
+      "type": "Text",
+      "text": ":",
+      "bounds": "[111,71][126,124]"
+    },
+    {
+      "id": "type:Column#10",
+      "type": "Column",
+      "text": "",
+      "bounds": "[59,1050][1261,2450]"
+    },
+    {
+      "id": "type:Column#18",
+      "type": "Column",
+      "text": "",
+      "bounds": "[129,1999][967,2132]"
+    },
+    {
+      "id": "type:Scroll#0",
+      "type": "Scroll",
+      "text": "",
+      "bounds": "[0,137][1320,2450]"
+    },
+    {
+      "id": "type:Column#21",
+      "type": "Column",
+      "text": "",
+      "bounds": "[13,2471][272,2744]"
+    },
+    {
+      "id": "type:Column#2",
+      "type": "Column",
+      "text": "",
+      "bounds": "[0,137][1320,2450]"
+    },
+    {
+      "id": "text:沒有日程時 減少空間佔用",
+      "type": "Text",
+      "text": "沒有日程時 減少空間佔用",
+      "bounds": "[129,1784][682,1841]"
+    },
+    {
+      "id": "type:Divider#2",
+      "type": "Divider",
+      "text": "",
+      "bounds": "[108,1628][1212,1632]"
+    },
+    {
+      "id": "type:Text#20",
+      "type": "Text",
+      "text": "低電量閾值",
+      "bounds": "[129,2289][409,2355]"
+    },
+    {
+      "id": "type:Column#11",
+      "type": "Column",
+      "text": "",
+      "bounds": "[59,1050][1261,1341]"
     },
     {
       "id": "text:關於",
@@ -457,168 +367,6 @@
       "bounds": "[272,2471][531,2744]"
     },
     {
-      "id": "type:Row#20",
-      "type": "Row",
-      "text": "",
-      "bounds": "[1002,55][1079,136]"
-    },
-    {
-      "id": "type:Column#16",
-      "type": "Column",
-      "text": "",
-      "bounds": "[129,1708][967,1841]"
-    },
-    {
-      "id": "text:其他功能",
-      "type": "Text",
-      "text": "其他功能",
-      "bounds": "[576,2650][745,2699]"
-    },
-    {
-      "id": "type:Text#13",
-      "type": "Text",
-      "text": "▯",
-      "bounds": "[796,1418][929,1551]"
-    },
-    {
-      "id": "text:校園信息",
-      "type": "Text",
-      "text": "校園信息",
-      "bounds": "[58,2650][227,2699]"
-    },
-    {
-      "id": "text:檢查軟件更新",
-      "type": "Text",
-      "text": "檢查軟件更新",
-      "bounds": "[129,658][465,724]"
-    },
-    {
-      "id": "type:Row#22",
-      "type": "Row",
-      "text": "",
-      "bounds": "[1173,55][1271,136]"
-    },
-    {
-      "id": "text:低電量閾值",
-      "type": "Text",
-      "text": "低電量閾值",
-      "bounds": "[129,2289][409,2355]"
-    },
-    {
-      "id": "text:11, :, 06",
-      "type": "Flex",
-      "text": "11, :, 06",
-      "bounds": "[49,55][188,136]"
-    },
-    {
-      "id": "text:版本號：1.0.0+1",
-      "type": "Text",
-      "text": "版本號：1.0.0+1",
-      "bounds": "[129,443][488,500]"
-    },
-    {
-      "id": "key:settingsThemeLight",
-      "type": "Text",
-      "text": "☼",
-      "bounds": "[929,1418][1062,1551]"
-    },
-    {
-      "id": "type:Text#18",
-      "type": "Text",
-      "text": "低電量卡片變色提醒",
-      "bounds": "[129,1999][633,2065]"
-    },
-    {
-      "id": "type:Column#19",
-      "type": "Column",
-      "text": "",
-      "bounds": "[59,2212][1261,2450]"
-    },
-    {
-      "id": "type:Row#15",
-      "type": "Row",
-      "text": "",
-      "bounds": "[1076,2517][1279,2636]"
-    },
-    {
-      "id": "type:Text#25",
-      "type": "Text",
-      "text": "其他功能",
-      "bounds": "[576,2650][745,2699]"
-    },
-    {
-      "id": "type:Text#30",
-      "type": "Text",
-      "text": "06",
-      "bounds": "[126,66][188,128]"
-    },
-    {
-      "id": "type:Text#17",
-      "type": "Text",
-      "text": "沒有日程時 減少空間佔用",
-      "bounds": "[129,1784][682,1841]"
-    },
-    {
-      "id": "type:Column#25",
-      "type": "Column",
-      "text": "",
-      "bounds": "[1048,2471][1307,2744]"
-    },
-    {
-      "id": "type:Row#16",
-      "type": "Row",
-      "text": "",
-      "bounds": "[49,55][1271,136]"
-    },
-    {
-      "id": "type:Row#14",
-      "type": "Row",
-      "text": "",
-      "bounds": "[817,2517][1020,2636]"
-    },
-    {
-      "id": "text:›",
-      "type": "Text",
-      "text": "›",
-      "bounds": "[1129,2294][1163,2417]"
-    },
-    {
-      "id": "type:Divider#4",
-      "type": "Divider",
-      "text": "",
-      "bounds": "[108,2209][1212,2213]"
-    },
-    {
-      "id": "text:睿思論壇",
-      "type": "Text",
-      "text": "睿思論壇",
-      "bounds": "[317,2650][486,2699]"
-    },
-    {
-      "id": "type:Scroll#0",
-      "type": "Scroll",
-      "text": "",
-      "bounds": "[0,137][1320,2450]"
-    },
-    {
-      "id": "type:Column#22",
-      "type": "Column",
-      "text": "",
-      "bounds": "[272,2471][531,2744]"
-    },
-    {
-      "id": "text:豬圖鑑賞",
-      "type": "Text",
-      "text": "豬圖鑑賞",
-      "bounds": "[834,2650][1003,2699]"
-    },
-    {
-      "id": "key:navTo_settings",
-      "type": "Column",
-      "text": "",
-      "bounds": "[1048,2471][1307,2744]"
-    },
-    {
       "id": "type:Row#10",
       "type": "Row",
       "text": "",
@@ -631,165 +379,273 @@
       "bounds": "[317,2650][486,2699]"
     },
     {
-      "id": "type:Column#4",
-      "type": "Column",
+      "id": "type:Image#3",
+      "type": "Image",
       "text": "",
-      "bounds": "[59,290][1261,868]"
+      "bounds": "[875,2533][963,2621]"
     },
     {
-      "id": "type:Text#21",
+      "id": "type:Row#21",
+      "type": "Row",
+      "text": "",
+      "bounds": "[1086,55][1166,136]"
+    },
+    {
+      "id": "text:顏色設置",
       "type": "Text",
-      "text": "目前為 15 度",
-      "bounds": "[129,2365][408,2422]"
+      "text": "顏色設置",
+      "bounds": "[129,1127][353,1193]"
+    },
+    {
+      "id": "type:Text#31",
+      "type": "Text",
+      "text": "100",
+      "bounds": "[1182,75][1252,120]"
+    },
+    {
+      "id": "text:其他功能",
+      "type": "Text",
+      "text": "其他功能",
+      "bounds": "[576,2650][745,2699]"
+    },
+    {
+      "id": "text:檢查軟件更新",
+      "type": "Text",
+      "text": "檢查軟件更新",
+      "bounds": "[129,658][465,724]"
+    },
+    {
+      "id": "text:☼",
+      "type": "Text",
+      "text": "☼",
+      "bounds": "[929,1418][1062,1551]"
+    },
+    {
+      "id": "type:Text#30",
+      "type": "Text",
+      "text": "25",
+      "bounds": "[126,66][188,128]"
+    },
+    {
+      "id": "type:Row#13",
+      "type": "Row",
+      "text": "",
+      "bounds": "[559,2517][762,2636]"
+    },
+    {
+      "id": "type:Row#22",
+      "type": "Row",
+      "text": "",
+      "bounds": "[1173,55][1271,136]"
+    },
+    {
+      "id": "type:Divider#3",
+      "type": "Divider",
+      "text": "",
+      "bounds": "[108,1918][1212,1922]"
+    },
+    {
+      "id": "type:Text#27",
+      "type": "Text",
+      "text": "設置",
+      "bounds": "[1135,2650][1220,2699]"
+    },
+    {
+      "id": "text:07, :, 25",
+      "type": "Flex",
+      "text": "07, :, 25",
+      "bounds": "[49,55][188,136]"
+    },
+    {
+      "id": "type:Column#13",
+      "type": "Column",
+      "text": "",
+      "bounds": "[59,1341][1261,1632]"
+    },
+    {
+      "id": "type:Column#15",
+      "type": "Column",
+      "text": "",
+      "bounds": "[59,1631][1261,1922]"
+    },
+    {
+      "id": "text:明日香橙",
+      "type": "Text",
+      "text": "明日香橙",
+      "bounds": "[129,1203][326,1260]"
+    },
+    {
+      "id": "type:Text#15",
+      "type": "Text",
+      "text": "◕",
+      "bounds": "[1062,1418][1195,1551]"
+    },
+    {
+      "id": "type:Row#15",
+      "type": "Row",
+      "text": "",
+      "bounds": "[1076,2517][1279,2636]"
+    },
+    {
+      "id": "type:Divider#4",
+      "type": "Divider",
+      "text": "",
+      "bounds": "[108,2209][1212,2213]"
+    },
+    {
+      "id": "type:Column#24",
+      "type": "Column",
+      "text": "",
+      "bounds": "[789,2471][1048,2744]"
+    },
+    {
+      "id": "type:Text#23",
+      "type": "Text",
+      "text": "校園信息",
+      "bounds": "[58,2650][227,2699]"
+    },
+    {
+      "id": "type:Text#26",
+      "type": "Text",
+      "text": "豬圖鑑賞",
+      "bounds": "[834,2650][1003,2699]"
+    },
+    {
+      "id": "key:navTo_settings",
+      "type": "Column",
+      "text": "",
+      "bounds": "[1048,2471][1307,2744]"
+    },
+    {
+      "id": "text:›",
+      "type": "Text",
+      "text": "›",
+      "bounds": "[1129,2294][1163,2417]"
+    },
+    {
+      "id": "type:Row#14",
+      "type": "Row",
+      "text": "",
+      "bounds": "[817,2517][1020,2636]"
+    },
+    {
+      "id": "key:settingsThemeDark",
+      "type": "Text",
+      "text": "◕",
+      "bounds": "[1062,1418][1195,1551]"
+    },
+    {
+      "id": "key:settingsThemeSystem",
+      "type": "Text",
+      "text": "▯",
+      "bounds": "[796,1418][929,1551]"
+    },
+    {
+      "id": "text:◕",
+      "type": "Text",
+      "text": "◕",
+      "bounds": "[1062,1418][1195,1551]"
+    },
+    {
+      "id": "text:▯",
+      "type": "Text",
+      "text": "▯",
+      "bounds": "[796,1418][929,1551]"
+    },
+    {
+      "id": "type:Column#7",
+      "type": "Column",
+      "text": "",
+      "bounds": "[59,581][1261,868]"
+    },
+    {
+      "id": "type:Row#20",
+      "type": "Row",
+      "text": "",
+      "bounds": "[1002,55][1079,136]"
+    },
+    {
+      "id": "text:關於本程序",
+      "type": "Text",
+      "text": "關於本程序",
+      "bounds": "[129,367][409,433]"
+    },
+    {
+      "id": "type:Divider#1",
+      "type": "Divider",
+      "text": "",
+      "bounds": "[108,1337][1212,1341]"
+    },
+    {
+      "id": "type:Column#25",
+      "type": "Column",
+      "text": "",
+      "bounds": "[1048,2471][1307,2744]"
+    },
+    {
+      "id": "type:Row#12",
+      "type": "Row",
+      "text": "",
+      "bounds": "[300,2517][503,2636]"
+    },
+    {
+      "id": "key:navTo_pig",
+      "type": "Column",
+      "text": "",
+      "bounds": "[789,2471][1048,2744]"
+    },
+    {
+      "id": "type:Column#5",
+      "type": "Column",
+      "text": "",
+      "bounds": "[59,290][1261,581]"
+    },
+    {
+      "id": "type:Row#17",
+      "type": "Row",
+      "text": "",
+      "bounds": "[0,0][1320,136]"
+    },
+    {
+      "id": "type:Row#19",
+      "type": "Row",
+      "text": "",
+      "bounds": "[49,66][126,128]"
+    },
+    {
+      "id": "type:Image#4",
+      "type": "Image",
+      "text": "",
+      "bounds": "[1134,2533][1222,2621]"
+    },
+    {
+      "id": "text:版本號：1.0.0+1",
+      "type": "Text",
+      "text": "版本號：1.0.0+1",
+      "bounds": "[129,443][488,500]"
+    },
+    {
+      "id": "key:navTo_toolbox",
+      "type": "Column",
+      "text": "",
+      "bounds": "[531,2471][790,2744]"
+    },
+    {
+      "id": "type:Column#6",
+      "type": "Column",
+      "text": "",
+      "bounds": "[129,367][1101,500]"
+    },
+    {
+      "id": "type:Text#14",
+      "type": "Text",
+      "text": "☼",
+      "bounds": "[929,1418][1062,1551]"
     }
   ],
   "nodes_removed": [
     {
-      "id": "text:IDS Login password",
-      "type": "Text",
-      "text": "IDS Login password",
-      "bounds": "[258,935][1034,1068]"
-    },
-    {
-      "id": "key:loginSubmitButton",
-      "type": "Button",
-      "text": "Login",
-      "bounds": "[115,1232][1205,1372]"
-    },
-    {
-      "id": "key:loginPasswordInput",
-      "type": "TextInput",
-      "text": "",
-      "bounds": "[258,935][1034,1068]"
-    },
-    {
-      "id": "type:genericContainer#0",
-      "type": "genericContainer",
-      "text": "",
-      "bounds": "[658,339][662,343]"
-    },
-    {
-      "id": "type:rootWebArea#0",
-      "type": "rootWebArea",
-      "text": "",
-      "bounds": "[658,339][662,343]"
-    },
-    {
-      "id": "text:https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
-      "type": "Web",
-      "text": "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
-      "bounds": "[658,339][662,343]"
-    },
-    {
-      "id": "type:Button#0",
-      "type": "Button",
-      "text": "Login",
-      "bounds": "[115,1232][1205,1372]"
-    },
-    {
-      "id": "key:togglePasswordVisibility",
-      "type": "Text",
-      "text": "View",
-      "bounds": "[1034,979][1188,1024]"
-    },
-    {
-      "id": "text:Clear cache",
-      "type": "Text",
-      "text": "Clear cache",
-      "bounds": "[300,1589][504,1634]"
-    },
-    {
-      "id": "text:ID",
-      "type": "Text",
-      "text": "ID",
-      "bounds": "[153,804][258,849]"
-    },
-    {
-      "id": "key:mockHomePreviewButton",
-      "type": "Button",
-      "text": "Mock 预览主页（仅 UI，不登录）",
-      "bounds": "[115,1400][1205,1526]"
-    },
-    {
-      "id": "text:11, :, 05",
-      "type": "Flex",
-      "text": "11, :, 05",
-      "bounds": "[49,55][188,136]"
-    },
-    {
-      "id": "text:XDYOU",
-      "type": "Text",
-      "text": "XDYOU",
-      "bounds": "[583,468][739,600]"
-    },
-    {
-      "id": "key:loginLogo",
-      "type": "Stack",
-      "text": "",
-      "bounds": "[506,343][814,651]"
-    },
-    {
-      "id": "key:loginAccountInput",
-      "type": "TextInput",
-      "text": "",
-      "bounds": "[258,760][1174,893]"
-    },
-    {
-      "id": "key:viewNetworkInteraction",
-      "type": "Text",
-      "text": "View network interaction",
-      "bounds": "[581,1589][1020,1634]"
-    },
-    {
-      "id": "text:05",
-      "type": "Text",
-      "text": "05",
-      "bounds": "[126,66][188,128]"
-    },
-    {
-      "id": "type:genericContainer#1",
-      "type": "genericContainer",
-      "text": "",
-      "bounds": "[658,339][662,343]"
-    },
-    {
-      "id": "text:==",
-      "type": "Text",
-      "text": "==",
-      "bounds": "[629,406][692,468]"
-    },
-    {
-      "id": "type:TextInput#0",
-      "type": "TextInput",
-      "text": "",
-      "bounds": "[258,760][1174,893]"
-    },
-    {
-      "id": "text:PW",
-      "type": "Text",
-      "text": "PW",
-      "bounds": "[153,981][258,1022]"
-    },
-    {
-      "id": "type:TextInput#1",
-      "type": "TextInput",
-      "text": "",
-      "bounds": "[258,935][1034,1068]"
-    },
-    {
-      "id": "text:View network interaction",
-      "type": "Text",
-      "text": "View network interaction",
-      "bounds": "[581,1589][1020,1634]"
-    },
-    {
-      "id": "text:Login",
-      "type": "Button",
-      "text": "Login",
-      "bounds": "[115,1232][1205,1372]"
-    },
-    {
-      "id": "type:Stack#13",
+      "id": "type:Stack#14",
       "type": "Stack",
       "text": "",
       "bounds": "[520,48][800,136]"
@@ -801,16 +657,88 @@
       "bounds": "[115,1400][1205,1526]"
     },
     {
-      "id": "key:idsCookieBootstrap",
-      "type": "Web",
-      "text": "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
-      "bounds": "[658,339][662,343]"
+      "id": "key:viewNetworkInteraction",
+      "type": "Text",
+      "text": "View network interaction",
+      "bounds": "[581,1589][1020,1634]"
     },
     {
-      "id": "text:Mock 预览主页（仅 UI，不登录）",
+      "id": "key:mockHomePreviewButton",
       "type": "Button",
       "text": "Mock 预览主页（仅 UI，不登录）",
       "bounds": "[115,1400][1205,1526]"
+    },
+    {
+      "id": "text:==",
+      "type": "Text",
+      "text": "==",
+      "bounds": "[629,406][692,468]"
+    },
+    {
+      "id": "text:Clear cache",
+      "type": "Text",
+      "text": "Clear cache",
+      "bounds": "[300,1589][504,1634]"
+    },
+    {
+      "id": "key:togglePasswordVisibility",
+      "type": "Text",
+      "text": "View",
+      "bounds": "[1034,979][1188,1024]"
+    },
+    {
+      "id": "text:24",
+      "type": "Text",
+      "text": "24",
+      "bounds": "[126,66][188,128]"
+    },
+    {
+      "id": "text:View network interaction",
+      "type": "Text",
+      "text": "View network interaction",
+      "bounds": "[581,1589][1020,1634]"
+    },
+    {
+      "id": "type:genericContainer#0",
+      "type": "genericContainer",
+      "text": "",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "key:loginSubmitButton",
+      "type": "Button",
+      "text": "Login",
+      "bounds": "[115,1232][1205,1372]"
+    },
+    {
+      "id": "key:loginAccountInput",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[258,760][1174,893]"
+    },
+    {
+      "id": "type:genericContainer#1",
+      "type": "genericContainer",
+      "text": "",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "type:Stack#13",
+      "type": "Stack",
+      "text": "",
+      "bounds": "[520,48][800,136]"
+    },
+    {
+      "id": "type:Button#0",
+      "type": "Button",
+      "text": "Login",
+      "bounds": "[115,1232][1205,1372]"
+    },
+    {
+      "id": "text:07, :, 24",
+      "type": "Flex",
+      "text": "07, :, 24",
+      "bounds": "[49,55][188,136]"
     },
     {
       "id": "key:loginPasswordMask",
@@ -819,10 +747,82 @@
       "bounds": "[258,935][1034,1068]"
     },
     {
+      "id": "text:Mock 预览主页（仅 UI，不登录）",
+      "type": "Button",
+      "text": "Mock 预览主页（仅 UI，不登录）",
+      "bounds": "[115,1400][1205,1526]"
+    },
+    {
+      "id": "text:ID",
+      "type": "Text",
+      "text": "ID",
+      "bounds": "[153,804][258,849]"
+    },
+    {
+      "id": "text:https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
+      "type": "Web",
+      "text": "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
+      "bounds": "[658,339][662,343]"
+    },
+    {
       "id": "type:Web#0",
       "type": "Web",
       "text": "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
       "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "text:PW",
+      "type": "Text",
+      "text": "PW",
+      "bounds": "[153,981][258,1022]"
+    },
+    {
+      "id": "key:loginPasswordInput",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[258,935][1034,1068]"
+    },
+    {
+      "id": "text:IDS Login password",
+      "type": "Text",
+      "text": "IDS Login password",
+      "bounds": "[258,935][1034,1068]"
+    },
+    {
+      "id": "key:loginLogo",
+      "type": "Stack",
+      "text": "",
+      "bounds": "[506,343][814,651]"
+    },
+    {
+      "id": "type:TextInput#0",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[258,760][1174,893]"
+    },
+    {
+      "id": "key:clearSessionButton",
+      "type": "Text",
+      "text": "Clear cache",
+      "bounds": "[300,1589][504,1634]"
+    },
+    {
+      "id": "text:Login",
+      "type": "Button",
+      "text": "Login",
+      "bounds": "[115,1232][1205,1372]"
+    },
+    {
+      "id": "text:XDYOU",
+      "type": "Text",
+      "text": "XDYOU",
+      "bounds": "[583,468][739,600]"
+    },
+    {
+      "id": "type:TextInput#1",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[258,935][1034,1068]"
     },
     {
       "id": "text:View",
@@ -831,24 +831,162 @@
       "bounds": "[1034,979][1188,1024]"
     },
     {
-      "id": "type:Stack#14",
-      "type": "Stack",
-      "text": "",
-      "bounds": "[520,48][800,136]"
+      "id": "key:idsCookieBootstrap",
+      "type": "Web",
+      "text": "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
+      "bounds": "[658,339][662,343]"
     },
     {
-      "id": "key:clearSessionButton",
-      "type": "Text",
-      "text": "Clear cache",
-      "bounds": "[300,1589][504,1634]"
+      "id": "type:rootWebArea#0",
+      "type": "rootWebArea",
+      "text": "",
+      "bounds": "[658,339][662,343]"
     }
   ],
   "attrs_changed": [
+    {
+      "node_id": "type:Text#2",
+      "attr": "text",
+      "before": "ID",
+      "after": "版本號：1.0.0+1"
+    },
+    {
+      "node_id": "type:Text#2",
+      "attr": "bounds",
+      "before": "[153,804][258,849]",
+      "after": "[129,443][488,500]"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "text",
+      "before": "Clear cache",
+      "after": "›"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "bounds",
+      "before": "[300,1589][504,1634]",
+      "after": "[1129,663][1163,786]"
+    },
+    {
+      "node_id": "type:Stack#5",
+      "attr": "bounds",
+      "before": "[49,55][1320,136]",
+      "after": "[995,55][1079,136]"
+    },
+    {
+      "node_id": "type:Row#8",
+      "attr": "bounds",
+      "before": "[1086,55][1166,136]",
+      "after": "[59,1922][1261,2209]"
+    },
+    {
+      "node_id": "type:Stack#0",
+      "attr": "bounds",
+      "before": "[506,343][814,651]",
+      "after": "[0,0][1320,136]"
+    },
+    {
+      "node_id": "type:Row#9",
+      "attr": "clickable",
+      "before": "false",
+      "after": "true"
+    },
+    {
+      "node_id": "type:Row#9",
+      "attr": "bounds",
+      "before": "[1173,55][1271,136]",
+      "after": "[59,2212][1261,2450]"
+    },
     {
       "node_id": "type:Stack#4",
       "attr": "bounds",
       "before": "[0,0][1320,136]",
       "after": "[49,55][188,136]"
+    },
+    {
+      "node_id": "key:ClockStatusView",
+      "attr": "text",
+      "before": "07, :, 24",
+      "after": "07, :, 25"
+    },
+    {
+      "node_id": "type:Flex#0",
+      "attr": "text",
+      "before": "07, :, 24",
+      "after": "07, :, 25"
+    },
+    {
+      "node_id": "type:Stack#12",
+      "attr": "bounds",
+      "before": "[1173,69][1271,125]",
+      "after": "[520,48][800,136]"
+    },
+    {
+      "node_id": "type:Row#3",
+      "attr": "bounds",
+      "before": "[49,55][1271,136]",
+      "after": "[59,896][1261,1050]"
+    },
+    {
+      "node_id": "type:Row#0",
+      "attr": "bounds",
+      "before": "[115,756][1205,896]",
+      "after": "[59,137][1261,290]"
+    },
+    {
+      "node_id": "type:Stack#8",
+      "attr": "bounds",
+      "before": "[1079,55][1166,136]",
+      "after": "[1166,55][1271,136]"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "text",
+      "before": ":",
+      "after": "明日香橙"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "bounds",
+      "before": "[111,71][126,124]",
+      "after": "[129,1203][326,1260]"
+    },
+    {
+      "node_id": "type:Row#7",
+      "attr": "bounds",
+      "before": "[1002,55][1079,136]",
+      "after": "[59,1631][1261,1918]"
+    },
+    {
+      "node_id": "type:Stack#11",
+      "attr": "bounds",
+      "before": "[1173,69][1271,125]",
+      "after": "[520,48][800,136]"
+    },
+    {
+      "node_id": "type:Text#1",
+      "attr": "text",
+      "before": "XDYOU",
+      "after": "關於本程序"
+    },
+    {
+      "node_id": "type:Text#1",
+      "attr": "bounds",
+      "before": "[583,468][739,600]",
+      "after": "[129,367][409,433]"
+    },
+    {
+      "node_id": "type:Stack#10",
+      "attr": "bounds",
+      "before": "[1166,55][1271,136]",
+      "after": "[1173,69][1271,125]"
     },
     {
       "node_id": "type:Stack#6",
@@ -859,7 +997,7 @@
     {
       "node_id": "type:Text#8",
       "attr": "text",
-      "before": "11",
+      "before": "07",
       "after": "顏色設置"
     },
     {
@@ -869,10 +1007,10 @@
       "after": "[129,1127][353,1193]"
     },
     {
-      "node_id": "type:Row#3",
+      "node_id": "type:Stack#1",
       "attr": "bounds",
-      "before": "[49,55][1271,136]",
-      "after": "[59,896][1261,1050]"
+      "before": "[258,935][1034,1068]",
+      "after": "[0,0][1320,136]"
     },
     {
       "node_id": "type:Row#5",
@@ -881,21 +1019,15 @@
       "after": "[59,1341][1261,1628]"
     },
     {
-      "node_id": "type:Stack#8",
+      "node_id": "type:Stack#3",
       "attr": "bounds",
-      "before": "[1079,55][1166,136]",
-      "after": "[1166,55][1271,136]"
-    },
-    {
-      "node_id": "type:Stack#1",
-      "attr": "bounds",
-      "before": "[258,935][1034,1068]",
-      "after": "[0,0][1320,136]"
+      "before": "[0,0][1320,136]",
+      "after": "[49,55][1320,136]"
     },
     {
       "node_id": "type:Text#10",
       "attr": "text",
-      "before": "05",
+      "before": "24",
       "after": "›"
     },
     {
@@ -917,22 +1049,22 @@
       "after": "[59,581][1261,868]"
     },
     {
-      "node_id": "type:Row#9",
-      "attr": "clickable",
-      "before": "false",
-      "after": "true"
+      "node_id": "type:Stack#9",
+      "attr": "bounds",
+      "before": "[1086,69][1166,125]",
+      "after": "[1173,69][1271,125]"
     },
     {
-      "node_id": "type:Row#9",
-      "attr": "bounds",
-      "before": "[1173,55][1271,136]",
-      "after": "[59,2212][1261,2450]"
+      "node_id": "type:Text#3",
+      "attr": "text",
+      "before": "PW",
+      "after": "›"
     },
     {
-      "node_id": "type:Stack#5",
+      "node_id": "type:Text#3",
       "attr": "bounds",
-      "before": "[49,55][1320,136]",
-      "after": "[995,55][1079,136]"
+      "before": "[153,981][258,1022]",
+      "after": "[1129,372][1163,495]"
     },
     {
       "node_id": "type:Text#0",
@@ -945,156 +1077,6 @@
       "attr": "bounds",
       "before": "[629,406][692,468]",
       "after": "[604,180][716,246]"
-    },
-    {
-      "node_id": "type:Text#7",
-      "attr": "text",
-      "before": "View network interaction",
-      "after": "界面設置"
-    },
-    {
-      "node_id": "type:Text#7",
-      "attr": "clickable",
-      "before": "true",
-      "after": "false"
-    },
-    {
-      "node_id": "type:Text#7",
-      "attr": "bounds",
-      "before": "[581,1589][1020,1634]",
-      "after": "[548,940][772,1006]"
-    },
-    {
-      "node_id": "type:Text#2",
-      "attr": "text",
-      "before": "ID",
-      "after": "版本號：1.0.0+1"
-    },
-    {
-      "node_id": "type:Text#2",
-      "attr": "bounds",
-      "before": "[153,804][258,849]",
-      "after": "[129,443][488,500]"
-    },
-    {
-      "node_id": "type:Stack#3",
-      "attr": "bounds",
-      "before": "[0,0][1320,136]",
-      "after": "[49,55][1320,136]"
-    },
-    {
-      "node_id": "type:Column#1",
-      "attr": "bounds",
-      "before": "[559,396][762,599]",
-      "after": "[0,137][1320,2450]"
-    },
-    {
-      "node_id": "type:Text#4",
-      "attr": "text",
-      "before": "IDS Login password",
-      "after": "檢查軟件更新"
-    },
-    {
-      "node_id": "type:Text#4",
-      "attr": "clickable",
-      "before": "true",
-      "after": "false"
-    },
-    {
-      "node_id": "type:Text#4",
-      "attr": "bounds",
-      "before": "[258,935][1034,1068]",
-      "after": "[129,658][465,724]"
-    },
-    {
-      "node_id": "type:Row#0",
-      "attr": "bounds",
-      "before": "[115,756][1205,896]",
-      "after": "[59,137][1261,290]"
-    },
-    {
-      "node_id": "type:Row#4",
-      "attr": "clickable",
-      "before": "false",
-      "after": "true"
-    },
-    {
-      "node_id": "type:Row#4",
-      "attr": "bounds",
-      "before": "[0,0][1320,136]",
-      "after": "[59,1050][1261,1337]"
-    },
-    {
-      "node_id": "type:Row#1",
-      "attr": "clickable",
-      "before": "false",
-      "after": "true"
-    },
-    {
-      "node_id": "type:Row#1",
-      "attr": "bounds",
-      "before": "[115,931][1205,1071]",
-      "after": "[59,290][1261,577]"
-    },
-    {
-      "node_id": "type:Text#11",
-      "attr": "text",
-      "before": "100",
-      "after": "設置深淺色"
-    },
-    {
-      "node_id": "type:Text#11",
-      "attr": "bounds",
-      "before": "[1182,75][1252,120]",
-      "after": "[129,1418][409,1484]"
-    },
-    {
-      "node_id": "type:Text#9",
-      "attr": "text",
-      "before": ":",
-      "after": "春風綠"
-    },
-    {
-      "node_id": "type:Text#9",
-      "attr": "bounds",
-      "before": "[111,71][126,124]",
-      "after": "[129,1203][277,1260]"
-    },
-    {
-      "node_id": "type:Text#1",
-      "attr": "text",
-      "before": "XDYOU",
-      "after": "關於本程序"
-    },
-    {
-      "node_id": "type:Text#1",
-      "attr": "bounds",
-      "before": "[583,468][739,600]",
-      "after": "[129,367][409,433]"
-    },
-    {
-      "node_id": "type:Stack#9",
-      "attr": "bounds",
-      "before": "[1086,69][1166,125]",
-      "after": "[1173,69][1271,125]"
-    },
-    {
-      "node_id": "type:Stack#10",
-      "attr": "bounds",
-      "before": "[1166,55][1271,136]",
-      "after": "[1173,69][1271,125]"
-    },
-    {
-      "node_id": "type:Flex#0",
-      "attr": "text",
-      "before": "11, :, 05",
-      "after": "11, :, 06"
-    },
-    {
-      "node_id": "type:Row#7",
-      "attr": "bounds",
-      "before": "[1002,55][1079,136]",
-      "after": "[59,1631][1261,1918]"
     },
     {
       "node_id": "type:Text#5",
@@ -1115,10 +1097,64 @@
       "after": "[129,734][571,791]"
     },
     {
-      "node_id": "type:Stack#11",
+      "node_id": "type:Text#4",
+      "attr": "text",
+      "before": "IDS Login password",
+      "after": "檢查軟件更新"
+    },
+    {
+      "node_id": "type:Text#4",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#4",
       "attr": "bounds",
-      "before": "[1173,69][1271,125]",
-      "after": "[520,48][800,136]"
+      "before": "[258,935][1034,1068]",
+      "after": "[129,658][465,724]"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "text",
+      "before": "100",
+      "after": "設置深淺色"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "bounds",
+      "before": "[1182,75][1252,120]",
+      "after": "[129,1418][409,1484]"
+    },
+    {
+      "node_id": "type:Stack#7",
+      "attr": "bounds",
+      "before": "[995,55][1079,136]",
+      "after": "[1086,69][1166,125]"
+    },
+    {
+      "node_id": "type:Row#1",
+      "attr": "clickable",
+      "before": "false",
+      "after": "true"
+    },
+    {
+      "node_id": "type:Row#1",
+      "attr": "bounds",
+      "before": "[115,931][1205,1071]",
+      "after": "[59,290][1261,577]"
+    },
+    {
+      "node_id": "type:Row#4",
+      "attr": "clickable",
+      "before": "false",
+      "after": "true"
+    },
+    {
+      "node_id": "type:Row#4",
+      "attr": "bounds",
+      "before": "[0,0][1320,136]",
+      "after": "[59,1050][1261,1337]"
     },
     {
       "node_id": "type:Row#6",
@@ -1127,10 +1163,36 @@
       "after": "[793,1418][1198,1551]"
     },
     {
-      "node_id": "type:Stack#12",
+      "node_id": "type:Text#7",
+      "attr": "text",
+      "before": "View network interaction",
+      "after": "界面設置"
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#7",
       "attr": "bounds",
-      "before": "[1173,69][1271,125]",
-      "after": "[520,48][800,136]"
+      "before": "[581,1589][1020,1634]",
+      "after": "[548,940][772,1006]"
+    },
+    {
+      "node_id": "type:Column#1",
+      "attr": "bounds",
+      "before": "[559,396][762,599]",
+      "after": "[0,137][1320,2450]"
+    }
+  ],
+  "text_changes": [
+    {
+      "node_id": "type:Text#2",
+      "attr": "text",
+      "before": "ID",
+      "after": "版本號：1.0.0+1"
     },
     {
       "node_id": "type:Text#6",
@@ -1139,65 +1201,45 @@
       "after": "›"
     },
     {
-      "node_id": "type:Text#6",
-      "attr": "clickable",
-      "before": "true",
-      "after": "false"
-    },
-    {
-      "node_id": "type:Text#6",
-      "attr": "bounds",
-      "before": "[300,1589][504,1634]",
-      "after": "[1129,663][1163,786]"
-    },
-    {
-      "node_id": "type:Row#8",
-      "attr": "bounds",
-      "before": "[1086,55][1166,136]",
-      "after": "[59,1922][1261,2209]"
-    },
-    {
       "node_id": "key:ClockStatusView",
       "attr": "text",
-      "before": "11, :, 05",
-      "after": "11, :, 06"
+      "before": "07, :, 24",
+      "after": "07, :, 25"
     },
     {
-      "node_id": "type:Text#3",
+      "node_id": "type:Flex#0",
       "attr": "text",
-      "before": "PW",
-      "after": "›"
+      "before": "07, :, 24",
+      "after": "07, :, 25"
     },
     {
-      "node_id": "type:Text#3",
-      "attr": "bounds",
-      "before": "[153,981][258,1022]",
-      "after": "[1129,372][1163,495]"
+      "node_id": "type:Text#9",
+      "attr": "text",
+      "before": ":",
+      "after": "明日香橙"
     },
     {
-      "node_id": "type:Stack#0",
-      "attr": "bounds",
-      "before": "[506,343][814,651]",
-      "after": "[0,0][1320,136]"
+      "node_id": "type:Text#1",
+      "attr": "text",
+      "before": "XDYOU",
+      "after": "關於本程序"
     },
-    {
-      "node_id": "type:Stack#7",
-      "attr": "bounds",
-      "before": "[995,55][1079,136]",
-      "after": "[1086,69][1166,125]"
-    }
-  ],
-  "text_changes": [
     {
       "node_id": "type:Text#8",
       "attr": "text",
-      "before": "11",
+      "before": "07",
       "after": "顏色設置"
     },
     {
       "node_id": "type:Text#10",
       "attr": "text",
-      "before": "05",
+      "before": "24",
+      "after": "›"
+    },
+    {
+      "node_id": "type:Text#3",
+      "attr": "text",
+      "before": "PW",
       "after": "›"
     },
     {
@@ -1207,16 +1249,10 @@
       "after": "關於"
     },
     {
-      "node_id": "type:Text#7",
+      "node_id": "type:Text#5",
       "attr": "text",
-      "before": "View network interaction",
-      "after": "界面設置"
-    },
-    {
-      "node_id": "type:Text#2",
-      "attr": "text",
-      "before": "ID",
-      "after": "版本號：1.0.0+1"
+      "before": "View",
+      "after": "最新版本：等待獲取"
     },
     {
       "node_id": "type:Text#4",
@@ -1231,65 +1267,14 @@
       "after": "設置深淺色"
     },
     {
-      "node_id": "type:Text#9",
+      "node_id": "type:Text#7",
       "attr": "text",
-      "before": ":",
-      "after": "春風綠"
-    },
-    {
-      "node_id": "type:Text#1",
-      "attr": "text",
-      "before": "XDYOU",
-      "after": "關於本程序"
-    },
-    {
-      "node_id": "type:Flex#0",
-      "attr": "text",
-      "before": "11, :, 05",
-      "after": "11, :, 06"
-    },
-    {
-      "node_id": "type:Text#5",
-      "attr": "text",
-      "before": "View",
-      "after": "最新版本：等待獲取"
-    },
-    {
-      "node_id": "type:Text#6",
-      "attr": "text",
-      "before": "Clear cache",
-      "after": "›"
-    },
-    {
-      "node_id": "key:ClockStatusView",
-      "attr": "text",
-      "before": "11, :, 05",
-      "after": "11, :, 06"
-    },
-    {
-      "node_id": "type:Text#3",
-      "attr": "text",
-      "before": "PW",
-      "after": "›"
+      "before": "View network interaction",
+      "after": "界面設置"
     }
   ],
   "count_changes": {
-    "Button": {
-      "before": 2,
-      "after": 0,
-      "delta": -2
-    },
-    "TextInput": {
-      "before": 2,
-      "after": 0,
-      "delta": -2
-    },
-    "Divider": {
-      "before": 0,
-      "after": 5,
-      "delta": 5
-    },
-    "rootWebArea": {
+    "Web": {
       "before": 1,
       "after": 0,
       "delta": -1
@@ -1299,10 +1284,35 @@
       "after": 5,
       "delta": 5
     },
-    "Toggle": {
+    "Text": {
+      "before": 12,
+      "after": 32,
+      "delta": 20
+    },
+    "rootWebArea": {
+      "before": 1,
+      "after": 0,
+      "delta": -1
+    },
+    "Scroll": {
       "before": 0,
-      "after": 2,
-      "delta": 2
+      "after": 1,
+      "delta": 1
+    },
+    "TextInput": {
+      "before": 2,
+      "after": 0,
+      "delta": -2
+    },
+    "Row": {
+      "before": 10,
+      "after": 23,
+      "delta": 13
+    },
+    "Stack": {
+      "before": 15,
+      "after": 13,
+      "delta": -2
     },
     "genericContainer": {
       "before": 2,
@@ -1314,31 +1324,21 @@
       "after": 26,
       "delta": 24
     },
-    "Stack": {
-      "before": 15,
-      "after": 13,
+    "Button": {
+      "before": 2,
+      "after": 0,
       "delta": -2
     },
-    "Scroll": {
+    "Divider": {
       "before": 0,
-      "after": 1,
-      "delta": 1
+      "after": 5,
+      "delta": 5
     },
-    "Text": {
-      "before": 12,
-      "after": 32,
-      "delta": 20
-    },
-    "Web": {
-      "before": 1,
-      "after": 0,
-      "delta": -1
-    },
-    "Row": {
-      "before": 10,
-      "after": 23,
-      "delta": 13
+    "Toggle": {
+      "before": 0,
+      "after": 2,
+      "delta": 2
     }
   },
-  "summary": "新增 107 个节点; 移除 33 个节点; 文本变化 14 处; 属性变化 57 处; 数量变化: Button: 2→0, TextInput: 2→0, Divider: 0→5, rootWebArea: 1→0, Image: 0→5, Toggle: 0→2, genericContainer: 2→0, Column: 2→26, Stack: 15→13, Scroll: 0→1, Text: 12→32, Web: 1→0, Row: 10→23"
+  "summary": "新增 107 个节点; 移除 33 个节点; 文本变化 14 处; 属性变化 57 处; 数量变化: Web: 1→0, Image: 0→5, Text: 12→32, rootWebArea: 1→0, Scroll: 0→1, TextInput: 2→0, Row: 10→23, Stack: 15→13, genericContainer: 2→0, Column: 2→26, Button: 2→0, Divider: 0→5, Toggle: 0→2"
 }

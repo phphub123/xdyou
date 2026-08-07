@@ -1,0 +1,967 @@
+{
+  "nodes_added": [
+    {
+      "id": "type:Column#2",
+      "type": "Column",
+      "text": "",
+      "bounds": "[0,137][1320,2450]"
+    },
+    {
+      "id": "type:Column#10",
+      "type": "Column",
+      "text": "",
+      "bounds": "[1048,2471][1307,2744]"
+    },
+    {
+      "id": "type:Text#14",
+      "type": "Text",
+      "text": "100",
+      "bounds": "[1182,75][1252,120]"
+    },
+    {
+      "id": "text:尚未查询空调设备；IMEI 不会被持久化或写入日志。",
+      "type": "Text",
+      "text": "尚未查询空调设备；IMEI 不会被持久化或写入日志。",
+      "bounds": "[112,1317][1089,1366]"
+    },
+    {
+      "id": "type:Row#13",
+      "type": "Row",
+      "text": "",
+      "bounds": "[1173,55][1271,136]"
+    },
+    {
+      "id": "text:‹",
+      "type": "Button",
+      "text": "‹",
+      "bounds": "[63,199][217,339]"
+    },
+    {
+      "id": "text:豬圖鑑賞",
+      "type": "Text",
+      "text": "豬圖鑑賞",
+      "bounds": "[834,2650][1003,2699]"
+    },
+    {
+      "id": "type:Image#4",
+      "type": "Image",
+      "text": "",
+      "bounds": "[1134,2533][1222,2621]"
+    },
+    {
+      "id": "key:energyCampusBoundary",
+      "type": "Column",
+      "text": "",
+      "bounds": "[63,465][1257,771]"
+    },
+    {
+      "id": "type:Column#5",
+      "type": "Column",
+      "text": "",
+      "bounds": "[63,806][1257,1415]"
+    },
+    {
+      "id": "type:Image#1",
+      "type": "Image",
+      "text": "",
+      "bounds": "[358,2533][446,2621]"
+    },
+    {
+      "id": "type:Column#4",
+      "type": "Column",
+      "text": "",
+      "bounds": "[63,465][1257,771]"
+    },
+    {
+      "id": "text:该查询仅在校园网和真实 IDS 会话可用；未满足条件时会保留真实错误，不显示演示余额。",
+      "type": "Text",
+      "text": "该查询仅在校园网和真实 IDS 会话可用；未满足条件时会保留真实错误，不显示演示余额。",
+      "bounds": "[112,616][1163,722]"
+    },
+    {
+      "id": "key:energyAirconEmpty",
+      "type": "Text",
+      "text": "尚未查询空调设备；IMEI 不会被持久化或写入日志。",
+      "bounds": "[112,1317][1089,1366]"
+    },
+    {
+      "id": "type:Column#7",
+      "type": "Column",
+      "text": "",
+      "bounds": "[272,2471][531,2744]"
+    },
+    {
+      "id": "text:空调设备 IMEI 格式不正确。",
+      "type": "Text",
+      "text": "空调设备 IMEI 格式不正确。",
+      "bounds": "[63,367][590,416]"
+    },
+    {
+      "id": "type:Text#13",
+      "type": "Text",
+      "text": "26",
+      "bounds": "[126,66][188,128]"
+    },
+    {
+      "id": "key:navTo_settings",
+      "type": "Column",
+      "text": "",
+      "bounds": "[1048,2471][1307,2744]"
+    },
+    {
+      "id": "text:其他功能",
+      "type": "Text",
+      "text": "其他功能",
+      "bounds": "[576,2650][745,2699]"
+    },
+    {
+      "id": "text:睿思論壇",
+      "type": "Text",
+      "text": "睿思論壇",
+      "bounds": "[317,2650][486,2699]"
+    },
+    {
+      "id": "key:navTo_pig",
+      "type": "Column",
+      "text": "",
+      "bounds": "[789,2471][1048,2744]"
+    },
+    {
+      "id": "type:Button#2",
+      "type": "Button",
+      "text": "使用 IMEI 查询",
+      "bounds": "[112,1142][1208,1282]"
+    },
+    {
+      "id": "key:navTo_toolbox",
+      "type": "Column",
+      "text": "",
+      "bounds": "[531,2471][790,2744]"
+    },
+    {
+      "id": "type:Column#8",
+      "type": "Column",
+      "text": "",
+      "bounds": "[531,2471][790,2744]"
+    },
+    {
+      "id": "key:energyAirconQuery",
+      "type": "Button",
+      "text": "使用 IMEI 查询",
+      "bounds": "[112,1142][1208,1282]"
+    },
+    {
+      "id": "text:查询",
+      "type": "Button",
+      "text": "查询",
+      "bounds": "[1033,199][1257,339]"
+    },
+    {
+      "id": "key:energyRefresh",
+      "type": "Button",
+      "text": "查询",
+      "bounds": "[1033,199][1257,339]"
+    },
+    {
+      "id": "type:Row#11",
+      "type": "Row",
+      "text": "",
+      "bounds": "[1002,55][1079,136]"
+    },
+    {
+      "id": "type:Row#12",
+      "type": "Row",
+      "text": "",
+      "bounds": "[1086,55][1166,136]"
+    },
+    {
+      "id": "type:Text#12",
+      "type": "Text",
+      "text": ":",
+      "bounds": "[111,71][126,124]"
+    },
+    {
+      "id": "type:Image#0",
+      "type": "Image",
+      "text": "",
+      "bounds": "[99,2533][187,2621]"
+    },
+    {
+      "id": "text:使用 IMEI 查询",
+      "type": "Button",
+      "text": "使用 IMEI 查询",
+      "bounds": "[112,1142][1208,1282]"
+    },
+    {
+      "id": "type:Image#2",
+      "type": "Image",
+      "text": "",
+      "bounds": "[617,2533][705,2621]"
+    },
+    {
+      "id": "type:Row#10",
+      "type": "Row",
+      "text": "",
+      "bounds": "[49,66][126,128]"
+    },
+    {
+      "id": "key:navTo_ruisi",
+      "type": "Column",
+      "text": "",
+      "bounds": "[272,2471][531,2744]"
+    },
+    {
+      "id": "key:energyBack",
+      "type": "Button",
+      "text": "‹",
+      "bounds": "[63,199][217,339]"
+    },
+    {
+      "id": "text:宿舍电费与水费",
+      "type": "Text",
+      "text": "宿舍电费与水费",
+      "bounds": "[112,514][553,588]"
+    },
+    {
+      "id": "text:电量与能耗",
+      "type": "Text",
+      "text": "电量与能耗",
+      "bounds": "[245,220][1033,318]"
+    },
+    {
+      "id": "type:Blank#0",
+      "type": "Blank",
+      "text": "",
+      "bounds": "[63,1415][1257,1485]"
+    },
+    {
+      "id": "type:Scroll#0",
+      "type": "Scroll",
+      "text": "",
+      "bounds": "[63,416][1257,2387]"
+    },
+    {
+      "id": "text:空调能耗",
+      "type": "Text",
+      "text": "空调能耗",
+      "bounds": "[112,855][364,929]"
+    },
+    {
+      "id": "type:Column#6",
+      "type": "Column",
+      "text": "",
+      "bounds": "[13,2471][272,2744]"
+    },
+    {
+      "id": "type:Column#9",
+      "type": "Column",
+      "text": "",
+      "bounds": "[789,2471][1048,2744]"
+    },
+    {
+      "id": "key:energyStatus",
+      "type": "Text",
+      "text": "空调设备 IMEI 格式不正确。",
+      "bounds": "[63,367][590,416]"
+    },
+    {
+      "id": "type:Image#3",
+      "type": "Image",
+      "text": "",
+      "bounds": "[875,2533][963,2621]"
+    },
+    {
+      "id": "type:Column#3",
+      "type": "Column",
+      "text": "",
+      "bounds": "[63,416][1257,1485]"
+    },
+    {
+      "id": "key:energyAirconCard",
+      "type": "Column",
+      "text": "",
+      "bounds": "[63,806][1257,1415]"
+    },
+    {
+      "id": "text:校園信息",
+      "type": "Text",
+      "text": "校園信息",
+      "bounds": "[58,2650][227,2699]"
+    },
+    {
+      "id": "key:energyImeiInput",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[112,964][1208,1111]"
+    },
+    {
+      "id": "key:navTo_home",
+      "type": "Column",
+      "text": "",
+      "bounds": "[13,2471][272,2744]"
+    },
+    {
+      "id": "text:設置",
+      "type": "Text",
+      "text": "設置",
+      "bounds": "[1135,2650][1220,2699]"
+    }
+  ],
+  "nodes_removed": [
+    {
+      "id": "key:loginSubmitButton",
+      "type": "Button",
+      "text": "Login",
+      "bounds": "[115,1232][1205,1372]"
+    },
+    {
+      "id": "key:clearSessionButton",
+      "type": "Text",
+      "text": "Clear cache",
+      "bounds": "[300,1589][504,1634]"
+    },
+    {
+      "id": "text:PW",
+      "type": "Text",
+      "text": "PW",
+      "bounds": "[153,981][258,1022]"
+    },
+    {
+      "id": "type:Stack#14",
+      "type": "Stack",
+      "text": "",
+      "bounds": "[520,48][800,136]"
+    },
+    {
+      "id": "key:viewNetworkInteraction",
+      "type": "Text",
+      "text": "View network interaction",
+      "bounds": "[581,1589][1020,1634]"
+    },
+    {
+      "id": "type:genericContainer#0",
+      "type": "genericContainer",
+      "text": "",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "key:togglePasswordVisibility",
+      "type": "Text",
+      "text": "View",
+      "bounds": "[1034,979][1188,1024]"
+    },
+    {
+      "id": "text:ID",
+      "type": "Text",
+      "text": "ID",
+      "bounds": "[153,804][258,849]"
+    },
+    {
+      "id": "key:loginLogo",
+      "type": "Stack",
+      "text": "",
+      "bounds": "[506,343][814,651]"
+    },
+    {
+      "id": "type:Web#0",
+      "type": "Web",
+      "text": "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "text:View network interaction",
+      "type": "Text",
+      "text": "View network interaction",
+      "bounds": "[581,1589][1020,1634]"
+    },
+    {
+      "id": "type:Stack#13",
+      "type": "Stack",
+      "text": "",
+      "bounds": "[520,48][800,136]"
+    },
+    {
+      "id": "text:Login",
+      "type": "Button",
+      "text": "Login",
+      "bounds": "[115,1232][1205,1372]"
+    },
+    {
+      "id": "text:XDYOU",
+      "type": "Text",
+      "text": "XDYOU",
+      "bounds": "[583,468][739,600]"
+    },
+    {
+      "id": "text:==",
+      "type": "Text",
+      "text": "==",
+      "bounds": "[629,406][692,468]"
+    },
+    {
+      "id": "text:Mock 预览主页（仅 UI，不登录）",
+      "type": "Button",
+      "text": "Mock 预览主页（仅 UI，不登录）",
+      "bounds": "[115,1400][1205,1526]"
+    },
+    {
+      "id": "text:Clear cache",
+      "type": "Text",
+      "text": "Clear cache",
+      "bounds": "[300,1589][504,1634]"
+    },
+    {
+      "id": "text:https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
+      "type": "Web",
+      "text": "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "key:loginAccountInput",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[258,760][1174,893]"
+    },
+    {
+      "id": "text:View",
+      "type": "Text",
+      "text": "View",
+      "bounds": "[1034,979][1188,1024]"
+    },
+    {
+      "id": "key:mockHomePreviewButton",
+      "type": "Button",
+      "text": "Mock 预览主页（仅 UI，不登录）",
+      "bounds": "[115,1400][1205,1526]"
+    },
+    {
+      "id": "text:IDS Login password",
+      "type": "Text",
+      "text": "IDS Login password",
+      "bounds": "[258,935][1034,1068]"
+    },
+    {
+      "id": "type:genericContainer#1",
+      "type": "genericContainer",
+      "text": "",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "key:loginPasswordMask",
+      "type": "Text",
+      "text": "IDS Login password",
+      "bounds": "[258,935][1034,1068]"
+    },
+    {
+      "id": "type:TextInput#1",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[258,935][1034,1068]"
+    },
+    {
+      "id": "key:loginPasswordInput",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[258,935][1034,1068]"
+    },
+    {
+      "id": "type:rootWebArea#0",
+      "type": "rootWebArea",
+      "text": "",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "key:idsCookieBootstrap",
+      "type": "Web",
+      "text": "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
+      "bounds": "[658,339][662,343]"
+    }
+  ],
+  "attrs_changed": [
+    {
+      "node_id": "type:Stack#3",
+      "attr": "bounds",
+      "before": "[0,0][1320,136]",
+      "after": "[49,55][1320,136]"
+    },
+    {
+      "node_id": "type:Column#1",
+      "attr": "bounds",
+      "before": "[559,396][762,599]",
+      "after": "[0,137][1320,2450]"
+    },
+    {
+      "node_id": "type:Stack#10",
+      "attr": "bounds",
+      "before": "[1166,55][1271,136]",
+      "after": "[1173,69][1271,125]"
+    },
+    {
+      "node_id": "type:Row#4",
+      "attr": "bounds",
+      "before": "[0,0][1320,136]",
+      "after": "[559,2517][762,2636]"
+    },
+    {
+      "node_id": "type:Stack#11",
+      "attr": "bounds",
+      "before": "[1173,69][1271,125]",
+      "after": "[520,48][800,136]"
+    },
+    {
+      "node_id": "type:Button#1",
+      "attr": "text",
+      "before": "Mock 预览主页（仅 UI，不登录）",
+      "after": "查询"
+    },
+    {
+      "node_id": "type:Button#1",
+      "attr": "bounds",
+      "before": "[115,1400][1205,1526]",
+      "after": "[1033,199][1257,339]"
+    },
+    {
+      "node_id": "type:Stack#1",
+      "attr": "bounds",
+      "before": "[258,935][1034,1068]",
+      "after": "[0,0][1320,136]"
+    },
+    {
+      "node_id": "type:Stack#8",
+      "attr": "bounds",
+      "before": "[1079,55][1166,136]",
+      "after": "[1166,55][1271,136]"
+    },
+    {
+      "node_id": "type:Text#5",
+      "attr": "text",
+      "before": "View",
+      "after": "尚未查询空调设备；IMEI 不会被持久化或写入日志。"
+    },
+    {
+      "node_id": "type:Text#5",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#5",
+      "attr": "bounds",
+      "before": "[1034,979][1188,1024]",
+      "after": "[112,1317][1089,1366]"
+    },
+    {
+      "node_id": "type:Text#10",
+      "attr": "text",
+      "before": "26",
+      "after": "設置"
+    },
+    {
+      "node_id": "type:Text#10",
+      "attr": "bounds",
+      "before": "[126,66][188,128]",
+      "after": "[1135,2650][1220,2699]"
+    },
+    {
+      "node_id": "type:Row#7",
+      "attr": "bounds",
+      "before": "[1002,55][1079,136]",
+      "after": "[49,55][1271,136]"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "text",
+      "before": ":",
+      "after": "豬圖鑑賞"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "bounds",
+      "before": "[111,71][126,124]",
+      "after": "[834,2650][1003,2699]"
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "text",
+      "before": "View network interaction",
+      "after": "睿思論壇"
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "bounds",
+      "before": "[581,1589][1020,1634]",
+      "after": "[317,2650][486,2699]"
+    },
+    {
+      "node_id": "type:Text#2",
+      "attr": "text",
+      "before": "ID",
+      "after": "宿舍电费与水费"
+    },
+    {
+      "node_id": "type:Text#2",
+      "attr": "bounds",
+      "before": "[153,804][258,849]",
+      "after": "[112,514][553,588]"
+    },
+    {
+      "node_id": "type:Row#3",
+      "attr": "bounds",
+      "before": "[49,55][1271,136]",
+      "after": "[300,2517][503,2636]"
+    },
+    {
+      "node_id": "type:Text#8",
+      "attr": "text",
+      "before": "07",
+      "after": "其他功能"
+    },
+    {
+      "node_id": "type:Text#8",
+      "attr": "bounds",
+      "before": "[49,66][111,128]",
+      "after": "[576,2650][745,2699]"
+    },
+    {
+      "node_id": "type:Stack#9",
+      "attr": "bounds",
+      "before": "[1086,69][1166,125]",
+      "after": "[1173,69][1271,125]"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "text",
+      "before": "100",
+      "after": "07"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "bounds",
+      "before": "[1182,75][1252,120]",
+      "after": "[49,66][111,128]"
+    },
+    {
+      "node_id": "type:Text#4",
+      "attr": "text",
+      "before": "IDS Login password",
+      "after": "空调能耗"
+    },
+    {
+      "node_id": "type:Text#4",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#4",
+      "attr": "bounds",
+      "before": "[258,935][1034,1068]",
+      "after": "[112,855][364,929]"
+    },
+    {
+      "node_id": "type:Row#2",
+      "attr": "bounds",
+      "before": "[300,1589][1020,1634]",
+      "after": "[41,2517][244,2636]"
+    },
+    {
+      "node_id": "type:Stack#0",
+      "attr": "bounds",
+      "before": "[506,343][814,651]",
+      "after": "[0,0][1320,136]"
+    },
+    {
+      "node_id": "type:Text#0",
+      "attr": "text",
+      "before": "==",
+      "after": "电量与能耗"
+    },
+    {
+      "node_id": "type:Text#0",
+      "attr": "bounds",
+      "before": "[629,406][692,468]",
+      "after": "[245,220][1033,318]"
+    },
+    {
+      "node_id": "type:Row#5",
+      "attr": "bounds",
+      "before": "[49,55][188,136]",
+      "after": "[817,2517][1020,2636]"
+    },
+    {
+      "node_id": "type:Text#3",
+      "attr": "text",
+      "before": "PW",
+      "after": "该查询仅在校园网和真实 IDS 会话可用；未满足条件时会保留真实错误，不显示演示余额。"
+    },
+    {
+      "node_id": "type:Text#3",
+      "attr": "bounds",
+      "before": "[153,981][258,1022]",
+      "after": "[112,616][1163,722]"
+    },
+    {
+      "node_id": "type:Text#1",
+      "attr": "text",
+      "before": "XDYOU",
+      "after": "空调设备 IMEI 格式不正确。"
+    },
+    {
+      "node_id": "type:Text#1",
+      "attr": "bounds",
+      "before": "[583,468][739,600]",
+      "after": "[63,367][590,416]"
+    },
+    {
+      "node_id": "type:Row#6",
+      "attr": "bounds",
+      "before": "[49,66][126,128]",
+      "after": "[1076,2517][1279,2636]"
+    },
+    {
+      "node_id": "type:Row#8",
+      "attr": "bounds",
+      "before": "[1086,55][1166,136]",
+      "after": "[0,0][1320,136]"
+    },
+    {
+      "node_id": "type:TextInput#0",
+      "attr": "bounds",
+      "before": "[258,760][1174,893]",
+      "after": "[112,964][1208,1111]"
+    },
+    {
+      "node_id": "type:Row#9",
+      "attr": "bounds",
+      "before": "[1173,55][1271,136]",
+      "after": "[49,55][188,136]"
+    },
+    {
+      "node_id": "type:Stack#5",
+      "attr": "bounds",
+      "before": "[49,55][1320,136]",
+      "after": "[995,55][1079,136]"
+    },
+    {
+      "node_id": "type:Stack#4",
+      "attr": "bounds",
+      "before": "[0,0][1320,136]",
+      "after": "[49,55][188,136]"
+    },
+    {
+      "node_id": "type:Stack#7",
+      "attr": "bounds",
+      "before": "[995,55][1079,136]",
+      "after": "[1086,69][1166,125]"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "text",
+      "before": "Clear cache",
+      "after": "校園信息"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "bounds",
+      "before": "[300,1589][504,1634]",
+      "after": "[58,2650][227,2699]"
+    },
+    {
+      "node_id": "type:Row#1",
+      "attr": "bounds",
+      "before": "[115,931][1205,1071]",
+      "after": "[0,2450][1320,2758]"
+    },
+    {
+      "node_id": "type:Stack#12",
+      "attr": "bounds",
+      "before": "[1173,69][1271,125]",
+      "after": "[520,48][800,136]"
+    },
+    {
+      "node_id": "type:Row#0",
+      "attr": "bounds",
+      "before": "[115,756][1205,896]",
+      "after": "[63,199][1257,339]"
+    },
+    {
+      "node_id": "type:Stack#6",
+      "attr": "bounds",
+      "before": "[49,55][188,136]",
+      "after": "[1079,55][1166,136]"
+    },
+    {
+      "node_id": "type:Button#0",
+      "attr": "text",
+      "before": "Login",
+      "after": "‹"
+    },
+    {
+      "node_id": "type:Button#0",
+      "attr": "bounds",
+      "before": "[115,1232][1205,1372]",
+      "after": "[63,199][217,339]"
+    }
+  ],
+  "text_changes": [
+    {
+      "node_id": "type:Button#1",
+      "attr": "text",
+      "before": "Mock 预览主页（仅 UI，不登录）",
+      "after": "查询"
+    },
+    {
+      "node_id": "type:Text#5",
+      "attr": "text",
+      "before": "View",
+      "after": "尚未查询空调设备；IMEI 不会被持久化或写入日志。"
+    },
+    {
+      "node_id": "type:Text#10",
+      "attr": "text",
+      "before": "26",
+      "after": "設置"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "text",
+      "before": ":",
+      "after": "豬圖鑑賞"
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "text",
+      "before": "View network interaction",
+      "after": "睿思論壇"
+    },
+    {
+      "node_id": "type:Text#2",
+      "attr": "text",
+      "before": "ID",
+      "after": "宿舍电费与水费"
+    },
+    {
+      "node_id": "type:Text#8",
+      "attr": "text",
+      "before": "07",
+      "after": "其他功能"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "text",
+      "before": "100",
+      "after": "07"
+    },
+    {
+      "node_id": "type:Text#4",
+      "attr": "text",
+      "before": "IDS Login password",
+      "after": "空调能耗"
+    },
+    {
+      "node_id": "type:Text#0",
+      "attr": "text",
+      "before": "==",
+      "after": "电量与能耗"
+    },
+    {
+      "node_id": "type:Text#3",
+      "attr": "text",
+      "before": "PW",
+      "after": "该查询仅在校园网和真实 IDS 会话可用；未满足条件时会保留真实错误，不显示演示余额。"
+    },
+    {
+      "node_id": "type:Text#1",
+      "attr": "text",
+      "before": "XDYOU",
+      "after": "空调设备 IMEI 格式不正确。"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "text",
+      "before": "Clear cache",
+      "after": "校園信息"
+    },
+    {
+      "node_id": "type:Button#0",
+      "attr": "text",
+      "before": "Login",
+      "after": "‹"
+    }
+  ],
+  "count_changes": {
+    "Row": {
+      "before": 10,
+      "after": 14,
+      "delta": 4
+    },
+    "Column": {
+      "before": 2,
+      "after": 11,
+      "delta": 9
+    },
+    "genericContainer": {
+      "before": 2,
+      "after": 0,
+      "delta": -2
+    },
+    "TextInput": {
+      "before": 2,
+      "after": 1,
+      "delta": -1
+    },
+    "Text": {
+      "before": 12,
+      "after": 15,
+      "delta": 3
+    },
+    "Scroll": {
+      "before": 0,
+      "after": 1,
+      "delta": 1
+    },
+    "Button": {
+      "before": 2,
+      "after": 3,
+      "delta": 1
+    },
+    "Image": {
+      "before": 0,
+      "after": 5,
+      "delta": 5
+    },
+    "Web": {
+      "before": 1,
+      "after": 0,
+      "delta": -1
+    },
+    "rootWebArea": {
+      "before": 1,
+      "after": 0,
+      "delta": -1
+    },
+    "Stack": {
+      "before": 15,
+      "after": 13,
+      "delta": -2
+    },
+    "Blank": {
+      "before": 0,
+      "after": 1,
+      "delta": 1
+    }
+  },
+  "summary": "新增 51 个节点; 移除 28 个节点; 文本变化 14 处; 属性变化 56 处; 数量变化: Row: 10→14, Column: 2→11, genericContainer: 2→0, TextInput: 2→1, Text: 12→15, Scroll: 0→1, Button: 2→3, Image: 0→5, Web: 1→0, rootWebArea: 1→0, Stack: 15→13, Blank: 0→1"
+}

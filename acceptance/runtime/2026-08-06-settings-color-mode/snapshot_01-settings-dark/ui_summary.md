@@ -32,14 +32,14 @@
                   - Row 1202×287 [clickable]
                     - Column 972×133
                       - Text 224×66 text="顏色設置"
-                      - Text 148×57 text="春風綠"
+                      - Text 197×57 text="明日香橙"
                     - Text 34×123 text="›"
                   - Divider 1104×4
                 - Column 1202×291
                   - Row 1202×287
                     - Column 664×133
                       - Text 280×66 text="設置深淺色"
-                      - Text 197×57 text="白天模式"
+                      - Text 197×57 text="黑夜模式"
                     - Row 405×133
                       - Text 133×133 text="▯" key="settingsThemeSystem" [clickable]
                       - Text 133×133 text="☼" key="settingsThemeLight" [clickable]
@@ -101,7 +101,7 @@
   - Toggle: 2
   - root: 1
   - Scroll: 1
-- 文本内容: ['關於', '關於本程序', '版本號：1.0.0+1', '›', '檢查軟件更新', '最新版本：等待獲取', '›', '界面設置', '顏色設置', '春風綠', '›', '設置深淺色', '白天模式', '▯', '☼', '◕', '簡化日程時間軸', '沒有日程時 減少空間佔用', '低電量卡片變色提醒', '電量小於閾值時 電量卡片變色提醒', '低電量閾值', '目前為 15 度', '›', '校園信息', '睿思論壇', '其他功能', '豬圖鑑賞', '設置']
+- 文本内容: ['關於', '關於本程序', '版本號：1.0.0+1', '›', '檢查軟件更新', '最新版本：等待獲取', '›', '界面設置', '顏色設置', '明日香橙', '›', '設置深淺色', '黑夜模式', '▯', '☼', '◕', '簡化日程時間軸', '沒有日程時 減少空間佔用', '低電量卡片變色提醒', '電量小於閾值時 電量卡片變色提醒', '低電量閾值', '目前為 15 度', '›', '校園信息', '睿思論壇', '其他功能', '豬圖鑑賞', '設置']
 - Key 标识: ['settingsThemeSystem', 'settingsThemeLight', 'settingsThemeDark', 'settingsTimelineToggle', 'settingsLowElectricityToggle', 'navTo_home', 'navTo_ruisi', 'navTo_toolbox', 'navTo_pig', 'navTo_settings']
 
 ## 视觉审美分析数据

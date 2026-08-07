@@ -1,0 +1,957 @@
+{
+  "nodes_added": [
+    {
+      "id": "key:emptyClassroomStatus",
+      "type": "Text",
+      "text": "A real IDS/Ehall session is required before academic data can load.",
+      "bounds": "[63,894][1238,992]"
+    },
+    {
+      "id": "text:1  2  3  4  5  6  7  8  9 10 11",
+      "type": "Text",
+      "text": "1  2  3  4  5  6  7  8  9 10 11",
+      "bounds": "[404,1034][1257,1100]"
+    },
+    {
+      "id": "key:navTo_settings",
+      "type": "Column",
+      "text": "",
+      "bounds": "[1048,2471][1307,2744]"
+    },
+    {
+      "id": "type:Image#4",
+      "type": "Image",
+      "text": "",
+      "bounds": "[1134,2533][1222,2621]"
+    },
+    {
+      "id": "key:emptyClassroomMatrix",
+      "type": "Scroll",
+      "text": "",
+      "bounds": "[63,1121][1257,2387]"
+    },
+    {
+      "id": "text:加载教学楼",
+      "type": "Button",
+      "text": "加载教学楼",
+      "bounds": "[865,355][1257,495]"
+    },
+    {
+      "id": "key:navTo_pig",
+      "type": "Column",
+      "text": "",
+      "bounds": "[789,2471][1048,2744]"
+    },
+    {
+      "id": "type:Row#12",
+      "type": "Row",
+      "text": "",
+      "bounds": "[49,55][188,136]"
+    },
+    {
+      "id": "text:A real IDS/Ehall session is required before academic data can load.",
+      "type": "Text",
+      "text": "A real IDS/Ehall session is required before academic data can load.",
+      "bounds": "[63,894][1238,992]"
+    },
+    {
+      "id": "type:TextInput#3",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[63,719][1005,859]"
+    },
+    {
+      "id": "key:emptyClassroomSemesterInput",
+      "type": "TextInput",
+      "text": "2026-1",
+      "bounds": "[688,537][1257,677]"
+    },
+    {
+      "id": "text:空闲教室",
+      "type": "Text",
+      "text": "空闲教室",
+      "bounds": "[63,199][428,306]"
+    },
+    {
+      "id": "text:查询",
+      "type": "Button",
+      "text": "查询",
+      "bounds": "[1033,719][1257,859]"
+    },
+    {
+      "id": "key:navTo_toolbox",
+      "type": "Column",
+      "text": "",
+      "bounds": "[531,2471][790,2744]"
+    },
+    {
+      "id": "text:2026-08-06",
+      "type": "TextInput",
+      "text": "2026-08-06",
+      "bounds": "[63,537][660,677]"
+    },
+    {
+      "id": "text:睿思論壇",
+      "type": "Text",
+      "text": "睿思論壇",
+      "bounds": "[317,2650][486,2699]"
+    },
+    {
+      "id": "key:navTo_home",
+      "type": "Column",
+      "text": "",
+      "bounds": "[13,2471][272,2744]"
+    },
+    {
+      "id": "type:Row#13",
+      "type": "Row",
+      "text": "",
+      "bounds": "[49,66][126,128]"
+    },
+    {
+      "id": "type:Row#10",
+      "type": "Row",
+      "text": "",
+      "bounds": "[49,55][1271,136]"
+    },
+    {
+      "id": "key:emptyClassroomDateInput",
+      "type": "TextInput",
+      "text": "2026-08-06",
+      "bounds": "[63,537][660,677]"
+    },
+    {
+      "id": "type:Image#1",
+      "type": "Image",
+      "text": "",
+      "bounds": "[358,2533][446,2621]"
+    },
+    {
+      "id": "type:Row#14",
+      "type": "Row",
+      "text": "",
+      "bounds": "[1002,55][1079,136]"
+    },
+    {
+      "id": "key:emptyClassroomBuildingInput",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[63,355][837,495]"
+    },
+    {
+      "id": "type:Image#3",
+      "type": "Image",
+      "text": "",
+      "bounds": "[875,2533][963,2621]"
+    },
+    {
+      "id": "type:Column#5",
+      "type": "Column",
+      "text": "",
+      "bounds": "[272,2471][531,2744]"
+    },
+    {
+      "id": "type:TextInput#2",
+      "type": "TextInput",
+      "text": "2026-1",
+      "bounds": "[688,537][1257,677]"
+    },
+    {
+      "id": "text:教室",
+      "type": "Text",
+      "text": "教室",
+      "bounds": "[63,1034][404,1100]"
+    },
+    {
+      "id": "type:Column#6",
+      "type": "Column",
+      "text": "",
+      "bounds": "[531,2471][790,2744]"
+    },
+    {
+      "id": "type:Row#15",
+      "type": "Row",
+      "text": "",
+      "bounds": "[1086,55][1166,136]"
+    },
+    {
+      "id": "text:其他功能",
+      "type": "Text",
+      "text": "其他功能",
+      "bounds": "[576,2650][745,2699]"
+    },
+    {
+      "id": "text:校園信息",
+      "type": "Text",
+      "text": "校園信息",
+      "bounds": "[58,2650][227,2699]"
+    },
+    {
+      "id": "key:emptyClassroomLoadBuildings",
+      "type": "Button",
+      "text": "加载教学楼",
+      "bounds": "[865,355][1257,495]"
+    },
+    {
+      "id": "type:Row#16",
+      "type": "Row",
+      "text": "",
+      "bounds": "[1173,55][1271,136]"
+    },
+    {
+      "id": "type:Text#12",
+      "type": "Text",
+      "text": "100",
+      "bounds": "[1182,75][1252,120]"
+    },
+    {
+      "id": "text:豬圖鑑賞",
+      "type": "Text",
+      "text": "豬圖鑑賞",
+      "bounds": "[834,2650][1003,2699]"
+    },
+    {
+      "id": "key:emptyClassroomSearch",
+      "type": "Button",
+      "text": "查询",
+      "bounds": "[1033,719][1257,859]"
+    },
+    {
+      "id": "key:navTo_ruisi",
+      "type": "Column",
+      "text": "",
+      "bounds": "[272,2471][531,2744]"
+    },
+    {
+      "id": "type:Column#3",
+      "type": "Column",
+      "text": "",
+      "bounds": "[63,1754][1257,1755]"
+    },
+    {
+      "id": "type:Column#7",
+      "type": "Column",
+      "text": "",
+      "bounds": "[789,2471][1048,2744]"
+    },
+    {
+      "id": "type:Column#4",
+      "type": "Column",
+      "text": "",
+      "bounds": "[13,2471][272,2744]"
+    },
+    {
+      "id": "type:Image#2",
+      "type": "Image",
+      "text": "",
+      "bounds": "[617,2533][705,2621]"
+    },
+    {
+      "id": "type:Column#8",
+      "type": "Column",
+      "text": "",
+      "bounds": "[1048,2471][1307,2744]"
+    },
+    {
+      "id": "type:Scroll#0",
+      "type": "Scroll",
+      "text": "",
+      "bounds": "[63,1121][1257,2387]"
+    },
+    {
+      "id": "text:設置",
+      "type": "Text",
+      "text": "設置",
+      "bounds": "[1135,2650][1220,2699]"
+    },
+    {
+      "id": "text:2026-1",
+      "type": "TextInput",
+      "text": "2026-1",
+      "bounds": "[688,537][1257,677]"
+    },
+    {
+      "id": "type:Row#11",
+      "type": "Row",
+      "text": "",
+      "bounds": "[0,0][1320,136]"
+    },
+    {
+      "id": "key:emptyClassroomFilterInput",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[63,719][1005,859]"
+    },
+    {
+      "id": "type:Image#0",
+      "type": "Image",
+      "text": "",
+      "bounds": "[99,2533][187,2621]"
+    },
+    {
+      "id": "type:Column#2",
+      "type": "Column",
+      "text": "",
+      "bounds": "[0,137][1320,2450]"
+    }
+  ],
+  "nodes_removed": [
+    {
+      "id": "text:Mock 预览主页（仅 UI，不登录）",
+      "type": "Button",
+      "text": "Mock 预览主页（仅 UI，不登录）",
+      "bounds": "[115,1400][1205,1526]"
+    },
+    {
+      "id": "text:Login",
+      "type": "Button",
+      "text": "Login",
+      "bounds": "[115,1232][1205,1372]"
+    },
+    {
+      "id": "type:Stack#13",
+      "type": "Stack",
+      "text": "",
+      "bounds": "[520,48][800,136]"
+    },
+    {
+      "id": "type:genericContainer#1",
+      "type": "genericContainer",
+      "text": "",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "key:loginSubmitButton",
+      "type": "Button",
+      "text": "Login",
+      "bounds": "[115,1232][1205,1372]"
+    },
+    {
+      "id": "key:loginPasswordMask",
+      "type": "Text",
+      "text": "IDS Login password",
+      "bounds": "[258,935][1034,1068]"
+    },
+    {
+      "id": "key:loginAccountInput",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[258,760][1174,893]"
+    },
+    {
+      "id": "text:View",
+      "type": "Text",
+      "text": "View",
+      "bounds": "[1034,979][1188,1024]"
+    },
+    {
+      "id": "text:https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
+      "type": "Web",
+      "text": "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "text:XDYOU",
+      "type": "Text",
+      "text": "XDYOU",
+      "bounds": "[583,468][739,600]"
+    },
+    {
+      "id": "text:ID",
+      "type": "Text",
+      "text": "ID",
+      "bounds": "[153,804][258,849]"
+    },
+    {
+      "id": "key:togglePasswordVisibility",
+      "type": "Text",
+      "text": "View",
+      "bounds": "[1034,979][1188,1024]"
+    },
+    {
+      "id": "type:rootWebArea#0",
+      "type": "rootWebArea",
+      "text": "",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "type:Web#0",
+      "type": "Web",
+      "text": "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "type:genericContainer#0",
+      "type": "genericContainer",
+      "text": "",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "type:Stack#14",
+      "type": "Stack",
+      "text": "",
+      "bounds": "[520,48][800,136]"
+    },
+    {
+      "id": "key:clearSessionButton",
+      "type": "Text",
+      "text": "Clear cache",
+      "bounds": "[300,1589][504,1634]"
+    },
+    {
+      "id": "text:Clear cache",
+      "type": "Text",
+      "text": "Clear cache",
+      "bounds": "[300,1589][504,1634]"
+    },
+    {
+      "id": "key:idsCookieBootstrap",
+      "type": "Web",
+      "text": "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3Dhttps%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
+      "bounds": "[658,339][662,343]"
+    },
+    {
+      "id": "key:loginLogo",
+      "type": "Stack",
+      "text": "",
+      "bounds": "[506,343][814,651]"
+    },
+    {
+      "id": "key:loginPasswordInput",
+      "type": "TextInput",
+      "text": "",
+      "bounds": "[258,935][1034,1068]"
+    },
+    {
+      "id": "key:mockHomePreviewButton",
+      "type": "Button",
+      "text": "Mock 预览主页（仅 UI，不登录）",
+      "bounds": "[115,1400][1205,1526]"
+    },
+    {
+      "id": "text:PW",
+      "type": "Text",
+      "text": "PW",
+      "bounds": "[153,981][258,1022]"
+    },
+    {
+      "id": "text:==",
+      "type": "Text",
+      "text": "==",
+      "bounds": "[629,406][692,468]"
+    },
+    {
+      "id": "text:View network interaction",
+      "type": "Text",
+      "text": "View network interaction",
+      "bounds": "[581,1589][1020,1634]"
+    },
+    {
+      "id": "text:IDS Login password",
+      "type": "Text",
+      "text": "IDS Login password",
+      "bounds": "[258,935][1034,1068]"
+    },
+    {
+      "id": "key:viewNetworkInteraction",
+      "type": "Text",
+      "text": "View network interaction",
+      "bounds": "[581,1589][1020,1634]"
+    }
+  ],
+  "attrs_changed": [
+    {
+      "node_id": "type:Row#7",
+      "attr": "bounds",
+      "before": "[1002,55][1079,136]",
+      "after": "[559,2517][762,2636]"
+    },
+    {
+      "node_id": "type:Stack#0",
+      "attr": "bounds",
+      "before": "[506,343][814,651]",
+      "after": "[0,0][1320,136]"
+    },
+    {
+      "node_id": "type:Button#1",
+      "attr": "text",
+      "before": "Mock 预览主页（仅 UI，不登录）",
+      "after": "查询"
+    },
+    {
+      "node_id": "type:Button#1",
+      "attr": "bounds",
+      "before": "[115,1400][1205,1526]",
+      "after": "[1033,719][1257,859]"
+    },
+    {
+      "node_id": "type:Row#6",
+      "attr": "bounds",
+      "before": "[49,66][126,128]",
+      "after": "[300,2517][503,2636]"
+    },
+    {
+      "node_id": "type:Stack#6",
+      "attr": "bounds",
+      "before": "[49,55][188,136]",
+      "after": "[1079,55][1166,136]"
+    },
+    {
+      "node_id": "type:Stack#11",
+      "attr": "bounds",
+      "before": "[1173,69][1271,125]",
+      "after": "[520,48][800,136]"
+    },
+    {
+      "node_id": "type:Text#10",
+      "attr": "text",
+      "before": "26",
+      "after": ":"
+    },
+    {
+      "node_id": "type:Text#10",
+      "attr": "bounds",
+      "before": "[126,66][188,128]",
+      "after": "[111,71][126,124]"
+    },
+    {
+      "node_id": "type:Text#4",
+      "attr": "text",
+      "before": "IDS Login password",
+      "after": "校園信息"
+    },
+    {
+      "node_id": "type:Text#4",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#4",
+      "attr": "bounds",
+      "before": "[258,935][1034,1068]",
+      "after": "[58,2650][227,2699]"
+    },
+    {
+      "node_id": "type:Row#5",
+      "attr": "bounds",
+      "before": "[49,55][188,136]",
+      "after": "[41,2517][244,2636]"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "text",
+      "before": "100",
+      "after": "26"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "bounds",
+      "before": "[1182,75][1252,120]",
+      "after": "[126,66][188,128]"
+    },
+    {
+      "node_id": "type:Text#1",
+      "attr": "text",
+      "before": "XDYOU",
+      "after": "A real IDS/Ehall session is required before academic data can load."
+    },
+    {
+      "node_id": "type:Text#1",
+      "attr": "bounds",
+      "before": "[583,468][739,600]",
+      "after": "[63,894][1238,992]"
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "text",
+      "before": "View network interaction",
+      "after": "豬圖鑑賞"
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "bounds",
+      "before": "[581,1589][1020,1634]",
+      "after": "[834,2650][1003,2699]"
+    },
+    {
+      "node_id": "type:Row#3",
+      "attr": "bounds",
+      "before": "[49,55][1271,136]",
+      "after": "[63,992][1257,1121]"
+    },
+    {
+      "node_id": "type:Row#8",
+      "attr": "bounds",
+      "before": "[1086,55][1166,136]",
+      "after": "[817,2517][1020,2636]"
+    },
+    {
+      "node_id": "type:Row#9",
+      "attr": "bounds",
+      "before": "[1173,55][1271,136]",
+      "after": "[1076,2517][1279,2636]"
+    },
+    {
+      "node_id": "type:Text#8",
+      "attr": "text",
+      "before": "07",
+      "after": "設置"
+    },
+    {
+      "node_id": "type:Text#8",
+      "attr": "bounds",
+      "before": "[49,66][111,128]",
+      "after": "[1135,2650][1220,2699]"
+    },
+    {
+      "node_id": "type:Stack#10",
+      "attr": "bounds",
+      "before": "[1166,55][1271,136]",
+      "after": "[1173,69][1271,125]"
+    },
+    {
+      "node_id": "type:Text#2",
+      "attr": "text",
+      "before": "ID",
+      "after": "教室"
+    },
+    {
+      "node_id": "type:Text#2",
+      "attr": "bounds",
+      "before": "[153,804][258,849]",
+      "after": "[63,1034][404,1100]"
+    },
+    {
+      "node_id": "type:Stack#1",
+      "attr": "bounds",
+      "before": "[258,935][1034,1068]",
+      "after": "[0,0][1320,136]"
+    },
+    {
+      "node_id": "type:Button#0",
+      "attr": "text",
+      "before": "Login",
+      "after": "加载教学楼"
+    },
+    {
+      "node_id": "type:Button#0",
+      "attr": "bounds",
+      "before": "[115,1232][1205,1372]",
+      "after": "[865,355][1257,495]"
+    },
+    {
+      "node_id": "type:Text#3",
+      "attr": "text",
+      "before": "PW",
+      "after": "1  2  3  4  5  6  7  8  9 10 11"
+    },
+    {
+      "node_id": "type:Text#3",
+      "attr": "bounds",
+      "before": "[153,981][258,1022]",
+      "after": "[404,1034][1257,1100]"
+    },
+    {
+      "node_id": "type:Stack#7",
+      "attr": "bounds",
+      "before": "[995,55][1079,136]",
+      "after": "[1086,69][1166,125]"
+    },
+    {
+      "node_id": "type:Row#0",
+      "attr": "bounds",
+      "before": "[115,756][1205,896]",
+      "after": "[63,348][1257,502]"
+    },
+    {
+      "node_id": "type:Stack#5",
+      "attr": "bounds",
+      "before": "[49,55][1320,136]",
+      "after": "[995,55][1079,136]"
+    },
+    {
+      "node_id": "type:Stack#9",
+      "attr": "bounds",
+      "before": "[1086,69][1166,125]",
+      "after": "[1173,69][1271,125]"
+    },
+    {
+      "node_id": "type:Column#1",
+      "attr": "bounds",
+      "before": "[559,396][762,599]",
+      "after": "[0,137][1320,2450]"
+    },
+    {
+      "node_id": "type:Stack#12",
+      "attr": "bounds",
+      "before": "[1173,69][1271,125]",
+      "after": "[520,48][800,136]"
+    },
+    {
+      "node_id": "type:TextInput#0",
+      "attr": "bounds",
+      "before": "[258,760][1174,893]",
+      "after": "[63,355][837,495]"
+    },
+    {
+      "node_id": "type:Stack#8",
+      "attr": "bounds",
+      "before": "[1079,55][1166,136]",
+      "after": "[1166,55][1271,136]"
+    },
+    {
+      "node_id": "type:Stack#4",
+      "attr": "bounds",
+      "before": "[0,0][1320,136]",
+      "after": "[49,55][188,136]"
+    },
+    {
+      "node_id": "type:Text#0",
+      "attr": "text",
+      "before": "==",
+      "after": "空闲教室"
+    },
+    {
+      "node_id": "type:Text#0",
+      "attr": "bounds",
+      "before": "[629,406][692,468]",
+      "after": "[63,199][428,306]"
+    },
+    {
+      "node_id": "type:TextInput#1",
+      "attr": "text",
+      "before": "",
+      "after": "2026-08-06"
+    },
+    {
+      "node_id": "type:TextInput#1",
+      "attr": "bounds",
+      "before": "[258,935][1034,1068]",
+      "after": "[63,537][660,677]"
+    },
+    {
+      "node_id": "type:Stack#3",
+      "attr": "bounds",
+      "before": "[0,0][1320,136]",
+      "after": "[49,55][1320,136]"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "text",
+      "before": "Clear cache",
+      "after": "其他功能"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "bounds",
+      "before": "[300,1589][504,1634]",
+      "after": "[576,2650][745,2699]"
+    },
+    {
+      "node_id": "type:Row#2",
+      "attr": "bounds",
+      "before": "[300,1589][1020,1634]",
+      "after": "[63,712][1257,866]"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "text",
+      "before": ":",
+      "after": "07"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "bounds",
+      "before": "[111,71][126,124]",
+      "after": "[49,66][111,128]"
+    },
+    {
+      "node_id": "type:Row#1",
+      "attr": "bounds",
+      "before": "[115,931][1205,1071]",
+      "after": "[63,530][1257,684]"
+    },
+    {
+      "node_id": "type:Row#4",
+      "attr": "bounds",
+      "before": "[0,0][1320,136]",
+      "after": "[0,2450][1320,2758]"
+    },
+    {
+      "node_id": "type:Text#5",
+      "attr": "text",
+      "before": "View",
+      "after": "睿思論壇"
+    },
+    {
+      "node_id": "type:Text#5",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#5",
+      "attr": "bounds",
+      "before": "[1034,979][1188,1024]",
+      "after": "[317,2650][486,2699]"
+    }
+  ],
+  "text_changes": [
+    {
+      "node_id": "type:Button#1",
+      "attr": "text",
+      "before": "Mock 预览主页（仅 UI，不登录）",
+      "after": "查询"
+    },
+    {
+      "node_id": "type:Text#10",
+      "attr": "text",
+      "before": "26",
+      "after": ":"
+    },
+    {
+      "node_id": "type:Text#4",
+      "attr": "text",
+      "before": "IDS Login password",
+      "after": "校園信息"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "text",
+      "before": "100",
+      "after": "26"
+    },
+    {
+      "node_id": "type:Text#1",
+      "attr": "text",
+      "before": "XDYOU",
+      "after": "A real IDS/Ehall session is required before academic data can load."
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "text",
+      "before": "View network interaction",
+      "after": "豬圖鑑賞"
+    },
+    {
+      "node_id": "type:Text#8",
+      "attr": "text",
+      "before": "07",
+      "after": "設置"
+    },
+    {
+      "node_id": "type:Text#2",
+      "attr": "text",
+      "before": "ID",
+      "after": "教室"
+    },
+    {
+      "node_id": "type:Button#0",
+      "attr": "text",
+      "before": "Login",
+      "after": "加载教学楼"
+    },
+    {
+      "node_id": "type:Text#3",
+      "attr": "text",
+      "before": "PW",
+      "after": "1  2  3  4  5  6  7  8  9 10 11"
+    },
+    {
+      "node_id": "type:Text#0",
+      "attr": "text",
+      "before": "==",
+      "after": "空闲教室"
+    },
+    {
+      "node_id": "type:TextInput#1",
+      "attr": "text",
+      "before": "",
+      "after": "2026-08-06"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "text",
+      "before": "Clear cache",
+      "after": "其他功能"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "text",
+      "before": ":",
+      "after": "07"
+    },
+    {
+      "node_id": "type:Text#5",
+      "attr": "text",
+      "before": "View",
+      "after": "睿思論壇"
+    }
+  ],
+  "count_changes": {
+    "Scroll": {
+      "before": 0,
+      "after": 1,
+      "delta": 1
+    },
+    "Stack": {
+      "before": 15,
+      "after": 13,
+      "delta": -2
+    },
+    "rootWebArea": {
+      "before": 1,
+      "after": 0,
+      "delta": -1
+    },
+    "Text": {
+      "before": 12,
+      "after": 13,
+      "delta": 1
+    },
+    "Row": {
+      "before": 10,
+      "after": 17,
+      "delta": 7
+    },
+    "Image": {
+      "before": 0,
+      "after": 5,
+      "delta": 5
+    },
+    "TextInput": {
+      "before": 2,
+      "after": 4,
+      "delta": 2
+    },
+    "genericContainer": {
+      "before": 2,
+      "after": 0,
+      "delta": -2
+    },
+    "Column": {
+      "before": 2,
+      "after": 9,
+      "delta": 7
+    },
+    "Web": {
+      "before": 1,
+      "after": 0,
+      "delta": -1
+    }
+  },
+  "summary": "新增 49 个节点; 移除 27 个节点; 文本变化 15 处; 属性变化 58 处; 数量变化: Scroll: 0→1, Stack: 15→13, rootWebArea: 1→0, Text: 12→13, Row: 10→17, Image: 0→5, TextInput: 2→4, genericContainer: 2→0, Column: 2→9, Web: 1→0"
+}
