@@ -21,7 +21,6 @@
 **/build-script-cache
 /build.log
 /.tmp
-/.agents/skills/cangjie-harmonyos-knowledge/rag/.cjdocs/
 
 # Local runtime evidence may contain device identifiers or transient form text.
 # Commit reviewed root Markdown summaries, not raw captures or scenarios.
