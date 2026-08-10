@@ -19,6 +19,18 @@ public class IDSPasswordCipher {
         "a", "b", "c", "d", "e", "f", "h", "i", "j", "k", "m", "n", "p", "r", "s", "t", "w", "x", "y", "z", "2", "3", "4", "5", "6", "7", "8"
     ]
 
+    // IDS 2.0 associates the slider challenge with a 128-bit browser
+    // fingerprint registered before the CAPTCHA is opened.
+    public static func generateBrowserFingerprint(): String {
+        let bytes = createRandom().generateRandom(16).data
+        let hex: Array<String> = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
+        var result = ""
+        for (value in bytes) {
+            let number = Int64(value)
+            result += hex[number / 16] + hex[number % 16]
+        }
+        return result
+    }
     public static func encrypt(password: String, salt: String): String {
         let keyBytes = salt.toArray()
         if (keyBytes.size != 16) { throw Exception("IDS pwdEncryptSalt must be exactly 16 UTF-8 bytes") }
