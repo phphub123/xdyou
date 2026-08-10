@@ -4,6 +4,7 @@ import kit.ArkUI.*
 import kit.ArkWeb.*
 import std.collection.ArrayList
 import std.convert.*
+import std.math.*
 import std.sync.*
 import std.time.*
 import ohos.arkui.state_macro_manage.*
@@ -258,7 +259,15 @@ public class LoginWindow {
         if (!this.showReAuthDialog) {
             this.reAuthCode = ""
             this.reAuthError = ""
-            this.reAuthNotice = "检测到短信二次认证，请获取并输入验证码。"
+            let recipient = match (this.currentReAuth) {
+                case Some(value) => value.recipient
+                case None => ""
+            }
+            this.reAuthNotice = if (recipient == "") {
+                "检测到短信二次认证，请获取并输入验证码。"
+            } else {
+                "短信二次认证号码：${recipient}。请获取并输入验证码。"
+            }
             this.reAuthSending = false
             this.reAuthSubmitting = false
             this.reAuthNavigationPending = false
@@ -465,12 +474,22 @@ public class LoginWindow {
         this.status = "正在后台登录统一认证…"
         this.viewModel.beginLogin(this.account, this.password,
             { state, message => launch { this.applyLoginState(state, message) } },
+            { captcha => launch { this.showManualSlider(captcha) } },
             { reAuth => launch {
                 this.currentReAuth = Some(reAuth)
                 this.password = ""
                 this.openReAuthDialog()
             } },
             { cookie => launch { this.finishBackendLogin(cookie) } })
+    }
+    func showManualSlider(captcha: SliderCaptcha): Unit {
+        this.currentCaptcha = Some(captcha)
+        this.captchaImage = "data:image/png;base64," + captcha.bigImage
+        this.captchaPieceImage = "data:image/png;base64," + captcha.smallImage
+        this.sliderOffset = 0.0
+        this.resetSliderTracks()
+        this.loading = false
+        this.status = "自动识别未通过，请手动拖动滑块后验证。"
     }
     func consumeDebugLoginMessage(message: String): String {
         let separator = "\n---IDS_RAW_RESPONSE---\n"
@@ -502,6 +521,9 @@ public class LoginWindow {
             this.loading = false
             this.webLoginSubmitting = false
             this.showOfficialIdsPage = false
+            this.captchaImage = ""
+            this.captchaPieceImage = ""
+            this.currentCaptcha = None
             this.closeReAuthDialog()
             this.showHome = true
             this.status = "IDS authentication succeeded."
@@ -517,6 +539,16 @@ public class LoginWindow {
         this.sliderStartX = 0.0
         this.sliderStartY = 0.0
         this.sliderLastTime = 0
+    }
+    func recordSliderValue(value: Float64, mode: SliderChangeMode): Unit {
+        match (mode) {
+            case SliderChangeMode.Begin => this.sliderOffset = value
+            case SliderChangeMode.Moving => this.sliderOffset = value
+            case SliderChangeMode.End => this.sliderOffset = value
+            case SliderChangeMode.Click =>
+                this.status = "请按住圆形滑块拖动，不能点击轨道跳转。"
+            case _ => ()
+        }
     }
     func addSliderTrack(x: Float64, y: Float64, timestamp: Int64): Unit {
         let dx = Int64(x - this.sliderStartX)
@@ -569,20 +601,34 @@ public class LoginWindow {
             case _ => ()
         }
     }
-    func sliderTracksJson(): String {
-        if (this.sliderTrackX.size < 2) {
+    // TouchEvent screen coordinates can be reported in device pixels while the
+    // ArkUI Slider value is in vp. Scale the captured Down/Move/Up trajectory so
+    // its final `a` is exactly the same logical moveLength sent to IDS. This is
+    // the Dart CaptchaWidget invariant: tracks.last.a == moveLength.
+    func sliderTracksJson(move: Int64): String {
+        if (this.sliderTrackX.size < 2 || move <= 0) {
             return ""
         }
+        let rawFinalX = this.sliderTrackX[this.sliderTrackX.size - 1]
+        if (rawFinalX <= 0) { return "" }
         var result = "["
         var index: Int64 = 0
         while (index < this.sliderTrackX.size) {
             if (index > 0) {
                 result += ","
             }
+            let normalizedX = if (index == this.sliderTrackX.size - 1) {
+                move
+            } else {
+                Int64(round(Float64(this.sliderTrackX[index]) * Float64(move) /
+                    Float64(rawFinalX)))
+            }
+            let normalizedY = Int64(round(Float64(this.sliderTrackY[index]) * Float64(move) /
+                Float64(rawFinalX)))
             result +=
-                "{\\\"a\\\":${this.sliderTrackX[index]}," +
-                "\\\"b\\\":${this.sliderTrackY[index]}," +
-                "\\\"c\\\":${this.sliderTrackTime[index]}}"
+                "{\"a\":${normalizedX}," +
+                "\"b\":${normalizedY}," +
+                "\"c\":${this.sliderTrackTime[index]}}"
             index += 1
         }
         return result + "]"
@@ -594,8 +640,39 @@ public class LoginWindow {
         return this.sliderTrackX[this.sliderTrackX.size - 1]
     }
     func verifySlider(): Unit {
-        this.status = "滑块由后台自动完成，无需手动操作。"
-        this.loading = false
+        let move = Int64(round(this.sliderOffset))
+        let tracks = this.sliderTracksJson(move)
+        if (move <= 0 || tracks == "") {
+            this.status = "请先拖动滑块到缺口位置。"
+            return
+        }
+        match (this.currentCaptcha) {
+            case Some(captcha) =>
+                this.loading = true
+                this.viewModel.submitManualCaptcha(captcha, move, tracks,
+                    { state, message => launch { this.applyLoginState(state, message) } },
+                    { refreshed => launch { this.showManualSlider(refreshed) } },
+                    { reAuth => launch {
+                        this.currentReAuth = Some(reAuth)
+                        this.password = ""
+                        this.captchaImage = ""
+                        this.captchaPieceImage = ""
+                        this.currentCaptcha = None
+                        this.openReAuthDialog()
+                    } },
+                    { cookie => launch { this.finishBackendLogin(cookie) } })
+            case None => this.status = "滑块会话已失效，请重新登录。"
+        }
+    }
+    func refreshManualSlider(): Unit {
+        match (this.currentCaptcha) {
+            case Some(captcha) =>
+                this.loading = true
+                this.viewModel.refreshManualCaptcha(captcha,
+                    { state, message => launch { this.applyLoginState(state, message) } },
+                    { refreshed => launch { this.showManualSlider(refreshed) } })
+            case None => this.status = "滑块会话已失效，请重新登录。"
+        }
     }
     func openMockPreview(): Unit {
         this.mockPreview = true
@@ -748,32 +825,38 @@ public class LoginWindow {
                     .borderRadius(7.vp)
                     .onClick({_ => this.openMockPreview()})
                     .id("mockHomePreviewButton")
-                if (false && this.captchaImage != "") {
-                    Text("IDS verification").fontSize(14.vp).fontWeight(FontWeight.Bold).margin(top: 16.vp)
+                if (this.captchaImage != "") {
+                    Text("请拖动滑块完成验证").fontSize(14.vp).fontWeight(FontWeight.Bold).margin(top: 16.vp)
                     Stack {
                         Image(this.captchaImage)
-                            .width(250.vp)
-                            .height(138.vp)
+                            .width(280.vp)
+                            .height(155.vp)
                             .objectFit(ImageFit.Contain)
                             .id("idsSliderImage")
                         Image(this.captchaPieceImage)
-                            .width(40.vp)
-                            .height(138.vp)
+                            .width(44.vp)
+                            .height(155.vp)
                             .objectFit(ImageFit.Contain)
                             .position(x: this.sliderOffset.vp, y: 0.vp)
                             .id("idsSliderPiece")
-                    }.width(250.vp).height(138.vp).margin(top: 8.vp)
-                    Slider(value: this.sliderOffset, min: 0.0, max: 210.0, step: 1.0, style: SliderStyle.OutSet)
-                        .width(250.vp)
+                    }.width(280.vp).height(155.vp).margin(top: 8.vp)
+                    Slider(value: this.sliderOffset, min: 0.0, max: 240.0, step: 1.0, style: SliderStyle.OutSet)
+                        .width(280.vp)
                         .showTips(true)
-                        .onChange({value: Float64, _ => this.sliderOffset = value})
+                        .onChange({value: Float64, mode: SliderChangeMode => this.recordSliderValue(value, mode)})
                         .onTouch({event => this.captureSliderTouch(event)})
                         .id("idsSliderControl")
                     Button(if (this.loading) {
                         "Verifying..."
                     } else {
                         "Verify"
-                    }).width(250.vp).margin(top: 8.vp).onClick({_ => this.verifySlider()}).id("idsSliderVerifyButton")
+                    }).width(280.vp).margin(top: 8.vp).onClick({_ => this.verifySlider()}).id("idsSliderVerifyButton")
+                    Button("刷新验证码")
+                        .width(280.vp)
+                        .margin(top: 6.vp)
+                        .enabled(!this.loading)
+                        .onClick({_ => this.refreshManualSlider()})
+                        .id("idsSliderRefreshButton")
                 }
                 Row {
                     Text("Clear cache")

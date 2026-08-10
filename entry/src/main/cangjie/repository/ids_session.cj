@@ -48,7 +48,7 @@ public class IDSReAuthSession {
     public let challengeLocation: String
     public let username: String
     public let service: String
-    public let cookieHeader: String
+    public var cookieHeader: String
     var multifactor: String = "true"
     public var recipient: String = ""
 
@@ -60,6 +60,7 @@ public class IDSReAuthSession {
     }
 
     public func prepare(onReady: () -> Unit, onError: (String) -> Unit): Unit {
+        this.multifactor = this.queryValue(this.challengeLocation, "isMultifactor", "true")
         let client = createHttp()
         let headers = HashMap<String, String>()
         if (this.cookieHeader != "") { headers["Cookie"] = this.cookieHeader }
@@ -74,7 +75,10 @@ public class IDSReAuthSession {
                         case Some(page) => if (page.responseCode != 200) {
                             client.destroy(); onError("二次认证页面已失效（HTTP ${page.responseCode}）。")
                         } else {
-                            this.switchToSms(client, headers, onReady, onError)
+                            this.cookieHeader = this.mergeCookies(this.cookieHeader,
+                                this.responseCookieText(page.cookies, page.header))
+                            client.destroy()
+                            this.registerFingerprint({ => this.switchToSms(onReady, onError) }, onError)
                         }
                         case None => client.destroy(); onError("二次认证页面没有返回响应。")
                     }
@@ -85,7 +89,55 @@ public class IDSReAuthSession {
         }
     }
 
-    func switchToSms(client: HttpRequest, headers: HashMap<String, String>, onReady: () -> Unit, onError: (String) -> Unit): Unit {
+    func registerFingerprint(onReady: () -> Unit, onError: (String) -> Unit): Unit {
+        let fingerprint = SessionStore().restoreSetting("idsBrowserFingerprint")
+        if (fingerprint == "") { onError("短信二次认证缺少浏览器指纹，请重新登录。"); return }
+        let client = createHttp()
+        let receivedCookies = IDSCookieCapture()
+        let headerCallback = IDSHeadersReceiveCb({ responseHeaders =>
+            for ((name, value) in responseHeaders) {
+                match (Regex("^set-cookie$", RegexFlag.IgnoreCase).find(name)) {
+                    case Some(_) => receivedCookies.value = value
+                    case None => ()
+                }
+            }
+        })
+        client.on(HttpRequestEvent.HeadersReceive, headerCallback)
+        let headers = HashMap<String, String>()
+        if (this.cookieHeader != "") { headers["Cookie"] = this.cookieHeader }
+        let timestamp = DateTime.now().toUnixTimeStamp().toMilliseconds()
+        let options = HttpRequestOptions(method: RequestMethod.Get, header: headers,
+            expectDataType: HttpDataType.StringValue, usingCache: false,
+            connectTimeout: 10000, readTimeout: 30000)
+        try {
+            client.request("https://ids.xidian.edu.cn/authserver/bfp/info?bfp=${fingerprint}&_=${timestamp}",
+                options, { error, response =>
+                    client.destroy()
+                    match (error) {
+                        case Some(value) => onError("二次认证指纹登记失败：${value.message}")
+                        case None => match (response) {
+                            case Some(value) =>
+                                if (value.responseCode >= 200 && value.responseCode < 300) {
+                                    let responseCookies = if (receivedCookies.value != "") {
+                                        receivedCookies.value
+                                    } else { this.responseCookieText(value.cookies, value.header) }
+                                    this.cookieHeader = this.mergeCookies(this.cookieHeader,
+                                        responseCookies)
+                                    onReady()
+                                } else { onError("二次认证指纹登记返回 HTTP ${value.responseCode}。") }
+                            case None => onError("二次认证指纹登记没有返回响应。")
+                        }
+                    }
+                })
+        } catch (e: BusinessException) {
+            client.destroy(); onError("无法启动二次认证指纹登记：${e.code} ${e.message}")
+        }
+    }
+
+    func switchToSms(onReady: () -> Unit, onError: (String) -> Unit): Unit {
+        let client = createHttp()
+        let headers = HashMap<String, String>()
+        if (this.cookieHeader != "") { headers["Cookie"] = this.cookieHeader }
         let body = "isMultifactor=${this.formEncode(this.multifactor)}&reAuthType=3&service=${this.formEncode(this.service)}"
         headers["Content-Type"] = "application/x-www-form-urlencoded;charset=UTF-8"
         let options = HttpRequestOptions(method: RequestMethod.Post, header: headers,
@@ -95,16 +147,19 @@ public class IDSReAuthSession {
             match (error) {
                 case Some(value) => client.destroy(); onError("无法切换短信二次认证：${value.message}")
                 case None => match (response) {
-                    case Some(value) => match (value.result) {
+                    case Some(value) =>
+                        this.cookieHeader = this.mergeCookies(this.cookieHeader,
+                            this.responseCookieText(value.cookies, value.header))
+                        match (value.result) {
                         case HttpData.StringData(text) =>
                             if (!text.contains("\"code\":\"1\"") && !text.contains("\"code\":1")) {
                                 client.destroy(); onError(this.errorWithRawResponse(this.jsonMessage(text, "无法切换到短信二次认证"), text))
                             } else {
-                                this.recipient = this.jsonString(text, "reAuthUserNameInput")
+                                this.recipient = this.maskPhone(this.jsonString(text, "reAuthUserNameInput"))
                                 client.destroy(); onReady()
                             }
                         case _ => client.destroy(); onError("切换短信认证返回了非文本响应。")
-                    }
+                        }
                     case None => client.destroy(); onError("切换短信认证没有返回响应。")
                 }
             }
@@ -156,10 +211,13 @@ public class IDSReAuthSession {
                 match (error) {
                     case Some(value) => onError("二次认证网络错误：${value.message}")
                     case None => match (response) {
-                        case Some(value) => match (value.result) {
-                            case HttpData.StringData(text) => if (value.responseCode >= 200 && value.responseCode < 400) { onSuccess(text) } else { onError(this.errorWithRawResponse("二次认证返回 HTTP ${value.responseCode}", text)) }
-                            case _ => onError("二次认证返回了非文本响应")
-                        }
+                        case Some(value) =>
+                            this.cookieHeader = this.mergeCookies(this.cookieHeader,
+                                this.responseCookieText(value.cookies, value.header))
+                            match (value.result) {
+                                case HttpData.StringData(text) => if (value.responseCode >= 200 && value.responseCode < 400) { onSuccess(text) } else { onError(this.errorWithRawResponse("二次认证返回 HTTP ${value.responseCode}", text)) }
+                                case _ => onError("二次认证返回了非文本响应")
+                            }
                         case None => onError("二次认证没有返回响应")
                     }
                 }
@@ -186,6 +244,63 @@ public class IDSReAuthSession {
     func maskPhone(value: String): String {
         if (value.size < 7) { return "****" }
         return value[0..3] + "****" + value[value.size - 4..value.size]
+    }
+    func queryValue(url: String, name: String, fallback: String): String {
+        let pattern = Regex("[?&]${name}=([^&#]+)")
+        match (pattern.find(url, group: true)) {
+            case Some(value) => value.matchString(1)
+            case None => fallback
+        }
+    }
+    func responseCookieText(cookies: String, headers: HashMap<String, String>): String {
+        if (cookies != "") { return cookies }
+        for ((name, value) in headers) {
+            match (Regex("^set-cookie$", RegexFlag.IgnoreCase).find(name)) {
+                case Some(_) => return value
+                case None => ()
+            }
+        }
+        return ""
+    }
+    func mergeCookies(existing: String, raw: String): String {
+        let values = ArrayList<String>()
+        for (pair in Regex(";").split(existing)) { this.upsertCookie(values, pair.trimAscii()) }
+        for (line in Regex("[\r\n,]+").split(raw)) {
+            let columns = Regex("\\t").split(line)
+            if (columns.size >= 7) {
+                this.upsertCookie(values,
+                    "${columns[columns.size - 2]}=${columns[columns.size - 1]}")
+                continue
+            }
+            let fields = Regex(";").split(line)
+            var index: Int64 = 0
+            while (index < fields.size) {
+                let pair = fields[index].trimAscii()
+                let parts = Regex("=").split(pair)
+                let name = if (parts.size > 0) { parts[0].toAsciiLower() } else { "" }
+                if (index == 0 || !(name == "path" || name == "domain" || name == "expires" ||
+                    name == "max-age" || name == "samesite" || name == "secure" ||
+                    name == "httponly" || name == "priority" || name == "partitioned")) {
+                    this.upsertCookie(values, pair)
+                }
+                index += 1
+            }
+        }
+        var result = ""
+        for (item in values) { if (result != "") { result += "; " }; result += item }
+        return result
+    }
+    func upsertCookie(values: ArrayList<String>, pair: String): Unit {
+        if (!pair.contains("=")) { return }
+        let parts = Regex("=").split(pair)
+        if (parts.size == 0 || parts[0] == "") { return }
+        let prefix = "${parts[0]}="
+        var index: Int64 = 0
+        while (index < values.size) {
+            if (values[index].startsWith(prefix)) { values[index] = pair; return }
+            index += 1
+        }
+        values.add(pair)
     }
     func formEncode(value: String): String {
         let hex: Array<String> = ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"]
@@ -233,7 +348,9 @@ public class IDSSession {
                                 if (value.responseCode == 200) {
                                     try {
                                         let responseCookies = if (receivedCookies.value != "") { receivedCookies.value } else { this.responseCookieText(value.cookies, value.header) }
-                                        onReady(this.parseLoginPage(html, this.mergeCookies(webCookies, responseCookies)))
+                                        let mergedCookies = this.mergeCookies(webCookies, responseCookies)
+                                        Hilog.info(1, "IDSLogin", "login page cookieNames=${this.cookieNames(mergedCookies)}")
+                                        onReady(this.parseLoginPage(html, mergedCookies))
                                     }
                                     catch (e: Exception) { onError("Malformed IDS login page: ${e.message}") }
                                 } else { onError("IDS returned HTTP ${value.responseCode}") }
@@ -256,6 +373,16 @@ public class IDSSession {
                 store.saveSetting("idsBrowserFingerprint", fingerprint)
         }
         let request = createHttp()
+        let receivedCookies = IDSCookieCapture()
+        let headerCallback = IDSHeadersReceiveCb({ responseHeaders =>
+            for ((name, value) in responseHeaders) {
+                match (Regex("^set-cookie$", RegexFlag.IgnoreCase).find(name)) {
+                    case Some(_) => receivedCookies.value = value
+                    case None => ()
+                }
+            }
+        })
+        request.on(HttpRequestEvent.HeadersReceive, headerCallback)
         let headers = HashMap<String, String>()
         if (page.cookieHeader != "") { headers["Cookie"] = page.cookieHeader }
         headers["User-Agent"] = IDSSession.browserUserAgent
@@ -271,8 +398,11 @@ public class IDSSession {
                     case None => match (response) {
                         case Some(value) =>
                             if (value.responseCode >= 200 && value.responseCode < 300) {
-                                let cookies = this.mergeCookies(page.cookieHeader, this.responseCookieText(value.cookies, value.header))
-                                Hilog.info(1, "IDSLogin", "browser fingerprint registered cookieCount=${this.cookieCount(cookies)}")
+                                let responseCookies = if (receivedCookies.value != "") {
+                                    receivedCookies.value
+                                } else { this.responseCookieText(value.cookies, value.header) }
+                                let cookies = this.mergeCookies(page.cookieHeader, responseCookies)
+                                Hilog.info(1, "IDSLogin", "browser fingerprint registered cookieCount=${this.cookieCount(cookies)} cookieNames=${this.cookieNames(cookies)} responseNames=${this.cookieNames(responseCookies)}")
                                 onReady(IDSLoginPage(page.hiddenFields, page.encryptSalt, cookies))
                             } else { onError("IDS fingerprint registration returned HTTP ${value.responseCode}") }
                         case None => onError("IDS fingerprint registration returned no response")
@@ -337,6 +467,9 @@ public class IDSSession {
     public func verifySlider(captcha: SliderCaptcha, move: Int64, tracks: String,
         onResult: (Bool, String, String) -> Unit, onError: (String) -> Unit): Unit {
         try {
+            if (!IDSPasswordCipher.captchaEncryptionSelfTest()) {
+                throw Exception("Cangjie AES-CBC output differs from the Python protocol vector")
+            }
             let safeMove = if (move < 0) { 0 } else if (move > 280) { 280 } else { move }
             Hilog.info(1, "IDSLogin", "slider verify request move=${safeMove} trackPoints=${this.trackPointCount(tracks)}")
             if (tracks == "") { throw Exception("Slider gesture track is empty") }
@@ -351,7 +484,9 @@ public class IDSSession {
             headers["Origin"] = "https://ids.xidian.edu.cn"
             headers["X-Requested-With"] = "XMLHttpRequest"
             headers["User-Agent"] = IDSSession.browserUserAgent
-            let options = HttpRequestOptions(method: RequestMethod.Post, header: headers, usingProtocol: HttpProtocol.Http1_1, extraData: HttpData.ArrayData("sign=${this.formEncode(sign)}".toArray()), expectDataType: HttpDataType.StringValue, usingCache: false, readTimeout: 30000, connectTimeout: 10000)
+            // Match Dio's form submission shape. NetworkKit documents textual
+            // application/x-www-form-urlencoded request bodies as StringData.
+            let options = HttpRequestOptions(method: RequestMethod.Post, header: headers, usingProtocol: HttpProtocol.Http1_1, extraData: HttpData.StringData("sign=${this.formEncode(sign)}"), expectDataType: HttpDataType.StringValue, usingCache: false, readTimeout: 30000, connectTimeout: 10000)
             request.request(IDSSession.verifySliderUrl, options, { err, response =>
                 request.destroy()
                 match (err) {
@@ -484,6 +619,16 @@ public class IDSSession {
         onReAuthRequired: (IDSReAuthSession) -> Unit,
         onError: (String) -> Unit
     ): Unit {
+        // NetworkKit follows the IDS 302 automatically on this platform. In
+        // that case the callback is HTTP 200 with the re-authentication HTML,
+        // and the original Location header is no longer available.
+        if (this.isReAuthPage(body)) {
+            let multifactor = this.reAuthPageValue(body, "isMultifactor", "true")
+            let challenge = "https://ids.xidian.edu.cn/authserver/reAuthCheck/reAuthLoginView.do" +
+                "?isMultifactor=${this.formEncode(multifactor)}&service=${this.formEncode(EhallSession.landingUrl)}"
+            onReAuthRequired(IDSReAuthSession(challenge, account, EhallSession.landingUrl, cookies))
+            return
+        }
         if (code == 301 || code == 302 || code == 303 || code == 307 || code == 308) {
             match (this.headerValue(headers, "location")) {
                 case Some(location) =>
@@ -518,6 +663,18 @@ public class IDSSession {
         }
         if (cookies != "" && this.isEhallPage(body)) { onSuccess(cookies); return }
         onError(this.errorWithRawResponse("IDS returned an unrecognized page after credential submission.", body))
+    }
+    func isReAuthPage(body: String): Bool {
+        return body.contains("var reAuthParams") ||
+            body.contains("/static/custom/js/reAuth.js") ||
+            body.contains("class=\"re_auth_content\"")
+    }
+    func reAuthPageValue(body: String, name: String, fallback: String): String {
+        let expression = Regex("\\\"${name}\\\"\\s*:\\s*\\\"([^\\\"]+)\\\"")
+        match (expression.find(body, group: true)) {
+            case Some(value) => value.matchString(1)
+            case None => fallback
+        }
     }
     func submitContinue(fields: HashMap<String, String>, cookieHeader: String, onSuccess: (String) -> Unit, onError: (String) -> Unit): Unit {
         var form = ""
@@ -703,6 +860,14 @@ public class IDSSession {
         // NetworkKit may expose either Set-Cookie lines or a semicolon-delimited
         // cookie header. Preserve cookie pairs while filtering Set-Cookie attributes.
         for (line in Regex("[\r\n,]+").split(raw)) {
+            // HttpResponse.cookies uses the Netscape cookie-file layout on
+            // HarmonyOS: domain<TAB>flag<TAB>path<TAB>secure<TAB>expiry<TAB>name<TAB>value.
+            let columns = Regex("\\t").split(line)
+            if (columns.size >= 7) {
+                this.upsertCookie(values,
+                    "${columns[columns.size - 2]}=${columns[columns.size - 1]}")
+                continue
+            }
             let fields = Regex(";").split(line)
             var fieldIndex: Int64 = 0
             while (fieldIndex < fields.size) {
@@ -741,6 +906,25 @@ public class IDSSession {
         var count: Int64 = 0
         for (pair in Regex(";").split(header)) { if (pair.contains("=")) { count += 1 } }
         return count
+    }
+    func cookieNames(header: String): String {
+        var result = ""
+        for (line in Regex("[\r\n,]+").split(header)) {
+            let columns = Regex("\\t").split(line)
+            if (columns.size >= 7) {
+                if (result != "") { result += "," }
+                result += columns[columns.size - 2]
+                continue
+            }
+            for (pair in Regex(";").split(line)) {
+            let parts = Regex("=").split(pair.trimAscii())
+            if (parts.size > 0 && parts[0] != "") {
+                if (result != "") { result += "," }
+                result += parts[0]
+            }
+            }
+        }
+        return result
     }
 
     func formEncode(value: String): String {

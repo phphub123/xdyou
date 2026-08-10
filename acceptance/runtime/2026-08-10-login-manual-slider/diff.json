@@ -1,0 +1,512 @@
+{
+  "nodes_added": [
+    {
+      "id": "text:00000000000",
+      "type": "TextInput",
+      "text": "00000000000",
+      "bounds": "[258,756][1174,889]"
+    },
+    {
+      "id": "type:Image#0",
+      "type": "Image",
+      "text": "",
+      "bounds": "[170,1663][1150,2206]"
+    },
+    {
+      "id": "type:Image#1",
+      "type": "Image",
+      "text": "",
+      "bounds": "[569,1663][723,2205]"
+    },
+    {
+      "id": "text:114.000000",
+      "type": "Slider",
+      "text": "114.000000",
+      "bounds": "[170,2206][1150,2346]"
+    },
+    {
+      "id": "key:idsSliderImage",
+      "type": "Image",
+      "text": "",
+      "bounds": "[170,1663][1150,2206]"
+    },
+    {
+      "id": "type:Button#2",
+      "type": "Button",
+      "text": "Verify",
+      "bounds": "[170,2374][1150,2514]"
+    },
+    {
+      "id": "text:Verify",
+      "type": "Button",
+      "text": "Verify",
+      "bounds": "[170,2374][1150,2514]"
+    },
+    {
+      "id": "type:Text#13",
+      "type": "Text",
+      "text": "100",
+      "bounds": "[1182,75][1252,120]"
+    },
+    {
+      "id": "text:invalid-probe-only",
+      "type": "TextInput",
+      "text": "invalid-probe-only",
+      "bounds": "[258,931][1034,1064]"
+    },
+    {
+      "id": "key:idsSliderRefreshButton",
+      "type": "Button",
+      "text": "刷新验证码",
+      "bounds": "[170,2535][1150,2675]"
+    },
+    {
+      "id": "type:Button#3",
+      "type": "Button",
+      "text": "刷新验证码",
+      "bounds": "[170,2535][1150,2675]"
+    },
+    {
+      "id": "text:15",
+      "type": "Text",
+      "text": "15",
+      "bounds": "[126,66][188,128]"
+    },
+    {
+      "id": "text:********",
+      "type": "Text",
+      "text": "********",
+      "bounds": "[258,931][1034,1064]"
+    },
+    {
+      "id": "text:03, :, 15",
+      "type": "Flex",
+      "text": "03, :, 15",
+      "bounds": "[49,55][188,136]"
+    },
+    {
+      "id": "text:滑块未通过（errorCode=0 message=error bodyBytes=34）。请点击“刷新验证码”后再试。",
+      "type": "Text",
+      "text": "滑块未通过（errorCode=0 message=error bodyBytes=34）。请点击“刷新验证码”后再试。",
+      "bounds": "[126,2825][1194,2856]"
+    },
+    {
+      "id": "type:Text#12",
+      "type": "Text",
+      "text": "15",
+      "bounds": "[126,66][188,128]"
+    },
+    {
+      "id": "text:刷新验证码",
+      "type": "Button",
+      "text": "刷新验证码",
+      "bounds": "[170,2535][1150,2675]"
+    },
+    {
+      "id": "key:idsSliderControl",
+      "type": "Slider",
+      "text": "114.000000",
+      "bounds": "[170,2206][1150,2346]"
+    },
+    {
+      "id": "type:Stack#18",
+      "type": "Stack",
+      "text": "",
+      "bounds": "[520,48][800,136]"
+    },
+    {
+      "id": "text:请拖动滑块完成验证",
+      "type": "Text",
+      "text": "请拖动滑块完成验证",
+      "bounds": "[439,1578][881,1635]"
+    },
+    {
+      "id": "type:Slider#0",
+      "type": "Slider",
+      "text": "114.000000",
+      "bounds": "[170,2206][1150,2346]"
+    },
+    {
+      "id": "key:idsSliderPiece",
+      "type": "Image",
+      "text": "",
+      "bounds": "[569,1663][723,2205]"
+    },
+    {
+      "id": "key:loginStatus",
+      "type": "Text",
+      "text": "滑块未通过（errorCode=0 message=error bodyBytes=34）。请点击“刷新验证码”后再试。",
+      "bounds": "[126,2825][1194,2856]"
+    },
+    {
+      "id": "key:idsSliderVerifyButton",
+      "type": "Button",
+      "text": "Verify",
+      "bounds": "[170,2374][1150,2514]"
+    }
+  ],
+  "nodes_removed": [
+    {
+      "id": "text:IDS Login password",
+      "type": "Text",
+      "text": "IDS Login password",
+      "bounds": "[258,931][1034,1064]"
+    },
+    {
+      "id": "text:03, :, 14",
+      "type": "Flex",
+      "text": "03, :, 14",
+      "bounds": "[49,55][188,136]"
+    },
+    {
+      "id": "text:14",
+      "type": "Text",
+      "text": "14",
+      "bounds": "[126,66][188,128]"
+    }
+  ],
+  "attrs_changed": [
+    {
+      "node_id": "key:clearSessionButton",
+      "attr": "bounds",
+      "before": "[300,1585][504,1630]",
+      "after": "[300,2738][504,2783]"
+    },
+    {
+      "node_id": "key:ClockStatusView",
+      "attr": "text",
+      "before": "03, :, 14",
+      "after": "03, :, 15"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "text",
+      "before": "100",
+      "after": ":"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "bounds",
+      "before": "[1182,75][1252,120]",
+      "after": "[111,71][126,124]"
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "text",
+      "before": "View network interaction",
+      "after": "Clear cache"
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "bounds",
+      "before": "[581,1585][1020,1630]",
+      "after": "[300,2738][504,2783]"
+    },
+    {
+      "node_id": "type:Stack#12",
+      "attr": "bounds",
+      "before": "[1086,69][1166,125]",
+      "after": "[1079,55][1166,136]"
+    },
+    {
+      "node_id": "type:Text#10",
+      "attr": "text",
+      "before": "14",
+      "after": "03"
+    },
+    {
+      "node_id": "type:Text#10",
+      "attr": "bounds",
+      "before": "[126,66][188,128]",
+      "after": "[49,66][111,128]"
+    },
+    {
+      "node_id": "type:Flex#0",
+      "attr": "text",
+      "before": "03, :, 14",
+      "after": "03, :, 15"
+    },
+    {
+      "node_id": "type:Stack#13",
+      "attr": "bounds",
+      "before": "[1166,55][1271,136]",
+      "after": "[1086,69][1166,125]"
+    },
+    {
+      "node_id": "type:TextInput#1",
+      "attr": "text",
+      "before": "",
+      "after": "invalid-probe-only"
+    },
+    {
+      "node_id": "key:loginPasswordMask",
+      "attr": "text",
+      "before": "IDS Login password",
+      "after": "********"
+    },
+    {
+      "node_id": "type:Stack#16",
+      "attr": "bounds",
+      "before": "[520,48][800,136]",
+      "after": "[1173,69][1271,125]"
+    },
+    {
+      "node_id": "type:Stack#14",
+      "attr": "bounds",
+      "before": "[1173,69][1271,125]",
+      "after": "[1166,55][1271,136]"
+    },
+    {
+      "node_id": "type:Row#2",
+      "attr": "bounds",
+      "before": "[300,1585][1020,1630]",
+      "after": "[300,2738][1020,2783]"
+    },
+    {
+      "node_id": "type:Text#4",
+      "attr": "text",
+      "before": "IDS Login password",
+      "after": "********"
+    },
+    {
+      "node_id": "key:viewNetworkInteraction",
+      "attr": "bounds",
+      "before": "[581,1585][1020,1630]",
+      "after": "[581,2738][1020,2783]"
+    },
+    {
+      "node_id": "text:View network interaction",
+      "attr": "bounds",
+      "before": "[581,1585][1020,1630]",
+      "after": "[581,2738][1020,2783]"
+    },
+    {
+      "node_id": "type:TextInput#0",
+      "attr": "text",
+      "before": "",
+      "after": "00000000000"
+    },
+    {
+      "node_id": "type:Text#8",
+      "attr": "text",
+      "before": "03",
+      "after": "View network interaction"
+    },
+    {
+      "node_id": "type:Text#8",
+      "attr": "clickable",
+      "before": "false",
+      "after": "true"
+    },
+    {
+      "node_id": "type:Text#8",
+      "attr": "bounds",
+      "before": "[49,66][111,128]",
+      "after": "[581,2738][1020,2783]"
+    },
+    {
+      "node_id": "text:Clear cache",
+      "attr": "bounds",
+      "before": "[300,1585][504,1630]",
+      "after": "[300,2738][504,2783]"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "text",
+      "before": ":",
+      "after": "滑块未通过（errorCode=0 message=error bodyBytes=34）。请点击“刷新验证码”后再试。"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "bounds",
+      "before": "[111,71][126,124]",
+      "after": "[126,2825][1194,2856]"
+    },
+    {
+      "node_id": "type:Stack#9",
+      "attr": "bounds",
+      "before": "[1004,55][1079,136]",
+      "after": "[920,55][1004,136]"
+    },
+    {
+      "node_id": "type:Stack#8",
+      "attr": "bounds",
+      "before": "[920,55][1004,136]",
+      "after": "[49,55][188,136]"
+    },
+    {
+      "node_id": "key:loginPasswordInput",
+      "attr": "text",
+      "before": "",
+      "after": "invalid-probe-only"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "text",
+      "before": "Clear cache",
+      "after": "请拖动滑块完成验证"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "clickable",
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "bounds",
+      "before": "[300,1585][504,1630]",
+      "after": "[439,1578][881,1635]"
+    },
+    {
+      "node_id": "type:Stack#7",
+      "attr": "bounds",
+      "before": "[49,55][188,136]",
+      "after": "[49,55][1320,136]"
+    },
+    {
+      "node_id": "key:loginAccountInput",
+      "attr": "text",
+      "before": "",
+      "after": "00000000000"
+    },
+    {
+      "node_id": "type:Stack#3",
+      "attr": "bounds",
+      "before": "[0,0][1320,136]",
+      "after": "[170,1663][1150,2206]"
+    },
+    {
+      "node_id": "type:Stack#10",
+      "attr": "bounds",
+      "before": "[1011,55][1079,136]",
+      "after": "[1004,55][1079,136]"
+    },
+    {
+      "node_id": "type:Stack#11",
+      "attr": "bounds",
+      "before": "[1079,55][1166,136]",
+      "after": "[1011,55][1079,136]"
+    },
+    {
+      "node_id": "type:Stack#6",
+      "attr": "bounds",
+      "before": "[49,55][1320,136]",
+      "after": "[0,0][1320,136]"
+    }
+  ],
+  "text_changes": [
+    {
+      "node_id": "key:ClockStatusView",
+      "attr": "text",
+      "before": "03, :, 14",
+      "after": "03, :, 15"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "text",
+      "before": "100",
+      "after": ":"
+    },
+    {
+      "node_id": "type:Text#7",
+      "attr": "text",
+      "before": "View network interaction",
+      "after": "Clear cache"
+    },
+    {
+      "node_id": "type:Text#10",
+      "attr": "text",
+      "before": "14",
+      "after": "03"
+    },
+    {
+      "node_id": "type:Flex#0",
+      "attr": "text",
+      "before": "03, :, 14",
+      "after": "03, :, 15"
+    },
+    {
+      "node_id": "type:TextInput#1",
+      "attr": "text",
+      "before": "",
+      "after": "invalid-probe-only"
+    },
+    {
+      "node_id": "key:loginPasswordMask",
+      "attr": "text",
+      "before": "IDS Login password",
+      "after": "********"
+    },
+    {
+      "node_id": "type:Text#4",
+      "attr": "text",
+      "before": "IDS Login password",
+      "after": "********"
+    },
+    {
+      "node_id": "type:TextInput#0",
+      "attr": "text",
+      "before": "",
+      "after": "00000000000"
+    },
+    {
+      "node_id": "type:Text#8",
+      "attr": "text",
+      "before": "03",
+      "after": "View network interaction"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "text",
+      "before": ":",
+      "after": "滑块未通过（errorCode=0 message=error bodyBytes=34）。请点击“刷新验证码”后再试。"
+    },
+    {
+      "node_id": "key:loginPasswordInput",
+      "attr": "text",
+      "before": "",
+      "after": "invalid-probe-only"
+    },
+    {
+      "node_id": "type:Text#6",
+      "attr": "text",
+      "before": "Clear cache",
+      "after": "请拖动滑块完成验证"
+    },
+    {
+      "node_id": "key:loginAccountInput",
+      "attr": "text",
+      "before": "",
+      "after": "00000000000"
+    }
+  ],
+  "count_changes": {
+    "Text": {
+      "before": 12,
+      "after": 14,
+      "delta": 2
+    },
+    "Slider": {
+      "before": 0,
+      "after": 1,
+      "delta": 1
+    },
+    "Button": {
+      "before": 2,
+      "after": 4,
+      "delta": 2
+    },
+    "Image": {
+      "before": 0,
+      "after": 2,
+      "delta": 2
+    },
+    "Stack": {
+      "before": 18,
+      "after": 19,
+      "delta": 1
+    }
+  },
+  "summary": "新增 24 个节点; 移除 3 个节点; 文本变化 14 处; 属性变化 38 处; 数量变化: Text: 12→14, Slider: 0→1, Button: 2→4, Image: 0→2, Stack: 18→19"
+}
