@@ -26,9 +26,12 @@ public class LoginViewModel {
         this.lastSliderFailure = ""
         onState(SessionState.Authenticating, "正在请求统一认证登录表单…")
         this.ids.requestLoginPage(EhallSession.landingUrl, { page =>
-            this.pendingPage = Some(page)
-            onState(SessionState.Authenticating, "正在后台完成滑块验证…")
-            this.beginAutomaticCaptcha(page, 0, onState, onReAuthRequired, onAuthenticated)
+            onState(SessionState.Authenticating, "正在登记统一认证设备指纹…")
+            this.ids.registerBrowserFingerprint(page, { registeredPage =>
+                this.pendingPage = Some(registeredPage)
+                onState(SessionState.Authenticating, "正在后台完成滑块验证…")
+                this.beginAutomaticCaptcha(registeredPage, 0, onState, onReAuthRequired, onAuthenticated)
+            }, { error => this.fail(error, onState) })
         }, { error => this.fail(error, onState) })
     }
 

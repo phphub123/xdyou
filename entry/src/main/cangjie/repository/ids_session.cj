@@ -199,6 +199,8 @@ public class IDSSession {
     static let loginUrl: String = "https://ids.xidian.edu.cn/authserver/login"
     static let sliderUrl: String = "https://ids.xidian.edu.cn/authserver/common/openSliderCaptcha.htl"
     static let verifySliderUrl: String = "https://ids.xidian.edu.cn/authserver/common/verifySliderCaptcha.htl"
+    static let fingerprintUrl: String = "https://ids.xidian.edu.cn/authserver/bfp/info"
+    static let browserUserAgent: String = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
 
     public func requestLoginPage(target: String, onReady: (IDSLoginPage) -> Unit, onError: (String) -> Unit): Unit {
         let request = createHttp()
@@ -208,6 +210,7 @@ public class IDSSession {
         let webCookies = if (normalCookies != "") { normalCookies } else { privateCookies }
         let requestHeaders = HashMap<String, String>()
         if (webCookies != "") { requestHeaders["Cookie"] = webCookies }
+        requestHeaders["User-Agent"] = IDSSession.browserUserAgent
         let receivedCookies = IDSCookieCapture()
         let headerCallback = IDSHeadersReceiveCb({ headers =>
             for ((name, value) in headers) {
@@ -243,18 +246,56 @@ public class IDSSession {
         } catch (e: BusinessException) { request.destroy(); onError("Unable to start IDS request: ${e.code} ${e.message}") }
     }
 
+    public func registerBrowserFingerprint(page: IDSLoginPage, onReady: (IDSLoginPage) -> Unit, onError: (String) -> Unit): Unit {
+        let store = SessionStore()
+        var fingerprint = store.restoreSetting("idsBrowserFingerprint")
+        match (Regex("^[0-9A-F]{32}$").find(fingerprint)) {
+            case Some(_) => ()
+            case None =>
+                fingerprint = IDSPasswordCipher.generateBrowserFingerprint()
+                store.saveSetting("idsBrowserFingerprint", fingerprint)
+        }
+        let request = createHttp()
+        let headers = HashMap<String, String>()
+        if (page.cookieHeader != "") { headers["Cookie"] = page.cookieHeader }
+        headers["User-Agent"] = IDSSession.browserUserAgent
+        let options = HttpRequestOptions(method: RequestMethod.Get, header: headers,
+            usingProtocol: HttpProtocol.Http1_1, expectDataType: HttpDataType.StringValue,
+            usingCache: false, readTimeout: 30000, connectTimeout: 10000)
+        let timestamp = DateTime.now().toUnixTimeStamp().toMilliseconds()
+        try {
+            request.request("${IDSSession.fingerprintUrl}?bfp=${fingerprint}&_=${timestamp}", options, { err, response =>
+                request.destroy()
+                match (err) {
+                    case Some(error) => onError("IDS fingerprint registration failed: ${error.code} ${error.message}")
+                    case None => match (response) {
+                        case Some(value) =>
+                            if (value.responseCode >= 200 && value.responseCode < 300) {
+                                let cookies = this.mergeCookies(page.cookieHeader, this.responseCookieText(value.cookies, value.header))
+                                Hilog.info(1, "IDSLogin", "browser fingerprint registered cookieCount=${this.cookieCount(cookies)}")
+                                onReady(IDSLoginPage(page.hiddenFields, page.encryptSalt, cookies))
+                            } else { onError("IDS fingerprint registration returned HTTP ${value.responseCode}") }
+                        case None => onError("IDS fingerprint registration returned no response")
+                    }
+                }
+            })
+        } catch (e: BusinessException) {
+            request.destroy(); onError("Unable to register IDS fingerprint: ${e.code} ${e.message}")
+        }
+    }
     public func requestSliderCaptcha(page: IDSLoginPage, onReady: (SliderCaptcha) -> Unit, onError: (String) -> Unit): Unit {
         Hilog.info(1, "IDSLogin", "slider open request started")
         let request = createHttp()
         let headers = HashMap<String, String>()
         if (page.cookieHeader != "") { headers["Cookie"] = page.cookieHeader }
         headers["Accept"] = "application/json, text/javascript, */*; q=0.01"
-        headers["User-Agent"] = "Dart/3.12 (dart:io)"
+        headers["User-Agent"] = IDSSession.browserUserAgent
         let options = HttpRequestOptions(method: RequestMethod.Get, header: headers, usingProtocol: HttpProtocol.Http1_1, expectDataType: HttpDataType.StringValue, usingCache: false, readTimeout: 30000, connectTimeout: 10000)
         try {
             let timestamp = DateTime.now().toUnixTimeStamp().toMilliseconds()
             request.request("${IDSSession.sliderUrl}?_=${timestamp}", options, { err, response =>
                 request.destroy()
+
                 match (err) {
                     case Some(error) =>
                         Hilog.error(1, "IDSLogin", "slider open network error code=${error.code} message=${this.safeLog(error.message)}")
@@ -271,8 +312,9 @@ public class IDSSession {
                                         let key = ArrayList<UInt8>()
                                         var index: Int64 = bytes.size - 16
                                         while (index < bytes.size) { key.add(bytes[index]); index += 1 }
-                                        Hilog.info(1, "IDSLogin", "slider open accepted HTTP 200 image payload present")
-                                        onReady(SliderCaptcha(big, small, key.toArray(), page.cookieHeader))
+                                        let cookies = this.mergeCookies(page.cookieHeader, this.responseCookieText(value.cookies, value.header))
+                                        Hilog.info(1, "IDSLogin", "slider open accepted cookieCount=${this.cookieCount(cookies)}")
+                                        onReady(SliderCaptcha(big, small, key.toArray(), cookies))
                                     } catch (e: Exception) {
                                         Hilog.error(1, "IDSLogin", "slider open malformed response: ${this.safeLog(e.message)}")
                                         onError("Malformed slider response: ${e.message}")
@@ -308,7 +350,7 @@ public class IDSSession {
             headers["Access-Control-Allow-Origin"] = "https://ids.xidian.edu.cn"
             headers["Origin"] = "https://ids.xidian.edu.cn"
             headers["X-Requested-With"] = "XMLHttpRequest"
-            headers["User-Agent"] = "Dart/3.12 (dart:io)"
+            headers["User-Agent"] = IDSSession.browserUserAgent
             let options = HttpRequestOptions(method: RequestMethod.Post, header: headers, usingProtocol: HttpProtocol.Http1_1, extraData: HttpData.ArrayData("sign=${this.formEncode(sign)}".toArray()), expectDataType: HttpDataType.StringValue, usingCache: false, readTimeout: 30000, connectTimeout: 10000)
             request.request(IDSSession.verifySliderUrl, options, { err, response =>
                 request.destroy()
@@ -408,6 +450,7 @@ public class IDSSession {
             headers["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8"
             headers["Origin"] = "https://ids.xidian.edu.cn"
             headers["Referer"] = "${IDSSession.loginUrl}?service=${EhallSession.landingUrl}"
+            headers["User-Agent"] = IDSSession.browserUserAgent
             let request = createHttp()
             let options = HttpRequestOptions(method: RequestMethod.Post, header: headers, usingProtocol: HttpProtocol.Http1_1, extraData: HttpData.StringData(form), expectDataType: HttpDataType.StringValue, usingCache: false, readTimeout: 30000, connectTimeout: 10000)
             request.request("${IDSSession.loginUrl}?service=${EhallSession.landingUrl}", options, { err, response =>
@@ -657,17 +700,31 @@ public class IDSSession {
         for (pair in Regex(";").split(existing)) {
             this.upsertCookie(values, pair.trimAscii())
         }
-        // `raw` is the response's Set-Cookie text. Each line/comma starts a
-        // cookie and attributes after the first semicolon are not request data.
-        for (line in Regex("[\\r\\n,]+").split(raw)) {
+        // NetworkKit may expose either Set-Cookie lines or a semicolon-delimited
+        // cookie header. Preserve cookie pairs while filtering Set-Cookie attributes.
+        for (line in Regex("[\r\n,]+").split(raw)) {
             let fields = Regex(";").split(line)
-            if (fields.size > 0) { this.upsertCookie(values, fields[0].trimAscii()) }
+            var fieldIndex: Int64 = 0
+            while (fieldIndex < fields.size) {
+                let pair = fields[fieldIndex].trimAscii()
+                let parts = Regex("=").split(pair)
+                let name = if (parts.size > 0) { parts[0].toAsciiLower() } else { "" }
+                if (fieldIndex == 0 || !this.isCookieAttribute(name)) {
+                    this.upsertCookie(values, pair)
+                }
+                fieldIndex += 1
+            }
         }
         var result = ""
         for (item in values) { if (result != "") { result += "; " }; result += item }
         return result
     }
 
+    func isCookieAttribute(name: String): Bool {
+        return name == "path" || name == "domain" || name == "expires" ||
+            name == "max-age" || name == "samesite" || name == "secure" ||
+            name == "httponly" || name == "priority" || name == "partitioned"
+    }
     func upsertCookie(values: ArrayList<String>, pair: String): Unit {
         if (!pair.contains("=")) { return }
         let equal = Regex("=").split(pair)
