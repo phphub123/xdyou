@@ -1,0 +1,13 @@
+{
+  "name": "XDYou login validation and process health",
+  "description": "Verify account/password validation and that the official IDS submission keeps the target process alive without retaining test secrets.",
+  "steps": [
+    {"action": "click", "target": {"key": "loginSubmitButton"}, "wait_after": 1},
+    {"action": "snapshot", "label": "01-empty-login-validation"}
+  ],
+  "assertions": [
+    {"type": "exists", "target": {"key": "loginAccountInput"}, "message": "Account input remains visible"},
+    {"type": "exists", "target": {"key": "loginPasswordInput"}, "message": "Password input remains visible"},
+    {"type": "exists", "target": {"text": "Student ID is required."}, "message": "Empty account validation is shown"}
+  ]
+}

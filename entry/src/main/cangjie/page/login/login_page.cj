@@ -3,11 +3,14 @@ package ohos_app_cangjie_entry.page.login
 import kit.ArkUI.*
 import kit.ArkWeb.*
 import std.collection.ArrayList
+import std.convert.*
+import std.sync.*
 import std.time.*
 import ohos.arkui.state_macro_manage.*
 import ohos.business_exception.*
 import ohos_app_cangjie_entry.repository.*
 import ohos_app_cangjie_entry.controller.*
+import ohos_app_cangjie_entry.model.*
 import ohos_app_cangjie_entry.external.*
 import ohos_app_cangjie_entry.themes.*
 import ohos_app_cangjie_entry.page.homepage.*
@@ -22,11 +25,22 @@ public class LoginWindow {
     @State var showHome: Bool = false
     @State var mockPreview: Bool = false
     @State var status: String = ""
+    @State var rawLoginResponse: String = ""
     @State var captchaImage: String = ""
     @State var captchaPieceImage: String = ""
     @State var sliderOffset: Float64 = 0.0
     @State var webReady: Bool = false
     @State var webLoginSubmitting: Bool = false
+    @State var showOfficialIdsPage: Bool = false
+    @State var showReAuthDialog: Bool = false
+    @State var reAuthCode: String = ""
+    @State var reAuthNotice: String = ""
+    @State var reAuthError: String = ""
+    @State var reAuthSending: Bool = false
+    @State var reAuthSubmitting: Bool = false
+    @State var reAuthTrustDevice: Bool = false
+    @State var reAuthNavigationPending: Bool = false
+    @State var reAuthSecondsRemaining: Int64 = 0
     @StorageProp["xdyouThemePreference"]
     let themePreference: String = "System"
     @StorageProp["colorMode"]
@@ -40,7 +54,11 @@ public class LoginWindow {
     var sliderStartY: Float64 = 0.0
     var sliderLastTime: Int64 = 0
     var sessionStore: ?SessionStore = None
+    var loginWatchdogTimer: ?Timer = None
+    var loginInspectionCount: Int64 = 0
+    var reAuthCountdownTimer: ?Timer = None
     var viewModel: LoginViewModel = LoginViewModel()
+    var currentReAuth: ?IDSReAuthSession = None
     var currentCaptcha: ?SliderCaptcha = None
 
     func darkMode(): Bool {
@@ -54,9 +72,14 @@ public class LoginWindow {
             this.account = snapshot.account
             this.showHome = true
             this.status = "Restored the saved IDS session."
+            this.rawLoginResponse = ""
         } else if (snapshot.account != "") {
             this.account = snapshot.account
         }
+    }
+    protected override func aboutToDisappear(): Unit {
+        this.stopLoginWatchdog()
+        this.stopReAuthCountdown()
     }
     func store(): SessionStore {
         match (this.sessionStore) {
@@ -71,13 +94,88 @@ public class LoginWindow {
         this.captchaImage = ""
         this.captchaPieceImage = ""
         this.currentCaptcha = None
+        this.rawLoginResponse = ""
+        this.closeReAuthDialog()
+        this.stopLoginWatchdog()
+        this.showOfficialIdsPage = false
         this.status = "Local IDS session data was cleared."
+    }
+    func stopLoginWatchdog(): Unit {
+        match (this.loginWatchdogTimer) {
+            case Some(timer) => timer.cancel()
+            case None => ()
+        }
+        this.loginWatchdogTimer = None
+        this.loginInspectionCount = 0
+    }
+    func startLoginWatchdog(): Unit {
+        this.stopLoginWatchdog()
+        this.loginWatchdogTimer = Some(Timer.repeat(Duration.second * 2, Duration.second * 2, { => launch {
+            if (!this.webLoginSubmitting || this.showReAuthDialog || this.showHome) {
+                this.stopLoginWatchdog()
+                return
+            }
+            this.loginInspectionCount += 1
+            this.inspectOfficialIdsPage()
+            if (this.loginInspectionCount >= 6 && this.webLoginSubmitting && !this.showOfficialIdsPage) {
+                this.loading = false
+                this.showOfficialIdsPage = true
+                this.status = "统一认证仍在等待操作，请在页面中完成滑块或查看错误提示。"
+            }
+        }}))
+    }
+    func inspectOfficialIdsPage(): Unit {
+        let script = """
+(() => {
+  const text = String(document.body ? document.body.innerText : '').split(String.fromCharCode(10)).join(' ').slice(0, 180);
+  const slider = Boolean(document.querySelector(
+    '#sliderCaptcha, .sliderCaptcha, .slider-captcha, [class*=slider], [id*=slider], iframe[src*=captcha]'
+  ));
+  const reauth = location.pathname.includes('/authserver/reAuthCheck/reAuthLoginView.do');
+  return (reauth ? 'REAUTH' : slider ? 'SLIDER' : 'WAIT') + '|' + text;
+})()
+"""
+        let callback: AsyncCallback<String> = {
+            error: ?BusinessException, data: ?String => launch {
+                match (error) {
+                    case Some(value) =>
+                        this.loading = false
+                        this.showOfficialIdsPage = true
+                        this.status = "无法检查统一认证状态（${value.code}），请直接在页面中继续。"
+                    case None => match (data) {
+                        case Some(value) => this.handleOfficialIdsInspection(value)
+                        case None => ()
+                    }
+                }
+            }
+        }
+        this.idsBootstrapController.runJavaScript(script, callback)
+    }
+    func handleOfficialIdsInspection(raw: String): Unit {
+        let value = raw.trimAscii().replace("\"", "")
+        if (value.startsWith("REAUTH|")) {
+            this.stopLoginWatchdog()
+            this.showOfficialIdsPage = false
+            this.openReAuthDialog()
+        } else if (value.startsWith("SLIDER|")) {
+            this.loading = false
+            this.showOfficialIdsPage = true
+            this.status = "账号密码已提交，请先在统一认证页面完成滑块验证。"
+        } else if (value.contains("用户名或密码") || value.contains("账号或密码") ||
+            value.contains("密码有误")) {
+            this.stopLoginWatchdog()
+            this.loading = false
+            this.webLoginSubmitting = false
+            this.showOfficialIdsPage = false
+            this.status = "用户名或密码有误。"
+        }
     }
     func beginOfficialWebLogin(): Unit {
         if (!this.webReady) {
             this.status = "Preparing the secure IDS session. Try again in a moment."
             return
         }
+        this.closeReAuthDialog()
         let account64 = IDSPasswordCipher.toBase64(this.account.toArray())
         let password64 = IDSPasswordCipher.toBase64(this.password.toArray())
         let script = """
@@ -104,31 +202,225 @@ public class LoginWindow {
             error: ?BusinessException, _: ?String => launch {
                 match (error) {
                     case Some(value) =>
+                        this.stopLoginWatchdog()
                         this.loading = false
                         this.webLoginSubmitting = false
+                        this.showOfficialIdsPage = false
                         this.password = ""
                         this.status = "Unable to submit the IDS form: ${value.code}"
                     case None =>
                         this.password = ""
-                        this.status = "Submitting the official IDS form..."
+                        this.status = "正在等待统一认证处理；若需要滑块，页面会自动展开。"
                 }
             }
         }
         this.webLoginSubmitting = true
+        this.showOfficialIdsPage = false
         this.loading = true
-        this.status = "Submitting the official IDS form..."
+        this.status = "正在提交统一认证账号密码…"
+        this.startLoginWatchdog()
         this.idsBootstrapController.runJavaScript(script, callback)
     }
     func finishOfficialWebLogin(url: String): Unit {
-        if (!this.webLoginSubmitting) {
+        if (!this.webLoginSubmitting && !this.showReAuthDialog) {
+            return
+        }
+        if (this.isReAuthUrl(url)) {
+            this.stopLoginWatchdog()
+            this.showOfficialIdsPage = false
+            this.openReAuthDialog()
             return
         }
         if (url.contains("ids.xidian.edu.cn/authserver/login")) {
+            if (this.showReAuthDialog && this.reAuthNavigationPending) {
+                return
+            }
+            if (this.showReAuthDialog) {
+                this.reAuthSubmitting = false
+                this.reAuthError = "二次认证未完成，请检查验证码后重试。"
+                return
+            }
+            this.stopLoginWatchdog()
             this.loading = false
             this.webLoginSubmitting = false
+            this.showOfficialIdsPage = false
             this.status = "IDS rejected the account or password."
             return
         }
+        this.completeOfficialWebLogin(url)
+    }
+    func isReAuthUrl(url: String): Bool {
+        return url.contains("ids.xidian.edu.cn/authserver/reAuthCheck/reAuthLoginView.do")
+    }
+    func openReAuthDialog(): Unit {
+        this.loading = false
+        this.webLoginSubmitting = true
+        if (!this.showReAuthDialog) {
+            this.reAuthCode = ""
+            this.reAuthError = ""
+            this.reAuthNotice = "检测到短信二次认证，请获取并输入验证码。"
+            this.reAuthSending = false
+            this.reAuthSubmitting = false
+            this.reAuthNavigationPending = false
+        }
+        this.showReAuthDialog = true
+        this.status = "等待短信二次认证。"
+    }
+    func stopReAuthCountdown(): Unit {
+        match (this.reAuthCountdownTimer) {
+            case Some(timer) => timer.cancel()
+            case None => ()
+        }
+        this.reAuthCountdownTimer = None
+        this.reAuthSecondsRemaining = 0
+    }
+    func startReAuthCountdown(seconds: Int64): Unit {
+        this.stopReAuthCountdown()
+        if (seconds <= 0) {
+            return
+        }
+        this.reAuthSecondsRemaining = seconds
+        this.reAuthCountdownTimer = Some(
+            Timer.repeat(
+                Duration.second,
+                Duration.second,
+                { => launch {
+                    if (!this.showReAuthDialog || this.reAuthSecondsRemaining <= 1) {
+                        this.stopReAuthCountdown()
+                    } else {
+                        this.reAuthSecondsRemaining -= 1
+                    }
+                }}
+            )
+        )
+    }
+    func closeReAuthDialog(): Unit {
+        this.stopReAuthCountdown()
+        this.showReAuthDialog = false
+        this.reAuthCode = ""
+        this.reAuthNotice = ""
+        this.reAuthError = ""
+        this.reAuthSending = false
+        this.reAuthSubmitting = false
+        this.reAuthTrustDevice = false
+        this.reAuthNavigationPending = false
+    }
+    func cancelReAuth(): Unit {
+        this.stopLoginWatchdog()
+        this.viewModel.clearPendingPassword()
+        this.currentReAuth = None
+        this.closeReAuthDialog()
+        this.showOfficialIdsPage = false
+        this.password = ""
+        this.loading = false
+        this.webLoginSubmitting = false
+        this.status = "已取消短信二次认证。"
+        try {
+            WebCookieManager.clearSessionCookie()
+        } catch (e: BusinessException) {
+            this.status += " 清理 IDS 会话失败：${e.code}。"
+        }
+        this.idsBootstrapController.loadUrl(
+            "https://ids.xidian.edu.cn/authserver/login?service=" +
+                "https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3D" +
+                "https%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html"
+        )
+    }
+    func sendReAuthCode(): Unit {
+        if (this.reAuthSending || this.reAuthSubmitting || this.reAuthSecondsRemaining > 0) {
+            return
+        }
+        match (this.currentReAuth) {
+            case Some(reAuth) =>
+                this.reAuthSending = true
+                this.reAuthError = ""
+                reAuth.sendSms({ message, seconds => launch {
+                    this.reAuthSending = false
+                    this.reAuthNotice = message
+                    this.startReAuthCountdown(seconds)
+                } }, { error => launch {
+                    this.reAuthSending = false
+                    this.reAuthError = this.consumeDebugLoginMessage(error)
+                } })
+            case None => this.reAuthError = "二次认证会话已失效，请取消后重新登录。"
+        }
+    }
+    func handleReAuthSendResult(raw: String): Unit {
+        let value = raw.trimAscii().replace("\"", "")
+        if (!value.contains("OK|")) {
+            this.reAuthError = if (value.contains("ERROR|")) {
+                value.replace("ERROR|", "")
+            } else {
+                "短信验证码发送失败。"
+            }
+            return
+        }
+        let fields = value.replace("OK|", "").split("|")
+        if (fields.size < 2) {
+            this.reAuthError = "统一认证返回了无效的验证码发送结果。"
+            return
+        }
+        var seconds: Int64 = 0
+        try {
+            seconds = Int64.parse(fields[0])
+        } catch (_) {
+            seconds = 0
+        }
+        let recipient = if (fields.size > 2 && fields[2] != "") { "（${fields[2]}）" } else { "" }
+        this.reAuthNotice = fields[1] + recipient
+        this.startReAuthCountdown(seconds)
+    }
+    func submitReAuthCode(): Unit {
+        let normalized = this.reAuthCode.trimAscii()
+        if (normalized == "") {
+            this.reAuthError = "请输入短信验证码。"
+            return
+        }
+        if (this.reAuthSending || this.reAuthSubmitting) {
+            return
+        }
+        match (this.currentReAuth) {
+            case Some(reAuth) =>
+                this.reAuthSubmitting = true
+                this.reAuthError = ""
+                reAuth.submitSms(normalized, this.reAuthTrustDevice,
+                    { cookie => launch {
+                        this.reAuthSubmitting = false
+                        this.finishBackendLogin(cookie)
+                    } }, { message => launch {
+                        this.reAuthSubmitting = false
+                        this.reAuthCode = ""
+                        this.reAuthError = this.consumeDebugLoginMessage(message)
+                    } }, { error => launch {
+                        this.reAuthSubmitting = false
+                        this.reAuthError = this.consumeDebugLoginMessage(error)
+                    } })
+            case None => this.reAuthError = "二次认证会话已失效，请取消后重新登录。"
+        }
+    }
+    func handleReAuthSubmitResult(raw: String): Unit {
+        let value = raw.trimAscii().replace("\"", "")
+        if (value.contains("OK|")) {
+            this.reAuthNotice = value.replace("OK|", "")
+            this.status = "二次认证通过，正在继续登录…"
+            this.reAuthNavigationPending = true
+            return
+        }
+        this.reAuthSubmitting = false
+        if (value.contains("REJECTED|")) {
+            this.reAuthCode = ""
+            this.reAuthError = value.replace("REJECTED|", "")
+        } else if (value.contains("EXPIRED|")) {
+            this.reAuthError = value.replace("EXPIRED|", "") + "，请取消后重新登录。"
+        } else if (value.contains("ERROR|")) {
+            this.reAuthError = value.replace("ERROR|", "")
+        } else {
+            this.reAuthError = "二次认证失败。"
+        }
+    }
+    func completeOfficialWebLogin(url: String): Unit {
+        this.stopLoginWatchdog()
+        this.showOfficialIdsPage = false
         let idsCookies = WebCookieManager.fetchCookie("https://ids.xidian.edu.cn/authserver/login")
         let serviceCookies = WebCookieManager.fetchCookie(url)
         let cookies = if (idsCookies == "") {
@@ -145,6 +437,7 @@ public class LoginWindow {
             this.password = ""
             this.loading = false
             this.webLoginSubmitting = false
+            this.closeReAuthDialog()
             this.showHome = true
             this.status = "IDS authentication succeeded."
         } catch (e: Exception) {
@@ -155,18 +448,67 @@ public class LoginWindow {
     }
     func validate(): Unit {
         if (this.account.trimAscii() == "") {
+            this.rawLoginResponse = ""
             this.status = "Student ID is required."
             return
         }
         if (this.password == "") {
+            this.rawLoginResponse = ""
             this.status = "Password is required."
             return
         }
-        this.captchaImage = ""
-        this.captchaPieceImage = ""
         this.currentCaptcha = None
-        this.resetSliderTracks()
-        this.beginOfficialWebLogin()
+        this.rawLoginResponse = ""
+        this.currentReAuth = None
+        this.closeReAuthDialog()
+        this.loading = true
+        this.status = "正在后台登录统一认证…"
+        this.viewModel.beginLogin(this.account, this.password,
+            { state, message => launch { this.applyLoginState(state, message) } },
+            { reAuth => launch {
+                this.currentReAuth = Some(reAuth)
+                this.password = ""
+                this.openReAuthDialog()
+            } },
+            { cookie => launch { this.finishBackendLogin(cookie) } })
+    }
+    func consumeDebugLoginMessage(message: String): String {
+        let separator = "\n---IDS_RAW_RESPONSE---\n"
+        let parts = message.split(separator)
+        if (parts.size >= 2) {
+            var raw = parts[1]
+            var index: Int64 = 2
+            while (index < parts.size) {
+                raw += separator + parts[index]
+                index += 1
+            }
+            this.rawLoginResponse = raw
+            return parts[0]
+        }
+        return message
+    }
+    func applyLoginState(state: SessionState, message: String): Unit {
+        match (state) {
+            case SessionState.Failed => this.loading = false
+            case SessionState.LoggedIn => this.loading = false
+            case _ => this.loading = true
+        }
+        this.status = this.consumeDebugLoginMessage(message)
+    }
+    func finishBackendLogin(cookie: String): Unit {
+        try {
+            this.store().saveAuthenticatedSession(this.account, cookie)
+            this.password = ""
+            this.loading = false
+            this.webLoginSubmitting = false
+            this.showOfficialIdsPage = false
+            this.closeReAuthDialog()
+            this.showHome = true
+            this.status = "IDS authentication succeeded."
+        } catch (e: Exception) {
+            this.loading = false
+            this.status = "Authenticated but local session storage failed: ${e.message}"
+        }
     }
     func resetSliderTracks(): Unit {
         this.sliderTrackX.clear();
@@ -252,37 +594,8 @@ public class LoginWindow {
         return this.sliderTrackX[this.sliderTrackX.size - 1]
     }
     func verifySlider(): Unit {
-        match (this.currentCaptcha) {
-            case Some(captcha) =>
-                this.loading = true
-                let tracks = this.sliderTracksJson()
-                if (tracks == "") {
-                    this.status = "Drag the IDS slider before verification."
-                    this.loading = false
-                    return
-                }
-                this
-                    .viewModel
-                    .verifyCaptcha(captcha, this.lastSliderTrackX(), tracks,
-                        {
-                            _, message => launch {
-                            this.loading = false
-                        this.status = message
-                        }
-                        }, {
-                            cookie => launch {
-                            try {
-                            this.store().saveAuthenticatedSession(this.account, cookie);
-                            this.password = ""
-                            this.showHome = true
-                        } catch (e: Exception) {
-                            this.loading = false
-                            this.status = "Authenticated but local session storage failed: ${e.message}"
-                        }
-                        }
-                        })
-            case None => this.status = "Load the IDS slider before verification."
-        }
+        this.status = "滑块由后台自动完成，无需手动操作。"
+        this.loading = false
     }
     func openMockPreview(): Unit {
         this.mockPreview = true
@@ -311,22 +624,8 @@ public class LoginWindow {
                 this.account
             }, previewMode: this.mockPreview, onLogout: {=> this.leaveHome()})
         } else {
-            Column {
-                Web(
-                    src: "https://ids.xidian.edu.cn/authserver/login?service=" +
-                        "https%3A%2F%2Fehall.xidian.edu.cn%2Flogin%3Fservice%3D" +
-                        "https%3A%2F%2Fehall.xidian.edu.cn%2Fnew%2Findex.html",
-                    controller: this.idsBootstrapController
-                ).onPageEnd({
-                    event => if (!this.webReady && event.url.contains("ids.xidian.edu.cn/authserver/login")) {
-                        this.webReady = true
-                        if (this.status == "") {
-                            this.status = ""
-                        }
-                    } else {
-                        this.finishOfficialWebLogin(event.url)
-                    }
-                }).width(1.vp).height(1.vp).opacity(0.0).id("idsCookieBootstrap")
+            Stack {
+                Column {
                 Stack {
                     Column {
                     Text("==").fontSize(15.vp).fontWeight(FontWeight.Bold).fontColor(0xFFFFFFFF);
@@ -449,7 +748,7 @@ public class LoginWindow {
                     .borderRadius(7.vp)
                     .onClick({_ => this.openMockPreview()})
                     .id("mockHomePreviewButton")
-                if (this.captchaImage != "") {
+                if (false && this.captchaImage != "") {
                     Text("IDS verification").fontSize(14.vp).fontWeight(FontWeight.Bold).margin(top: 16.vp)
                     Stack {
                         Image(this.captchaImage)
@@ -488,14 +787,45 @@ public class LoginWindow {
                         .margin(left: 22.vp)
                         .onClick(
                             {
-                                _ => this.status =
-                                    "IDS network status is shown below; sensitive request data " +
-                                    "is never persisted."
+                                _ =>
+                                    this.status =
+                                        "IDS network status is shown below; sensitive request data " +
+                                        "is never persisted."
+                                    if (this.rawLoginResponse == "") {
+                                        this.rawLoginResponse = "还没有捕获到登录接口返回的错误响应。"
+                                    }
                             })
                         .id("viewNetworkInteraction")
                 }.margin(top: 18.vp)
                 if (this.status != "") {
                     Text(this.status).fontSize(11.vp).fontColor(0xFF68758A).margin(top: 12.vp).id("loginStatus")
+                }
+                if (this.rawLoginResponse != "") {
+                    Column {
+                        Text("登录接口原始错误响应")
+                            .fontSize(11.vp)
+                            .fontWeight(FontWeight.Bold)
+                            .fontColor(0xFFBA1A1A)
+                            .width(100.percent)
+                        Scroll {
+                            Text(this.rawLoginResponse)
+                                .fontSize(10.vp)
+                                .fontColor(0xFFBA1A1A)
+                                .width(100.percent)
+                                .lineHeight(15.vp)
+                                .id("loginRawErrorJson")
+                        }
+                            .width(100.percent)
+                            .height(118.vp)
+                            .margin(top: 6.vp)
+                    }
+                        .width(100.percent)
+                        .padding(10.vp)
+                        .margin(top: 10.vp)
+                        .backgroundColor(0xFFFFF1F1)
+                        .border(width: 1.vp, color: 0xFFBA1A1A, radius: 8.vp)
+                        .alignItems(HorizontalAlign.Start)
+                        .id("loginRawErrorPanel")
                 }
             }
                 .width(100.percent)
@@ -503,6 +833,120 @@ public class LoginWindow {
                 .padding(left: 33.vp, right: 33.vp, top: 58.vp)
                 .alignItems(HorizontalAlign.Center)
                 .backgroundColor(ThemePalette.pageBackground(this.darkMode()))
+                if (this.showReAuthDialog) {
+                    Column {
+                        Text("短信二次认证")
+                            .fontSize(20.vp)
+                            .fontWeight(FontWeight.Bold)
+                            .fontColor(ThemePalette.textPrimary(this.darkMode()))
+                            .width(100.percent)
+                        Text("统一认证要求再次验证身份。请获取短信验证码后完成登录。")
+                            .fontSize(13.vp)
+                            .fontColor(ThemePalette.textSecondary(this.darkMode()))
+                            .lineHeight(20.vp)
+                            .margin(top: 9.vp)
+                            .width(100.percent)
+                        TextInput(placeholder: "短信验证码", text: this.reAuthCode)
+                            .width(100.percent)
+                            .height(44.vp)
+                            .margin(top: 18.vp)
+                            .backgroundColor(ThemePalette.inputSurface(this.darkMode()))
+                            .border(
+                                width: 1.vp,
+                                color: if (this.reAuthError == "") {
+                                    ThemePalette.primary(this.darkMode())
+                                } else {
+                                    0xFFBA1A1A
+                                },
+                                radius: 8.vp
+                            )
+                            .enabled(!this.reAuthSending && !this.reAuthSubmitting)
+                            .onChange({value => this.reAuthCode = value})
+                            .id("idsReAuthCodeInput")
+                        Button(if (this.reAuthSending) {
+                            "正在发送…"
+                        } else if (this.reAuthSecondsRemaining > 0) {
+                            "${this.reAuthSecondsRemaining} 秒后可重新发送"
+                        } else {
+                            "获取短信验证码"
+                        })
+                            .width(100.percent)
+                            .height(40.vp)
+                            .margin(top: 10.vp)
+                            .enabled(
+                                !this.reAuthSending && !this.reAuthSubmitting &&
+                                    this.reAuthSecondsRemaining == 0
+                            )
+                            .fontColor(ThemePalette.primary(this.darkMode()))
+                            .backgroundColor(ThemePalette.primaryContainer(this.darkMode()))
+                            .onClick({_ => this.sendReAuthCode()})
+                            .id("idsReAuthSendCodeButton")
+                        if (this.reAuthNotice != "") {
+                            Text(this.reAuthNotice)
+                                .fontSize(12.vp)
+                                .fontColor(ThemePalette.textSecondary(this.darkMode()))
+                                .margin(top: 8.vp)
+                                .width(100.percent)
+                                .id("idsReAuthNotice")
+                        }
+                        if (this.reAuthError != "") {
+                            Text(this.reAuthError)
+                                .fontSize(12.vp)
+                                .fontColor(0xFFBA1A1A)
+                                .margin(top: 8.vp)
+                                .width(100.percent)
+                                .id("idsReAuthError")
+                        }
+                        Row {
+                            Toggle(ToggleType.Switch, isOn: this.reAuthTrustDevice)
+                                .selectedColor(ThemePalette.primary(this.darkMode()))
+                                .enabled(!this.reAuthSending && !this.reAuthSubmitting)
+                                .onChange({value: Bool => this.reAuthTrustDevice = value})
+                                .id("idsReAuthTrustDeviceToggle")
+                            Column {
+                                Text("信任此设备")
+                                    .fontSize(14.vp)
+                                    .fontWeight(FontWeight.Medium)
+                                    .fontColor(ThemePalette.textPrimary(this.darkMode()))
+                                Text("启用后统一认证可能减少本设备后续二次验证。")
+                                    .fontSize(11.vp)
+                                    .fontColor(ThemePalette.textSecondary(this.darkMode()))
+                                    .margin(top: 2.vp)
+                            }.layoutWeight(1).margin(left: 8.vp).alignItems(HorizontalAlign.Start)
+                        }.width(100.percent).margin(top: 14.vp)
+                        Row {
+                            Button("取消")
+                                .layoutWeight(1)
+                                .height(40.vp)
+                                .enabled(!this.reAuthSending && !this.reAuthSubmitting)
+                                .fontColor(ThemePalette.primary(this.darkMode()))
+                                .backgroundColor(ThemePalette.primaryContainer(this.darkMode()))
+                                .onClick({_ => this.cancelReAuth()})
+                                .id("idsReAuthCancelButton")
+                            Button(if (this.reAuthSubmitting) {
+                                "验证中…"
+                            } else {
+                                "确认"
+                            })
+                                .layoutWeight(1)
+                                .height(40.vp)
+                                .margin(left: 10.vp)
+                                .enabled(!this.reAuthSending && !this.reAuthSubmitting)
+                                .fontColor(ThemePalette.primaryText())
+                                .backgroundColor(ThemePalette.primary(this.darkMode()))
+                                .onClick({_ => this.submitReAuthCode()})
+                                .id("idsReAuthConfirmButton")
+                        }.width(100.percent).margin(top: 20.vp)
+                    }
+                        .width(326.vp)
+                        .padding(22.vp)
+                        .backgroundColor(ThemePalette.pageBackground(this.darkMode()))
+                        .borderRadius(20.vp)
+                        .align(Alignment.Center)
+                        .alignItems(HorizontalAlign.Start)
+                        .id("idsReAuthDialog")
+                }
+            }.width(100.percent).height(100.percent)
         }
     }
 }

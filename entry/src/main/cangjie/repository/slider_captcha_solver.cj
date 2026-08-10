@@ -1,16 +1,19 @@
 package ohos_app_cangjie_entry.repository
 
 import kit.ImageKit.*
+import kit.PerformanceAnalysisKit.Hilog
 import std.random.*
 import std.math.*
 
 class DecodedCaptchaImage {
     let width: Int64
     let height: Int64
+    let rowStride: Int64
     let pixels: Array<UInt8>
-    init(width: Int64, height: Int64, pixels: Array<UInt8>) {
+    init(width: Int64, height: Int64, rowStride: Int64, pixels: Array<UInt8>) {
         this.width = width
         this.height = height
+        this.rowStride = rowStride
         this.pixels = pixels
     }
 }
@@ -25,6 +28,7 @@ public class SliderCaptchaAutoSolver {
         if (encodedPiece.size <= 16) { throw Exception("IDS slider piece is shorter than its AES key") }
         let pieceImage = Array<UInt8>(encodedPiece.size - 16, { index => encodedPiece[index] })
         let piece = SliderCaptchaAutoSolver.decodeBytes(pieceImage)
+        Hilog.info(1, "IDSLogin", "solver decoded puzzle=${puzzle.width}x${puzzle.height} piece=${piece.width}x${piece.height}")
         if (puzzle.width <= piece.width || puzzle.height < piece.height) {
             throw Exception("IDS slider image dimensions are invalid")
         }
@@ -50,12 +54,13 @@ public class SliderCaptchaAutoSolver {
         if (xLeft > xRight || yTop > yBottom) { throw Exception("IDS slider piece has no opaque pixels") }
 
         let border: Int64 = 24
-        if (xLeft + border <= xRight - border && yTop + border <= yBottom - border) {
-            xLeft += border
-            xRight -= border
-            yTop += border
-            yBottom -= border
+        if (xLeft + border > xRight - border || yTop + border > yBottom - border) {
+            throw Exception("IDS slider piece template is empty after 24px border crop")
         }
+        xLeft += border
+        xRight -= border
+        yTop += border
+        yBottom -= border
         let windowWidth = xRight - xLeft + 1
         let windowHeight = yBottom - yTop + 1
         let area = windowWidth * windowHeight
@@ -83,11 +88,13 @@ public class SliderCaptchaAutoSolver {
             y += 1
         }
 
-        let lastOffset = puzzle.width - piece.width
+        let candidateCount = puzzle.width - piece.width
+        if (candidateCount <= 0) { throw Exception("IDS slider candidate range is empty") }
+        let lastOffset = candidateCount
         var bestOffset: Int64 = 0
         var bestScore = -1000000000000.0
         var offset: Int64 = 0
-        while (offset <= lastOffset) {
+        while (offset < candidateCount) {
             var windowMean = 0.0
             y = yTop
             while (y <= yBottom) {
@@ -119,6 +126,7 @@ public class SliderCaptchaAutoSolver {
             offset += 1
         }
         let move = Int64(round(Float64(bestOffset) * 280.0 / Float64(puzzle.width)))
+        Hilog.info(1, "IDSLogin", "solver NCC bestOffset=${bestOffset} score=${bestScore} move=${move}")
         return move
     }
 
@@ -158,20 +166,23 @@ public class SliderCaptchaAutoSolver {
         let source = createImageSource(bytes)
         let pixelMap = source.createPixelMap(options: DecodingOptions(desiredPixelFormat: PixelMapFormat.Rgba8888))
         let info = pixelMap.getImageInfo()
+        let stride = Int64(info.stride)
+        let bytesPerRow = Int64(pixelMap.getBytesNumberPerRow())
         let pixels = Array<UInt8>(Int64(pixelMap.getPixelBytesNumber()), repeat: 0)
         pixelMap.readPixelsToBuffer(pixels)
-        let result = DecodedCaptchaImage(Int64(info.size.width), Int64(info.size.height), pixels)
+        let result = DecodedCaptchaImage(Int64(info.size.width), Int64(info.size.height), bytesPerRow, pixels)
+        Hilog.info(1, "IDSLogin", "solver pixel format=${info.pixelFormat} stride=${stride} bytesPerRow=${bytesPerRow}")
         pixelMap.release()
         source.release()
         return result
     }
 
     static func luminance(image: DecodedCaptchaImage, x: Int64, y: Int64): Float64 {
-        let index = (y * image.width + x) * 4
+        let index = y * image.rowStride + x * 4
         return Float64(image.pixels[index]) * 0.299 + Float64(image.pixels[index + 1]) * 0.587 + Float64(image.pixels[index + 2]) * 0.114
     }
 
     static func alpha(image: DecodedCaptchaImage, x: Int64, y: Int64): Int64 {
-        return Int64(image.pixels[(y * image.width + x) * 4 + 3])
+        return Int64(image.pixels[y * image.rowStride + x * 4 + 3])
     }
 }

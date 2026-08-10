@@ -1,0 +1,107 @@
+{
+  "nodes_added": [
+    {
+      "id": "type:Text#12",
+      "type": "Text",
+      "text": "100",
+      "bounds": "[1182,75][1252,120]"
+    },
+    {
+      "id": "key:loginStatus",
+      "type": "Text",
+      "text": "Student ID is required.",
+      "bounds": "[465,1672][856,1717]"
+    },
+    {
+      "id": "text:Student ID is required.",
+      "type": "Text",
+      "text": "Student ID is required.",
+      "bounds": "[465,1672][856,1717]"
+    }
+  ],
+  "nodes_removed": [],
+  "attrs_changed": [
+    {
+      "node_id": "type:Text#8",
+      "attr": "text",
+      "before": "05",
+      "after": "Student ID is required."
+    },
+    {
+      "node_id": "type:Text#8",
+      "attr": "bounds",
+      "before": "[49,66][111,128]",
+      "after": "[465,1672][856,1717]"
+    },
+    {
+      "node_id": "type:Text#10",
+      "attr": "text",
+      "before": "31",
+      "after": ":"
+    },
+    {
+      "node_id": "type:Text#10",
+      "attr": "bounds",
+      "before": "[126,66][188,128]",
+      "after": "[111,71][126,124]"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "text",
+      "before": ":",
+      "after": "05"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "bounds",
+      "before": "[111,71][126,124]",
+      "after": "[49,66][111,128]"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "text",
+      "before": "100",
+      "after": "31"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "bounds",
+      "before": "[1182,75][1252,120]",
+      "after": "[126,66][188,128]"
+    }
+  ],
+  "text_changes": [
+    {
+      "node_id": "type:Text#8",
+      "attr": "text",
+      "before": "05",
+      "after": "Student ID is required."
+    },
+    {
+      "node_id": "type:Text#10",
+      "attr": "text",
+      "before": "31",
+      "after": ":"
+    },
+    {
+      "node_id": "type:Text#9",
+      "attr": "text",
+      "before": ":",
+      "after": "05"
+    },
+    {
+      "node_id": "type:Text#11",
+      "attr": "text",
+      "before": "100",
+      "after": "31"
+    }
+  ],
+  "count_changes": {
+    "Text": {
+      "before": 12,
+      "after": 13,
+      "delta": 1
+    }
+  },
+  "summary": "新增 3 个节点; 文本变化 4 处; 属性变化 8 处; 数量变化: Text: 12→13"
+}

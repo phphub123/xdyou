@@ -2,9 +2,11 @@ package ohos_app_cangjie_entry.repository
 
 import kit.NetworkKit.*
 import kit.ArkWeb.*
+import kit.PerformanceAnalysisKit.Hilog
 import ohos.business_exception.*
 import ohos.callback_invoke.*
 import std.collection.*
+import std.convert.*
 import std.regex.*
 import std.time.*
 
@@ -39,6 +41,157 @@ public class SliderCaptcha {
         this.smallImage = smallImage
         this.aesKey = aesKey
         this.cookieHeader = cookieHeader
+    }
+}
+
+public class IDSReAuthSession {
+    public let challengeLocation: String
+    public let username: String
+    public let service: String
+    public let cookieHeader: String
+    var multifactor: String = "true"
+    public var recipient: String = ""
+
+    public init(challengeLocation: String, username: String, service: String, cookieHeader: String) {
+        this.challengeLocation = challengeLocation
+        this.username = username
+        this.service = service
+        this.cookieHeader = cookieHeader
+    }
+
+    public func prepare(onReady: () -> Unit, onError: (String) -> Unit): Unit {
+        let client = createHttp()
+        let headers = HashMap<String, String>()
+        if (this.cookieHeader != "") { headers["Cookie"] = this.cookieHeader }
+        let getOptions = HttpRequestOptions(method: RequestMethod.Get, header: headers,
+            expectDataType: HttpDataType.StringValue, usingCache: false,
+            connectTimeout: 10000, readTimeout: 30000)
+        try {
+            client.request(this.challengeLocation, getOptions, { error, response =>
+                match (error) {
+                    case Some(value) => client.destroy(); onError("二次认证页面请求失败：${value.message}")
+                    case None => match (response) {
+                        case Some(page) => if (page.responseCode != 200) {
+                            client.destroy(); onError("二次认证页面已失效（HTTP ${page.responseCode}）。")
+                        } else {
+                            this.switchToSms(client, headers, onReady, onError)
+                        }
+                        case None => client.destroy(); onError("二次认证页面没有返回响应。")
+                    }
+                }
+            })
+        } catch (e: BusinessException) {
+            client.destroy(); onError("无法启动二次认证请求：${e.code} ${e.message}")
+        }
+    }
+
+    func switchToSms(client: HttpRequest, headers: HashMap<String, String>, onReady: () -> Unit, onError: (String) -> Unit): Unit {
+        let body = "isMultifactor=${this.formEncode(this.multifactor)}&reAuthType=3&service=${this.formEncode(this.service)}"
+        headers["Content-Type"] = "application/x-www-form-urlencoded;charset=UTF-8"
+        let options = HttpRequestOptions(method: RequestMethod.Post, header: headers,
+            extraData: HttpData.StringData(body), expectDataType: HttpDataType.StringValue,
+            usingCache: false, connectTimeout: 10000, readTimeout: 30000)
+        client.request("https://ids.xidian.edu.cn/authserver/reAuthCheck/changeReAuthType.do", options, { error, response =>
+            match (error) {
+                case Some(value) => client.destroy(); onError("无法切换短信二次认证：${value.message}")
+                case None => match (response) {
+                    case Some(value) => match (value.result) {
+                        case HttpData.StringData(text) =>
+                            if (!text.contains("\"code\":\"1\"") && !text.contains("\"code\":1")) {
+                                client.destroy(); onError(this.errorWithRawResponse(this.jsonMessage(text, "无法切换到短信二次认证"), text))
+                            } else {
+                                this.recipient = this.jsonString(text, "reAuthUserNameInput")
+                                client.destroy(); onReady()
+                            }
+                        case _ => client.destroy(); onError("切换短信认证返回了非文本响应。")
+                    }
+                    case None => client.destroy(); onError("切换短信认证没有返回响应。")
+                }
+            }
+        })
+    }
+
+    public func sendSms(onResult: (String, Int64) -> Unit, onError: (String) -> Unit): Unit {
+        this.postForm("https://ids.xidian.edu.cn/authserver/dynamicCode/getDynamicCodeByReauth.do",
+            "userName=${this.formEncode(this.username)}&authCodeTypeName=reAuthDynamicCodeType",
+            { text =>
+                let result = this.jsonString(text, "res")
+                if (result != "success" && result != "code_time_fail") {
+                    onError(this.errorWithRawResponse(this.jsonMessage(text, "短信验证码发送失败"), text))
+                } else {
+                    var seconds: Int64 = 0
+                    try { seconds = Int64.parse(this.jsonString(text, "codeTime")) } catch (_) { seconds = 0 }
+                    let mobile = this.jsonString(text, "mobile")
+                    onResult(this.jsonMessage(text, "验证码已发送") + if (mobile == "") { "" } else { "（${this.maskPhone(mobile)}）" }, seconds)
+                }
+            }, onError)
+    }
+
+    public func submitSms(code: String, trustDevice: Bool, onSuccess: (String) -> Unit, onRejected: (String) -> Unit, onError: (String) -> Unit): Unit {
+        let body = "service=${this.formEncode(this.service)}&reAuthType=3&isMultifactor=${this.formEncode(this.multifactor)}&password=&dynamicCode=${this.formEncode(code)}&uuid=&answer1=&answer2=&otpCode=&skipTmpReAuth=${if (trustDevice) { "true" } else { "false" }}"
+        this.postForm("https://ids.xidian.edu.cn/authserver/reAuthCheck/reAuthSubmit.do", body, { text =>
+            let status = this.jsonString(text, "code")
+            let message = this.jsonMessage(text, "二次认证失败")
+            let debugMessage = this.errorWithRawResponse(message, text)
+            if (status == "reAuth_failed") { onRejected(debugMessage); return }
+            if (status == "reAuth_unauthorized") { onError(debugMessage); return }
+            if (status != "reAuth_success") { onError(debugMessage); return }
+            this.postForm("${IDSSession.loginUrl}?service=${this.formEncode(this.service)}", "", { finalText =>
+                if (finalText.contains("http") || finalText != "") { onSuccess(this.cookieHeader) } else { onError("二次认证成功，但未收到业务系统登录结果") }
+            }, onError)
+        }, onError)
+    }
+
+    func postForm(url: String, body: String, onSuccess: (String) -> Unit, onError: (String) -> Unit): Unit {
+        let client = createHttp()
+        let headers = HashMap<String, String>()
+        if (this.cookieHeader != "") { headers["Cookie"] = this.cookieHeader }
+        headers["Content-Type"] = "application/x-www-form-urlencoded;charset=UTF-8"
+        let options = HttpRequestOptions(method: if (body == "") { RequestMethod.Get } else { RequestMethod.Post }, header: headers,
+            extraData: HttpData.StringData(body), expectDataType: HttpDataType.StringValue,
+            usingCache: false, connectTimeout: 10000, readTimeout: 30000)
+        try {
+            client.request(url, options, { error, response =>
+                client.destroy()
+                match (error) {
+                    case Some(value) => onError("二次认证网络错误：${value.message}")
+                    case None => match (response) {
+                        case Some(value) => match (value.result) {
+                            case HttpData.StringData(text) => if (value.responseCode >= 200 && value.responseCode < 400) { onSuccess(text) } else { onError(this.errorWithRawResponse("二次认证返回 HTTP ${value.responseCode}", text)) }
+                            case _ => onError("二次认证返回了非文本响应")
+                        }
+                        case None => onError("二次认证没有返回响应")
+                    }
+                }
+            })
+        } catch (e: BusinessException) { client.destroy(); onError("无法启动二次认证请求：${e.code} ${e.message}") }
+    }
+
+    func jsonString(text: String, key: String): String {
+        let pattern = Regex("\\\"${key}\\\"\\s*:\\s*\\\"([^\\\"]*)\\\"")
+        match (pattern.find(text, group: true)) { case Some(value) => value.matchString(1); case None => "" }
+    }
+    func jsonMessage(text: String, fallback: String): String {
+        let message = this.jsonString(text, "returnMessage")
+        if (message != "") { return message }
+        let msg = this.jsonString(text, "msg")
+        if (msg != "") { return msg }
+        let generic = this.jsonString(text, "message")
+        return if (generic == "") { fallback } else { generic }
+    }
+    func errorWithRawResponse(message: String, body: String): String {
+        if (body.trimAscii() == "") { return message }
+        return message + "\n---IDS_RAW_RESPONSE---\n" + body
+    }
+    func maskPhone(value: String): String {
+        if (value.size < 7) { return "****" }
+        return value[0..3] + "****" + value[value.size - 4..value.size]
+    }
+    func formEncode(value: String): String {
+        let hex: Array<String> = ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"]
+        var result = ""
+        for (byte in value.toArray()) { let n = Int64(byte); if ((n >= 65 && n <= 90) || (n >= 97 && n <= 122) || (n >= 48 && n <= 57) || n == 45 || n == 46 || n == 95 || n == 126) { result += String.fromUtf8([byte]) } else { result += "%${hex[n / 16]}${hex[n % 16]}" } }
+        return result
     }
 }
 
@@ -91,6 +244,7 @@ public class IDSSession {
     }
 
     public func requestSliderCaptcha(page: IDSLoginPage, onReady: (SliderCaptcha) -> Unit, onError: (String) -> Unit): Unit {
+        Hilog.info(1, "IDSLogin", "slider open request started")
         let request = createHttp()
         let headers = HashMap<String, String>()
         if (page.cookieHeader != "") { headers["Cookie"] = page.cookieHeader }
@@ -102,7 +256,9 @@ public class IDSSession {
             request.request("${IDSSession.sliderUrl}?_=${timestamp}", options, { err, response =>
                 request.destroy()
                 match (err) {
-                    case Some(error) => onError("Slider request failed: ${error.code} ${error.message}")
+                    case Some(error) =>
+                        Hilog.error(1, "IDSLogin", "slider open network error code=${error.code} message=${this.safeLog(error.message)}")
+                        onError("Slider request failed: ${error.code} ${error.message}")
                     case None => match (response) {
                         case Some(value) => match (value.result) {
                             case HttpData.StringData(body) =>
@@ -115,10 +271,19 @@ public class IDSSession {
                                         let key = ArrayList<UInt8>()
                                         var index: Int64 = bytes.size - 16
                                         while (index < bytes.size) { key.add(bytes[index]); index += 1 }
+                                        Hilog.info(1, "IDSLogin", "slider open accepted HTTP 200 image payload present")
                                         onReady(SliderCaptcha(big, small, key.toArray(), page.cookieHeader))
-                                    } catch (e: Exception) { onError("Malformed slider response: ${e.message}") }
-                                } else { onError("Slider returned HTTP ${value.responseCode}") }
-                            case _ => onError("Slider returned an unexpected response format")
+                                    } catch (e: Exception) {
+                                        Hilog.error(1, "IDSLogin", "slider open malformed response: ${this.safeLog(e.message)}")
+                                        onError("Malformed slider response: ${e.message}")
+                                    }
+                                } else {
+                                    Hilog.error(1, "IDSLogin", "slider open rejected HTTP ${value.responseCode}")
+                                    onError("Slider returned HTTP ${value.responseCode}")
+                                }
+                            case _ =>
+                                Hilog.error(1, "IDSLogin", "slider open unexpected response data type")
+                                onError("Slider returned an unexpected response format")
                         }
                         case None => onError("Slider returned no response")
                     }
@@ -127,9 +292,11 @@ public class IDSSession {
         } catch (e: BusinessException) { request.destroy(); onError("Unable to load slider: ${e.code} ${e.message}") }
     }
 
-    public func verifySlider(captcha: SliderCaptcha, move: Int64, tracks: String, onResult: (Bool, String) -> Unit, onError: (String) -> Unit): Unit {
+    public func verifySlider(captcha: SliderCaptcha, move: Int64, tracks: String,
+        onResult: (Bool, String, String) -> Unit, onError: (String) -> Unit): Unit {
         try {
             let safeMove = if (move < 0) { 0 } else if (move > 280) { 280 } else { move }
+            Hilog.info(1, "IDSLogin", "slider verify request move=${safeMove} trackPoints=${this.trackPointCount(tracks)}")
             if (tracks == "") { throw Exception("Slider gesture track is empty") }
             let payload = "{\"canvasLength\":280,\"moveLength\":${safeMove},\"tracks\":${tracks}}"
             let sign = IDSPasswordCipher.encryptCaptchaPayload(payload, captcha.aesKey)
@@ -146,26 +313,68 @@ public class IDSSession {
             request.request(IDSSession.verifySliderUrl, options, { err, response =>
                 request.destroy()
                 match (err) {
-                    case Some(error) => onError("Slider verification failed: ${error.code} ${error.message}")
+                    case Some(error) =>
+                        Hilog.error(1, "IDSLogin", "slider verify network error move=${safeMove} code=${error.code} message=${this.safeLog(error.message)}")
+                        onError("滑块网络错误 ${error.code}: ${error.message}")
                     case None => match (response) {
                         case Some(value) => match (value.result) {
                             case HttpData.StringData(body) =>
                                 if (value.responseCode == 200) {
                                     let accepted = this.sliderAccepted(body)
-                                    onResult(accepted, captcha.cookieHeader)
+                                    let summary = this.sliderResponseSummary(body)
+                                    if (accepted) {
+                                        Hilog.info(1, "IDSLogin", "slider verify accepted move=${safeMove} ${summary}")
+                                    } else {
+                                        Hilog.warn(1, "IDSLogin", "slider verify rejected move=${safeMove} ${summary}")
+                                    }
+                                    onResult(accepted, captcha.cookieHeader, summary)
                                 }
-                                else { onError("Slider verification returned HTTP ${value.responseCode}") }
-                            case _ => onError("Slider verification returned an unexpected response format")
+                                else {
+                                    Hilog.error(1, "IDSLogin", "slider verify HTTP ${value.responseCode} move=${safeMove}")
+                                    onError("滑块验证返回 HTTP ${value.responseCode}")
+                                }
+                            case _ =>
+                                Hilog.error(1, "IDSLogin", "slider verify unexpected response type move=${safeMove}")
+                                onError("滑块验证返回了非文本响应")
                         }
                         case None => onError("Slider verification returned no response")
                     }
                 }
             })
-        } catch (e: Exception) { onError("Could not prepare slider verification: ${e.message}") }
+        } catch (e: Exception) {
+            Hilog.error(1, "IDSLogin", "slider verify preparation failed move=${move}: ${this.safeLog(e.message)}")
+            onError("滑块验证准备失败：${e.message}")
+        }
     }
     func sliderAccepted(body: String): Bool {
         let accepted = Regex(#"\"errorCode\"\s*:\s*(\"1\"|1)"#)
         match (accepted.find(body)) { case Some(_) => return true; case None => return false }
+    }
+    func sliderResponseSummary(body: String): String {
+        let code = this.jsonScalar(body, "errorCode")
+        let message = this.firstJsonMessage(body)
+        return "errorCode=${if (code == "") { "<missing>" } else { code }} message=${if (message == "") { "<empty>" } else { this.safeLog(message) }} bodyBytes=${body.toArray().size}"
+    }
+    func firstJsonMessage(body: String): String {
+        let names: Array<String> = ["message", "msg", "errorMsg", "errorMessage"]
+        for (name in names) { let value = this.jsonScalar(body, name); if (value != "") { return value } }
+        return ""
+    }
+    func jsonScalar(body: String, name: String): String {
+        let quoted = Regex("\\\"${name}\\\"\\s*:\\s*\\\"([^\\\"]*)\\\"")
+        match (quoted.find(body, group: true)) { case Some(value) => return value.matchString(1); case None => () }
+        let number = Regex("\\\"${name}\\\"\\s*:\\s*(-?[0-9]+)")
+        match (number.find(body, group: true)) { case Some(value) => value.matchString(1); case None => "" }
+    }
+    func trackPointCount(tracks: String): Int64 {
+        var count: Int64 = 0
+        for (_ in Regex(#"\"a\"\s*:"#).findAll(tracks)) { count += 1 }
+        return count
+    }
+    func safeLog(value: String): String {
+        var result = value.replace("\n", " ").replace("\r", " ")
+        if (result.size > 160) { result = result[0..160] }
+        return result
     }
 
     public func submitCredentials(
@@ -176,6 +385,7 @@ public class IDSSession {
         password: String,
         onSuccess: (String) -> Unit,
         onCaptchaRequired: (IDSLoginPage) -> Unit,
+        onReAuthRequired: (IDSReAuthSession) -> Unit,
         onError: (String) -> Unit
     ): Unit {
         try {
@@ -203,15 +413,16 @@ public class IDSSession {
             request.request("${IDSSession.loginUrl}?service=${EhallSession.landingUrl}", options, { err, response =>
                 request.destroy()
                 match (err) {
-                    case Some(error) => onError("Login network error ${error.code}: ${error.message}")
+                    case Some(error) => onError(this.errorWithRawResponse("Login network error ${error.code}: ${error.message}", "network_error: ${error.code} ${error.message}"))
                     case None => match (response) {
                         case Some(value) => match (value.result) {
                             case HttpData.StringData(body) =>
                                 let cookies = this.mergeCookies(verifiedCookie, this.responseCookieText(value.cookies, value.header))
-                                this.handleLoginResponse(value.responseCode, value.header, body, cookies, page, captchaVerified, onSuccess, onCaptchaRequired, onError)
-                            case _ => onError("IDS returned an unexpected login response format.")
+                                this.handleLoginResponse(value.responseCode, value.header, body, cookies, page,
+                                    captchaVerified, account, onSuccess, onCaptchaRequired, onReAuthRequired, onError)
+                            case _ => onError(this.errorWithRawResponse("IDS returned an unexpected login response format.", "unexpected_response_format"))
                         }
-                        case None => onError("IDS login returned no response")
+                        case None => onError(this.errorWithRawResponse("IDS login returned no response", "no_response"))
                     }
                 }
             })
@@ -224,19 +435,29 @@ public class IDSSession {
         cookies: String,
         page: IDSLoginPage,
         captchaVerified: Bool,
+        account: String,
         onSuccess: (String) -> Unit,
         onCaptchaRequired: (IDSLoginPage) -> Unit,
+        onReAuthRequired: (IDSReAuthSession) -> Unit,
         onError: (String) -> Unit
     ): Unit {
         if (code == 301 || code == 302 || code == 303 || code == 307 || code == 308) {
             match (this.headerValue(headers, "location")) {
-                case Some(_) => if (cookies == "") { onError("IDS redirected without creating a session.") } else { onSuccess(cookies) }
+                case Some(location) =>
+                    if (this.isReAuthLocation(location)) {
+                        onReAuthRequired(IDSReAuthSession(this.absoluteIdsUrl(location), account,
+                            EhallSession.landingUrl, cookies))
+                    } else if (cookies == "") {
+                        onError("IDS redirected without creating a session.")
+                    } else {
+                        onSuccess(cookies)
+                    }
                 case None => onError("IDS returned a redirect without a Location header.")
             }
             return
         }
-        if (code == 401) { onError(this.loginErrorMessage(body)); return }
-        if (code != 200) { onError("IDS login failed with HTTP ${code}."); return }
+        if (code == 401) { onError(this.loginErrorWithRawResponse(body)); return }
+        if (code != 200) { onError(this.errorWithRawResponse("IDS login failed with HTTP ${code}.", body)); return }
         if (this.requiresCaptcha(body)) {
             onCaptchaRequired(IDSLoginPage(page.hiddenFields, page.encryptSalt, cookies))
             return
@@ -249,11 +470,11 @@ public class IDSSession {
             if (!captchaVerified) {
                 try { onCaptchaRequired(this.parseLoginPage(body, cookies)) }
                 catch (e: Exception) { onError("IDS requested verification but returned an invalid login form: ${e.message}") }
-            } else { onError(this.loginErrorMessage(body)) }
+            } else { onError(this.errorWithRawResponse(this.loginErrorMessage(body), body)) }
             return
         }
         if (cookies != "" && this.isEhallPage(body)) { onSuccess(cookies); return }
-        onError("IDS returned an unrecognized page after credential submission.")
+        onError(this.errorWithRawResponse("IDS returned an unrecognized page after credential submission.", body))
     }
     func submitContinue(fields: HashMap<String, String>, cookieHeader: String, onSuccess: (String) -> Unit, onError: (String) -> Unit): Unit {
         var form = ""
@@ -336,6 +557,23 @@ public class IDSSession {
             case None => ()
         }
         return "IDS rejected the account or password."
+    }
+
+    func errorWithRawResponse(message: String, body: String): String {
+        if (body.trimAscii() == "") { return message }
+        return message + "\n---IDS_RAW_RESPONSE---\n" + body
+    }
+
+    func loginErrorWithRawResponse(body: String): String {
+        return this.errorWithRawResponse(this.loginErrorMessage(body), body)
+    }
+
+    func isReAuthLocation(value: String): Bool {
+        return value.contains("/authserver/reAuthCheck/reAuthLoginView.do")
+    }
+    func absoluteIdsUrl(value: String): String {
+        if (value.startsWith("https://") || value.startsWith("http://")) { return value }
+        return if (value.startsWith("/")) { "https://ids.xidian.edu.cn" + value } else { "https://ids.xidian.edu.cn/" + value }
     }
 
     func headerValue(headers: HashMap<String, String>, name: String): ?String {
