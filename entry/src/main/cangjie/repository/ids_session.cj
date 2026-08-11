@@ -319,7 +319,7 @@ public class IDSSession {
 
     public func requestLoginPage(target: String, onReady: (IDSLoginPage) -> Unit, onError: (String) -> Unit): Unit {
         let request = createHttp()
-        let requestUrl = "${IDSSession.loginUrl}?service=${target}"
+        let requestUrl = "${IDSSession.loginUrl}?service=${this.formEncode(target)}"
         let normalCookies = WebCookieManager.fetchCookie(requestUrl)
         let privateCookies = WebCookieManager.fetchCookie(requestUrl, incognito: true)
         let webCookies = if (normalCookies != "") { normalCookies } else { privateCookies }
@@ -584,18 +584,39 @@ public class IDSSession {
             headers["Cookie"] = verifiedCookie
             headers["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8"
             headers["Origin"] = "https://ids.xidian.edu.cn"
-            headers["Referer"] = "${IDSSession.loginUrl}?service=${EhallSession.landingUrl}"
+            let loginRequestUrl =
+                "${IDSSession.loginUrl}?service=${this.formEncode(EhallSession.landingUrl)}"
+            headers["Referer"] = loginRequestUrl
             headers["User-Agent"] = IDSSession.browserUserAgent
             let request = createHttp()
+            // NetworkKit follows redirects automatically and SDK 23 does not
+            // expose a redirect-disable option. Preserve cookies emitted by
+            // every response in the chain, not only the final response.
+            let receivedCookies = IDSCookieCapture()
+            let headerCallback = IDSHeadersReceiveCb({ responseHeaders =>
+                for ((name, value) in responseHeaders) {
+                    match (Regex("^set-cookie$", RegexFlag.IgnoreCase).find(name)) {
+                        case Some(_) =>
+                            receivedCookies.value =
+                                this.mergeCookies(receivedCookies.value, value)
+                        case None => ()
+                    }
+                }
+            })
+            request.on(HttpRequestEvent.HeadersReceive, headerCallback)
             let options = HttpRequestOptions(method: RequestMethod.Post, header: headers, usingProtocol: HttpProtocol.Http1_1, extraData: HttpData.StringData(form), expectDataType: HttpDataType.StringValue, usingCache: false, readTimeout: 30000, connectTimeout: 10000)
-            request.request("${IDSSession.loginUrl}?service=${EhallSession.landingUrl}", options, { err, response =>
+            request.request(loginRequestUrl, options, { err, response =>
                 request.destroy()
                 match (err) {
                     case Some(error) => onError(this.errorWithRawResponse("Login network error ${error.code}: ${error.message}", "network_error: ${error.code} ${error.message}"))
                     case None => match (response) {
                         case Some(value) => match (value.result) {
                             case HttpData.StringData(body) =>
-                                let cookies = this.mergeCookies(verifiedCookie, this.responseCookieText(value.cookies, value.header))
+                                let redirectCookies = this.mergeCookies(
+                                    receivedCookies.value,
+                                    this.responseCookieText(value.cookies, value.header)
+                                )
+                                let cookies = this.mergeCookies(verifiedCookie, redirectCookies)
                                 this.handleLoginResponse(value.responseCode, value.header, body, cookies, page,
                                     captchaVerified, account, onSuccess, onCaptchaRequired, onReAuthRequired, onError)
                             case _ => onError(this.errorWithRawResponse("IDS returned an unexpected login response format.", "unexpected_response_format"))
@@ -645,6 +666,12 @@ public class IDSSession {
             return
         }
         if (code == 401) { onError(this.loginErrorWithRawResponse(body)); return }
+        if (this.isRedirectedPostMethodRejected(code, body)) {
+            Hilog.warn(1, "IDSLogin",
+                "login POST was replayed at a GET-only redirect target; recovering with GET")
+            this.resumeEhallRedirectWithGet(cookies, account, onSuccess, onReAuthRequired, onError)
+            return
+        }
         if (code != 200) { onError(this.errorWithRawResponse("IDS login failed with HTTP ${code}.", body)); return }
         if (this.requiresCaptcha(body)) {
             onCaptchaRequired(IDSLoginPage(page.hiddenFields, page.encryptSalt, cookies))
@@ -663,6 +690,97 @@ public class IDSSession {
         }
         if (cookies != "" && this.isEhallPage(body)) { onSuccess(cookies); return }
         onError(this.errorWithRawResponse("IDS returned an unrecognized page after credential submission.", body))
+    }
+    func isRedirectedPostMethodRejected(code: UInt32, body: String): Bool {
+        if (code != 405) { return false }
+        let lower = body.toAsciiLower()
+        return lower.contains("request method") && lower.contains("post") &&
+            lower.contains("not supported")
+    }
+    func resumeEhallRedirectWithGet(
+        cookieHeader: String,
+        account: String,
+        onSuccess: (String) -> Unit,
+        onReAuthRequired: (IDSReAuthSession) -> Unit,
+        onError: (String) -> Unit
+    ): Unit {
+        let request = createHttp()
+        let receivedCookies = IDSCookieCapture()
+        let headerCallback = IDSHeadersReceiveCb({ responseHeaders =>
+            for ((name, value) in responseHeaders) {
+                match (Regex("^set-cookie$", RegexFlag.IgnoreCase).find(name)) {
+                    case Some(_) =>
+                        receivedCookies.value =
+                            this.mergeCookies(receivedCookies.value, value)
+                    case None => ()
+                }
+            }
+        })
+        request.on(HttpRequestEvent.HeadersReceive, headerCallback)
+        let headers = HashMap<String, String>()
+        if (cookieHeader != "") { headers["Cookie"] = cookieHeader }
+        headers["Referer"] = IDSSession.loginUrl
+        headers["User-Agent"] = IDSSession.browserUserAgent
+        let options = HttpRequestOptions(
+            method: RequestMethod.Get,
+            header: headers,
+            usingProtocol: HttpProtocol.Http1_1,
+            expectDataType: HttpDataType.StringValue,
+            usingCache: false,
+            readTimeout: 30000,
+            connectTimeout: 10000
+        )
+        try {
+            request.request(EhallSession.landingUrl, options, { err, response =>
+                request.destroy()
+                match (err) {
+                    case Some(error) =>
+                        onError("Ehall GET redirect recovery failed: ${error.code} ${error.message}")
+                    case None => match (response) {
+                        case Some(value) => match (value.result) {
+                            case HttpData.StringData(body) =>
+                                let responseCookies = this.mergeCookies(
+                                    receivedCookies.value,
+                                    this.responseCookieText(value.cookies, value.header)
+                                )
+                                let cookies = this.mergeCookies(cookieHeader, responseCookies)
+                                if (this.isReAuthPage(body)) {
+                                    let multifactor =
+                                        this.reAuthPageValue(body, "isMultifactor", "true")
+                                    let challenge =
+                                        "https://ids.xidian.edu.cn/authserver/reAuthCheck/" +
+                                        "reAuthLoginView.do?isMultifactor=" +
+                                        "${this.formEncode(multifactor)}&service=" +
+                                        this.formEncode(EhallSession.landingUrl)
+                                    onReAuthRequired(IDSReAuthSession(
+                                        challenge,
+                                        account,
+                                        EhallSession.landingUrl,
+                                        cookies
+                                    ))
+                                } else if (value.responseCode == 200 &&
+                                    cookies != "" && this.isEhallPage(body)) {
+                                    Hilog.info(1, "IDSLogin",
+                                        "Ehall GET redirect recovery reached the service")
+                                    onSuccess(cookies)
+                                } else {
+                                    onError(this.errorWithRawResponse(
+                                        "Ehall GET redirect recovery failed with HTTP " +
+                                            "${value.responseCode}.",
+                                        body
+                                    ))
+                                }
+                            case _ =>
+                                onError("Ehall GET redirect recovery returned a non-text response.")
+                        }
+                        case None => onError("Ehall GET redirect recovery returned no response.")
+                    }
+                }
+            })
+        } catch (e: BusinessException) {
+            request.destroy()
+            onError("Unable to start Ehall GET redirect recovery: ${e.code} ${e.message}")
+        }
     }
     func isReAuthPage(body: String): Bool {
         return body.contains("var reAuthParams") ||
