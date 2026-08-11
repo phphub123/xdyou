@@ -89,10 +89,23 @@ public class SchoolCardSession {
         }
     }
 
-    func absoluteLocation(location: String): String {
+    func resolveLocation(currentUrl: String, location: String): String {
         if (location.startsWith("http://") || location.startsWith("https://")) { return location }
-        if (location.startsWith("/")) { return SchoolCardSession.baseUrl + location }
-        return SchoolCardSession.baseUrl + "/" + location
+        let originMatch = Regex(#"^(https?://[^/]+)"#, RegexFlag.IgnoreCase)
+        let origin = match (originMatch.find(currentUrl, group: true)) {
+            case Some(found) => found.matchString(1)
+            case None => SchoolCardSession.baseUrl
+        }
+        if (location.startsWith("/")) { return origin + location }
+        let cleanCurrent = match (Regex(#"^([^?#]+)"#).find(currentUrl, group: true)) {
+            case Some(found) => found.matchString(1)
+            case None => currentUrl
+        }
+        let slash = cleanCurrent.lastIndexOf("/")
+        return match (slash) {
+            case Some(index) => cleanCurrent[0..index] + "/" + location
+            case None => origin + "/" + location
+        }
     }
 
     func follow(url: String, cookie: String, depth: Int64,
@@ -101,7 +114,7 @@ public class SchoolCardSession {
         this.request(url, RequestMethod.Get, cookie, "", { code, headers, body, merged =>
             if (code == 301 || code == 302 || code == 303 || code == 307 || code == 308) {
                 match (this.headerValue(headers, "location")) {
-                    case Some(location) => this.follow(this.absoluteLocation(location), merged, depth + 1, success, failure)
+                    case Some(location) => this.follow(this.resolveLocation(url, location), merged, depth + 1, success, failure)
                     case None => failure("Campus-card SSO redirect did not include a Location header.")
                 }
             } else if (code == 200) { success(body, merged) }

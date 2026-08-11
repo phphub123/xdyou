@@ -6,6 +6,8 @@ import ohos.arkui.state_macro_manage.*
 import ohos.business_exception.*
 import ohos.resource.*
 import ohos_app_cangjie_entry.repository.*
+import ohos_app_cangjie_entry.repository.xidian_ids.*
+import ohos_app_cangjie_entry.controller.*
 import ohos_app_cangjie_entry.themes.*
 import ohos_app_cangjie_entry.page.class_attendance.*
 import ohos_app_cangjie_entry.page.classtable.*
@@ -207,6 +209,12 @@ public class AlignedNavItem {
 
 @Component
 public class AlignedCampusPage {
+    @State var scheduleCount: Int64 = 0
+    @State var scheduleStatus: String = "正在加载真实课表"
+    @State var schoolCardValue: String = "正在获取校园卡信息"
+    @State var schoolCardStatus: String = "正在查询余额"
+    let classTableController = ClassTableController()
+    let schoolCardController = SchoolCardController()
     let previewMode: Bool
     let onSchedule: () -> Unit
     let onScore: () -> Unit
@@ -227,6 +235,27 @@ public class AlignedCampusPage {
     let systemColorMode: ColorMode = ColorMode.Light
     func darkMode(): Bool {
         return AppTheme.isDark(this.themePreference, this.systemColorMode)
+    }
+
+    protected override func aboutToAppear(): Unit {
+        if (this.previewMode) {
+            this.scheduleStatus = "预览数据"
+            return
+        }
+        AcademicSession().loadCurrentSemester({ semester => launch {
+            SessionStore().saveSetting("semester", semester)
+            this.classTableController.reloadClassTable(semester, { data => launch {
+                this.scheduleCount = data.courses.size
+                this.scheduleStatus = if (data.courses.size == 0) { "本学期暂无课程" } else { "已同步 ${data.courses.size} 条课程安排" }
+            } }, { message => launch { this.scheduleStatus = message } })
+        } }, { message => launch { this.scheduleStatus = message } })
+        this.schoolCardController.overview({ value => launch {
+            this.schoolCardValue = "余额 ${value.balance} 元"
+            this.schoolCardStatus = "校园卡账户已同步"
+        } }, { message => launch {
+            this.schoolCardValue = "校园卡信息暂不可用"
+            this.schoolCardStatus = message
+        } })
     }
 
     func build() {
@@ -286,11 +315,11 @@ public class AlignedCampusPage {
                                 .fillColor(0xFF41699F)
                                 .margin(left: 16.vp, right: 15.vp)
                             Column {
-                                Text("今日安排完成").fontSize(20.vp).fontColor(0xFF474B55)
-                                Text("正在加載").fontSize(13.vp).fontColor(0xFF454953).margin(top: 1.vp)
+                                Text(if (this.scheduleCount > 0) { "本学期课程 ${this.scheduleCount} 项" } else { "今日安排" }).fontSize(20.vp).fontColor(0xFF474B55)
+                                Text(this.scheduleStatus).fontSize(13.vp).fontColor(0xFF454953).margin(top: 1.vp)
                             }.layoutWeight(1).alignItems(HorizontalAlign.Start)
                         }.width(100.percent).height(55.vp).onClick({_ => this.onSchedule()})
-                        Text("正在加載日程")
+                        Text(this.scheduleStatus)
                             .width(100.percent)
                             .height(34.vp)
                             .textAlign(TextAlign.Center)

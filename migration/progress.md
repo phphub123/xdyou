@@ -114,3 +114,11 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Added the real authenticated favorite-device add endpoint and a format-validated manual device-ID entry beside the existing device removal/control flows.
 - QR scanning is explicitly deferred pending a Scan Kit pure-Cangjie probe; no scan result or favorite is manufactured.
 - Latest x86_64 HAP built successfully in 1 min 1 s 909 ms. Runtime service interaction stays `BLOCKED_EXTERNAL` until an independent SMS login is supplied; see `evidence/phase-c-dorm-water-favorite.md`.
+
+## 2026-08-11: genuine academic data restored
+
+- Added per-application Ehall SSO bootstrap and cookie merge before timetable, score and examination business requests.
+- Score and examination pages now auto-load after entry; examination resolves the current semester and combines arranged/unarranged data before grouping.
+- Campus home schedule uses the real class-table controller; verified 34 arrangements, 36 score rows and 18 examination rows in the retained genuine session.
+- Campus-card home state no longer remains static; its independent OAuth chain currently returns a real HTTP 404 and remains unaccepted. Library borrowing and energy summaries remain pending.
+- Build, overwrite install and emulator launch passed. Private academic fields were not persisted in evidence.

@@ -14,6 +14,20 @@ public class ExamPage {
     @State var semester: String = ""
     @State var exams: ArrayList<ExamItem> = ArrayList<ExamItem>()
     let controller = ExamController()
+    protected override func aboutToAppear(): Unit {
+        if (this.semester == "" && !this.loading) {
+            this.loading = true
+            this.status = "正在获取当前学期…"
+            AcademicSession().loadCurrentSemester({ code => launch {
+                this.semester = code
+                this.loading = false
+                this.refresh()
+            } }, { message => launch {
+                this.loading = false
+                this.status = message
+            } })
+        }
+    }
     func refresh(): Unit {
         if (this.semester.trimAscii() == "") {
             this.status = "请先输入学期代码。"
