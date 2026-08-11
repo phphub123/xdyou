@@ -68,7 +68,7 @@ public class HomePage {
             } else if (this.selected == 0 && this.homeFeature == 1) {
                 ClassAttendancePage(onBack: {=> this.homeFeature = 0})
             } else if (this.selected == 0 && this.homeFeature == 2) {
-                EmptyClassroomPage()
+                EmptyClassroomPage(onBack: {=> this.homeFeature = 0})
             } else if (this.selected == 0 && this.homeFeature == 3) {
                 LibraryPage(onBack: {=> this.homeFeature = 0})
             } else if (this.selected == 0 && this.homeFeature == 4) {

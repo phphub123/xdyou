@@ -107,3 +107,11 @@
 - RAG query attempted: `HttpRequestOptions redirect maxLimit followRedirect NetworkKit`; indexed query returned `OperationalError: unable to open database file`.
 - Fallback full document read: `.agents/skills/cangjie-harmonyos-knowledge/rag/docs/API/NetworkKit/cj-apis-net-http.md`, `HttpRequestOptions`, response headers/cookies and response-size `maxLimit` sections. Conclusion: `maxLimit` controls response bytes, not redirects; redirects and cookies must be handled from response code, `Location`, headers and cookies.
 - Validation: full Hvigor build, overwrite install, ability launch, stable-id component-tree checks and target-process Hilog. Private response fields were neither printed nor persisted.
+## 2026-08-11 — campus query live data and preliminary UI alignment
+
+- Skills: `harmonyos-cangjie-dev`, `harmonyos-build-run-diagnose`, `cangjie-harmonyos-knowledge`, and `cangjie-core-reference`; the required workflow files and `cangjie-essentials.md` were read before implementation.
+- Source/UI reads: Flutter empty-classroom, attendance and class-table source chains plus `UI真实数据展示截图/空闲教室.png`, `考勤查询.png`, and `日程表.png`.
+- Core reference: read the Cangjie `DateTime` and `dayOfWeek` reference before implementing current-week selection and the seven-day timetable layout.
+- Build diagnosis: the first timetable macro failure was analyzed with `build_analyzer.py`; the local builder expression was simplified before rebuilding instead of repeating the same command unchanged.
+- Runtime verification: final single-emulator-ABI build reported `BUILD SUCCESSFUL in 1 min 21 s 333 ms`; overwrite install, cold launch, stable-id tree checks, screenshots and target Hilog passed on `127.0.0.1:5557`.
+- Adopted result: 12 real empty rooms, 34 real timetable arrangements and 57 real Chaoxing attendance rows render without mock data. Attendance semester fallback and UI evidence are documented in `evidence/campus-query-live-data-2026-08-11.md`.

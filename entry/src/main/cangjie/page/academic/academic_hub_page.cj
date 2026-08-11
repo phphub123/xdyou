@@ -25,7 +25,7 @@ public class AcademicHub {
                 Button("Exams").layoutWeight(1).onClick({_ => this.tab = 2}).id("academicTabExams")
             }.width(100.percent).padding(8.vp)
             if (this.tab == 0) {
-                ClassTablePage()
+                ClassTablePage(onBack: {=> ()})
             } else if (this.tab == 1) {
                 ScorePage()
             } else if (this.tab == 2) {
@@ -33,7 +33,7 @@ public class AcademicHub {
             } else if (this.tab == 4) {
                 CustomClassPage(onBack: {=> this.tab = 0})
             } else {
-                EmptyClassroomPage()
+                EmptyClassroomPage(onBack: {=> this.tab = 0})
             }
         }.width(100.percent).height(100.percent)
     }

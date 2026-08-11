@@ -1,6 +1,7 @@
 package ohos_app_cangjie_entry.repository.xidian_ids
 
 import kit.NetworkKit.*
+import kit.PerformanceAnalysisKit.Hilog
 import ohos.business_exception.*
 import std.collection.*
 import std.regex.*
@@ -23,6 +24,7 @@ class LearningCourseInfo {
 
 public class LearningSession {
     static let loginUrl = "https://xdspoc.fanya.chaoxing.com/sso/xdspoc"
+    static let idsLearningLoginUrl = "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fxdspoc.fanya.chaoxing.com%2Fsso%2Fxdspoc"
     static let courseInfoUrl = "https://fycourse.fanya.chaoxing.com/courselist/study"
     static let courseDataUrl = "https://fycourse.fanya.chaoxing.com/courselist/studyCourseDatashow"
     static let courseDetailUrl = "https://mobilelearn.chaoxing.com/v2/apis/signStat/getActiveList"
@@ -42,7 +44,7 @@ public class LearningSession {
         try {
             let headers = HashMap<String, String>()
             headers["Cookie"] = this.baseCookies()
-            headers["Host"] = host
+            if (host != "") { headers["Host"] = host }
             headers["Accept"] = "text/html,application/json;q=0.9,*/*;q=0.8"
             headers["User-Agent"] = "Mozilla/5.0 (HarmonyOS; XDYou)"
             let options = HttpRequestOptions(method: RequestMethod.Get, header: headers,
@@ -66,7 +68,7 @@ public class LearningSession {
     }
 
     func ensureLearningLogin(success: () -> Unit, failure: (String) -> Unit): Unit {
-        this.request(LearningSession.loginUrl, "xdspoc.fanya.chaoxing.com", { body =>
+        this.request(LearningSession.idsLearningLoginUrl, "", { body =>
             let lower = body.toAsciiLower()
             if (lower.contains("pwdencryptsalt") || lower.contains("authserver/login")) {
                 failure("IDS 会话已失效或尚未授权学习通，请退出后重新登录。")
@@ -81,17 +83,44 @@ public class LearningSession {
     func loadCourseList(success: (ArrayList<ClassAttendance>) -> Unit, failure: (String) -> Unit): Unit {
         this.request(LearningSession.courseInfoUrl, "fycourse.fanya.chaoxing.com", { html =>
             try {
-                let semester = this.selectedSemester(html)
+                let selected = this.selectedSemester(html)
                 let courses = this.parseCourseList(html)
-                let query = "?v=1&semesternum=${this.urlEncode(semester)}"
-                this.request(LearningSession.courseDataUrl + query, "fycourse.fanya.chaoxing.com", { tableHtml =>
-                    try { success(this.parseAttendanceTable(tableHtml, courses)) }
-                    catch (error: Exception) { failure("考勤表解析失败：${error.message}") }
-                }, failure)
+                let semesters = this.semesterOptions(html, selected)
+                Hilog.info(1, "LearningSession", "course page bytes=${html.size} yearList=${html.contains("yearList")} itemMarker=${html.contains("myde_course_item")}")
+                Hilog.info(1, "LearningSession", "course list semester=${selected} semesterCount=${semesters.size} courseCount=${courses.size}")
+                this.loadAttendanceSemester(semesters, 0, courses, success, failure)
             } catch (error: Exception) { failure("课程列表解析失败：${error.message}") }
         }, failure)
     }
 
+    func loadAttendanceSemester(semesters: ArrayList<String>, index: Int64,
+        courses: ArrayList<LearningCourseInfo>, success: (ArrayList<ClassAttendance>) -> Unit,
+        failure: (String) -> Unit): Unit {
+        if (index >= semesters.size) { success(ArrayList<ClassAttendance>()); return }
+        let semester = semesters[index]
+        let query = "?v=1&semesternum=${this.urlEncode(semester)}"
+        this.request(LearningSession.courseDataUrl + query, "fycourse.fanya.chaoxing.com", { tableHtml =>
+            try {
+                let items = this.parseAttendanceTable(tableHtml, courses)
+                let lowerTable = tableHtml.toAsciiLower()
+                Hilog.info(1, "LearningSession", "attendance semester=${semester} table=${lowerTable.contains("<table")} login=${lowerTable.contains("login")} bytes=${tableHtml.size} count=${items.size}")
+                if (items.size > 0) { success(items) }
+                else { this.loadAttendanceSemester(semesters, index + 1, courses, success, failure) }
+            } catch (error: Exception) { failure("考勤表解析失败：${error.message}") }
+        }, failure)
+    }
+
+    func semesterOptions(html: String, selected: String): ArrayList<String> {
+        let result = ArrayList<String>()
+        let seen = HashSet<String>()
+        if (selected != "") { result.add(selected); seen.add(selected) }
+        let pattern = Regex(#"<option\b[^>]*\bvalue\s*=\s*[\"']([^\"']+)[\"'][^>]*>"#, RegexFlag.IgnoreCase)
+        for (value in pattern.findAll(html, group: true)) {
+            let semester = this.decodeHtml(value.matchString(1)).trimAscii()
+            if (semester != "" && !seen.contains(semester)) { seen.add(semester); result.add(semester) }
+        }
+        return result
+    }
     public func loadAttendanceDetail(course: ClassAttendance, page: Int64, pageSize: Int64,
         success: (ArrayList<ClassAttendanceDetail>) -> Unit, failure: (String) -> Unit): Unit {
         if (course.courseId == "" || course.clazzId == "") { failure("该课程缺少超星课程标识，无法读取签到详情。"); return }
@@ -215,16 +244,43 @@ public class LearningSession {
 
     func mergeCookies(existing: String, raw: String): String {
         let values = ArrayList<String>()
-        for (source in [existing, raw]) {
-            for (line in Regex("[\\r\\n,]+").split(source)) {
-                let parts = Regex(";").split(line)
-                if (parts.size == 0 || !parts[0].contains("=")) { continue }
-                let pair = parts[0].trimAscii(); let name = Regex("=").split(pair)[0]
-                var replaced = false; var index: Int64 = 0
-                while (index < values.size) { if (values[index].startsWith("${name}=")) { values[index] = pair; replaced = true }; index += 1 }
-                if (!replaced) { values.add(pair) }
+        for (pair in Regex(";").split(existing)) { this.upsertCookie(values, pair.trimAscii()) }
+        for (line in Regex("[\\r\\n,]+").split(raw)) {
+            let columns = Regex("\\t").split(line)
+            if (columns.size >= 7) {
+                this.upsertCookie(values, "${columns[columns.size - 2]}=${columns[columns.size - 1]}")
+                continue
+            }
+            let fields = Regex(";").split(line)
+            var index: Int64 = 0
+            while (index < fields.size) {
+                let pair = fields[index].trimAscii()
+                let parts = Regex("=").split(pair)
+                let name = if (parts.size > 0) { parts[0].toAsciiLower() } else { "" }
+                if (index == 0 || !this.isCookieAttribute(name)) { this.upsertCookie(values, pair) }
+                index += 1
             }
         }
-        var result = ""; for (item in values) { if (result != "") { result += "; " }; result += item }; return result
+        var result = ""
+        for (item in values) { if (result != "") { result += "; " }; result += item }
+        return result
+    }
+
+    func isCookieAttribute(name: String): Bool {
+        return name == "path" || name == "domain" || name == "expires" || name == "max-age" ||
+            name == "samesite" || name == "secure" || name == "httponly" || name == "priority"
+    }
+
+    func upsertCookie(values: ArrayList<String>, pair: String): Unit {
+        if (!pair.contains("=")) { return }
+        let parts = Regex("=").split(pair)
+        if (parts.size == 0 || parts[0] == "") { return }
+        let prefix = "${parts[0]}="
+        var index: Int64 = 0
+        while (index < values.size) {
+            if (values[index].startsWith(prefix)) { values[index] = pair; return }
+            index += 1
+        }
+        values.add(pair)
     }
 }

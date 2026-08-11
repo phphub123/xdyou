@@ -122,3 +122,10 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Campus home schedule uses the real class-table controller; verified 34 arrangements, 36 score rows and 18 examination rows in the retained genuine session.
 - Campus-card home state no longer remains static; its independent OAuth chain currently returns a real HTTP 404 and remains unaccepted. Library borrowing and energy summaries remain pending.
 - Build, overwrite install and emulator launch passed. Private academic fields were not persisted in evidence.
+## 2026-08-11: empty classroom, attendance and class-table live UI
+
+- Empty-classroom entry now resolves the real current semester, automatically loads the selected building, renders 12 returned rooms in an 11-period matrix, and retains date/building/name filters with stable IDs.
+- Class table now resolves the real term, calculates week/day from the term start, and renders 34 arrangements in a source-shaped seven-day grid; 3 courses without an arranged time remain explicitly listed.
+- Learning/Chaoxing SSO now preserves returned cookies and does not force a manual Host when following the IDS service ticket. Attendance probes the server-provided semester list: the current summer semester is genuinely empty, while the all-semester table returns and renders 57 real rows.
+- Attendance cards were moved to direct `@State courses` iteration because a parameterized Builder retained its first empty list snapshot. Visible cards, refresh, grouping and explicit missing-detail-ID errors are verified on the emulator.
+- Final single-emulator-ABI HAP built, installed and cold-launched successfully. Paired captures are under `acceptance/runtime/2026-08-11-campus-query-live/`; pixel-perfect Phase F alignment and Chaoxing detail-ID recovery remain `IN_PROGRESS`.

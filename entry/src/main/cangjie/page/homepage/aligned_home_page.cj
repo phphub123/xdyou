@@ -54,7 +54,7 @@ public class AlignedHomePage {
                 if (this.selected == 0 && this.homeFeature == 1) {
                     ClassAttendancePage(onBack: {=> this.homeFeature = 0})
                 } else if (this.selected == 0 && this.homeFeature == 2) {
-                    EmptyClassroomPage()
+                    EmptyClassroomPage(onBack: {=> this.homeFeature = 0})
                 } else if (this.selected == 0 && this.homeFeature == 3) {
                     LibraryPage(onBack: {=> this.homeFeature = 0})
                 } else if (this.selected == 0 && this.homeFeature == 4) {
@@ -66,7 +66,7 @@ public class AlignedHomePage {
                 } else if (this.selected == 0 && this.homeFeature == 7) {
                     ExamPage()
                 } else if (this.selected == 0 && this.homeFeature == 8) {
-                    ClassTablePage()
+                    ClassTablePage(onBack: {=> this.homeFeature = 0})
                 } else if (this.selected == 0 && this.homeFeature == 9) {
                     SchoolCardPage(onBack: {=> this.homeFeature = 0})
                 } else if (this.selected == 0 && this.homeFeature == 10) {
