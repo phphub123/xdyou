@@ -7,14 +7,14 @@ source/lib/repository/xidian_ids/ids_session.dart,entry/src/main/cangjie/reposit
 source/lib/repository/xidian_ids/ehall_session.dart,entry/src/main/cangjie/repository/ids_session.cj,EhallSession,EhallSession,Landing target and IDS redirect entry; end-to-end redirect needs successful IDS verification,BLOCKED_EXTERNAL
 source/lib/page/home/home_page.dart,entry/src/main/cangjie/page/homepage/legacy_home_page.cj,HomePage,HomePage,Five navigation authenticated shell,IN_PROGRESS
 source/lib/page/settings/,entry/src/main/cangjie/page/setting/legacy_setting_page.cj,Settings,SettingWindow,Language theme persistence and sign-out entry,IN_PROGRESS
-source/lib/controller/classtable_controller.dart,entry/src/main/cangjie/page/classtable/classtable_page.cj,ClassTableController,ClassTablePage,Real Ehall timetable refresh state and day-scoped scroll layout,BLOCKED_EXTERNAL
+source/lib/controller/classtable_controller.dart,entry/src/main/cangjie/page/classtable/classtable_page.cj,ClassTableController,ClassTablePage,Real Ehall timetable refresh state and day-scoped scroll layout,IN_PROGRESS
 source/lib/model/xidian_ids/classtable.dart,entry/src/main/cangjie/model/xidian_ids/academic.cj,ClassTableData/CourseSlot,CourseSlot,Course arrangement transport model for Ehall xskcb rows,IN_PROGRESS
-source/lib/repository/xidian_ids/classtable_session.dart,entry/src/main/cangjie/repository/xidian_ids/academic_session.cj,ClassTableSession,AcademicSession.loadClassTable,Real Ehall xskcb HTTP JSON request with authenticated session gate,BLOCKED_EXTERNAL
+source/lib/repository/xidian_ids/classtable_session.dart,entry/src/main/cangjie/repository/xidian_ids/academic_session.cj,ClassTableSession,AcademicSession.loadClassTable,Real Ehall xskcb HTTP JSON request with authenticated session gate,IN_PROGRESS
 source/lib/controller/semester_controller.dart,entry/src/main/cangjie/page/academic/academic_hub_page.cj,SemesterController,ScorePage/ExamPage semester inputs,Semester input for authenticated academic fetches,IN_PROGRESS
 source/lib/model/xidian_ids/score.dart,entry/src/main/cangjie/model/xidian_ids/academic.cj,Score,ScoreItem,Score transport and visible fields,IN_PROGRESS
-source/lib/repository/xidian_ids/score_session.dart,entry/src/main/cangjie/repository/xidian_ids/academic_session.cj,ScoreSession,AcademicSession.loadScores,Real Ehall cjcx request and JSON parsing,BLOCKED_EXTERNAL
+source/lib/repository/xidian_ids/score_session.dart,entry/src/main/cangjie/repository/xidian_ids/academic_session.cj,ScoreSession,AcademicSession.loadScores,Real Ehall cjcx request and JSON parsing,IN_PROGRESS
 source/lib/model/xidian_ids/exam.dart,entry/src/main/cangjie/model/xidian_ids/academic.cj,ExamData/Subject,ExamItem,Exam transport and visible fields,IN_PROGRESS
-source/lib/repository/xidian_ids/exam_session.dart,entry/src/main/cangjie/repository/xidian_ids/academic_session.cj,ExamSession,AcademicSession.loadExams,Real Ehall wdksap request and JSON parsing,BLOCKED_EXTERNAL
+source/lib/repository/xidian_ids/exam_session.dart,entry/src/main/cangjie/repository/xidian_ids/academic_session.cj,ExamSession,AcademicSession.loadExams,Real Ehall wdksap request and JSON parsing,IN_PROGRESS
 source/lib/page/classtable/,entry/src/main/cangjie/page/classtable/classtable_page.cj,ClassTablePage,ClassTablePage,Refresh empty error day selection and scroll list,IN_PROGRESS
 source/lib/page/score/,entry/src/main/cangjie/page/score/score_page.cj,ScorePage,ScorePage,Refresh empty error and scroll list,IN_PROGRESS
 source/lib/model/xidian_ids/exam.dart,entry/src/main/cangjie/model/xidian_ids/exam.cj,Subject,ExamItem,Arranged state course id and parsed start time,IN_PROGRESS

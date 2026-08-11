@@ -114,3 +114,18 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Added the real authenticated favorite-device add endpoint and a format-validated manual device-ID entry beside the existing device removal/control flows.
 - QR scanning is explicitly deferred pending a Scan Kit pure-Cangjie probe; no scan result or favorite is manufactured.
 - Latest x86_64 HAP built successfully in 1 min 1 s 909 ms. Runtime service interaction stays `BLOCKED_EXTERNAL` until an independent SMS login is supplied; see `evidence/phase-c-dorm-water-favorite.md`.
+
+## 2026-08-11: genuine academic data restored
+
+- Added per-application Ehall SSO bootstrap and cookie merge before timetable, score and examination business requests.
+- Score and examination pages now auto-load after entry; examination resolves the current semester and combines arranged/unarranged data before grouping.
+- Campus home schedule uses the real class-table controller; verified 34 arrangements, 36 score rows and 18 examination rows in the retained genuine session.
+- Campus-card home state no longer remains static; its independent OAuth chain currently returns a real HTTP 404 and remains unaccepted. Library borrowing and energy summaries remain pending.
+- Build, overwrite install and emulator launch passed. Private academic fields were not persisted in evidence.
+## 2026-08-11: empty classroom, attendance and class-table live UI
+
+- Empty-classroom entry now resolves the real current semester, automatically loads the selected building, renders 12 returned rooms in an 11-period matrix, and retains date/building/name filters with stable IDs.
+- Class table now resolves the real term, calculates week/day from the term start, and renders 34 arrangements in a source-shaped seven-day grid; 3 courses without an arranged time remain explicitly listed.
+- Learning/Chaoxing SSO now preserves returned cookies and does not force a manual Host when following the IDS service ticket. Attendance probes the server-provided semester list: the current summer semester is genuinely empty, while the all-semester table returns and renders 57 real rows.
+- Attendance cards were moved to direct `@State courses` iteration because a parameterized Builder retained its first empty list snapshot. Visible cards, refresh, grouping and explicit missing-detail-ID errors are verified on the emulator.
+- Final single-emulator-ABI HAP built, installed and cold-launched successfully. Paired captures are under `acceptance/runtime/2026-08-11-campus-query-live/`; pixel-perfect Phase F alignment and Chaoxing detail-ID recovery remain `IN_PROGRESS`.

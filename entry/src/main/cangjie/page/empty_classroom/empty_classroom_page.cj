@@ -3,15 +3,17 @@ package ohos_app_cangjie_entry.page.empty_classroom
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import std.collection.*
-import std.convert.*
 import std.time.*
 import ohos_app_cangjie_entry.controller.*
 import ohos_app_cangjie_entry.model.xidian_ids.*
+import ohos_app_cangjie_entry.repository.*
+import ohos_app_cangjie_entry.repository.xidian_ids.*
 
 @Component
 public class EmptyClassroomPage {
+    let onBack: () -> Unit
     @State var loading: Bool = false
-    @State var status: String = "先加载教学楼，再按日期查询。"
+    @State var status: String = "正在读取当前学期和教学楼…"
     @State var building: String = ""
     @State var date: String = DateTime.now().format("yyyy-MM-dd")
     @State var semester: String = ""
@@ -19,162 +21,186 @@ public class EmptyClassroomPage {
     @State var places: ArrayList<EmptyClassroomPlace> = ArrayList<EmptyClassroomPlace>()
     @State var rooms: ArrayList<EmptyClassroomData> = ArrayList<EmptyClassroomData>()
     let controller = EmptyClassroomController()
+
     protected override func aboutToAppear(): Unit {
-        if (this.semester == "") {
-            let now = DateTime.now()
-            this.semester = match (now.month) {
-                case August => "${now.year}-1"
-                case September => "${now.year}-1"
-                case October => "${now.year}-1"
-                case November => "${now.year}-1"
-                case December => "${now.year}-1"
-                case _ => "${now.year - 1}-2"
-            }
-        }
-        if (this.places.size == 0 && !this.loading) {
-            this.loadBuildings()
-        }
+        if (this.places.size == 0 && !this.loading) { this.loadInitialData() }
     }
+
+    func loadInitialData(): Unit {
+        this.loading = true
+        this.status = "正在读取当前学期…"
+        AcademicSession().loadCurrentSemester({ value => launch {
+            this.semester = value
+            SessionStore().saveSetting("semester", value)
+            this.loadBuildings()
+        } }, { message => launch {
+            let cached = SessionStore().restoreSetting("semester")
+            if (cached == "") {
+                this.loading = false
+                this.status = message
+            } else {
+                this.semester = cached
+                this.loadBuildings()
+            }
+        } })
+    }
+
+    func selectedBuildingName(): String {
+        for (place in this.places) {
+            if (place.code == this.building) { return place.name }
+        }
+        return if (this.building == "") { "加载中" } else { this.building }
+    }
+
     func chooseBuilding(index: Int64): Unit {
         if (index >= 0 && index < this.places.size) {
             this.building = this.places[index].code
-            this.status = "已选择 ${this.places[index].name}。"
+            SessionStore().saveSetting("emptyClassroomBuilding", this.building)
+            this.search()
         }
     }
+
+    func nextBuilding(): Unit {
+        if (this.places.size == 0) { this.loadBuildings(); return }
+        var index: Int64 = 0
+        while (index < this.places.size) {
+            if (this.places[index].code == this.building) {
+                this.chooseBuilding((index + 1) % this.places.size)
+                return
+            }
+            index += 1
+        }
+        this.chooseBuilding(0)
+    }
+
     func loadBuildings(): Unit {
         this.loading = true
-        this.controller.loadBuildings({
-            items => launch {
-                this.places = items
-                this.loading = false
-                if (items.size > 0 && this.building == "") {
-                    this.building = items[0].code
-                }
-                this.status = if (items.size == 0) {
-                    "未返回教学楼。"
-                } else {
-                    "已加载 ${items.size} 个教学楼，当前代码 ${this.building}。"
-                }
-            }
-        }, {
-            message => launch {
+        this.status = "正在加载教学楼…"
+        this.controller.loadBuildings({ items => launch {
+            this.places = items
             this.loading = false
-        this.status = message
-        }
-        })
+            if (items.size == 0) {
+                this.status = "教务系统未返回教学楼。"
+                return
+            }
+            let cached = SessionStore().restoreSetting("emptyClassroomBuilding")
+            var selected: Int64 = 0
+            var index: Int64 = 0
+            while (index < items.size) {
+                if (items[index].code == cached) { selected = index }
+                index += 1
+            }
+            this.building = items[selected].code
+            this.search()
+        } }, { message => launch {
+            this.loading = false
+            this.status = message
+        } })
     }
+
     func search(): Unit {
+        if (this.loading) { return }
         this.loading = true
-        this.controller.search(this.building, this.date, this.semester, {
-            items => launch {
-                this.rooms = items
-                this.loading = false
-                this.status = "查询到 ${items.size} 间教室。"
-            }
-        }, {
-            message => launch {
+        this.rooms = ArrayList<EmptyClassroomData>()
+        this.status = "正在查询 ${this.selectedBuildingName()} 的空闲教室…"
+        this.controller.search(this.building, this.date, this.semester, { items => launch {
+            this.rooms = items
             this.loading = false
-        this.status = message
-        }
-        })
+            this.status = if (items.size == 0) { "所选日期没有返回教室。" } else { "已加载 ${items.size} 间教室" }
+        } }, { message => launch {
+            this.loading = false
+            this.status = message
+        } })
     }
+
+    @Builder
+    func slotBadge(used: Bool, index: Int64) {
+        Text(if (index >= 0) { "${index + 1}" } else { "" })
+            .width(21.vp)
+            .height(21.vp)
+            .fontSize(10.vp)
+            .fontWeight(FontWeight.Medium)
+            .textAlign(TextAlign.Center)
+            .fontColor(if (used) { 0xFFFFFFFF } else { 0xFF41699F })
+            .backgroundColor(if (used) { 0xFF476FA9 } else { 0x00FFFFFF })
+            .border(width: 1.vp, color: 0xFF476FA9)
+            .borderRadius(5.vp)
+            .margin(left: 2.vp)
+    }
+
     func build() {
         Column {
-            Text("空闲教室").fontSize(26.vp).fontWeight(FontWeight.Bold)
             Row {
-                TextInput(placeholder: "教学楼代码", text: this.building)
-                    .layoutWeight(1)
-                    .onChange({value => this.building = value})
-                    .id("emptyClassroomBuildingInput")
-                Button("加载教学楼")
-                    .margin(left: 8.vp)
-                    .onClick({_ => this.loadBuildings()})
-                    .id("emptyClassroomLoadBuildings")
-            }.width(100.percent).height(44.vp).margin(top: 12.vp)
-            if (this.places.size > 0) {
-                Scroll {
-                    Row {
-                    ForEach(this.places,
-                    itemGenerator: {
-                        item: EmptyClassroomPlace, index: Int64 => Button(item.name)
-                        .margin(right: 6.vp)
-                        .backgroundColor(if (item.code == this.building) {
-                            0xFF476FA9
-                        } else {
-                            0xFFE8EDF6
-                        })
-                        .fontColor(if (item.code == this.building) {
-                            0xFFFFFFFF
-                        } else {
-                            0xFF41699F
-                        })
-                        .onClick({_ => this.chooseBuilding(index)})
-                        .id("emptyClassroomBuilding_${index}")
-                    })
-                }.height(38.vp)
-                }.width(100.percent).height(42.vp).margin(top: 6.vp)
-            }
+                Button("<").width(38.vp).height(36.vp).margin(right: 8.vp).onClick({_ => this.onBack()}).id("emptyClassroomBack")
+                Text("空闲教室").fontSize(22.vp).fontWeight(FontWeight.Medium).layoutWeight(1)
+                Button(if (this.loading) { "查询中" } else { "刷新" })
+                    .height(36.vp)
+                    .onClick({_ => this.search()})
+                    .id("emptyClassroomRefresh")
+            }.width(100.percent)
+
+            TextInput(placeholder: "搜索教室名称或教学楼代号", text: this.filter)
+                .width(100.percent)
+                .height(42.vp)
+                .margin(top: 10.vp)
+                .backgroundColor(0xFFF2F3F8)
+                .border(width: 1.vp, color: 0xFF476FA9)
+                .borderRadius(10.vp)
+                .onChange({ value => this.filter = value })
+                .id("emptyClassroomFilterInput")
+
             Row {
-                TextInput(placeholder: "日期 yyyy-MM-dd", text: this.date)
+                TextInput(placeholder: "yyyy-MM-dd", text: this.date)
                     .layoutWeight(1)
-                    .onChange({value => this.date = value})
+                    .height(38.vp)
+                    .fontSize(12.vp)
+                    .fontColor(0xFFFFFFFF)
+                    .backgroundColor(0xFF476FA9)
+                    .borderRadius(8.vp)
+                    .onChange({ value => this.date = value })
                     .id("emptyClassroomDateInput")
-                TextInput(placeholder: "学期 2026-1", text: this.semester)
+                Button("教学楼：${this.selectedBuildingName()}")
                     .layoutWeight(1)
-                    .margin(left: 8.vp)
-                    .onChange({value => this.semester = value})
-                    .id("emptyClassroomSemesterInput")
-            }.width(100.percent).height(44.vp).margin(top: 8.vp)
+                    .height(38.vp)
+                    .fontSize(12.vp)
+                    .margin(left: 10.vp)
+                    .backgroundColor(0xFF476FA9)
+                    .onClick({_ => this.nextBuilding()})
+                    .id("emptyClassroomBuildingPicker")
+            }.width(100.percent).margin(top: 10.vp)
+
             Row {
-                TextInput(placeholder: "筛选教室名称", text: this.filter)
-                    .layoutWeight(1)
-                    .onChange({value => this.filter = value})
-                    .id("emptyClassroomFilterInput")
-                Button(if (this.loading) {
-                    "查询中…"
-                } else {
-                    "查询"
-                }).margin(left: 8.vp).onClick({_ => this.search()}).id("emptyClassroomSearch")
-            }.width(100.percent).height(44.vp).margin(top: 8.vp)
-            Text(this.status).fontSize(12.vp).fontColor(0xFF5F6368).margin(top: 8.vp).id("emptyClassroomStatus")
-            Row {
-                Text("教室").layoutWeight(2);
-            Text("1  2  3  4  5  6  7  8  9 10 11").layoutWeight(5)
-            }.width(100.percent).padding(top: 12.vp, bottom: 6.vp)
+                Row { this.slotBadge(true, -1); Text("占用").fontSize(12.vp).margin(left: 5.vp) }
+                Row { this.slotBadge(false, -1); Text("空闲").fontSize(12.vp).margin(left: 5.vp) }.margin(left: 18.vp)
+            }.width(100.percent).justifyContent(FlexAlign.Center).margin(top: 8.vp)
+
+            Text(this.status).fontSize(11.vp).fontColor(0xFF65738A).margin(top: 7.vp).id("emptyClassroomStatus")
+
             Scroll {
                 Column {
-                    ForEach(this.rooms, itemGenerator: {
-                        item: EmptyClassroomData, _: Int64 =>
-                            if (this.filter == "" || item.name.contains(this.filter)) {
+                    ForEach(this.rooms, itemGenerator: { item: EmptyClassroomData, _: Int64 =>
+                        if (this.filter == "" || item.name.contains(this.filter)) {
                             Row {
-                                Text(item.name).layoutWeight(2).fontSize(13.vp).maxLines(2)
+                                Text(item.name).width(65.vp).fontSize(11.vp).maxLines(2)
                                 Row {
-                                    ForEach(item.isUsed,
-                                    itemGenerator: {
-                                        used: Bool, index: Int64 => Text("${index + 1}")
-                                        .width(23.vp)
-                                        .height(23.vp)
-                                        .fontSize(10.vp)
-                                        .fontColor(if (used) {
-                                            0xFFFFFFFF
-                                        } else {
-                                            0xFF46699D
-                                        })
-                                        .backgroundColor(if (used) {
-                                            0xFF46699D
-                                        } else {
-                                            0xFFFFFFFF
-                                        })
-                                        .border(width: 1.vp, color: 0xFF46699D)
-                                        .borderRadius(5.vp)
-                                        .margin(left: 2.vp)
-                                    })
-                                }.layoutWeight(5)
-                            }.width(100.percent).padding(top: 8.vp, bottom: 8.vp).id("emptyClassroomRow")
+                                    ForEach(item.isUsed, itemGenerator: { used: Bool, index: Int64 => this.slotBadge(used, index) })
+                                }.layoutWeight(1).justifyContent(FlexAlign.SpaceBetween)
+                            }
+                                .width(100.percent)
+                                .height(34.vp)
+                                .id("emptyClassroomRow")
                         }
                     })
-                }.width(100.percent)
-            }.width(100.percent).layoutWeight(1).id("emptyClassroomMatrix")
-        }.width(100.percent).height(100.percent).padding(18.vp).alignItems(HorizontalAlign.Start)
+                    if (!this.loading && this.rooms.size == 0) {
+                        Text("暂无教室数据").fontSize(14.vp).fontColor(0xFF7A8797).margin(top: 32.vp)
+                    }
+                }.width(100.percent).alignItems(HorizontalAlign.Start)
+            }.width(100.percent).layoutWeight(1).margin(top: 5.vp).align(Alignment.TopStart).id("emptyClassroomMatrix")
+        }
+            .width(100.percent)
+            .height(100.percent)
+            .padding(left: 18.vp, right: 18.vp, top: 16.vp, bottom: 8.vp)
+            .alignItems(HorizontalAlign.Start)
+            .backgroundColor(0xFFF7F9FC)
     }
 }

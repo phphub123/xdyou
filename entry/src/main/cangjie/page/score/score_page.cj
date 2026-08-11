@@ -13,6 +13,9 @@ public class ScorePage {
     @State var status: String = "刷新以获取真实成绩。"
     @State var scores: ArrayList<ScoreItem> = ArrayList<ScoreItem>()
     let controller = ScoreController()
+    protected override func aboutToAppear(): Unit {
+        if (this.scores.size == 0 && !this.loading) { this.refresh() }
+    }
     func refresh(): Unit {
         this.loading = true
         this.controller.reloadScores({

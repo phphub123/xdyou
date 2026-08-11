@@ -174,8 +174,8 @@ public class ClassAttendancePage {
         }
         .width(100.percent)
         .height(100.percent)
-        .padding(18.vp)
-        .backgroundColor(0xFFF7F9FC)
+        .padding(left: 16.vp, right: 16.vp, top: 12.vp, bottom: 8.vp)
+        .backgroundColor(0xFFF6F6FE)
         .alignItems(HorizontalAlign.Start)
     }
 
@@ -244,41 +244,24 @@ public class ClassAttendancePage {
     func courseList() {
         Scroll {
             Column {
-                if (this.ineligible.size > 0) {
-                    Text("不合格")
-                        .fontSize(18.vp)
-                        .fontWeight(FontWeight.Bold)
-                        .margin(top: 14.vp)
-                        .id("attendanceGroupIneligible")
+                if (this.courses.size > 0) {
+                    Row {
+                        Text("●").fontSize(13.vp).fontColor(0xFF476FA9).margin(right: 7.vp)
+                        Text("未知")
+                            .fontSize(18.vp)
+                            .fontWeight(FontWeight.Bold)
+                            .id("attendanceGroupUnknown")
+                    }
+                    .width(100.percent)
+                    .margin(top: 14.vp, bottom: 2.vp)
                 }
-                this.courseCards(this.ineligible)
 
-                if (this.warning.size > 0) {
-                    Text("预警")
-                        .fontSize(18.vp)
-                        .fontWeight(FontWeight.Bold)
-                        .margin(top: 14.vp)
-                        .id("attendanceGroupWarning")
-                }
-                this.courseCards(this.warning)
-
-                if (this.eligible.size > 0) {
-                    Text("正常")
-                        .fontSize(18.vp)
-                        .fontWeight(FontWeight.Bold)
-                        .margin(top: 14.vp)
-                        .id("attendanceGroupEligible")
-                }
-                this.courseCards(this.eligible)
-
-                if (this.unknown.size > 0) {
-                    Text("未知")
-                        .fontSize(18.vp)
-                        .fontWeight(FontWeight.Bold)
-                        .margin(top: 14.vp)
-                        .id("attendanceGroupUnknown")
-                }
-                this.courseCards(this.unknown)
+                ForEach(
+                    this.courses,
+                    itemGenerator: {
+                        course: ClassAttendance, index: Int64 => this.courseCard(course, index)
+                    }
+                )
             }
             .width(100.percent)
         }
@@ -286,83 +269,51 @@ public class ClassAttendancePage {
         .layoutWeight(1)
         .scrollBar(BarState.Auto)
     }
-
     @Builder
-    func courseCards(items: ArrayList<ClassAttendance>) {
-        ForEach(
-            items,
-            itemGenerator: {
-                course: ClassAttendance, _: Int64 => AttendanceCourseCard(
-                    course: course,
-                    color: this.statusColor(course),
-                    onOpen: { => this.openDetail(this.indexOf(course)) }
-                )
-            }
-        )
-    }
-}
-
-@Component
-public class AttendanceCourseCard {
-    let course: ClassAttendance
-    let color: UInt32
-    let onOpen: () -> Unit
-
-    func build() {
+    func courseCard(course: ClassAttendance, index: Int64) {
         Column {
             Row {
-                Text(this.course.courseName)
-                    .fontSize(17.vp)
-                    .fontWeight(FontWeight.Bold)
+                Text(course.courseName)
+                    .fontSize(14.vp)
+                    .fontWeight(FontWeight.Medium)
+                    .fontColor(0xFFFFFFFF)
                     .layoutWeight(1)
-                Text(this.course.statusText())
-                    .fontSize(13.vp)
-                    .fontColor(this.color)
+                    .maxLines(1)
+                Text(course.statusText())
+                    .fontSize(11.vp)
+                    .fontColor(0xFFFFFFFF)
             }
-            .width(100.percent)
+                .width(100.percent)
+                .height(36.vp)
+                .padding(left: 12.vp, right: 10.vp)
+                .backgroundColor(this.statusColor(course))
 
-            Text(this.course.className)
-                .fontSize(12.vp)
-                .fontColor(0xFF75829A)
-                .margin(top: 4.vp)
-
-            Row {
-                Text("到课率 ${this.course.attendanceRate}")
-                    .fontSize(13.vp)
-                    .layoutWeight(1)
-                Text("签到 ${this.course.checkInCount}/${this.course.requiredCheckIn}")
-                    .fontSize(13.vp)
-                    .layoutWeight(1)
-                Text("旷课 ${this.course.absenceCount}")
-                    .fontSize(13.vp)
-                    .layoutWeight(1)
+            Column {
+                Text(course.className)
+                    .fontSize(11.vp)
+                    .fontColor(0xFF65738A)
+                Row {
+                    Text("签到次数　${course.checkInCount}").fontSize(11.vp).layoutWeight(1)
+                    Text("应签　${course.requiredCheckIn}").fontSize(11.vp).layoutWeight(1)
+                }.width(100.percent).margin(top: 6.vp)
+                Row {
+                    Text("最近状态　${course.attendanceRate}").fontSize(11.vp).layoutWeight(1)
+                    Text("旷课　${course.absenceCount}").fontSize(11.vp).layoutWeight(1)
+                }.width(100.percent).margin(top: 5.vp)
+                Text("请假：事假 ${course.personalLeave} / 病假 ${course.sickLeave} / 公假 ${course.officialLeave}")
+                    .fontSize(10.vp).fontColor(0xFF65738A).margin(top: 5.vp)
+                Text("学习进度　任务 ${course.taskProgress} / 作业 ${course.homeworkProgress} / 考试 ${course.examProgress}")
+                    .fontSize(10.vp).fontColor(0xFF65738A).margin(top: 4.vp)
             }
-            .width(100.percent)
-            .margin(top: 10.vp)
-
-            Text(
-                "请假：事假 ${this.course.personalLeave} · " +
-                "病假 ${this.course.sickLeave} · 公假 ${this.course.officialLeave}"
-            )
-            .fontSize(12.vp)
-            .fontColor(0xFF65738A)
-            .margin(top: 7.vp)
-
-            Text(
-                "任务点 ${this.course.taskProgress} · " +
-                "作业 ${this.course.homeworkProgress} · 考试 ${this.course.examProgress}"
-            )
-            .fontSize(12.vp)
-            .fontColor(0xFF65738A)
-            .margin(top: 4.vp)
+                .width(100.percent)
+                .padding(left: 12.vp, right: 12.vp, top: 8.vp, bottom: 10.vp)
+                .alignItems(HorizontalAlign.Start)
         }
-        .width(100.percent)
-        .padding(14.vp)
-        .margin(top: 9.vp)
-        .backgroundColor(0xFFFFFFFF)
-        .border(width: 2.vp, color: this.color)
-        .borderRadius(12.vp)
-        .onClick({ _ => this.onOpen() })
-        .id("attendanceCourseCard")
+            .width(100.percent)
+            .margin(top: 8.vp)
+            .backgroundColor(0xFFF0F1F8)
+            .borderRadius(9.vp)
+            .onClick({ _ => this.openDetail(this.indexOf(course)) })
+            .id("attendanceCourseCard_${index}")
     }
 }
