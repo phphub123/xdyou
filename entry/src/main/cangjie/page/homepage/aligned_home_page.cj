@@ -62,9 +62,9 @@ public class AlignedHomePage {
                 } else if (this.selected == 0 && this.homeFeature == 5) {
                     DormWaterPage(onBack: {=> this.homeFeature = 0})
                 } else if (this.selected == 0 && this.homeFeature == 6) {
-                    ScorePage()
+                    ScorePage(onBack: {=> this.homeFeature = 0})
                 } else if (this.selected == 0 && this.homeFeature == 7) {
-                    ExamPage()
+                    ExamPage(onBack: {=> this.homeFeature = 0})
                 } else if (this.selected == 0 && this.homeFeature == 8) {
                     ClassTablePage(onBack: {=> this.homeFeature = 0})
                 } else if (this.selected == 0 && this.homeFeature == 9) {

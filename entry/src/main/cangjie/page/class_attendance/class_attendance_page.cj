@@ -137,17 +137,16 @@ public class ClassAttendancePage {
         return if (this.selectedIndex >= 0) {
             "${this.selectedCourse().courseName} · 签到明细"
         } else {
-            "课堂考勤"
+            "考勤查询"
         }
     }
 
     @Builder
     func headerTrailing() {
         if (this.selectedIndex < 0) {
-            Button("刷新")
-                .height(40.vp)
-                .onClick({ _ => this.reload() })
-                .id("attendanceRefresh")
+            Button("↻").width(38.vp).height(38.vp).fontSize(23.vp)
+                .fontColor(0xFF344054).buttonStyle(ButtonStyleMode.Textual).backgroundColor(Color.Transparent)
+                .onClick({ _ => this.reload() }).id("attendanceRefresh")
         }
     }
 
@@ -160,11 +159,13 @@ public class ClassAttendancePage {
                 trailing: this.headerTrailing
             )
 
-            Text(this.status)
-                .fontSize(12.vp)
-                .fontColor(0xFF65738A)
-                .margin(top: 8.vp)
-                .id("attendanceStatus")
+            if (this.loading || !this.status.startsWith("共 ")) {
+                Text(this.status)
+                    .fontSize(11.vp)
+                    .fontColor(0xFF65738A)
+                    .margin(top: 7.vp)
+                    .id("attendanceStatus")
+            }
 
             if (this.selectedIndex >= 0) {
                 this.detailList()

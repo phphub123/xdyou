@@ -117,3 +117,20 @@
 - Build diagnosis: the first timetable macro failure was analyzed with `build_analyzer.py`; the local builder expression was simplified before rebuilding instead of repeating the same command unchanged.
 - Runtime verification: final single-emulator-ABI build reported `BUILD SUCCESSFUL in 1 min 21 s 333 ms`; overwrite install, cold launch, stable-id tree checks, screenshots and target Hilog passed on `127.0.0.1:5557`.
 - Adopted result: 12 real empty rooms, 34 real timetable arrangements and 57 real Chaoxing attendance rows render without mock data. Attendance semester fallback and UI evidence are documented in `evidence/campus-query-live-data-2026-08-11.md`.
+
+## 2026-08-11 — academic and campus UI alignment follow-up
+
+- Skills: `harmonyos-cangjie-dev`, `cangjie-harmonyos-knowledge`, and `harmonyos-build-run-diagnose`; the workflow files and `cangjie-essentials.md` were read before the change.
+- Required commands: `cjdocs.py --config .\cjdocs.toml doctor` and query `ArkUI Button TextInput state onClick`; both returned `OperationalError: unable to open database file`.
+- Raw fallback refs read in full: `cj-button-picker-textpicker.md` and `cj-universal-attribute-location.md`. Adopted `TextPicker(range, selected)`, non-looping `onChange`, and absolute `position(x, y)` for the schedule canvas.
+- Source/UI reads: score, exam, attendance, empty-classroom and class-table Flutter page/model/controller chains, plus the supplied paired screenshots.
+- Build diagnosis: the first build failed because `std.collection.*` and ArkUI both exported `Stack`; `build_analyzer.py` was run, imports were narrowed to `std.collection.ArrayList`, then the build passed instead of repeating the same error.
+- Runtime: single-emulator-ABI HAP installed on `127.0.0.1:5557`; stable IDs verified score filters/cards, all exam groups, 57-row attendance, empty-classroom picker controls, and the class-table time grid. Evidence: `evidence/ui-alignment-academic-campus-2026-08-11.md`.
+
+## 2026-08-11 — textual page-header icon correction
+
+- Skills: `harmonyos-cangjie-dev` and `cangjie-harmonyos-knowledge`.
+- Query: `ArkUI Button transparent backgroundColor Color Transparent button style`; configured index returned `OperationalError: unable to open database file`.
+- Raw refs read in full: `cj-button-picker-button.md` and `cj-universal-attribute-background.md`. The Button default is `Emphasized`; `ButtonStyleMode.Textual` is the documented no-background style and `Color.Transparent` is the documented transparent resource color.
+- Adopted: shared back plus score/exam/attendance/empty-classroom/class-table header actions now use textual style and `Color.Transparent` instead of integer `0x00000000`, which rendered as black emphasized circles on the emulator.
+- Validation for this focused change is delegated to the user's requested local DevEco build; no build or Git commit was run in this turn.

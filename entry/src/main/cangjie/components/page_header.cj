@@ -16,13 +16,15 @@ public class PageHeader {
 
     func build() {
         Row {
-            Button("‹").width(44.vp).height(40.vp).onClick({ _ => this.onBack() }).id(this.backId)
+            Button("←").width(38.vp).height(38.vp).fontSize(23.vp)
+                .fontColor(0xFF20242B).buttonStyle(ButtonStyleMode.Textual).backgroundColor(Color.Transparent)
+                .onClick({ _ => this.onBack() }).id(this.backId)
             if (this.titleId == "") {
-                Text(this.title).fontSize(24.vp).fontWeight(FontWeight.Bold).layoutWeight(1).margin(left: 8.vp)
+                Text(this.title).fontSize(22.vp).fontWeight(FontWeight.Medium).layoutWeight(1).margin(left: 8.vp)
             } else {
-                Text(this.title).fontSize(24.vp).fontWeight(FontWeight.Bold).layoutWeight(1).margin(left: 8.vp).id(this.titleId)
+                Text(this.title).fontSize(22.vp).fontWeight(FontWeight.Medium).layoutWeight(1).margin(left: 8.vp).id(this.titleId)
             }
             this.trailing()
-        }.width(100.percent)
+        }.width(100.percent).height(44.vp)
     }
 }

@@ -27,9 +27,9 @@ public class AcademicHub {
             if (this.tab == 0) {
                 ClassTablePage(onBack: {=> ()})
             } else if (this.tab == 1) {
-                ScorePage()
+                ScorePage(onBack: {=> this.tab = 0})
             } else if (this.tab == 2) {
-                ExamPage()
+                ExamPage(onBack: {=> this.tab = 0})
             } else if (this.tab == 4) {
                 CustomClassPage(onBack: {=> this.tab = 0})
             } else {
