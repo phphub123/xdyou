@@ -42,3 +42,5 @@
 **/__pycache__/
 *.pyc
 /entry/cjpm.toml
+
+/.claude
