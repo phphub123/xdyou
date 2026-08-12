@@ -5,6 +5,7 @@ import ohos_app_cangjie_entry.model.xidian_ids.*
 import ohos_app_cangjie_entry.repository.xidian_ids.*
 
 public class SchoolCardController {
+    public static var cachedBalance: String = ""
     private let session = SchoolCardSession()
     private var loading = false
     public func authorizeWeb(raw: String, cookies: String, failure: (String) -> Unit): Bool {
@@ -15,7 +16,7 @@ public class SchoolCardController {
     public func overview(success: (SchoolCardOverview) -> Unit, failure: (String) -> Unit): Unit {
         if (this.loading) { return }
         this.loading = true
-        this.session.getOverview({ value => this.loading = false; success(value) },
+        this.session.getOverview({ value => this.loading = false; SchoolCardController.cachedBalance = value.balance; success(value) },
             { message => this.loading = false; failure(message) })
     }
 
