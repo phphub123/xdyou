@@ -143,3 +143,12 @@
 - Raw fallback refs read: `API/NetworkKit/cj-apis-net-http.md` (`HttpRequestOptions`, `HttpResponse`, `HeadersReceive`) and `Guide/network/cj-http-request.md`. Adopted intermediate response-header capture because SDK 23 auto-follows redirects and exposes no final URL.
 - Implemented: IDS-authenticated energy OAuth/signature/AES/meter history chain; IDS-Chaoxing-OPAC JWT loan-list chain; campus-card redirect Cookie/OpenID recovery and date-range transaction fallback; real summaries on the campus home; source-shaped preliminary detail UIs.
 - Validation: direct x86_64 `cjpm build` passed twice after the stable compiler errors were repaired. Full Hvigor packaging could not be rerun because its external cache symlink requires a fresh sandbox escalation; no live-data PASS is claimed until the user builds/runs with the retained real session.
+
+## 2026-08-12 service SSO cookie repair
+
+- Skills: `harmonyos-cangjie-dev`, `cangjie-harmonyos-knowledge`, `cangjie-core-reference`, `harmonyos-build-run-diagnose`.
+- RAG commands: `cjdocs.py doctor` and query `ArkWeb WebCookieManager configCookie fetchCookie Cookie SSO redirect` were attempted; the index failed with `OperationalError: unable to open database file`, so the packaged raw ArkWeb reference was read instead.
+- Reference: `.agents/skills/cangjie-harmonyos-knowledge/rag/docs/API/ArkWeb/cj-apis-webview.md`, `configCookie(String,String,Bool)`; adopted conclusion: seed each saved IDS cookie before Web component loading and keep service authorization values memory-only.
+- Implementation: preserve every cookie pair from NetworkKit/Web cookie text, ignore cookie attributes, pass merged cookies into energy signed requests, and pass ArkWeb payload together with current URL so redirect authorization values are parsed.
+- Verification: `assembleApp --no-daemon` completed with `BUILD SUCCESSFUL`; install/start on x86_64 emulator succeeded. Runtime inspection established that the energy service is externally restricted when the HarmonyOS emulator is not on the campus network; live-value acceptance remains `BLOCKED_EXTERNAL` in that network condition.
+- Evidence: `acceptance/runtime/2026-08-12-service-auth/ids-cookie-seed/` and `acceptance/runtime/2026-08-12-service-auth/payload-code-final/`. Files contain component trees only; no cookies, tokens, QR payloads, or response bodies were saved.

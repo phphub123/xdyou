@@ -101,9 +101,15 @@ public class LibrarySession {
     func mergeAuthCookies(base: String, raw: String): String {
         let values = ArrayList<String>()
         for (pair in Regex(";").split(base)) { this.upsertAuthCookie(values, pair.trimAscii()) }
-        for (line in Regex("[\\r\\n,]+").split(raw)) { let fields=Regex(";").split(line); if(fields.size>0){this.upsertAuthCookie(values,fields[0].trimAscii())} }
+        for (line in Regex("[\\r\\n,]+").split(raw)) {
+            let columns=Regex("\\t").split(line)
+            if(columns.size>=7){this.upsertAuthCookie(values,"${columns[columns.size-2]}=${columns[columns.size-1]}");continue}
+            let fields=Regex(";").split(line);var index:Int64=0
+            while(index<fields.size){let pair=fields[index].trimAscii();let parts=Regex("=").split(pair);let name=if(parts.size>0){parts[0].toAsciiLower()}else{""};if(index==0||!this.isAuthCookieAttribute(name)){this.upsertAuthCookie(values,pair)};index+=1}
+        }
         var result=""; for(item in values){if(result!=""){result+="; "};result+=item};return result
     }
+    func isAuthCookieAttribute(name:String):Bool{return name=="path"||name=="domain"||name=="expires"||name=="max-age"||name=="samesite"||name=="secure"||name=="httponly"||name=="priority"||name=="partitioned"}
     func upsertAuthCookie(values:ArrayList<String>,pair:String):Unit{if(!pair.contains("=")){return};let fields=Regex("=").split(pair);if(fields.size==0||fields[0]==""){return};let prefix=fields[0]+"=";var i:Int64=0;while(i<values.size){if(values[i].startsWith(prefix)){values[i]=pair;return};i+=1};values.add(pair)}
     func authHeader(headers:HashMap<String,String>,name:String):String{for((key,value) in headers){if(key.toAsciiLower()==name.toAsciiLower()){return value}};return ""}
     func jwtFrom(value:String):String {

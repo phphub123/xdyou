@@ -456,7 +456,7 @@ public class AlignedCampusPage {
                 url: "https://xxcapp.xidian.edu.cn/uc/api/oauth/index?redirect=https://ignypt.xidian.edu.cn/revenueH5/login?opcode=MPAY%26appid=200260318155520600%26state=12312312312312%26qrcode=0",
                 cookieUrl: "https://ignypt.xidian.edu.cn",
                 stableId: "homeEnergyAuthWeb",
-                onReady: { url: String, payload: String, cookies: String => this.loadEnergyWeb(url, cookies) },
+                onReady: { url: String, payload: String, cookies: String => this.loadEnergyWeb(url + "|" + payload, cookies) },
                 onFailure: { message: String => this.energyValue = "电量信息暂不可用"; this.energyStatus = message }
             )
             }

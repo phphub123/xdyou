@@ -44,12 +44,27 @@ public class SchoolCardSession {
         let values = ArrayList<String>()
         for (pair in Regex(";").split(base)) { this.upsertCookie(values, pair.trimAscii()) }
         for (line in Regex("[\\r\\n,]+").split(raw)) {
-            let fields = Regex(";").split(line)
-            if (fields.size > 0) { this.upsertCookie(values, fields[0].trimAscii()) }
+            let columns = Regex("\\t").split(line)
+            if (columns.size >= 7) {
+                this.upsertCookie(values, "${columns[columns.size - 2]}=${columns[columns.size - 1]}")
+                continue
+            }
+            let fields = Regex(";").split(line); var index: Int64 = 0
+            while (index < fields.size) {
+                let pair = fields[index].trimAscii(); let parts = Regex("=").split(pair)
+                let name = if (parts.size > 0) { parts[0].toAsciiLower() } else { "" }
+                if (index == 0 || !this.isCookieAttribute(name)) { this.upsertCookie(values, pair) }
+                index += 1
+            }
         }
         var result = ""
         for (item in values) { if (result != "") { result += "; " }; result += item }
         return result
+    }
+    func isCookieAttribute(name: String): Bool {
+        return name == "path" || name == "domain" || name == "expires" ||
+            name == "max-age" || name == "samesite" || name == "secure" ||
+            name == "httponly" || name == "priority" || name == "partitioned"
     }
 
     func upsertCookie(values: ArrayList<String>, pair: String): Unit {

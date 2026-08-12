@@ -46,9 +46,25 @@ public class EnergySession {
         let values = ArrayList<String>()
         for (pair in Regex(";").split(base)) { this.upsert(values, pair.trimAscii()) }
         for (line in Regex("[\\r\\n,]+").split(raw)) {
-            let pieces = Regex(";").split(line); if (pieces.size > 0) { this.upsert(values, pieces[0].trimAscii()) }
+            let columns = Regex("\\t").split(line)
+            if (columns.size >= 7) {
+                this.upsert(values, "${columns[columns.size - 2]}=${columns[columns.size - 1]}")
+                continue
+            }
+            let pieces = Regex(";").split(line); var index: Int64 = 0
+            while (index < pieces.size) {
+                let pair = pieces[index].trimAscii(); let fields = Regex("=").split(pair)
+                let name = if (fields.size > 0) { fields[0].toAsciiLower() } else { "" }
+                if (index == 0 || !this.isCookieAttribute(name)) { this.upsert(values, pair) }
+                index += 1
+            }
         }
         var result = ""; for (item in values) { if (result != "") { result += "; " }; result += item }; return result
+    }
+    func isCookieAttribute(name: String): Bool {
+        return name == "path" || name == "domain" || name == "expires" ||
+            name == "max-age" || name == "samesite" || name == "secure" ||
+            name == "httponly" || name == "priority" || name == "partitioned"
     }
     func upsert(values: ArrayList<String>, pair: String): Unit {
         if (!pair.contains("=")) { return }; let pieces = Regex("=").split(pair)
@@ -136,6 +152,7 @@ public class EnergySession {
                 if (timestamp == "" || signature == "") { failure("电量签名响应缺少必要字段。"); return }
                 let encrypted = IDSPasswordCipher.encryptServicePayload(data, EnergySession.key, EnergySession.iv)
                 let request = createHttp(); let headers = HashMap<String, String>()
+                if (this.cookieHeader != "") { headers["Cookie"] = this.cookieHeader }
                 headers["timestamp"] = timestamp; headers["signature"] = signature; headers["OpCode"] = "MPAY"
                 headers["OrgId"] = ""; headers["RequestID"] = ""; headers["Content-Type"] = "application/json"
                 let target = if (isGet) { url + "?content=" + this.formEncode(this.formEncode(encrypted)) } else { url }
