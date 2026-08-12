@@ -129,3 +129,9 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Learning/Chaoxing SSO now preserves returned cookies and does not force a manual Host when following the IDS service ticket. Attendance probes the server-provided semester list: the current summer semester is genuinely empty, while the all-semester table returns and renders 57 real rows.
 - Attendance cards were moved to direct `@State courses` iteration because a parameterized Builder retained its first empty list snapshot. Visible cards, refresh, grouping and explicit missing-detail-ID errors are verified on the emulator.
 - Final single-emulator-ABI HAP built, installed and cold-launched successfully. Paired captures are under `acceptance/runtime/2026-08-11-campus-query-live/`; pixel-perfect Phase F alignment and Chaoxing detail-ID recovery remain `IN_PROGRESS`.
+## Live energy, library borrow and campus-card wiring (2026-08-11)
+
+- Added the source_2.0 energy OAuth/signature/AES meter chain, authenticated OPAC JWT loan list, and campus-card redirect Cookie/OpenID recovery without mock business data.
+- Energy, borrow status and card transactions received preliminary source-aligned pages; campus home now renders their controller summaries.
+- x86_64 direct Cangjie compilation passed twice. Full HAP/runtime and genuine value assertions remain pending the user's local DevEco build because Hvigor cache symlink creation was denied by the managed sandbox.
+- Evidence: `evidence/live-energy-library-card-2026-08-11.md`.

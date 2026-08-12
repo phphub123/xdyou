@@ -7,6 +7,9 @@ import ohos_app_cangjie_entry.repository.xidian_ids.*
 public class SchoolCardController {
     private let session = SchoolCardSession()
     private var loading = false
+    public func authorizeWeb(raw: String, cookies: String, failure: (String) -> Unit): Bool {
+        return this.session.authorizeFromWeb(raw, cookies, failure)
+    }
 
     // 获取校园卡账户概览信息（防止重复请求）
     public func overview(success: (SchoolCardOverview) -> Unit, failure: (String) -> Unit): Unit {

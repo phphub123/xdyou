@@ -21,12 +21,23 @@ public class SchoolCardPage {
     @State var records: ArrayList<PaidRecord> = ArrayList<PaidRecord>()
     @State var qrData: String = ""
     @State var showQr: Bool = false
+    var authorized: Bool = false
 
     protected override func aboutToAppear(): Unit {
-        let now = DateTime.now()
-        this.beginDate = now.format("yyyy-MM-01")
-        this.endDate = now.format("yyyy-MM-dd")
+        this.usePreviousMonth()
         this.refreshAll()
+    }
+
+    func usePreviousMonth(): Unit {
+        let parts = DateTime.now().format("yyyy-MM-dd").split("-")
+        try {
+            var year = Int64.parse(parts[0]); var month = Int64.parse(parts[1])
+            if (month == 1) { year -= 1; month = 12 } else { month -= 1 }
+            let days = if (month == 2) { if (year % 4 == 0) { 29 } else { 28 } }
+                else if (month == 4 || month == 6 || month == 9 || month == 11) { 30 } else { 31 }
+            let monthText = if (month < 10) { "0${month}" } else { month.toString() }
+            this.beginDate = "${year}-${monthText}-01"; this.endDate = "${year}-${monthText}-${days}"
+        } catch (_) { this.beginDate = DateTime.now().format("yyyy-MM-01"); this.endDate = DateTime.now().format("yyyy-MM-dd") }
     }
 
     protected override func aboutToDisappear(): Unit {
@@ -36,6 +47,7 @@ public class SchoolCardPage {
     }
 
     func refreshAll(): Unit {
+        if (!this.authorized) { this.loading = false; this.status = "正在完成校园卡认证…"; return }
         this.loading = true
         this.status = "正在查询校园卡余额…"
         this.controller.overview({
@@ -47,7 +59,8 @@ public class SchoolCardPage {
         }, {
             message => launch {
                 this.loading = false
-                this.status = message
+                this.status = "余额暂不可用，继续查询流水：${message}"
+                this.loadRecords()
             }
         })
     }
@@ -129,7 +142,7 @@ public class SchoolCardPage {
         Stack {
             Column {
                 PageHeader(
-                    title: "校园卡",
+                    title: "校园卡流水信息",
                     onBack: this.onBack,
                     backId: "schoolCardBack",
                     trailing: this.headerTrailing
@@ -210,6 +223,13 @@ public class SchoolCardPage {
                 .padding(18.vp)
                 .backgroundColor(0xFFF7F9FC)
                 .alignItems(HorizontalAlign.Start)
+            ServiceAuthWeb(
+                url: "https://v8scan.xidian.edu.cn/home/openXDOAuth2Page",
+                cookieUrl: "https://v8scan.xidian.edu.cn",
+                stableId: "schoolCardAuthWeb",
+                onReady: { url: String, payload: String, cookies: String => this.authorized = this.controller.authorizeWeb(url + "|" + payload, cookies, { message: String => this.status = message }); if (this.authorized) { this.refreshAll() } },
+                onFailure: { message: String => this.loading = false; this.status = message }
+            )
             if (this.showQr) {
                 Column {
                     Text("校园卡实时付款码").fontSize(20.vp).fontWeight(FontWeight.Bold)

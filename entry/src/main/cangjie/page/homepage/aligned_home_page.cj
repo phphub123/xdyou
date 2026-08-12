@@ -5,9 +5,13 @@ import kit.ArkWeb.*
 import ohos.arkui.state_macro_manage.*
 import ohos.business_exception.*
 import ohos.resource.*
+import std.sync.*
+import std.time.*
 import ohos_app_cangjie_entry.repository.*
 import ohos_app_cangjie_entry.repository.xidian_ids.*
 import ohos_app_cangjie_entry.controller.*
+import ohos_app_cangjie_entry.components.*
+import ohos_app_cangjie_entry.components.*
 import ohos_app_cangjie_entry.themes.*
 import ohos_app_cangjie_entry.page.class_attendance.*
 import ohos_app_cangjie_entry.page.classtable.*
@@ -211,11 +215,20 @@ public class AlignedNavItem {
 public class AlignedCampusPage {
     @State var scheduleCount: Int64 = 0
     @State var scheduleStatus: String = "正在加载真实课表"
+    @State var energyValue: String = "正在获取电量信息"
+    @State var energyStatus: String = "正在查询宿舍电量"
+    @State var libraryValue: String = "正在获取借书信息"
+    @State var libraryStatus: String = "正在查询借阅信息"
     @State var schoolCardValue: String = "正在获取校园卡信息"
     @State var schoolCardStatus: String = "正在查询余额"
     let classTableController = ClassTableController()
+    let energyController = EnergyController()
+    let libraryController = LibraryController()
     let schoolCardController = SchoolCardController()
     let previewMode: Bool
+    @State var energyAuthStarted: Bool = false
+    @State var libraryAuthStarted: Bool = false
+    @State var cardAuthStarted: Bool = false
     let onSchedule: () -> Unit
     let onScore: () -> Unit
     let onExam: () -> Unit
@@ -242,6 +255,15 @@ public class AlignedCampusPage {
             this.scheduleStatus = "预览数据"
             return
         }
+        Timer.once(Duration.second * 12, { => launch {
+            this.energyAuthStarted = true
+        }})
+        Timer.once(Duration.second * 22, { => launch {
+            this.libraryAuthStarted = true
+        }})
+        Timer.once(Duration.second * 32, { => launch {
+            this.cardAuthStarted = true
+        }})
         AcademicSession().loadCurrentSemester({ semester => launch {
             SessionStore().saveSetting("semester", semester)
             this.classTableController.reloadClassTable(semester, { data => launch {
@@ -249,15 +271,28 @@ public class AlignedCampusPage {
                 this.scheduleStatus = if (data.courses.size == 0) { "本学期暂无课程" } else { "已同步 ${data.courses.size} 条课程安排" }
             } }, { message => launch { this.scheduleStatus = message } })
         } }, { message => launch { this.scheduleStatus = message } })
-        this.schoolCardController.overview({ value => launch {
-            this.schoolCardValue = "余额 ${value.balance} 元"
-            this.schoolCardStatus = "校园卡账户已同步"
-        } }, { message => launch {
-            this.schoolCardValue = "校园卡信息暂不可用"
-            this.schoolCardStatus = message
-        } })
     }
 
+    func loadEnergyWeb(url: String, cookies: String): Unit {
+        this.energyController.reloadEnergyAuthorized(url, cookies, { value => launch {
+            this.energyValue = "余额 ${value.electricityRemain} 度"
+            this.energyStatus = "最后一次读表：${value.lastReadDate}"
+        } }, { message => launch { this.energyValue = "电量信息暂不可用"; this.energyStatus = message } })
+    }
+    func loadLibraryWeb(raw: String, cookies: String): Unit {
+        this.libraryController.borrowsAuthorized(raw, cookies, { values => launch {
+            this.libraryValue = "借书 ${values.size} 本"
+            this.libraryStatus = "待归还 ${values.size} 本书籍"
+        } }, { message => launch { this.libraryValue = "借书信息暂不可用"; this.libraryStatus = message } })
+    }
+    func loadCardWeb(raw: String, cookies: String): Unit {
+        if (!this.schoolCardController.authorizeWeb(raw, cookies, { message =>
+            this.schoolCardValue = "校园卡信息暂不可用"; this.schoolCardStatus = message
+        })) { return }
+        this.schoolCardController.overview({ value => launch {
+            this.schoolCardValue = "余额 ${value.balance} 元"; this.schoolCardStatus = "校园卡账户已同步"
+        } }, { message => launch { this.schoolCardValue = "校园卡信息暂不可用"; this.schoolCardStatus = message } })
+    }
     func build() {
         Column {
             Row {
@@ -339,36 +374,24 @@ public class AlignedCampusPage {
                         .id("homeScheduleCard")
                     AlignedInfoCard(
                         icon: @r(app.media.home_flash),
-                        value: "电量查询",
-                        note: "电费、水费与空调能耗",
+                        value: if (this.previewMode) { "余额 -62.7 度" } else { this.energyValue },
+                        note: if (this.previewMode) { "最后一次读表：2026-08-11" } else { this.energyStatus },
                         showQr: false,
                         onTap: this.onEnergy,
                         testId: "homeEnergyInfo"
                     )
                     AlignedInfoCard(
                         icon: @r(app.media.home_book),
-                        value: if (this.previewMode) {
-                            "借書 1 本"
-                        } else {
-                            "正在獲取借書信息"
-                        },
-                        note: if (this.previewMode) {
-                            "待歸還 1 本書籍"
-                        } else {
-                            "正在查詢信息中"
-                        },
+                        value: if (this.previewMode) { "借书 1 本" } else { this.libraryValue },
+                        note: if (this.previewMode) { "待归还 1 本书籍" } else { this.libraryStatus },
                         showQr: false,
                         onTap: this.onLibrary,
                         testId: "homeLibraryInfo"
                     )
                     AlignedInfoCard(
                         icon: @r(app.media.home_wallet),
-                        value: if (this.previewMode) {
-                            "未登錄"
-                        } else {
-                            "正在獲取校園卡信息"
-                        },
-                        note: "查看餘額、流水與付款碼",
+                        value: if (this.previewMode) { "卡里 0.00 元" } else { this.schoolCardValue },
+                        note: if (this.previewMode) { "查询一卡通流水" } else { this.schoolCardStatus },
                         showQr: true,
                         onTap: this.onSchoolCard,
                         testId: "homeSchoolCard"
@@ -428,6 +451,33 @@ public class AlignedCampusPage {
                     Blank().height(20.vp)
                 }.width(100.percent).padding(left: 16.vp, right: 16.vp, top: 11.vp).alignItems(HorizontalAlign.Start)
             }.width(100.percent).layoutWeight(1).align(Alignment.TopStart)
+            if (this.energyAuthStarted) {
+            ServiceAuthWeb(
+                url: "https://xxcapp.xidian.edu.cn/uc/api/oauth/index?redirect=https://ignypt.xidian.edu.cn/revenueH5/login?opcode=MPAY%26appid=200260318155520600%26state=12312312312312%26qrcode=0",
+                cookieUrl: "https://ignypt.xidian.edu.cn",
+                stableId: "homeEnergyAuthWeb",
+                onReady: { url: String, payload: String, cookies: String => this.loadEnergyWeb(url, cookies) },
+                onFailure: { message: String => this.energyValue = "电量信息暂不可用"; this.energyStatus = message }
+            )
+            }
+            if (this.libraryAuthStarted) {
+            ServiceAuthWeb(
+                url: "https://tyrzfw.chaoxing.com/auth/xidian/cas/init?isLogout=0&refer=https%3A%2F%2Fmfindxidian.libsp.cn%2Ffind%2Fsso%2Flogin%2Fxidian%2F1",
+                cookieUrl: "https://mfindxidian.libsp.cn",
+                stableId: "homeLibraryAuthWeb",
+                onReady: { url: String, payload: String, cookies: String => this.loadLibraryWeb(url + "|" + payload, cookies) },
+                onFailure: { message: String => this.libraryValue = "借书信息暂不可用"; this.libraryStatus = message }
+            )
+            }
+            if (this.cardAuthStarted) {
+            ServiceAuthWeb(
+                url: "https://v8scan.xidian.edu.cn/home/openXDOAuth2Page",
+                cookieUrl: "https://v8scan.xidian.edu.cn",
+                stableId: "homeCardAuthWeb",
+                onReady: { url: String, payload: String, cookies: String => this.loadCardWeb(url + "|" + payload, cookies) },
+                onFailure: { message: String => this.schoolCardValue = "校园卡信息暂不可用"; this.schoolCardStatus = message }
+            )
+            }
         }.width(100.percent).height(100.percent).backgroundColor(ThemePalette.pageBackground(this.darkMode()))
     }
 }

@@ -2,17 +2,28 @@ package ohos_app_cangjie_entry.repository.xidian_ids
 
 import kit.NetworkKit.*
 import ohos.business_exception.*
+import ohos.callback_invoke.*
 import std.collection.*
 import std.regex.*
 import stdx.encoding.json.*
 import ohos_app_cangjie_entry.model.xidian_ids.*
 import ohos_app_cangjie_entry.repository.*
 
+class SchoolCardHeaderCapture {
+    var cookies: String = ""
+    var location: String = ""
+}
+class SchoolCardHeadersCb <: Callback1Argument<HashMap<String, String>> {
+    let action: (HashMap<String, String>) -> Unit
+    public init(action: (HashMap<String, String>) -> Unit) { this.action = action }
+    public open func invoke(err: ?BusinessException, value: HashMap<String, String>): Unit { this.action(value) }
+}
 // Real campus-card requests only. OpenID, payment QR data and response bodies stay in memory.
 public class SchoolCardSession {
     static let baseUrl = "https://v8scan.xidian.edu.cn"
     private var openid: String = ""
     private var serviceCookie: String = ""
+    private var lastRedirectLocation: String = ""
 
     func sessionCookie(): String {
         let snapshot = SessionStore().restore()
@@ -58,6 +69,12 @@ public class SchoolCardSession {
         success: (UInt32, HashMap<String, String>, String, String) -> Unit,
         failure: (String) -> Unit): Unit {
         let client = createHttp()
+        let captured = SchoolCardHeaderCapture()
+        let callback = SchoolCardHeadersCb({ responseHeaders =>
+            match (this.headerValue(responseHeaders, "location")) { case Some(value) => captured.location = value; case None => () }
+            match (this.headerValue(responseHeaders, "set-cookie")) { case Some(value) => captured.cookies = this.mergeCookies(captured.cookies, value); case None => () }
+        })
+        client.on(HttpRequestEvent.HeadersReceive, callback)
         try {
             let headers = HashMap<String, String>()
             if (cookie != "") { headers["Cookie"] = cookie }
@@ -76,7 +93,8 @@ public class SchoolCardSession {
                         case Some(value) => match (value.result) {
                             case HttpData.StringData(text) =>
                                 let setCookie = match (this.headerValue(value.header, "set-cookie")) { case Some(raw) => raw; case None => "" }
-                                success(value.responseCode, value.header, text, this.mergeCookies(cookie, value.cookies + "\n" + setCookie))
+                                this.lastRedirectLocation = captured.location
+                                success(value.responseCode, value.header, text, this.mergeCookies(cookie, value.cookies + "\n" + setCookie + "\n" + captured.cookies))
                             case _ => failure("Campus-card service returned a non-text response.")
                         }
                         case None => failure("Campus-card service returned no response.")
@@ -118,10 +136,18 @@ public class SchoolCardSession {
                     case None => failure("Campus-card SSO redirect did not include a Location header.")
                 }
             } else if (code == 200) { success(body, merged) }
+            else if (this.openIdFrom(this.lastRedirectLocation) != "") { success("", merged) }
             else { failure("Campus-card service returned HTTP ${code}.") }
         }, failure)
     }
 
+    func openIdFrom(value: String): String {
+        let normalized = value.replace("%3F", "?").replace("%3f", "?").replace("%26", "&").replace("%3D", "=").replace("%3d", "=")
+        match (Regex(#"(?:[?&])openid=([^&#\"']+)"#, RegexFlag.IgnoreCase).find(normalized, group: true)) {
+            case Some(found) => found.matchString(1)
+            case None => ""
+        }
+    }
     func attribute(tag: String, name: String): String {
         let pattern = Regex("\\b${name}\\s*=\\s*[\\\"']([^\\\"']*)[\\\"']", RegexFlag.IgnoreCase)
         match (pattern.find(tag, group: true)) { case Some(found) => return found.matchString(1); case None => return "" }
@@ -130,9 +156,11 @@ public class SchoolCardSession {
     func ensureOpenId(success: () -> Unit, failure: (String) -> Unit): Unit {
         if (this.openid != "" && this.serviceCookie != "") { success(); return }
         try {
-            let cookie = this.sessionCookie()
+            let cookie = this.mergeCookies(this.sessionCookie(), this.serviceCookie)
             this.follow(SchoolCardSession.baseUrl + "/home/openXDOAuth2Page", cookie, 0, { html, merged =>
                 let inputPattern = Regex(#"<input\b[^>]*\bid\s*=\s*[\"']openid[\"'][^>]*>"#, RegexFlag.IgnoreCase)
+                let redirectOpenId = this.openIdFrom(this.lastRedirectLocation)
+                if (redirectOpenId != "") { this.openid = redirectOpenId; this.serviceCookie = merged; success(); return }
                 match (inputPattern.find(html)) {
                     case Some(found) =>
                         let value = this.attribute(found.matchString(), "value")
@@ -170,6 +198,13 @@ public class SchoolCardSession {
         }, failure)
     }
 
+    public func authorizeFromWeb(raw: String, cookie: String, failure: (String) -> Unit): Bool {
+        let value = match (Regex(#"(?:[?&|])openid=([^&#|\"']+)"#, RegexFlag.IgnoreCase).find(raw, group: true)) { case Some(found) => found.matchString(1); case None => this.openIdFrom(raw) }
+        this.serviceCookie = this.mergeCookies(this.sessionCookie(), cookie)
+        if (value == "") { return true }
+        this.openid = value
+        return true
+    }
     public func getPaidStatus(begin: String, end: String,
         success: (ArrayList<PaidRecord>) -> Unit, failure: (String) -> Unit): Unit {
         if (!Regex(#"^[0-9]{4}-[0-9]{2}-[0-9]{2}$"#).matches(begin) ||

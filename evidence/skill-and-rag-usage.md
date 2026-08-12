@@ -134,3 +134,12 @@
 - Raw refs read in full: `cj-button-picker-button.md` and `cj-universal-attribute-background.md`. The Button default is `Emphasized`; `ButtonStyleMode.Textual` is the documented no-background style and `Color.Transparent` is the documented transparent resource color.
 - Adopted: shared back plus score/exam/attendance/empty-classroom/class-table header actions now use textual style and `Color.Transparent` instead of integer `0x00000000`, which rendered as black emphasized circles on the emulator.
 - Validation for this focused change is delegated to the user's requested local DevEco build; no build or Git commit was run in this turn.
+
+## 2026-08-11 — energy, library borrow and campus-card live-data wiring
+
+- Skills: `harmonyos-cangjie-dev`, `cangjie-harmonyos-knowledge`, and `harmonyos-build-run-diagnose`; their workflow files and `cangjie-essentials.md` were read before implementation.
+- Source/UI reads: complete `source_2.0` energy, library-borrow and campus-card controller/model/repository chains plus paired screenshots under `鸿蒙截图/` and `UI真实数据展示截图/`.
+- Required RAG commands: `doctor`, `ArkUI Button TextInput state onClick`, and `NetworkKit HttpRequestOptions redirect maxLimit final URL responseCode cookies`; the configured index returned `OperationalError: unable to open database file`.
+- Raw fallback refs read: `API/NetworkKit/cj-apis-net-http.md` (`HttpRequestOptions`, `HttpResponse`, `HeadersReceive`) and `Guide/network/cj-http-request.md`. Adopted intermediate response-header capture because SDK 23 auto-follows redirects and exposes no final URL.
+- Implemented: IDS-authenticated energy OAuth/signature/AES/meter history chain; IDS-Chaoxing-OPAC JWT loan-list chain; campus-card redirect Cookie/OpenID recovery and date-range transaction fallback; real summaries on the campus home; source-shaped preliminary detail UIs.
+- Validation: direct x86_64 `cjpm build` passed twice after the stable compiler errors were repaired. Full Hvigor packaging could not be rerun because its external cache symlink requires a fresh sandbox escalation; no live-data PASS is claimed until the user builds/runs with the retained real session.
