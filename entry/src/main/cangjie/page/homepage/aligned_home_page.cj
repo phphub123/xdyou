@@ -215,18 +215,16 @@ public class AlignedNavItem {
 public class AlignedCampusPage {
     @State var scheduleCount: Int64 = 0
     @State var scheduleStatus: String = "正在加载真实课表"
-    @State var energyValue: String = "正在获取电量信息"
-    @State var energyStatus: String = "正在查询宿舍电量"
+    @State var energyValue: String = "水电信息需连接校园网"
+    @State var energyStatus: String = "连接校园网后进入详情页刷新"
     @State var libraryValue: String = "正在获取借书信息"
     @State var libraryStatus: String = "正在查询借阅信息"
     @State var schoolCardValue: String = "正在获取校园卡信息"
     @State var schoolCardStatus: String = "正在查询余额"
     let classTableController = ClassTableController()
-    let energyController = EnergyController()
     let libraryController = LibraryController()
     let schoolCardController = SchoolCardController()
     let previewMode: Bool
-    @State var energyAuthStarted: Bool = false
     @State var libraryAuthStarted: Bool = false
     @State var cardAuthStarted: Bool = false
     let onSchedule: () -> Unit
@@ -255,15 +253,20 @@ public class AlignedCampusPage {
             this.scheduleStatus = "预览数据"
             return
         }
-        Timer.once(Duration.second * 12, { => launch {
-            this.energyAuthStarted = true
-        }})
         Timer.once(Duration.second * 22, { => launch {
             this.libraryAuthStarted = true
         }})
         Timer.once(Duration.second * 32, { => launch {
             this.cardAuthStarted = true
         }})
+        if (LibraryController.cachedBorrowCount >= 0) {
+            this.libraryValue = "借书 ${LibraryController.cachedBorrowCount} 本"
+            this.libraryStatus = "待归还 ${LibraryController.cachedBorrowCount} 本书籍"
+        }
+        if (SchoolCardController.cachedBalance != "") {
+            this.schoolCardValue = "卡里 ${SchoolCardController.cachedBalance} 元"
+            this.schoolCardStatus = "查询一卡通流水"
+        }
         AcademicSession().loadCurrentSemester({ semester => launch {
             SessionStore().saveSetting("semester", semester)
             this.classTableController.reloadClassTable(semester, { data => launch {
@@ -273,12 +276,6 @@ public class AlignedCampusPage {
         } }, { message => launch { this.scheduleStatus = message } })
     }
 
-    func loadEnergyWeb(url: String, cookies: String): Unit {
-        this.energyController.reloadEnergyAuthorized(url, cookies, { value => launch {
-            this.energyValue = "余额 ${value.electricityRemain} 度"
-            this.energyStatus = "最后一次读表：${value.lastReadDate}"
-        } }, { message => launch { this.energyValue = "电量信息暂不可用"; this.energyStatus = message } })
-    }
     func loadLibraryWeb(raw: String, cookies: String): Unit {
         this.libraryController.borrowsAuthorized(raw, cookies, { values => launch {
             this.libraryValue = "借书 ${values.size} 本"
@@ -290,7 +287,7 @@ public class AlignedCampusPage {
             this.schoolCardValue = "校园卡信息暂不可用"; this.schoolCardStatus = message
         })) { return }
         this.schoolCardController.overview({ value => launch {
-            this.schoolCardValue = "余额 ${value.balance} 元"; this.schoolCardStatus = "校园卡账户已同步"
+            this.schoolCardValue = "卡里 ${value.balance} 元"; this.schoolCardStatus = "查询一卡通流水"
         } }, { message => launch { this.schoolCardValue = "校园卡信息暂不可用"; this.schoolCardStatus = message } })
     }
     func build() {
@@ -451,15 +448,6 @@ public class AlignedCampusPage {
                     Blank().height(20.vp)
                 }.width(100.percent).padding(left: 16.vp, right: 16.vp, top: 11.vp).alignItems(HorizontalAlign.Start)
             }.width(100.percent).layoutWeight(1).align(Alignment.TopStart)
-            if (this.energyAuthStarted) {
-            ServiceAuthWeb(
-                url: "https://xxcapp.xidian.edu.cn/uc/api/oauth/index?redirect=https://ignypt.xidian.edu.cn/revenueH5/login?opcode=MPAY%26appid=200260318155520600%26state=12312312312312%26qrcode=0",
-                cookieUrl: "https://ignypt.xidian.edu.cn",
-                stableId: "homeEnergyAuthWeb",
-                onReady: { url: String, payload: String, cookies: String => this.loadEnergyWeb(url + "|" + payload, cookies) },
-                onFailure: { message: String => this.energyValue = "电量信息暂不可用"; this.energyStatus = message }
-            )
-            }
             if (this.libraryAuthStarted) {
             ServiceAuthWeb(
                 url: "https://tyrzfw.chaoxing.com/auth/xidian/cas/init?isLogout=0&refer=https%3A%2F%2Fmfindxidian.libsp.cn%2Ffind%2Fsso%2Flogin%2Fxidian%2F1",

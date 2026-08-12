@@ -152,3 +152,11 @@
 - Implementation: preserve every cookie pair from NetworkKit/Web cookie text, ignore cookie attributes, pass merged cookies into energy signed requests, and pass ArkWeb payload together with current URL so redirect authorization values are parsed.
 - Verification: `assembleApp --no-daemon` completed with `BUILD SUCCESSFUL`; install/start on x86_64 emulator succeeded. Runtime inspection established that the energy service is externally restricted when the HarmonyOS emulator is not on the campus network; live-value acceptance remains `BLOCKED_EXTERNAL` in that network condition.
 - Evidence: `acceptance/runtime/2026-08-12-service-auth/ids-cookie-seed/` and `acceptance/runtime/2026-08-12-service-auth/payload-code-final/`. Files contain component trees only; no cookies, tokens, QR payloads, or response bodies were saved.
+
+## 2026-08-12 campus-card AJAX and home summaries
+
+- Skills: `harmonyos-cangjie-dev`, `cangjie-core-reference`, `cangjie-harmonyos-knowledge`, `harmonyos-build-run-diagnose`.
+- RAG doctor/query were attempted and returned `OperationalError: unable to open database file`; fallback references read: packaged NetworkKit `cj-apis-net-http.md` and Cangjie stdx JSON README.
+- Campus-card transactions now send the source application's AJAX request semantics (`Accept`, `Origin`, `Referer`, `X-Requested-With`) and refuse an HTML authentication page before JSON decoding. No response body is logged or persisted.
+- Successful library borrow counts and campus-card balances are cached in process memory only and reused when returning to the campus home. Water/electricity home authentication is no longer started because that service requires campus-network access.
+- Verification: `assembleApp --no-daemon` completed with `BUILD SUCCESSFUL`; live account/device validation is intentionally left to the user for this short turn.

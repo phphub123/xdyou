@@ -93,9 +93,14 @@ public class SchoolCardSession {
         try {
             let headers = HashMap<String, String>()
             if (cookie != "") { headers["Cookie"] = cookie }
-            headers["Accept"] = "text/html,application/json;q=0.9,*/*;q=0.8"
-            headers["Referer"] = SchoolCardSession.baseUrl + "/"
+            let isPost = body != ""
+            headers["Accept"] = if (isPost) { "application/json, text/javascript, */*; q=0.01" } else { "text/html,application/json;q=0.9,*/*;q=0.8" }
+            headers["Referer"] = if (isPost) { SchoolCardSession.baseUrl + "/selftrade/openSelfTrade?openid=${this.openid}" } else { SchoolCardSession.baseUrl + "/" }
             headers["Content-Type"] = "application/json; charset=utf-8"
+            if (isPost) {
+                headers["Origin"] = SchoolCardSession.baseUrl
+                headers["X-Requested-With"] = "XMLHttpRequest"
+            }
             let options = HttpRequestOptions(method: method, header: headers,
                 extraData: HttpData.StringData(body),
                 expectDataType: HttpDataType.StringValue, usingCache: false,
@@ -220,6 +225,15 @@ public class SchoolCardSession {
         this.openid = value
         return true
     }
+    func jsonPayload(raw: String): String {
+        let text = raw.trimAscii()
+        if (text.startsWith("{") && text.endsWith("}")) { return text }
+        match (Regex(#"<pre\b[^>]*>\s*([\s\S]*?\{[\s\S]*\})\s*</pre>"#, RegexFlag.IgnoreCase).find(text, group: true)) {
+            case Some(found) => return found.matchString(1).replace("&quot;", "\"").replace("&amp;", "&")
+            case None => return ""
+        }
+    }
+
     public func getPaidStatus(begin: String, end: String,
         success: (ArrayList<PaidRecord>) -> Unit, failure: (String) -> Unit): Unit {
         if (!Regex(#"^[0-9]{4}-[0-9]{2}-[0-9]{2}$"#).matches(begin) ||
@@ -233,7 +247,9 @@ public class SchoolCardSession {
                     this.serviceCookie = merged
                     if (code != 200) { failure("Campus-card records returned HTTP ${code}."); return }
                     try {
-                        let root = JsonValue.fromStr(text).asObject()
+                        let payload = this.jsonPayload(text)
+                        if (payload == "") { failure("校园卡会话已失效，请重新打开页面完成认证。"); return }
+                        let root = JsonValue.fromStr(payload).asObject()
                         match (root.get("resultData")) {
                             case Some(value) =>
                                 let rows = value.asArray(); let result = ArrayList<PaidRecord>(); var index: Int64 = 0
