@@ -106,8 +106,8 @@ public class AlignedHomePage {
                 }
             }.width(100.percent).layoutWeight(1)
             if (this.homeFeature == 0) {
-            Row {
-                AlignedNavItem(
+                Row {
+                    AlignedNavItem(
                     icon: @r(app.media.nav_school),
                     label: "校園信息",
                     index: 0,
@@ -115,7 +115,7 @@ public class AlignedHomePage {
                     onTap: {=> this.selectPage(0)},
                     stableId: "navTo_home"
                 )
-                AlignedNavItem(
+                    AlignedNavItem(
                     icon: @r(app.media.nav_forum),
                     label: "睿思論壇",
                     index: 1,
@@ -123,7 +123,7 @@ public class AlignedHomePage {
                     onTap: {=> this.selectPage(1)},
                     stableId: "navTo_ruisi"
                 )
-                AlignedNavItem(
+                    AlignedNavItem(
                     icon: @r(app.media.nav_tools),
                     label: "其他功能",
                     index: 2,
@@ -131,7 +131,7 @@ public class AlignedHomePage {
                     onTap: {=> this.selectPage(2)},
                     stableId: "navTo_toolbox"
                 )
-                AlignedNavItem(
+                    AlignedNavItem(
                     icon: @r(app.media.nav_pig),
                     label: "豬圖鑑賞",
                     index: 3,
@@ -139,20 +139,20 @@ public class AlignedHomePage {
                     onTap: {=> this.selectPage(3)},
                     stableId: "navTo_pig"
                 )
-                AlignedNavItem(
+                    AlignedNavItem(
                     icon: @r(app.media.nav_user),
                     label: "設置",
                     index: 4,
                     selectedIndex: this.selected,
                     onTap: {=> this.selectPage(4)},
                     stableId: "navTo_settings"
-                )
-            }
-                .width(100.percent)
-                .height(88.vp)
-                .padding(left: 3.vp, right: 3.vp, top: 5.vp, bottom: 3.vp)
-                .backgroundColor(ThemePalette.navSurface(this.darkMode()))
-                .border(width: 1.vp, color: ThemePalette.border(this.darkMode()))
+                    )
+                }
+                    .width(100.percent)
+                    .height(88.vp)
+                    .padding(left: 3.vp, right: 3.vp, top: 5.vp, bottom: 3.vp)
+                    .backgroundColor(ThemePalette.navSurface(this.darkMode()))
+                    .border(width: 1.vp, color: ThemePalette.border(this.darkMode()))
             }
         }.width(100.percent).height(100.percent).backgroundColor(ThemePalette.pageBackground(this.darkMode()))
     }

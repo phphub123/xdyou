@@ -141,3 +141,16 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Unified all existing `PageHeader` child pages around a source-aligned 48vp bar, 20vp title, SVG back icon, and 40vp transparent action targets.
 - Replaced mixed text-glyph/text-button refresh actions in class table, attendance, exam, score, empty classroom, energy, library, experiment, school network, sport, and campus card with one shared SVG refresh component while retaining stable IDs and real callbacks.
 - Final HAP built, installed and launched on `127.0.0.1:5555`; the homepage-to-empty-classroom scenario passed 3/3 and visually confirmed the final back/refresh header. Evidence: `evidence/subpage-header-ui-final-2026-08-13/` and `evidence/subpage-header-hilog-final-2026-08-13/`.
+
+## Library reference UI alignment (2026-08-13)
+
+- Rebuilt the library page around the reference AppBar/tab structure: text tabs with selected underline, divider, real cover image, paired borrow/due dates, computed due-day emphasis and a fixed bottom borrow summary.
+- Removed the reference-incompatible top-right refresh action; loading/empty/error states retain real authentication and explicit retry behavior. Homepage bottom navigation is now hidden while any homepage child page is open, matching the supplied child-page captures.
+- Final HAP built and installed on `127.0.0.1:5555`; borrow/search tab scenario passed 6/6 and PID `21851` had 0 FATAL. The current emulator lacks a real IDS library session, so populated loan-card comparison remains `BLOCKED_EXTERNAL` rather than using manufactured data. Evidence: `evidence/library-ui-alignment-final-v2-2026-08-13/`.
+
+## Campus-card transaction reference UI alignment (2026-08-13)
+
+- Rebuilt the transaction detail shell to match the supplied Flutter capture: source title bar, one blue current-month date-range action, `商户名称 / 金额 / 时间(合计)` columns, white rows and thin dividers.
+- Removed detail-page balance, payment-code, top refresh, two editable date fields and separate query button. The date action opens a functional two-step Cangjie `DatePicker` range flow and reloads the real transaction endpoint after confirmation.
+- Added an explicit authentication exception boundary after runtime faultlog diagnosis, preventing a missing campus-card session from terminating the Ability.
+- Final HAP built, installed and launched on `127.0.0.1:5555`; date-dialog scenario passed 7/7. Real populated-row and amount comparison remains `BLOCKED_EXTERNAL` because the emulator has no genuine campus-card SSO session. Evidence: `evidence/school-card-ui-alignment-final-2026-08-13/`.
