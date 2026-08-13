@@ -8,3 +8,11 @@
 - [resolved 2026-08-04] Monochrome SVG media resources can replace placeholder text glyphs and share selected/unselected colors through `Image(@r(app.media.*)).fillColor(...)`; the final campus capture renders 19 image nodes and passes all 5 reference-key assertions. (keywords: ArkUI Cangjie SVG Image fillColor navigation icons)
 - [resolved 2026-08-04] Passing a computed Boolean such as `parentState == index` into child `@Prop` initialized correctly but did not refresh the selected bottom-navigation capsule; passing the parent `@State` value directly as `@Prop selectedIndex` and comparing it with the child's immutable index kept selection reactive. Verification: final Pig screenshots show the fourth capsule selected before and after changing the image. (keywords: ArkUI Cangjie State Prop computed expression navigation refresh)
 - [resolved 2026-08-04] A transparent `0x00000000` Text background inside the clipped three-part settings selector rendered black on the emulator; using the enclosing card's opaque color for unselected segments preserved the intended lavender surface. Verification: final settings top screenshot after rebuild and install. (keywords: ArkUI Text backgroundColor transparent black clip selector)
+
+## 2026-08-13 — SMS second-factor visual alignment
+
+- Skills: `harmonyos-cangjie-dev`, `cangjie-harmonyos-knowledge`, and `harmonyos-build-run-diagnose`.
+- Reference: `UI真实数据展示截图/验证码.png`; source copy from `source_2.0/assets/flutter_i18n/zh_TW.yaml` and layout from `source_2.0/lib/page/login/ids_reauth_dialog.dart`.
+- Implementation: added a non-dismissible dim scrim, Traditional Chinese copy, floating-label outlined code input, outlined SMS action, `ToggleType.Checkbox` trust control, and source-shaped textual/filled action buttons while preserving existing `IDSReAuthSession` callbacks and stable IDs.
+- Retrieval: local `cjdocs.py` doctor passed with 644 documents; Checkbox, Toggle, TextInput and AlertDialog references were read before implementation.
+- Validation: `build_recovery.py --retry` reported `BUILD SUCCESSFUL in 6 s 912 ms`; final HAP installed/launched on `127.0.0.1:5555` as PID `15338`; preview component tree contains all dialog IDs and app-line FATAL count is 0. Real credentials/SMS remain externally gated.

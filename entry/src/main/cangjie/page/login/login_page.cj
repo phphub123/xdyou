@@ -917,51 +917,70 @@ public class LoginWindow {
                 .alignItems(HorizontalAlign.Center)
                 .backgroundColor(ThemePalette.pageBackground(this.darkMode()))
                 if (this.showReAuthDialog) {
+                    Column {}
+                        .width(100.percent)
+                        .height(100.percent)
+                        .backgroundColor(0x66000000)
+                        .id("idsReAuthScrim")
                     Column {
-                        Text("短信二次认证")
-                            .fontSize(20.vp)
-                            .fontWeight(FontWeight.Bold)
+                        Text("短信二次認證")
+                            .fontSize(21.vp)
+                            .fontWeight(FontWeight.Medium)
                             .fontColor(ThemePalette.textPrimary(this.darkMode()))
                             .width(100.percent)
-                        Text("统一认证要求再次验证身份。请获取短信验证码后完成登录。")
-                            .fontSize(13.vp)
-                            .fontColor(ThemePalette.textSecondary(this.darkMode()))
-                            .lineHeight(20.vp)
-                            .margin(top: 9.vp)
+                        Text("學校要求完成二次認證。請先獲取短信驗證碼，再輸入驗證碼繼續登錄。")
+                            .fontSize(14.vp)
+                            .fontColor(ThemePalette.textPrimary(this.darkMode()))
+                            .lineHeight(21.vp)
+                            .margin(top: 14.vp)
                             .width(100.percent)
-                        TextInput(placeholder: "短信验证码", text: this.reAuthCode)
-                            .width(100.percent)
-                            .height(44.vp)
-                            .margin(top: 18.vp)
-                            .backgroundColor(ThemePalette.inputSurface(this.darkMode()))
-                            .border(
-                                width: 1.vp,
-                                color: if (this.reAuthError == "") {
+                        Stack {
+                            TextInput(placeholder: "", text: this.reAuthCode)
+                                .width(100.percent)
+                                .height(54.vp)
+                                .backgroundColor(Color.Transparent)
+                                .border(
+                                    width: 1.5.vp,
+                                    color: if (this.reAuthError == "") {
+                                        ThemePalette.primary(this.darkMode())
+                                    } else {
+                                        0xFFBA1A1A
+                                    },
+                                    radius: 8.vp
+                                )
+                                .enabled(!this.reAuthSending && !this.reAuthSubmitting)
+                                .onChange({value => this.reAuthCode = value})
+                                .id("idsReAuthCodeInput")
+                            Text("短信驗證碼")
+                                .fontSize(12.vp)
+                                .fontColor(if (this.reAuthError == "") {
                                     ThemePalette.primary(this.darkMode())
                                 } else {
                                     0xFFBA1A1A
-                                },
-                                radius: 8.vp
-                            )
-                            .enabled(!this.reAuthSending && !this.reAuthSubmitting)
-                            .onChange({value => this.reAuthCode = value})
-                            .id("idsReAuthCodeInput")
+                                })
+                                .padding(left: 4.vp, right: 4.vp)
+                                .backgroundColor(ThemePalette.mutedPrimary(this.darkMode()))
+                                .position(x: 12.vp, y: (-7).vp)
+                        }.width(100.percent).height(54.vp).margin(top: 20.vp)
                         Button(if (this.reAuthSending) {
-                            "正在发送…"
+                            "正在發送…"
                         } else if (this.reAuthSecondsRemaining > 0) {
-                            "${this.reAuthSecondsRemaining} 秒后可重新发送"
+                            "${this.reAuthSecondsRemaining} 秒後可重新獲取"
                         } else {
-                            "获取短信验证码"
+                            "獲取驗證碼"
                         })
                             .width(100.percent)
-                            .height(40.vp)
-                            .margin(top: 10.vp)
+                            .height(42.vp)
+                            .margin(top: 14.vp)
                             .enabled(
                                 !this.reAuthSending && !this.reAuthSubmitting &&
                                     this.reAuthSecondsRemaining == 0
                             )
+                            .fontSize(14.vp)
                             .fontColor(ThemePalette.primary(this.darkMode()))
-                            .backgroundColor(ThemePalette.primaryContainer(this.darkMode()))
+                            .buttonStyle(ButtonStyleMode.Textual)
+                            .backgroundColor(Color.Transparent)
+                            .border(width: 1.vp, color: ThemePalette.primary(this.darkMode()), radius: 12.vp)
                             .onClick({_ => this.sendReAuthCode()})
                             .id("idsReAuthSendCodeButton")
                         if (this.reAuthNotice != "") {
@@ -981,50 +1000,59 @@ public class LoginWindow {
                                 .id("idsReAuthError")
                         }
                         Row {
-                            Toggle(ToggleType.Switch, isOn: this.reAuthTrustDevice)
+                            Toggle(ToggleType.Checkbox, isOn: this.reAuthTrustDevice)
+                                .size(width: 24.vp, height: 24.vp)
                                 .selectedColor(ThemePalette.primary(this.darkMode()))
                                 .enabled(!this.reAuthSending && !this.reAuthSubmitting)
                                 .onChange({value: Bool => this.reAuthTrustDevice = value})
                                 .id("idsReAuthTrustDeviceToggle")
                             Column {
-                                Text("信任此设备")
-                                    .fontSize(14.vp)
+                                Text("信任此設備")
+                                    .fontSize(16.vp)
                                     .fontWeight(FontWeight.Medium)
                                     .fontColor(ThemePalette.textPrimary(this.darkMode()))
-                                Text("启用后统一认证可能减少本设备后续二次验证。")
-                                    .fontSize(11.vp)
+                                Text("開啟後學校可能在一段時間內\n不再要求本設備二次認證")
+                                    .fontSize(13.vp)
                                     .fontColor(ThemePalette.textSecondary(this.darkMode()))
-                                    .margin(top: 2.vp)
-                            }.layoutWeight(1).margin(left: 8.vp).alignItems(HorizontalAlign.Start)
-                        }.width(100.percent).margin(top: 14.vp)
+                                    .lineHeight(19.vp)
+                                    .margin(top: 3.vp)
+                            }.layoutWeight(1).margin(left: 14.vp).alignItems(HorizontalAlign.Start)
+                        }.width(100.percent).margin(top: 18.vp).alignItems(VerticalAlign.Top)
                         Row {
                             Button("取消")
-                                .layoutWeight(1)
+                                .width(72.vp)
                                 .height(40.vp)
                                 .enabled(!this.reAuthSending && !this.reAuthSubmitting)
+                                .fontSize(14.vp)
                                 .fontColor(ThemePalette.primary(this.darkMode()))
-                                .backgroundColor(ThemePalette.primaryContainer(this.darkMode()))
+                                .buttonStyle(ButtonStyleMode.Textual)
+                                .backgroundColor(Color.Transparent)
                                 .onClick({_ => this.cancelReAuth()})
                                 .id("idsReAuthCancelButton")
                             Button(if (this.reAuthSubmitting) {
-                                "验证中…"
+                                "驗證中…"
                             } else {
-                                "确认"
+                                "確定"
                             })
-                                .layoutWeight(1)
+                                .width(92.vp)
                                 .height(40.vp)
-                                .margin(left: 10.vp)
+                                .margin(left: 8.vp)
                                 .enabled(!this.reAuthSending && !this.reAuthSubmitting)
+                                .fontSize(14.vp)
                                 .fontColor(ThemePalette.primaryText())
                                 .backgroundColor(ThemePalette.primary(this.darkMode()))
+                                .borderRadius(12.vp)
                                 .onClick({_ => this.submitReAuthCode()})
                                 .id("idsReAuthConfirmButton")
-                        }.width(100.percent).margin(top: 20.vp)
+                        }
+                            .width(100.percent)
+                            .margin(top: 22.vp)
+                            .justifyContent(FlexAlign.End)
                     }
-                        .width(326.vp)
-                        .padding(22.vp)
-                        .backgroundColor(ThemePalette.pageBackground(this.darkMode()))
-                        .borderRadius(20.vp)
+                        .width(330.vp)
+                        .padding(left: 24.vp, right: 24.vp, top: 26.vp, bottom: 22.vp)
+                        .backgroundColor(ThemePalette.mutedPrimary(this.darkMode()))
+                        .borderRadius(18.vp)
                         .align(Alignment.Center)
                         .alignItems(HorizontalAlign.Start)
                         .id("idsReAuthDialog")
