@@ -187,3 +187,37 @@
 - Adopted: SDK 23 Cangjie `DatePicker(selected:)` plus `onDateChange` in a two-step range overlay, current-month defaults, one blue range action, and a white three-column transaction table. Reference-incompatible balance, QR, refresh, editable date inputs, and separate query controls were removed from this detail page.
 - Runtime diagnosis: the first date-dialog scenario exposed an uncaught invalid-session exception from `SchoolCardSession.sessionCookie`; exported evidence is `evidence/school-card-date-picker-cjerror.log`. The page now catches that authentication-boundary exception and reports it in UI instead of terminating the Ability.
 - Verification: final `BUILD SUCCESSFUL in 10 s 371 ms`; installed/launched on `127.0.0.1:5555` as PID `10634`; date selector open/cancel plus shell assertions passed 7/7. Populated real transaction comparison remains `BLOCKED_EXTERNAL` without a genuine campus-card SSO session.
+
+## 2026-08-13 — campus-card calendar-range dialog alignment
+
+- Skills: `harmonyos-cangjie-dev`, `cangjie-harmonyos-knowledge`, and `harmonyos-build-run-diagnose`.
+- Reference: `UI真实数据展示截图/选日期.png`.
+- RAG: configured `doctor` and query `ArkUI CalendarPicker month calendar selected date range Cangjie` returned `OperationalError: unable to open database file`; raw fallback refs read completely were `docs/API/arkui-cj/cj-scroll-swipe-grid.md`, `cj-scroll-swipe-griditem.md`, and the Cangjie std time handbook.
+- Adopted: a pure-Cangjie fixed 7×6 `Grid` month calendar, `DateTime.dayOfWeek` offset, Gregorian month lengths, previous/next navigation, continuous range background, circular endpoints, dim scrim, and reference `CANCEL`/`OK` actions. No ArkTS interop was introduced.
+- Verification: HAP `BUILD SUCCESSFUL in 10 s 505 ms`; installed/launched on `127.0.0.1:5555` as PID `32692`; open, next-month, and cancel scenario passed 8/8; bounded target capture has 0 FATAL and 0 app-line ERROR/WARN.
+
+## 2026-08-13 — campus-card month/year dropdown alignment
+
+- Skills: `harmonyos-cangjie-dev`, `cangjie-harmonyos-knowledge`, and `harmonyos-build-run-diagnose`.
+- Reference: `UI真实数据展示截图/下拉选月份.png`.
+- RAG: configured `doctor` and query `ArkUI Button child Row triangle dropdown state grid Cangjie` returned `OperationalError: unable to open database file`; raw fallback `docs/API/arkui-cj/cj-button-picker-button.md` was read with the already verified Grid/GridItem refs.
+- Adopted: independent child-content `Button` controls for month/year labels and arrow indicators; a state-switched 3×4 month grid and 3×4 year grid; current view uses a blue filled capsule and the draft selection uses a blue outline.
+- Verification: HAP `BUILD SUCCESSFUL in 10 s 397 ms`; installed/launched on `127.0.0.1:5555` as PID `18205`; month open, July selection, year open and cancel completed with 3/3 assertions; bounded log contains 0 FATAL and 0 app-line ERROR/WARN.
+
+## 2026-08-13 — campus-card dropdown arrow size follow-up
+
+- Skills: `harmonyos-cangjie-dev` and `harmonyos-build-run-diagnose`.
+- Increased the month/year arrow glyph from 9vp to 15vp, added bold weight, an explicit 18×24vp visual box, centered alignment, and slightly wider text spacing while retaining the parent button hit target.
+- Verification: HAP `BUILD SUCCESSFUL in 10 s 516 ms`; installed/launched on `127.0.0.1:5555` as PID `26609`; month/year dropdown scenario passed 3/3 and the enlarged arrows were visually inspected in `evidence/school-card-dropdown-arrow-size-2026-08-13/`.
+
+## 2026-08-13 — campus-card dropdown arrow proportion correction
+
+- Skills: `harmonyos-cangjie-dev` and `harmonyos-build-run-diagnose`.
+- Matched the supplied screenshot proportion by changing the arrow to 12vp medium weight in a 12×20vp visual box and reducing label spacing from 5vp to 1vp; the parent buttons retain their full interaction targets.
+- Verification: HAP `BUILD SUCCESSFUL in 10 s 406 ms`; installed/launched on `127.0.0.1:5555` as PID `31864`; dropdown scenario passed 3/3 and the final month-selector screenshot is under `evidence/school-card-dropdown-arrow-proportion-2026-08-13/`.
+
+## 2026-08-13 — campus-card dropdown arrow 14vp follow-up
+
+- Skills: `harmonyos-cangjie-dev` and `harmonyos-build-run-diagnose`.
+- Increased only the arrow glyph and visual width from 12vp to 14vp; retained the 1vp label gap and medium weight so the compact original-image proportion is preserved.
+- Verification: HAP `BUILD SUCCESSFUL in 10 s 525 ms`.
