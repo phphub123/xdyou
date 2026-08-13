@@ -169,3 +169,21 @@
 - Refs read in full: `docs/API/arkui-cj/cj-image-video-image.md#func-fillcolor-resourcecolor` and `docs/API/arkui-cj/cj-image-video-image.md#func-objectfit-imagefit`. Adopted SVG `Image` with `fillColor`, `ImageFit.Contain`, transparent textual buttons, and 40vp action targets.
 - Implementation: shared SVG back and refresh actions replace text glyphs; title, action size, spacing, color, IDs and behavior are unified across every existing `PageHeader` child page and eleven refresh-capable pages.
 - Validation: baseline and final HAP builds both reported `BUILD SUCCESSFUL`; final HAP installed/launched on `127.0.0.1:5555` as PID `22616`; `scenario-subpage-header.json` passed 3/3 and the inspected capture shows both SVG actions. Bounded hilog has 0 FATAL; its one bundle-name ERROR is the system SCB force-split feature-map diagnostic, not the app process.
+
+## 2026-08-13 — library reference UI alignment
+
+- Skills: `harmonyos-cangjie-dev`, `cangjie-harmonyos-knowledge`, `cangjie-core-reference`, `harmonyos-build-run-diagnose`, and `harmonyos-evolution`.
+- Source/reference: `UI真实数据展示截图/图书馆信息.png`; Flutter structure from `library_window.dart`, `borrow_list_view.dart`, `borrow_info_card.dart`, and `model/xidian_ids/library.dart`.
+- RAG: `doctor` passed with 644 documents; queried `ArkUI Tabs TabContent tab bar indicator divider Cangjie`, `ArkUI Image network URL objectFit placeholder clip borderRadius`, and `Image String URL network image Cangjie Image constructor`.
+- Refs read: `docs/API/arkui-cj/cj-navigation-switching-tabs.md#tabs`, `docs/API/arkui-cj/cj-navigation-switching-tabcontent.md#func-tabbar-resourcestr`, and `docs/API/arkui-cj/cj-image-video-image.md#func-objectfit-imagefit`; std time reference supplied `DateTime.parse`/timestamp date-difference behavior.
+- Adopted: source-shaped text tabs with a thin selected indicator, real URL cover images with `ImageFit.Cover`, source date columns and computed due-day status, fixed borrow summary, no top-right refresh action, and no homepage bottom navigation while any homepage child page is open.
+- Verification: final HAP `BUILD SUCCESSFUL`, installed/launched on `127.0.0.1:5555` as PID `21851`; final library scenario passed 6/6 across borrow and search tabs; bounded hilog has 0 FATAL. Real loan-card pixel verification remains account/session gated and no fake loans were introduced.
+
+## 2026-08-13 — campus-card transaction reference UI alignment
+
+- Skills: `harmonyos-cangjie-dev`, `cangjie-harmonyos-knowledge`, and `harmonyos-build-run-diagnose`.
+- Source/reference: `UI真实数据展示截图/校园卡流水信息.png`, `source_2.0/lib/page/schoolcard/school_card_window.dart`, and the existing school-card controller/model/repository/page chain.
+- RAG: configured `doctor` and query `ArkUI Cangjie DatePickerDialog date range picker show dialog` both returned `OperationalError: unable to open database file`. The documented raw fallback was used; `docs/API/arkui-cj/cj-button-picker-datepicker.md` was read completely.
+- Adopted: SDK 23 Cangjie `DatePicker(selected:)` plus `onDateChange` in a two-step range overlay, current-month defaults, one blue range action, and a white three-column transaction table. Reference-incompatible balance, QR, refresh, editable date inputs, and separate query controls were removed from this detail page.
+- Runtime diagnosis: the first date-dialog scenario exposed an uncaught invalid-session exception from `SchoolCardSession.sessionCookie`; exported evidence is `evidence/school-card-date-picker-cjerror.log`. The page now catches that authentication-boundary exception and reports it in UI instead of terminating the Ability.
+- Verification: final `BUILD SUCCESSFUL in 10 s 371 ms`; installed/launched on `127.0.0.1:5555` as PID `10634`; date selector open/cancel plus shell assertions passed 7/7. Populated real transaction comparison remains `BLOCKED_EXTERNAL` without a genuine campus-card SSO session.
