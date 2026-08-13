@@ -39,8 +39,8 @@ public class LibraryPage {
     func overdue(value: String): Bool { let date=this.dateOnly(value);return date!="" && date.compare(DateTime.now().format("yyyy-MM-dd")) == Ordering.LT }
     func overdueCount(): Int64 { var count:Int64=0;for(item in this.borrows){if(this.overdue(item.normReturnDate)){count+=1}};return count }
     @Builder func headerTrailing() {
-        Button(if (this.loading) { "刷新中" } else { "刷新" }).height(38.vp).enabled(!this.loading)
-            .onClick({_ => if (this.tab == 0) { this.reloadBorrows() } else { this.search() }}).id("libraryRefresh")
+        HeaderRefreshAction(onRefresh: {=> if (this.tab == 0) { this.reloadBorrows() } else { this.search() }},
+            actionId: "libraryRefresh")
     }
     func build() {
         Column {

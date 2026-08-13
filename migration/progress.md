@@ -135,3 +135,9 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Energy, borrow status and card transactions received preliminary source-aligned pages; campus home now renders their controller summaries.
 - x86_64 direct Cangjie compilation passed twice. Full HAP/runtime and genuine value assertions remain pending the user's local DevEco build because Hvigor cache symlink creation was denied by the managed sandbox.
 - Evidence: `evidence/live-energy-library-card-2026-08-11.md`.
+
+## Homepage child-page header alignment (2026-08-13)
+
+- Unified all existing `PageHeader` child pages around a source-aligned 48vp bar, 20vp title, SVG back icon, and 40vp transparent action targets.
+- Replaced mixed text-glyph/text-button refresh actions in class table, attendance, exam, score, empty classroom, energy, library, experiment, school network, sport, and campus card with one shared SVG refresh component while retaining stable IDs and real callbacks.
+- Final HAP built, installed and launched on `127.0.0.1:5555`; the homepage-to-empty-classroom scenario passed 3/3 and visually confirmed the final back/refresh header. Evidence: `evidence/subpage-header-ui-final-2026-08-13/` and `evidence/subpage-header-hilog-final-2026-08-13/`.

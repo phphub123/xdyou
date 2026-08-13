@@ -72,9 +72,7 @@ public class ExamPage {
     @Builder
     func refreshAction() {
         Row {
-            Button("↻").width(38.vp).height(38.vp).fontSize(23.vp)
-                .fontColor(0xFF344054).buttonStyle(ButtonStyleMode.Textual).backgroundColor(Color.Transparent)
-                .onClick({_ => this.refresh()}).id("examRefreshButton")
+            HeaderRefreshAction(onRefresh: this.refresh, actionId: "examRefreshButton")
             if (this.exams.size > 0) {
                 Button("◷").width(38.vp).height(38.vp).fontSize(22.vp)
                     .fontColor(0xFF344054).buttonStyle(ButtonStyleMode.Textual).backgroundColor(Color.Transparent)

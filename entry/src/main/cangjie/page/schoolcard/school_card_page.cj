@@ -131,11 +131,7 @@ public class SchoolCardPage {
 
     @Builder
     func headerTrailing() {
-        Button(if (this.loading) {
-            "刷新中"
-        } else {
-            "刷新"
-        }).enabled(!this.loading).onClick({_ => this.refreshAll()}).id("schoolCardRefresh")
+        HeaderRefreshAction(onRefresh: this.refreshAll, actionId: "schoolCardRefresh")
     }
 
     func build() {

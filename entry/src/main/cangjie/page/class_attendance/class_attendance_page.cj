@@ -144,9 +144,7 @@ public class ClassAttendancePage {
     @Builder
     func headerTrailing() {
         if (this.selectedIndex < 0) {
-            Button("↻").width(38.vp).height(38.vp).fontSize(23.vp)
-                .fontColor(0xFF344054).buttonStyle(ButtonStyleMode.Textual).backgroundColor(Color.Transparent)
-                .onClick({ _ => this.reload() }).id("attendanceRefresh")
+            HeaderRefreshAction(onRefresh: this.reload, actionId: "attendanceRefresh")
         }
     }
 

@@ -160,3 +160,12 @@
 - Campus-card transactions now send the source application's AJAX request semantics (`Accept`, `Origin`, `Referer`, `X-Requested-With`) and refuse an HTML authentication page before JSON decoding. No response body is logged or persisted.
 - Successful library borrow counts and campus-card balances are cached in process memory only and reused when returning to the campus home. Water/electricity home authentication is no longer started because that service requires campus-network access.
 - Verification: `assembleApp --no-daemon` completed with `BUILD SUCCESSFUL`; live account/device validation is intentionally left to the user for this short turn.
+
+## 2026-08-13 — homepage child-page header alignment
+
+- Skills: `harmonyos-cangjie-dev`, `harmonyos-project-bootstrap`, `cangjie-harmonyos-knowledge`, `cangjie-core-reference`, `harmonyos-build-run-diagnose`, and `harmonyos-evolution`; required workflow files and `cangjie-essentials.md` were read before editing.
+- Reference images: `UI真实数据展示截图/日程表.png`, `成绩查询.png`, `考试安排.png`, `图书馆信息.png`, `空闲教室.png`, `校园卡流水信息.png`, `考勤查询.png`, and `水电页面_电量信息.png`.
+- RAG: `doctor` passed with 644 documents; queries were `ArkUI Button TextInput state onClick`, `ArkUI top app bar navigation back refresh icon button Row Image`, and `ArkUI Image SVG fillColor objectFit onClick component`.
+- Refs read in full: `docs/API/arkui-cj/cj-image-video-image.md#func-fillcolor-resourcecolor` and `docs/API/arkui-cj/cj-image-video-image.md#func-objectfit-imagefit`. Adopted SVG `Image` with `fillColor`, `ImageFit.Contain`, transparent textual buttons, and 40vp action targets.
+- Implementation: shared SVG back and refresh actions replace text glyphs; title, action size, spacing, color, IDs and behavior are unified across every existing `PageHeader` child page and eleven refresh-capable pages.
+- Validation: baseline and final HAP builds both reported `BUILD SUCCESSFUL`; final HAP installed/launched on `127.0.0.1:5555` as PID `22616`; `scenario-subpage-header.json` passed 3/3 and the inspected capture shows both SVG actions. Bounded hilog has 0 FATAL; its one bundle-name ERROR is the system SCB force-split feature-map diagnostic, not the app process.

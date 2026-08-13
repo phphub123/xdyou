@@ -167,9 +167,7 @@ public class ClassTablePage {
 
     @Builder
     func refreshAction() {
-        Button("↻").width(38.vp).height(38.vp).fontSize(23.vp)
-            .fontColor(0xFF344054).buttonStyle(ButtonStyleMode.Textual).backgroundColor(Color.Transparent)
-            .onClick({_ => this.refresh()}).id("classtableRefreshButton")
+        HeaderRefreshAction(onRefresh: this.refresh, actionId: "classtableRefreshButton")
     }
 
     func build() {

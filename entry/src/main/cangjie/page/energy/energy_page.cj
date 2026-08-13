@@ -41,8 +41,7 @@ public class EnergyPage {
         } }, { message => launch { this.loading = false; this.status = message } })
     }
     @Builder func headerTrailing() {
-        Button(if (this.loading) { "刷新中" } else { "刷新" }).height(38.vp).enabled(!this.loading)
-            .onClick({_ => this.reloadEnergy()}).id("energyRefresh")
+        HeaderRefreshAction(onRefresh: this.reloadEnergy, actionId: "energyRefresh")
     }
     func build() {
         Column {

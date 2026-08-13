@@ -83,11 +83,7 @@ public class SportPage {
 
     @Builder
     func headerTrailing() {
-        Button(if (this.loading) {
-            "加载中"
-        } else {
-            "刷新"
-        }).height(40.vp).onClick({_ => this.reload()}).id("sportRefresh")
+        HeaderRefreshAction(onRefresh: this.reload, actionId: "sportRefresh")
     }
 
     func build() {

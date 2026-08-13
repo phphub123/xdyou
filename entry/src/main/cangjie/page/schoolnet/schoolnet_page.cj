@@ -70,11 +70,7 @@ public class SchoolnetPage {
 
     @Builder
     func headerTrailing() {
-        Button(if (this.loading) {
-            "刷新中"
-        } else {
-            "刷新"
-        }).height(40.vp).onClick({_ => this.reload()}).id("schoolnetRefresh")
+        HeaderRefreshAction(onRefresh: this.reload, actionId: "schoolnetRefresh")
     }
 
     func build() {

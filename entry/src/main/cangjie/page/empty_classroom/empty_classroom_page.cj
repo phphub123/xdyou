@@ -157,9 +157,7 @@ public class EmptyClassroomPage {
 
     @Builder
     func refreshAction() {
-        Button("↻").width(38.vp).height(38.vp).fontSize(23.vp)
-            .fontColor(0xFF344054).buttonStyle(ButtonStyleMode.Textual).backgroundColor(Color.Transparent)
-            .onClick({_ => this.search()}).id("emptyClassroomRefresh")
+        HeaderRefreshAction(onRefresh: this.search, actionId: "emptyClassroomRefresh")
     }
 
     @Builder
