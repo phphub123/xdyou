@@ -25,6 +25,9 @@ public class SchoolCardPage {
     @State var datePickerStep: Int64 = 0
     @State var draftBeginDate: String = ""
     @State var draftEndDate: String = ""
+    @State var calendarYear: Int64 = 0
+    @State var calendarMonth: Int64 = 0
+    @State var calendarSelector: Int64 = 0
     var authorized: Bool = false
 
     protected override func aboutToAppear(): Unit {
@@ -116,43 +119,228 @@ public class SchoolCardPage {
         return "选择日期：从 ${this.beginDate} 到 ${this.endDate}"
     }
 
-    func parsedDate(value: String): DateTime {
-        try {
-            return DateTime.parse(value, "yyyy-MM-dd")
-        } catch (_) {
-            return DateTime.now()
-        }
-    }
-
     func openDateRange(): Unit {
         this.draftBeginDate = this.beginDate
         this.draftEndDate = this.endDate
         this.datePickerStep = 0
+        let parts = this.beginDate.split("-")
+        try {
+            this.calendarYear = Int64.parse(parts[0])
+            this.calendarMonth = Int64.parse(parts[1])
+        } catch (_) {
+            this.calendarYear = DateTime.now().year
+            this.calendarMonth = Int64.parse(DateTime.now().format("MM"))
+        }
+        this.calendarSelector = 0
         this.showDateRange = true
     }
 
-    func updateDraftDate(value: DateTime): Unit {
-        if (this.datePickerStep == 0) {
-            this.draftBeginDate = value.format("yyyy-MM-dd")
-        } else {
-            this.draftEndDate = value.format("yyyy-MM-dd")
+    func padded(value: Int64): String {
+        return if (value < 10) { "0${value}" } else { value.toString() }
+    }
+
+    func calendarDate(day: Int64): String {
+        return "${this.calendarYear}-${this.padded(this.calendarMonth)}-${this.padded(day)}"
+    }
+
+    func monthName(): String {
+        let names: Array<String> = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        if (this.calendarMonth < 1 || this.calendarMonth > 12) { return "" }
+        return names[this.calendarMonth - 1]
+    }
+
+    func draftMonth(): Int64 {
+        let parts = this.draftBeginDate.split("-")
+        try { return Int64.parse(parts[1]) } catch (_) { return 0 }
+    }
+
+    func draftYear(): Int64 {
+        let parts = this.draftBeginDate.split("-")
+        try { return Int64.parse(parts[0]) } catch (_) { return 0 }
+    }
+
+    func selectableYears(): ArrayList<Int64> {
+        let years = ArrayList<Int64>()
+        let first = this.calendarYear - 5
+        for (offset in 0..12) { years.add(first + offset) }
+        return years
+    }
+
+    func showMonthSelector(): Unit {
+        this.calendarSelector = if (this.calendarSelector == 1) { 0 } else { 1 }
+    }
+
+    func showYearSelector(): Unit {
+        this.calendarSelector = if (this.calendarSelector == 2) { 0 } else { 2 }
+    }
+
+    func selectMonth(month: Int64): Unit {
+        this.calendarMonth = month
+        this.calendarSelector = 0
+    }
+
+    func selectYear(year: Int64): Unit {
+        this.calendarYear = year
+        this.calendarSelector = 0
+    }
+
+    func daysInMonth(): Int64 {
+        if (this.calendarMonth == 2) {
+            return if (this.calendarYear % 400 == 0 || (this.calendarYear % 4 == 0 && this.calendarYear % 100 != 0)) { 29 } else { 28 }
+        }
+        return if (this.calendarMonth == 4 || this.calendarMonth == 6 || this.calendarMonth == 9 || this.calendarMonth == 11) { 30 } else { 31 }
+    }
+
+    func firstWeekday(): Int64 {
+        try {
+            let first = DateTime.parse("${this.calendarYear}-${this.padded(this.calendarMonth)}-01", "yyyy-MM-dd")
+            return match (first.dayOfWeek) {
+                case Sunday => 0
+                case Monday => 1
+                case Tuesday => 2
+                case Wednesday => 3
+                case Thursday => 4
+                case Friday => 5
+                case Saturday => 6
+            }
+        } catch (_) {
+            return 0
         }
     }
 
-    func advanceDatePicker(): Unit {
+    func calendarCells(): ArrayList<Int64> {
+        let cells = ArrayList<Int64>()
+        let offset = this.firstWeekday()
+        for (index in 0..42) {
+            let day = index - offset + 1
+            cells.add(if (day >= 1 && day <= this.daysInMonth()) { day } else { 0 })
+        }
+        return cells
+    }
+
+    func changeMonth(delta: Int64): Unit {
+        this.calendarMonth += delta
+        if (this.calendarMonth < 1) { this.calendarMonth = 12; this.calendarYear -= 1 }
+        if (this.calendarMonth > 12) { this.calendarMonth = 1; this.calendarYear += 1 }
+    }
+
+    func chooseDay(day: Int64): Unit {
+        if (day == 0) { return }
+        let chosen = this.calendarDate(day)
         if (this.datePickerStep == 0) {
+            this.draftBeginDate = chosen
+            this.draftEndDate = chosen
             this.datePickerStep = 1
-            return
+        } else {
+            if (chosen.compare(this.draftBeginDate) == Ordering.LT) {
+                this.draftEndDate = this.draftBeginDate
+                this.draftBeginDate = chosen
+            } else {
+                this.draftEndDate = chosen
+            }
+            this.datePickerStep = 0
         }
-        if (this.draftBeginDate.compare(this.draftEndDate) == Ordering.GT) {
-            let oldBegin = this.draftBeginDate
-            this.draftBeginDate = this.draftEndDate
-            this.draftEndDate = oldBegin
-        }
+    }
+
+    func isRangeDay(day: Int64): Bool {
+        if (day == 0) { return false }
+        let date = this.calendarDate(day)
+        return date.compare(this.draftBeginDate) != Ordering.LT && date.compare(this.draftEndDate) != Ordering.GT
+    }
+
+    func isRangeEdge(day: Int64): Bool {
+        if (day == 0) { return false }
+        let date = this.calendarDate(day)
+        return date == this.draftBeginDate || date == this.draftEndDate
+    }
+
+    func confirmDateRange(): Unit {
         this.beginDate = this.draftBeginDate
         this.endDate = this.draftEndDate
         this.showDateRange = false
         this.loadRecords()
+    }
+
+    @Builder
+    func weekdayHeader() {
+        Row {
+            ForEach(["S", "M", "T", "W", "T", "F", "S"], itemGenerator: { label: String, _: Int64 =>
+                Text(label).layoutWeight(1).fontSize(10.vp).fontColor(0xFF50545D).textAlign(TextAlign.Center)
+            })
+        }.width(100.percent).height(28.vp)
+    }
+
+    @Builder
+    func calendarDay(day: Int64, index: Int64) {
+        GridItem {
+            Stack {
+                Text("")
+                    .width(100.percent)
+                    .height(34.vp)
+                    .backgroundColor(if (this.isRangeDay(day)) { 0xFFDDE3F0 } else { Color.Transparent })
+                Text(if (day == 0) { "" } else { day.toString() })
+                    .width(34.vp)
+                    .height(34.vp)
+                    .fontSize(10.vp)
+                    .fontColor(if (this.isRangeEdge(day)) { 0xFFFFFFFF } else { 0xFF252932 })
+                    .textAlign(TextAlign.Center)
+                    .backgroundColor(if (this.isRangeEdge(day)) { 0xFF46699D } else { Color.Transparent })
+                    .borderRadius(17.vp)
+            }.width(100.percent).height(34.vp).align(Alignment.Center)
+        }.onClick({_ => this.chooseDay(day)}).id("schoolCardCalendarDay_${index}")
+    }
+
+    @Builder
+    func dropdownHeader(title: String, opened: Bool, stableId: String, action: () -> Unit) {
+        Button {
+            Row {
+                Text(title).fontSize(12.vp).fontColor(0xFF4C5059)
+                Text(if (opened) { "▴" } else { "▾" })
+                    .width(14.vp)
+                    .height(20.vp)
+                    .fontSize(14.vp)
+                    .fontWeight(FontWeight.Medium)
+                    .fontColor(0xFF4F535D)
+                    .textAlign(TextAlign.Center)
+                    .margin(left: 1.vp)
+            }.height(36.vp)
+        }
+            .height(36.vp)
+            .padding(left: 4.vp, right: 4.vp)
+            .buttonStyle(ButtonStyleMode.Textual)
+            .backgroundColor(Color.Transparent)
+            .onClick({_ => action()})
+            .id(stableId)
+    }
+
+    @Builder
+    func monthOption(label: String, index: Int64) {
+        GridItem {
+            Text(label)
+                .width(62.vp)
+                .height(32.vp)
+                .fontSize(12.vp)
+                .fontColor(if (this.calendarMonth == index + 1) { 0xFFFFFFFF } else { 0xFF30343C })
+                .textAlign(TextAlign.Center)
+                .backgroundColor(if (this.calendarMonth == index + 1) { 0xFF46699D } else { Color.Transparent })
+                .border(width: if (this.calendarMonth != index + 1 && this.draftMonth() == index + 1) { 1.vp } else { 0.vp }, color: 0xFF46699D)
+                .borderRadius(17.vp)
+        }.onClick({_ => this.selectMonth(index + 1)}).id("schoolCardMonthOption_${index + 1}")
+    }
+
+    @Builder
+    func yearOption(year: Int64, index: Int64) {
+        GridItem {
+            Text(year.toString())
+                .width(72.vp)
+                .height(32.vp)
+                .fontSize(12.vp)
+                .fontColor(if (this.calendarYear == year) { 0xFFFFFFFF } else { 0xFF30343C })
+                .textAlign(TextAlign.Center)
+                .backgroundColor(if (this.calendarYear == year) { 0xFF46699D } else { Color.Transparent })
+                .border(width: if (this.calendarYear != year && this.draftYear() == year) { 1.vp } else { 0.vp }, color: 0xFF46699D)
+                .borderRadius(17.vp)
+        }.onClick({_ => this.selectYear(year)}).id("schoolCardYearOption_${index}")
     }
 
     func authorizeResponse(url: String, payload: String, cookies: String): Unit {
@@ -270,26 +458,69 @@ public class SchoolCardPage {
                     .id("schoolCardQrDialog")
             }
             if (this.showDateRange) {
+                Column {}.width(100.percent).height(100.percent).backgroundColor(0x88000000)
+                    .onClick({_ => this.showDateRange = false}).id("schoolCardDateScrim")
                 Column {
-                    Text(if (this.datePickerStep == 0) { "选择开始日期" } else { "选择结束日期" })
-                        .fontSize(18.vp).fontWeight(FontWeight.Bold)
-                    Text(if (this.datePickerStep == 0) { this.draftBeginDate } else { this.draftEndDate })
-                        .fontSize(13.vp).fontColor(0xFF65738A).margin(top: 6.vp)
-                    DatePicker(selected: if (this.datePickerStep == 0) { this.parsedDate(this.draftBeginDate) } else { this.parsedDate(this.draftEndDate) })
-                        .width(100.percent)
-                        .height(220.vp)
-                        .onDateChange({value => this.updateDraftDate(value)})
                     Row {
-                        Button("取消").layoutWeight(1).height(38.vp).onClick({_ => this.showDateRange = false}).id("schoolCardDateCancel")
-                        Button(if (this.datePickerStep == 0) { "下一步" } else { "确定" })
-                            .layoutWeight(1).height(38.vp).margin(left: 8.vp)
-                            .onClick({_ => this.advanceDatePicker()}).id("schoolCardDateConfirm")
-                    }.width(100.percent).margin(top: 10.vp)
+                        this.dropdownHeader(this.monthName(), this.calendarSelector == 1, "schoolCardMonthDropdown", {=> this.showMonthSelector()})
+                        this.dropdownHeader(this.calendarYear.toString(), this.calendarSelector == 2, "schoolCardYearDropdown", {=> this.showYearSelector()})
+                        Blank().layoutWeight(1)
+                        if (this.calendarSelector == 0) {
+                            Button("‹").width(38.vp).height(38.vp).fontSize(23.vp).fontColor(0xFF30343C)
+                                .buttonStyle(ButtonStyleMode.Textual).backgroundColor(Color.Transparent)
+                                .onClick({_ => this.changeMonth(-1)}).id("schoolCardCalendarPrevious")
+                            Button("›").width(38.vp).height(38.vp).fontSize(23.vp).fontColor(0xFF30343C)
+                                .buttonStyle(ButtonStyleMode.Textual).backgroundColor(Color.Transparent)
+                                .onClick({_ => this.changeMonth(1)}).id("schoolCardCalendarNext")
+                        }
+                    }.width(100.percent).height(46.vp)
+                    Divider().width(100.percent).strokeWidth(if (this.calendarSelector == 0) { 0.vp } else { 1.vp }).color(0xFFE1E2EA)
+                    if (this.calendarSelector == 1) {
+                        Grid {
+                            ForEach(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], itemGenerator: { label: String, index: Int64 => this.monthOption(label, index) })
+                        }
+                            .width(100.percent)
+                            .height(204.vp)
+                            .padding(top: 10.vp, bottom: 10.vp)
+                            .columnsTemplate("1fr 1fr 1fr")
+                            .rowsTemplate("1fr 1fr 1fr 1fr")
+                            .id("schoolCardMonthGrid")
+                    } else if (this.calendarSelector == 2) {
+                        Grid {
+                            ForEach(this.selectableYears(), itemGenerator: { year: Int64, index: Int64 => this.yearOption(year, index) })
+                        }
+                            .width(100.percent)
+                            .height(204.vp)
+                            .padding(top: 10.vp, bottom: 10.vp)
+                            .columnsTemplate("1fr 1fr 1fr")
+                            .rowsTemplate("1fr 1fr 1fr 1fr")
+                            .id("schoolCardYearGrid")
+                    } else {
+                        this.weekdayHeader()
+                        Grid {
+                            ForEach(this.calendarCells(), itemGenerator: { day: Int64, index: Int64 => this.calendarDay(day, index) })
+                        }
+                            .width(100.percent)
+                            .height(204.vp)
+                            .columnsTemplate("1fr 1fr 1fr 1fr 1fr 1fr 1fr")
+                            .rowsTemplate("1fr 1fr 1fr 1fr 1fr 1fr")
+                    }
+                    Blank().layoutWeight(1)
+                    Row {
+                        Blank().layoutWeight(1)
+                        Button("CANCEL").height(38.vp).fontSize(12.vp).fontColor(0xFF34558F)
+                            .buttonStyle(ButtonStyleMode.Textual).backgroundColor(Color.Transparent)
+                            .onClick({_ => this.showDateRange = false}).id("schoolCardDateCancel")
+                        Button("OK").height(38.vp).fontSize(12.vp).fontColor(0xFF34558F)
+                            .buttonStyle(ButtonStyleMode.Textual).backgroundColor(Color.Transparent)
+                            .onClick({_ => this.confirmDateRange()}).id("schoolCardDateConfirm")
+                    }.width(100.percent).height(44.vp)
                 }
-                    .width(320.vp)
-                    .padding(18.vp)
-                    .backgroundColor(0xFFFFFFFF)
-                    .borderRadius(18.vp)
+                    .width(278.vp)
+                    .height(352.vp)
+                    .padding(left: 8.vp, right: 8.vp, top: 8.vp, bottom: 7.vp)
+                    .backgroundColor(0xFFF8F8FF)
+                    .borderRadius(16.vp)
                     .align(Alignment.Center)
                     .id("schoolCardDateDialog")
             }

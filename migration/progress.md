@@ -154,3 +154,29 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Removed detail-page balance, payment-code, top refresh, two editable date fields and separate query button. The date action opens a functional two-step Cangjie `DatePicker` range flow and reloads the real transaction endpoint after confirmation.
 - Added an explicit authentication exception boundary after runtime faultlog diagnosis, preventing a missing campus-card session from terminating the Ability.
 - Final HAP built, installed and launched on `127.0.0.1:5555`; date-dialog scenario passed 7/7. Real populated-row and amount comparison remains `BLOCKED_EXTERNAL` because the emulator has no genuine campus-card SSO session. Evidence: `evidence/school-card-ui-alignment-final-2026-08-13/`.
+
+## Campus-card calendar dialog alignment (2026-08-13)
+
+- Replaced the wheel-style two-step picker with the reference-shaped single-month range calendar: dim background, month/year header, previous/next controls, Sunday-first week header, continuous selected range, circular endpoints, and `CANCEL / OK` footer actions.
+- Month navigation and range selection use pure Cangjie `DateTime` plus ArkUI `Grid`; confirmation preserves the existing real transaction reload path.
+- Final HAP build passed, installed/started on `127.0.0.1:5555`, and the open → next month → cancel scenario passed 8/8 with 0 target FATAL. Evidence: `evidence/school-card-calendar-alignment-2026-08-13/` and `evidence/school-card-calendar-hilog-2026-08-13/`.
+
+## Campus-card month/year dropdown alignment (2026-08-13)
+
+- Month and year labels are now separate clickable buttons with stateful up/down indicators rather than text-appended glyphs.
+- Month expansion matches the supplied 3×4 month grid; year expansion uses the same visual language and a 12-year 3×4 grid. Selecting an option returns to the calendar without confirming the transaction range.
+- Final HAP build passed; month open/select, year open and cancel remained foreground on `127.0.0.1:5555`. Evidence: `evidence/school-card-dropdown-alignment-2026-08-13/` and `evidence/school-card-dropdown-hilog-2026-08-13/`.
+
+## Campus-card dropdown arrow sizing (2026-08-13)
+
+- Enlarged both dropdown arrows to 15vp bold glyphs with explicit centered visual bounds and improved spacing.
+- Rebuilt and replayed the full month/year dropdown scenario on `127.0.0.1:5555`; all 3 assertions passed. Evidence: `evidence/school-card-dropdown-arrow-size-2026-08-13/`.
+
+## Campus-card dropdown arrow proportion correction (2026-08-13)
+
+- Reduced the arrow visual box and label gap to match the supplied screenshot while keeping the arrow readable and the whole header button clickable.
+- Final build and month/year dropdown scenario passed; evidence: `evidence/school-card-dropdown-arrow-proportion-2026-08-13/`.
+
+## Campus-card dropdown arrow 14vp follow-up (2026-08-13)
+
+- Increased the compact month/year arrow from 12vp to 14vp without changing its 1vp label spacing; final HAP build passed.
