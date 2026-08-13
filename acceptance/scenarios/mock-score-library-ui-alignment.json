@@ -1,0 +1,16 @@
+{
+  "name": "Mock score and library UI alignment",
+  "steps": [
+    {"action": "click", "target": {"key": "mockHomePreviewButton"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "homeScore"}, "wait_after": 2},
+    {"action": "snapshot", "label": "01-score-aligned"},
+    {"action": "click", "target": {"key": "scoreBack"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "homeLibraryInfo"}, "wait_after": 2},
+    {"action": "snapshot", "label": "02-library-aligned"}
+  ],
+  "assertions": [
+    {"type": "exists", "target": {"key": "libraryBorrowTab"}, "message": "Borrow-state tab should exist"},
+    {"type": "exists", "target": {"key": "librarySearchTab"}, "message": "Book-search tab should exist"},
+    {"type": "not_exists", "target": {"key": "navTo_home"}, "message": "Bottom navigation must be hidden on library detail"}
+  ]
+}

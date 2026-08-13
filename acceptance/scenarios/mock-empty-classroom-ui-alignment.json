@@ -1,0 +1,13 @@
+{
+  "name": "Mock empty-classroom UI alignment",
+  "steps": [
+    {"action": "click", "target": {"key": "mockHomePreviewButton"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "homeEmptyClassroom"}, "wait_after": 2},
+    {"action": "snapshot", "label": "01-empty-classroom-aligned"}
+  ],
+  "assertions": [
+    {"type": "exists", "target": {"key": "emptyClassroomFilterInput"}, "message": "Source-shaped search field should exist"},
+    {"type": "not_exists", "target": {"key": "emptyClassroomRefresh"}, "message": "Source page has no refresh action"},
+    {"type": "not_exists", "target": {"key": "navTo_home"}, "message": "Bottom navigation must be hidden on detail pages"}
+  ]
+}

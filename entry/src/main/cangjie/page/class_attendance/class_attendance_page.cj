@@ -157,7 +157,7 @@ public class ClassAttendancePage {
                 trailing: this.headerTrailing
             )
 
-            if (this.loading || !this.status.startsWith("共 ")) {
+            if (this.loading) {
                 Text(this.status)
                     .fontSize(11.vp)
                     .fontColor(0xFF65738A)
@@ -173,8 +173,8 @@ public class ClassAttendancePage {
         }
         .width(100.percent)
         .height(100.percent)
-        .padding(left: 16.vp, right: 16.vp, top: 12.vp, bottom: 8.vp)
-        .backgroundColor(0xFFF6F6FE)
+        .padding(left: 14.vp, right: 14.vp, top: 8.vp, bottom: 8.vp)
+        .backgroundColor(0xFFFFFFFF)
         .alignItems(HorizontalAlign.Start)
     }
 
@@ -247,8 +247,9 @@ public class ClassAttendancePage {
                     Row {
                         Text("●").fontSize(13.vp).fontColor(0xFF476FA9).margin(right: 7.vp)
                         Text("未知")
-                            .fontSize(18.vp)
-                            .fontWeight(FontWeight.Bold)
+                            .fontSize(13.vp)
+                            .fontWeight(FontWeight.Normal)
+                            .fontColor(0xFF476FA9)
                             .id("attendanceGroupUnknown")
                     }
                     .width(100.percent)

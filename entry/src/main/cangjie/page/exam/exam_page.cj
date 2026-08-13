@@ -2,6 +2,7 @@ package ohos_app_cangjie_entry.page.exam
 
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
+import ohos.resource.*
 import std.collection.*
 import ohos_app_cangjie_entry.repository.xidian_ids.*
 import ohos_app_cangjie_entry.model.xidian_ids.*
@@ -73,11 +74,12 @@ public class ExamPage {
     func refreshAction() {
         Row {
             HeaderRefreshAction(onRefresh: this.refresh, actionId: "examRefreshButton")
-            if (this.exams.size > 0) {
-                Button("◷").width(38.vp).height(38.vp).fontSize(22.vp)
-                    .fontColor(0xFF344054).buttonStyle(ButtonStyleMode.Textual).backgroundColor(Color.Transparent)
-                    .onClick({_ => this.showUnarranged = true}).id("examUnarrangedButton")
-            }
+            Button {
+                Image(@r(app.media.action_exam_pending)).width(18.vp).height(18.vp)
+                    .objectFit(ImageFit.Contain)
+            }.width(38.vp).height(38.vp).padding(9.vp)
+                .buttonStyle(ButtonStyleMode.Textual).backgroundColor(Color.Transparent)
+                .onClick({_ => this.showUnarranged = true}).id("examUnarrangedButton")
         }
     }
 
@@ -175,7 +177,7 @@ public class ExamPage {
     func build() {
         Column {
             if (this.showUnarranged) { this.unarrangedContent() } else { this.mainContent() }
-        }.width(100.percent).height(100.percent).padding(left: 16.vp, right: 16.vp, top: 12.vp, bottom: 8.vp)
-            .alignItems(HorizontalAlign.Start).backgroundColor(0xFFF7F9FC)
+        }.width(100.percent).height(100.percent).padding(left: 14.vp, right: 14.vp, top: 8.vp, bottom: 8.vp)
+            .alignItems(HorizontalAlign.Start).backgroundColor(0xFFFFFFFF)
     }
 }

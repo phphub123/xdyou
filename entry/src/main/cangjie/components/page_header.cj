@@ -15,18 +15,45 @@ public class HeaderRefreshAction {
     func build() {
         Button {
             Image(@r(app.media.action_refresh))
-                .width(20.vp)
-                .height(20.vp)
+                .width(18.vp)
+                .height(18.vp)
                 .fillColor(0xFF20242B)
                 .objectFit(ImageFit.Contain)
         }
-            .width(40.vp)
-            .height(40.vp)
-            .padding(10.vp)
+            .width(38.vp)
+            .height(38.vp)
+            .padding(9.vp)
             .buttonStyle(ButtonStyleMode.Textual)
             .backgroundColor(Color.Transparent)
             .onClick({ _ => this.onRefresh() })
             .id(this.actionId)
+    }
+}
+
+@Component
+public class PageSearchField {
+    let placeholder: String
+    let value: String
+    let onChange: (String) -> Unit
+    let fieldId: String
+
+    func build() {
+        Row {
+            Image(@r(app.media.action_search))
+                .width(18.vp)
+                .height(18.vp)
+                .objectFit(ImageFit.Contain)
+                .margin(left: 11.vp, right: 7.vp)
+            TextInput(placeholder: this.placeholder, text: this.value)
+                .layoutWeight(1)
+                .height(38.vp)
+                .fontSize(13.vp)
+                .backgroundColor(Color.Transparent)
+                .border(width: 0.vp, color: Color.Transparent, radius: 0.vp)
+                .onChange({ value => this.onChange(value) })
+                .id(this.fieldId)
+        }.width(100.percent).height(42.vp).backgroundColor(0xFFF7F7FC)
+            .border(width: 1.vp, color: 0xFF697386, radius: 8.vp)
     }
 }
 
@@ -62,6 +89,6 @@ public class PageHeader {
                     .layoutWeight(1).margin(left: 8.vp).id(this.titleId)
             }
             this.trailing()
-        }.width(100.percent).height(48.vp)
+        }.width(100.percent).height(48.vp).backgroundColor(0xFFF7F7FC)
     }
 }

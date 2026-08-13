@@ -161,6 +161,14 @@
 - Successful library borrow counts and campus-card balances are cached in process memory only and reused when returning to the campus home. Water/electricity home authentication is no longer started because that service requires campus-network access.
 - Verification: `assembleApp --no-daemon` completed with `BUILD SUCCESSFUL`; live account/device validation is intentionally left to the user for this short turn.
 
+## 2026-08-13 Mock UI screenshot alignment
+
+- Skills: `harmonyos-cangjie-dev`, `cangjie-harmonyos-knowledge`, `cangjie-core-reference`, `harmonyos-build-run-diagnose`, and `harmonyos-evolution`; project configuration, `cangjie-essentials.md`, `Evolution.md`, and packaged memory were read before editing.
+- Screenshot pairs: compared library, score, empty-classroom, attendance, and examination images under `鸿蒙端UI截图暂无真实数据展示mock占位/` against the matching source-app images under `UI真实数据展示截图/`. No account values were copied into code.
+- RAG: configured `doctor` and required `ArkUI Button TextInput state onClick` query returned `OperationalError: unable to open database file`; the writable index was empty. Raw packaged `cj-text-input-textinput.md` and `cj-button-picker-button.md` sections for `onChange` and `ButtonStyleMode.Textual` were read as fallback.
+- Adopted UI conclusions: source detail pages are full-screen without the home bottom navigation; header actions are compact textual icon buttons; search inputs include a leading search icon; score filters are content-width buttons; library uses underlined tabs; exam refresh and unarranged actions remain visible together.
+- Verification: final `assembleApp --no-daemon` reported `BUILD SUCCESSFUL`; HAP `entry/build/default/outputs/default/entry-default-unsigned.hap` was installed on `127.0.0.1:5557`. Mock empty-classroom, exam, and score/library scenarios passed 3/3 assertions each, including absence of `navTo_home` on detail pages. No real IDS login was attempted.
+
 ## 2026-08-13 — homepage child-page header alignment
 
 - Skills: `harmonyos-cangjie-dev`, `harmonyos-project-bootstrap`, `cangjie-harmonyos-knowledge`, `cangjie-core-reference`, `harmonyos-build-run-diagnose`, and `harmonyos-evolution`; required workflow files and `cangjie-essentials.md` were read before editing.
@@ -169,3 +177,10 @@
 - Refs read in full: `docs/API/arkui-cj/cj-image-video-image.md#func-fillcolor-resourcecolor` and `docs/API/arkui-cj/cj-image-video-image.md#func-objectfit-imagefit`. Adopted SVG `Image` with `fillColor`, `ImageFit.Contain`, transparent textual buttons, and 40vp action targets.
 - Implementation: shared SVG back and refresh actions replace text glyphs; title, action size, spacing, color, IDs and behavior are unified across every existing `PageHeader` child page and eleven refresh-capable pages.
 - Validation: baseline and final HAP builds both reported `BUILD SUCCESSFUL`; final HAP installed/launched on `127.0.0.1:5555` as PID `22616`; `scenario-subpage-header.json` passed 3/3 and the inspected capture shows both SVG actions. Bounded hilog has 0 FATAL; its one bundle-name ERROR is the system SCB force-split feature-map diagnostic, not the app process.
+
+## 2026-08-13 Mock UI visual correction
+
+- Compared the score, exam, library, and empty-classroom source captures with the supplied HarmonyOS captures; no real-account data was added.
+- Skills: `harmonyos-cangjie-dev`, `cangjie-harmonyos-knowledge`, and `harmonyos-build-run-diagnose`.
+- RAG query `ArkUI Button Image TextInput Row layout` failed with `OperationalError: unable to open database file`; raw ref `docs/API/arkui-cj/cj-button-picker-button.md#enum-buttonstylemode` was read instead.
+- Adopted conclusion: use `ButtonStyleMode.Normal` for explicitly colored filter/search buttons and do not apply `Image.fillColor` to outline SVG icons.

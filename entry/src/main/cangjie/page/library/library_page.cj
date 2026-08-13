@@ -38,21 +38,25 @@ public class LibraryPage {
     func dateOnly(value: String): String { return if (value.size >= 10) { value[0..10] } else { value } }
     func overdue(value: String): Bool { let date=this.dateOnly(value);return date!="" && date.compare(DateTime.now().format("yyyy-MM-dd")) == Ordering.LT }
     func overdueCount(): Int64 { var count:Int64=0;for(item in this.borrows){if(this.overdue(item.normReturnDate)){count+=1}};return count }
-    @Builder func headerTrailing() {
-        HeaderRefreshAction(onRefresh: {=> if (this.tab == 0) { this.reloadBorrows() } else { this.search() }},
-            actionId: "libraryRefresh")
-    }
     func build() {
         Column {
-            PageHeader(title: "图书馆信息", onBack: this.onBack, backId: "libraryBack", trailing: this.headerTrailing)
+            PageHeader(title: "图书馆信息", onBack: this.onBack, backId: "libraryBack")
             Row {
-                Button("借书状态").layoutWeight(1).height(38.vp).backgroundColor(if(this.tab==0){0xFF46699D}else{0xFFE8ECF4})
-                    .fontColor(if(this.tab==0){0xFFFFFFFF}else{0xFF46699D}).onClick({_=>this.tab=0}).id("libraryBorrowTab")
-                Button("查询藏书").layoutWeight(1).height(38.vp).margin(left:8.vp).backgroundColor(if(this.tab==1){0xFF46699D}else{0xFFE8ECF4})
-                    .fontColor(if(this.tab==1){0xFFFFFFFF}else{0xFF46699D}).onClick({_=>this.tab=1}).id("librarySearchTab")
-            }.width(100.percent).margin(top:10.vp)
+                Column {
+                    Button("借书状态").width(100.percent).height(38.vp).fontSize(12.vp)
+                        .buttonStyle(ButtonStyleMode.Textual).backgroundColor(Color.Transparent)
+                        .fontColor(0xFF20242B).onClick({_=>this.tab=0}).id("libraryBorrowTab")
+                    Divider().width(46.vp).strokeWidth(2.vp).color(if(this.tab==0){0xFF20242B}else{0x00FFFFFF})
+                }.layoutWeight(1)
+                Column {
+                    Button("查询藏书").width(100.percent).height(38.vp).fontSize(12.vp)
+                        .buttonStyle(ButtonStyleMode.Textual).backgroundColor(Color.Transparent)
+                        .fontColor(0xFF20242B).onClick({_=>this.tab=1}).id("librarySearchTab")
+                    Divider().width(46.vp).strokeWidth(2.vp).color(if(this.tab==1){0xFF20242B}else{0x00FFFFFF})
+                }.layoutWeight(1)
+            }.width(100.percent).margin(top:2.vp)
             if (this.tab == 0) {
-                Text(this.status).fontSize(12.vp).fontColor(0xFF65738A).margin(top:8.vp).id("libraryStatus")
+                if (this.loading) { Text(this.status).fontSize(12.vp).fontColor(0xFF65738A).margin(top:8.vp).id("libraryStatus") }
                 Scroll { Column {
                     ForEach(this.borrows,itemGenerator:{item:BorrowData,index:Int64=>Row {
                         Column { Image(@r(app.media.home_book)).width(38.vp).height(38.vp).fillColor(0xFF46699D) }
@@ -73,8 +77,33 @@ public class LibraryPage {
                 Text("在借 ${this.borrows.size} 本，其中已过期 ${this.overdueCount()} 本")
                     .width(100.percent).height(40.vp).fontSize(13.vp).textAlign(TextAlign.Center).backgroundColor(0xFFFFFFFF).id("libraryBorrowSummary")
             } else {
-                Row { TextInput(placeholder:"搜索书名、作者或 ISBN",text:this.keyword).layoutWeight(1).height(42.vp).onChange({v=>this.keyword=v}).id("librarySearchInput")
-                    Button("搜索").height(42.vp).margin(left:8.vp).onClick({_=>this.search()}).id("librarySearchButton") }.width(100.percent).margin(top:10.vp)
+                Column {
+                    Row {
+                        Column {
+                            Text("搜索字段").fontSize(10.vp).fontColor(0xFF65738A)
+                                .width(100.percent).margin(left: 10.vp, top: 3.vp)
+                            Row {
+                                Text("任意词").fontSize(12.vp).layoutWeight(1)
+                                Text("⌄").fontSize(12.vp)
+                            }.width(100.percent).padding(left: 10.vp, right: 10.vp)
+                        }.width(112.vp).height(42.vp).border(width: 1.vp, color: 0xFF20242B, radius: 8.vp)
+                        Row {
+                            Image(@r(app.media.action_search)).width(16.vp).height(16.vp).margin(left: 10.vp, right: 7.vp)
+                            TextInput(placeholder:"在此搜索",text:this.keyword).layoutWeight(1).height(40.vp)
+                                .fontSize(12.vp).backgroundColor(Color.Transparent)
+                                .border(width:0.vp,color:Color.Transparent,radius:0.vp)
+                                .onChange({v=>this.keyword=v}).id("librarySearchInput")
+                        }.layoutWeight(1).height(42.vp).margin(left: 7.vp)
+                            .border(width: 1.vp, color: 0xFF20242B, radius: 8.vp)
+                    }.width(100.percent)
+                    Row {
+                        Text("⌄  更多搜索选项").fontSize(11.vp).fontColor(0xFF476FA9).layoutWeight(1)
+                        Button("搜索").width(80.vp).height(36.vp).fontSize(12.vp)
+                            .buttonStyle(ButtonStyleMode.Normal).backgroundColor(0xFF476FA9)
+                            .onClick({_=>this.search()}).id("librarySearchButton")
+                    }.width(100.percent).margin(top: 9.vp)
+                }.width(100.percent).padding(9.vp).margin(top: 10.vp)
+                    .backgroundColor(0xFFF0F1F8).borderRadius(8.vp)
                 Text(this.status).fontSize(12.vp).fontColor(0xFF65738A).margin(top:8.vp)
                 Scroll { Column { ForEach(this.books,itemGenerator:{book:BookInfo,index:Int64=>Column {
                     Text(book.bookName).fontSize(16.vp).fontWeight(FontWeight.Bold)
@@ -88,6 +117,7 @@ public class LibraryPage {
                 onReady: { url: String, payload: String, cookies: String => this.authRaw = url + "|" + payload; this.authCookies = cookies; this.reloadBorrows() },
                 onFailure: { message: String => this.loading = false; this.status = message }
             )
-        }.width(100.percent).height(100.percent).padding(18.vp).backgroundColor(0xFFF7F9FC).alignItems(HorizontalAlign.Start)
+        }.width(100.percent).height(100.percent).padding(left: 12.vp, right: 12.vp, top: 8.vp, bottom: 0.vp)
+            .backgroundColor(0xFFFFFFFF).alignItems(HorizontalAlign.Start)
     }
 }

@@ -105,6 +105,7 @@ public class AlignedHomePage {
                     AlignedSettingsPage(account: this.account, onLogout: this.onLogout)
                 }
             }.width(100.percent).layoutWeight(1)
+            if (this.homeFeature == 0) {
             Row {
                 AlignedNavItem(
                     icon: @r(app.media.nav_school),
@@ -152,6 +153,7 @@ public class AlignedHomePage {
                 .padding(left: 3.vp, right: 3.vp, top: 5.vp, bottom: 3.vp)
                 .backgroundColor(ThemePalette.navSurface(this.darkMode()))
                 .border(width: 1.vp, color: ThemePalette.border(this.darkMode()))
+            }
         }.width(100.percent).height(100.percent).backgroundColor(ThemePalette.pageBackground(this.darkMode()))
     }
 }

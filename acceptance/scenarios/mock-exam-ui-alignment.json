@@ -1,0 +1,13 @@
+{
+  "name": "Mock exam UI alignment",
+  "steps": [
+    {"action": "click", "target": {"key": "mockHomePreviewButton"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "homeExam"}, "wait_after": 2},
+    {"action": "snapshot", "label": "01-exam-aligned"}
+  ],
+  "assertions": [
+    {"type": "exists", "target": {"key": "examRefreshButton"}, "message": "Refresh action should exist"},
+    {"type": "exists", "target": {"key": "examUnarrangedButton"}, "message": "Unarranged-exam action should exist even before data loads"},
+    {"type": "not_exists", "target": {"key": "navTo_home"}, "message": "Bottom navigation must be hidden on detail pages"}
+  ]
+}

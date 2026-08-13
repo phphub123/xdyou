@@ -156,11 +156,6 @@ public class EmptyClassroomPage {
     }
 
     @Builder
-    func refreshAction() {
-        HeaderRefreshAction(onRefresh: this.search, actionId: "emptyClassroomRefresh")
-    }
-
-    @Builder
     func buildingPickerDialog() {
         Column {
             Text("选择教学楼").fontSize(17.vp).fontWeight(FontWeight.Medium).margin(bottom: 6.vp)
@@ -183,30 +178,32 @@ public class EmptyClassroomPage {
         Stack {
             Column {
                 PageHeader(title: "空闲教室", onBack: this.onBack,
-                    backId: "emptyClassroomBack", trailing: this.refreshAction)
+                    backId: "emptyClassroomBack")
 
-                TextInput(placeholder: "搜索教室名称或教学楼代号", text: this.filter)
-                    .width(100.percent).height(42.vp).margin(top: 10.vp)
-                    .backgroundColor(0xFFF2F3F8).border(width: 1.vp, color: 0xFF476FA9).borderRadius(10.vp)
-                    .onChange({ value => this.filter = value }).id("emptyClassroomFilterInput")
+                Column {
+                    PageSearchField(placeholder: "教室名称或者教学楼代码", value: this.filter,
+                        onChange: { value => this.filter = value }, fieldId: "emptyClassroomFilterInput")
+                }.width(100.percent).margin(top: 8.vp)
 
                 Row {
                     TextInput(placeholder: "yyyy-MM-dd", text: this.date)
-                        .layoutWeight(1).height(38.vp).fontSize(12.vp).fontColor(0xFFFFFFFF)
+                        .width(128.vp).height(34.vp).fontSize(11.vp).fontColor(0xFFFFFFFF)
                         .backgroundColor(0xFF476FA9).borderRadius(8.vp)
                         .onChange({ value => this.date = value }).id("emptyClassroomDateInput")
                     Button("教学楼：${this.selectedBuildingName()}")
-                        .layoutWeight(1).height(38.vp).fontSize(12.vp).margin(left: 10.vp)
+                        .height(34.vp).fontSize(11.vp).margin(left: 8.vp).padding(left: 13.vp, right: 13.vp)
                         .backgroundColor(0xFF476FA9).onClick({_ => this.openBuildingPicker()})
                         .id("emptyClassroomBuildingPicker")
-                }.width(100.percent).margin(top: 10.vp)
+                }.width(100.percent).margin(top: 10.vp).justifyContent(FlexAlign.Center)
 
                 Row {
                     Row { this.slotBadge(true, -1); Text("占用").fontSize(12.vp).margin(left: 5.vp) }
                     Row { this.slotBadge(false, -1); Text("空闲").fontSize(12.vp).margin(left: 5.vp) }.margin(left: 18.vp)
                 }.width(100.percent).justifyContent(FlexAlign.Center).margin(top: 8.vp)
 
-                Text(this.status).fontSize(11.vp).fontColor(0xFF65738A).margin(top: 7.vp).id("emptyClassroomStatus")
+                if (this.loading) {
+                    Text(this.status).fontSize(11.vp).fontColor(0xFF65738A).margin(top: 7.vp).id("emptyClassroomStatus")
+                }
 
                 Scroll {
                     Column {
@@ -226,8 +223,8 @@ public class EmptyClassroomPage {
                     }.width(100.percent).alignItems(HorizontalAlign.Start)
                 }.width(100.percent).layoutWeight(1).margin(top: 5.vp).align(Alignment.TopStart)
                     .id("emptyClassroomMatrix")
-            }.width(100.percent).height(100.percent).padding(left: 16.vp, right: 16.vp, top: 12.vp, bottom: 8.vp)
-                .alignItems(HorizontalAlign.Start).backgroundColor(0xFFF7F9FC)
+            }.width(100.percent).height(100.percent).padding(left: 14.vp, right: 14.vp, top: 8.vp, bottom: 8.vp)
+                .alignItems(HorizontalAlign.Start).backgroundColor(0xFFFFFFFF)
 
             if (this.showBuildingPicker) {
                 Column {}.width(100.percent).height(100.percent).backgroundColor(0x66000000)

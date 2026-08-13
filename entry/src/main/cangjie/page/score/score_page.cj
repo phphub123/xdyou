@@ -98,16 +98,22 @@ public class ScorePage {
     func build() {
         Column {
             PageHeader(title: "成绩查询", onBack: this.onBack, backId: "scoreBack", trailing: this.refreshAction)
-            TextInput(placeholder: "搜索成绩记录", text: this.query)
-                .width(100.percent).height(42.vp).margin(top: 10.vp)
-                .backgroundColor(0xFFF2F3F8).border(width: 1.vp, color: 0xFF476FA9).borderRadius(8.vp)
-                .onChange({ value => this.query = value }).id("scoreSearchInput")
-            Row {
-                Button("学期 ${this.semesterFilter}").layoutWeight(1).height(36.vp).fontSize(11.vp)
-                    .onClick({_ => this.nextSemester()}).id("scoreSemesterFilter")
-                Button("类型 ${this.typeFilter}").layoutWeight(1).height(36.vp).fontSize(11.vp).margin(left: 8.vp)
-                    .onClick({_ => this.nextType()}).id("scoreTypeFilter")
+            Column {
+                PageSearchField(placeholder: "搜索成绩记录", value: this.query,
+                    onChange: { value => this.query = value }, fieldId: "scoreSearchInput")
             }.width(100.percent).margin(top: 8.vp)
+            Row {
+                Button("学期 ${this.semesterFilter}").height(34.vp).fontSize(11.vp)
+                    .padding(left: 14.vp, right: 14.vp).borderRadius(8.vp)
+                    .buttonStyle(ButtonStyleMode.Normal)
+                    .backgroundColor(0xFF476FA9).fontColor(0xFFFFFFFF)
+                    .onClick({_ => this.nextSemester()}).id("scoreSemesterFilter")
+                Button("类型 ${this.typeFilter}").height(34.vp).fontSize(11.vp).margin(left: 8.vp)
+                    .padding(left: 14.vp, right: 14.vp).borderRadius(8.vp)
+                    .buttonStyle(ButtonStyleMode.Normal)
+                    .backgroundColor(0xFF476FA9).fontColor(0xFFFFFFFF)
+                    .onClick({_ => this.nextType()}).id("scoreTypeFilter")
+            }.width(100.percent).margin(top: 8.vp).justifyContent(FlexAlign.Start)
             if (this.scores.size > 0) {
                 Text("计入 ${this.summary().count} 门 · ${this.summary().credit} 学分 · 加权均分 ${this.summary().average} · GPA ${this.summary().gpa}")
                     .fontSize(10.vp).fontColor(0xFF65738A).margin(top: 7.vp).id("scoreSummary")
@@ -123,7 +129,7 @@ public class ScorePage {
                     if (!this.loading && this.scores.size == 0) { Text("暂无成绩记录").margin(top: 36.vp) }
                 }.width(100.percent).padding(bottom: 24.vp)
             }.width(100.percent).layoutWeight(1).align(Alignment.TopStart)
-        }.width(100.percent).height(100.percent).padding(left: 16.vp, right: 16.vp, top: 12.vp, bottom: 8.vp)
-            .alignItems(HorizontalAlign.Start).backgroundColor(0xFFF7F9FC)
+        }.width(100.percent).height(100.percent).padding(left: 14.vp, right: 14.vp, top: 8.vp, bottom: 8.vp)
+            .alignItems(HorizontalAlign.Start).backgroundColor(0xFFFFFFFF)
     }
 }
