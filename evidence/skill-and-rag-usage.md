@@ -228,3 +228,20 @@
 - Skills: `harmonyos-cangjie-dev` and `harmonyos-build-run-diagnose`.
 - Increased only the arrow glyph and visual width from 12vp to 14vp; retained the 1vp label gap and medium weight so the compact original-image proportion is preserved.
 - Verification: HAP `BUILD SUCCESSFUL in 10 s 525 ms`.
+
+## 2026-08-14 — homepage first course-card alignment
+
+- Skills: `harmonyos-cangjie-dev` and `harmonyos-build-run-diagnose`; both workflow files and `cangjie-essentials.md` were read before editing.
+- Source/reference: `UI真实数据展示截图/校园信息首页数据展示.png` and `source_2.0/lib/page/homepage/info_widget/classtable_card.dart`.
+- Adopted: restored the Flutter card's 32vp calendar icon, 18vp icon-to-copy gap, 14vp subtitle and 16vp empty-state label; preview-only state chips, title, date/week line and empty-state copy now match the supplied reference without manufacturing production schedule data.
+- Verification: HAP `BUILD SUCCESSFUL in 8 s 561 ms`; installed/launched on `127.0.0.1:5555` as PID `31201`; `homeScheduleCard` is present at 1208×518 px in the 1320 px-wide emulator capture. The retained real-login session verifies the production card geometry while intentionally preserving its live loading copy.
+- Evidence: `evidence/home-course-card-alignment-2026-08-14/`.
+
+## 2026-08-14 — homepage genuine schedule-state calculation
+
+- Skills: `harmonyos-cangjie-dev`, `cangjie-core-reference`, and `harmonyos-build-run-diagnose`.
+- Source chain read: `source_2.0/lib/controller/homepage_controller.dart`, `source_2.0/lib/controller/classtable_controller.dart`, `source_2.0/lib/page/homepage/info_widget/classtable_card.dart`, and the Simplified/Traditional Chinese translation keys.
+- Cangjie reference read: `references/cangjie-std/REFERENCE.md`, `references/cangjie-std/time/README.md`, and the Timer section of `references/cangjie-std/sync/README.md`.
+- Adopted: `DateTime.now()` supplies local time; the card switches to tomorrow after 21:25; term start and semester length determine the 1-based week or `假期中`; day/week filtering plus period-end filtering determines remaining courses; a zero result produces `今日安排完成` and `暂无日程`. A retained `Timer.repeat` refreshes the derived state every minute and is cancelled when the component disappears.
+- Verification: HAP `BUILD SUCCESSFUL in 8 s 244 ms`; installed/launched on `127.0.0.1:5555` as PID `7456`; after a 20-second genuine timetable load the component tree contains `今日安排完成`, `8月14日 周五 假期中`, and `暂无日程`.
+- Evidence: `evidence/home-course-real-time-2026-08-14/`.

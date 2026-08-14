@@ -180,3 +180,15 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 ## Campus-card dropdown arrow 14vp follow-up (2026-08-13)
 
 - Increased the compact month/year arrow from 12vp to 14vp without changing its 1vp label spacing; final HAP build passed.
+
+## Homepage first course-card alignment (2026-08-14)
+
+- Matched the first homepage course card to the supplied real-data screenshot and the Flutter `ClassTableCard` sizing: 32vp calendar icon, 18vp copy gap, 14vp subtitle, 16vp bottom state and capsule-shaped status chips.
+- The mock preview reproduces the supplied two failure chips, completed-today title, date/week line and empty schedule copy; the normal path continues to show genuine controller state rather than hard-coded schedule data.
+- Final HAP built successfully, installed and remained foreground on `127.0.0.1:5555` as PID `31201`. Evidence: `evidence/home-course-card-alignment-2026-08-14/`.
+
+## Homepage genuine schedule-state calculation (2026-08-14)
+
+- Ported the Flutter homepage/controller decision chain instead of showing semester totals: local time, 21:25 tomorrow rollover, term-start week calculation, holiday bounds, weekday/week filtering and elapsed-course removal.
+- The card now recomputes every minute and cancels its timer on disappearance. Empty remaining arrangements produce the source strings `今日安排完成` and `暂无日程`; the date line includes the real month/day, weekday and either the current week or `假期中`.
+- Final HAP built and installed successfully. The retained real session rendered `今日安排完成 / 8月14日 周五 假期中 / 暂无日程` on PID `7456`. Evidence: `evidence/home-course-real-time-2026-08-14/`.
