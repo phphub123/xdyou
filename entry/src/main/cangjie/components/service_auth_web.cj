@@ -15,6 +15,7 @@ public class ServiceAuthWeb {
     let url: String
     let cookieUrl: String
     let stableId: String
+    let requireOpenId: Bool
     let onReady: (String, String, String) -> Unit
     let onFailure: (String) -> Unit
     let controller: WebviewController = WebviewController()
@@ -60,7 +61,7 @@ public class ServiceAuthWeb {
   const href = safe(() => location.href);
   const input = safe(() => {
     const node = document.querySelector('#openid, input[name=openid]');
-    return node ? node.value : '';
+    return (node ? node.value : '') || new URL(location.href).searchParams.get('openid') || '';
   });
   const jwt = safe(() => {
     const url = new URL(location.href);
@@ -83,7 +84,9 @@ public class ServiceAuthWeb {
                                 if (value.startsWith("XDYOU_AUTH|")) {
                                     let tokenReady = !value.contains("|code=|") || !value.contains("|openid=|") || !value.contains("|jwt=|")
                                     let cookieFallbackReady = allowCookieFallback && this.inspectAttempts >= 4
-                                    if (!tokenReady && !cookieFallbackReady) { return }
+                                    let ready = if (this.requireOpenId) { !value.contains("|openid=|") }
+                                        else { tokenReady || cookieFallbackReady }
+                                    if (!ready) { return }
                                     let idsCookies = WebCookieManager.fetchCookie("https://ids.xidian.edu.cn/authserver/login")
                                     let serviceCookies = WebCookieManager.fetchCookie(this.cookieUrl)
                                     let cookies = if (idsCookies == "") { serviceCookies }

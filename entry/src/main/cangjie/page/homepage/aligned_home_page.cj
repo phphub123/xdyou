@@ -264,15 +264,14 @@ public class AlignedCampusPage {
             this.scheduleStatus = "预览数据"
             return
         }
+        this.cardAuthStarted = false
+        this.loadCardDirect()
         this.stopScheduleTimer()
         this.scheduleTimer = Some(Timer.repeat(Duration.second * 60, Duration.second * 60, { => launch {
             if (this.scheduleLoaded) { this.updateScheduleDisplay() }
         }}))
         Timer.once(Duration.second * 22, { => launch {
             this.libraryAuthStarted = true
-        }})
-        Timer.once(Duration.second * 32, { => launch {
-            this.cardAuthStarted = true
         }})
         if (LibraryController.cachedBorrowCount >= 0) {
             this.libraryValue = "借书 ${LibraryController.cachedBorrowCount} 本"
@@ -425,6 +424,15 @@ public class AlignedCampusPage {
         this.schoolCardController.overview({ value => launch {
             this.schoolCardValue = "卡里 ${value.balance} 元"; this.schoolCardStatus = "查询一卡通流水"
         } }, { message => launch { this.schoolCardValue = "校园卡信息暂不可用"; this.schoolCardStatus = message } })
+    }
+    func loadCardDirect(): Unit {
+        this.schoolCardController.overview({ value => launch {
+            this.schoolCardValue = "卡里 ${value.balance} 元"
+            this.schoolCardStatus = "查询一卡通流水"
+        } }, { message => launch {
+            this.schoolCardStatus = message
+            this.cardAuthStarted = true
+        } })
     }
     func build() {
         Column {
@@ -596,6 +604,7 @@ public class AlignedCampusPage {
                 url: "https://tyrzfw.chaoxing.com/auth/xidian/cas/init?isLogout=0&refer=https%3A%2F%2Fmfindxidian.libsp.cn%2Ffind%2Fsso%2Flogin%2Fxidian%2F1",
                 cookieUrl: "https://mfindxidian.libsp.cn",
                 stableId: "homeLibraryAuthWeb",
+                requireOpenId: false,
                 onReady: { url: String, payload: String, cookies: String => this.loadLibraryWeb(url + "|" + payload, cookies) },
                 onFailure: { message: String => this.libraryValue = "借书信息暂不可用"; this.libraryStatus = message }
             )
@@ -605,6 +614,7 @@ public class AlignedCampusPage {
                 url: "https://v8scan.xidian.edu.cn/home/openXDOAuth2Page",
                 cookieUrl: "https://v8scan.xidian.edu.cn",
                 stableId: "homeCardAuthWeb",
+                requireOpenId: true,
                 onReady: { url: String, payload: String, cookies: String => this.loadCardWeb(url + "|" + payload, cookies) },
                 onFailure: { message: String => this.schoolCardValue = "校园卡信息暂不可用"; this.schoolCardStatus = message }
             )

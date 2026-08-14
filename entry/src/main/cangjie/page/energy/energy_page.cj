@@ -88,6 +88,7 @@ public class EnergyPage {
                 url: "https://xxcapp.xidian.edu.cn/uc/api/oauth/index?redirect=https://ignypt.xidian.edu.cn/revenueH5/login?opcode=MPAY%26appid=200260318155520600%26state=12312312312312%26qrcode=0",
                 cookieUrl: "https://ignypt.xidian.edu.cn",
                 stableId: "energyAuthWeb",
+                requireOpenId: false,
                 onReady: { url: String, payload: String, cookies: String => this.authUrl = url + "|" + payload; this.authCookies = cookies; this.reloadEnergy() },
                 onFailure: { message: String => this.loading = false; this.status = message }
             )

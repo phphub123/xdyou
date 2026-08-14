@@ -94,17 +94,19 @@ public class SchoolCardSession {
             let headers = HashMap<String, String>()
             if (cookie != "") { headers["Cookie"] = cookie }
             let isPost = body != ""
-            headers["Accept"] = if (isPost) { "application/json, text/javascript, */*; q=0.01" } else { "text/html,application/json;q=0.9,*/*;q=0.8" }
-            headers["Referer"] = if (isPost) { SchoolCardSession.baseUrl + "/selftrade/openSelfTrade?openid=${this.openid}" } else { SchoolCardSession.baseUrl + "/" }
-            headers["Content-Type"] = "application/json; charset=utf-8"
-            if (isPost) {
-                headers["Origin"] = SchoolCardSession.baseUrl
-                headers["X-Requested-With"] = "XMLHttpRequest"
+            headers["User-Agent"] = IDSSession.browserUserAgent
+            headers["Content-Type"] = if (isPost) { "application/json; charset=utf-8" }
+                else { "application/x-www-form-urlencoded" }
+            let options = if (body == "") {
+                HttpRequestOptions(method: method, header: headers,
+                    expectDataType: HttpDataType.StringValue, usingCache: false,
+                    connectTimeout: 10000, readTimeout: 30000)
+            } else {
+                HttpRequestOptions(method: method, header: headers,
+                    extraData: HttpData.StringData(body),
+                    expectDataType: HttpDataType.StringValue, usingCache: false,
+                    connectTimeout: 10000, readTimeout: 30000)
             }
-            let options = HttpRequestOptions(method: method, header: headers,
-                extraData: HttpData.StringData(body),
-                expectDataType: HttpDataType.StringValue, usingCache: false,
-                connectTimeout: 10000, readTimeout: 30000)
             client.request(url, options, { error, response =>
                 client.destroy()
                 match (error) {
@@ -205,17 +207,35 @@ public class SchoolCardSession {
         }
     }
 
-    public func getOverview(success: (SchoolCardOverview) -> Unit, failure: (String) -> Unit): Unit {
+    func retryOverview(message: String, retried: Bool,
+        success: (SchoolCardOverview) -> Unit, failure: (String) -> Unit): Unit {
+        if (retried) { failure(message); return }
+        this.openid = ""
+        this.lastRedirectLocation = ""
+        this.loadOverview(true, success, failure)
+    }
+
+    func loadOverview(retried: Bool,
+        success: (SchoolCardOverview) -> Unit, failure: (String) -> Unit): Unit {
         this.ensureOpenId({ =>
             this.request(SchoolCardSession.baseUrl + "/myaccount/openMyAccount?openid=${this.openid}",
                 RequestMethod.Get, this.serviceCookie, "", { code, _, html, merged =>
                     this.serviceCookie = merged
-                    if (code != 200) { failure("Campus-card overview returned HTTP ${code}."); return }
+                    if (code != 200) {
+                        this.retryOverview("Campus-card overview returned HTTP ${code}.", retried, success, failure)
+                        return
+                    }
                     let money = this.moneyFromOverview(html)
-                    if (money == "") { failure("Campus-card overview did not contain a balance.") }
+                    if (money == "") {
+                        this.retryOverview("Campus-card overview did not contain a balance.", retried, success, failure)
+                    }
                     else { success(SchoolCardOverview(money)) }
-                }, failure)
+                }, { message => this.retryOverview(message, retried, success, failure) })
         }, failure)
+    }
+
+    public func getOverview(success: (SchoolCardOverview) -> Unit, failure: (String) -> Unit): Unit {
+        this.loadOverview(false, success, failure)
     }
 
     public func authorizeFromWeb(raw: String, cookie: String, failure: (String) -> Unit): Bool {
@@ -234,21 +254,31 @@ public class SchoolCardSession {
         }
     }
 
-    public func getPaidStatus(begin: String, end: String,
+    func retryPaidStatus(begin: String, end: String, message: String, retried: Bool,
         success: (ArrayList<PaidRecord>) -> Unit, failure: (String) -> Unit): Unit {
-        if (!Regex(#"^[0-9]{4}-[0-9]{2}-[0-9]{2}$"#).matches(begin) ||
-            !Regex(#"^[0-9]{4}-[0-9]{2}-[0-9]{2}$"#).matches(end)) {
-            failure("Dates must use yyyy-MM-dd."); return
-        }
+        if (retried) { failure(message); return }
+        this.openid = ""
+        this.lastRedirectLocation = ""
+        this.loadPaidStatus(begin, end, true, success, failure)
+    }
+
+    func loadPaidStatus(begin: String, end: String, retried: Bool,
+        success: (ArrayList<PaidRecord>) -> Unit, failure: (String) -> Unit): Unit {
         this.ensureOpenId({ =>
             let body = "{\"beginDate\":\"${begin}\",\"endDate\":\"${end}\",\"tradeType\":\"-1\",\"openid\":\"${this.openid}\"}"
             this.request(SchoolCardSession.baseUrl + "/selftrade/queryCardSelfTradeList?openid=${this.openid}",
                 RequestMethod.Post, this.serviceCookie, body, { code, _, text, merged =>
                     this.serviceCookie = merged
-                    if (code != 200) { failure("Campus-card records returned HTTP ${code}."); return }
+                    if (code != 200) {
+                        this.retryPaidStatus(begin, end, "Campus-card records returned HTTP ${code}.", retried, success, failure)
+                        return
+                    }
                     try {
                         let payload = this.jsonPayload(text)
-                        if (payload == "") { failure("校园卡会话已失效，请重新打开页面完成认证。"); return }
+                        if (payload == "") {
+                            this.retryPaidStatus(begin, end, "校园卡会话已失效，请重新登录。", retried, success, failure)
+                            return
+                        }
                         let root = JsonValue.fromStr(payload).asObject()
                         match (root.get("resultData")) {
                             case Some(value) =>
@@ -259,11 +289,24 @@ public class SchoolCardSession {
                                     index += 1
                                 }
                                 success(result)
-                            case None => failure("Campus-card response did not contain transaction data.")
+                            case None => this.retryPaidStatus(begin, end,
+                                "Campus-card response did not contain transaction data.", retried, success, failure)
                         }
-                    } catch (error: Exception) { failure("Malformed campus-card transaction response: ${error.message}") }
-                }, failure)
+                    } catch (error: Exception) {
+                        this.retryPaidStatus(begin, end,
+                            "Malformed campus-card transaction response: ${error.message}", retried, success, failure)
+                    }
+                }, { message => this.retryPaidStatus(begin, end, message, retried, success, failure) })
         }, failure)
+    }
+
+    public func getPaidStatus(begin: String, end: String,
+        success: (ArrayList<PaidRecord>) -> Unit, failure: (String) -> Unit): Unit {
+        if (!Regex(#"^[0-9]{4}-[0-9]{2}-[0-9]{2}$"#).matches(begin) ||
+            !Regex(#"^[0-9]{4}-[0-9]{2}-[0-9]{2}$"#).matches(end)) {
+            failure("Dates must use yyyy-MM-dd."); return
+        }
+        this.loadPaidStatus(begin, end, false, success, failure)
     }
 
     public func getQRCode(success: (String) -> Unit, failure: (String) -> Unit): Unit {

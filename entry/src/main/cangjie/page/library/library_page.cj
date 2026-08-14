@@ -230,6 +230,7 @@ public class LibraryPage {
                 url: "https://tyrzfw.chaoxing.com/auth/xidian/cas/init?isLogout=0&refer=https%3A%2F%2Fmfindxidian.libsp.cn%2Ffind%2Fsso%2Flogin%2Fxidian%2F1",
                 cookieUrl: "https://mfindxidian.libsp.cn",
                 stableId: "libraryAuthWeb",
+                requireOpenId: false,
                 onReady: { url: String, payload: String, cookies: String => this.authRaw = url + "|" + payload; this.authCookies = cookies; this.reloadBorrows() },
                 onFailure: { message: String => this.loading = false; this.status = message }
             )

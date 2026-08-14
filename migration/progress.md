@@ -177,6 +177,14 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Reduced the arrow visual box and label gap to match the supplied screenshot while keeping the arrow readable and the whole header button clickable.
 - Final build and month/year dropdown scenario passed; evidence: `evidence/school-card-dropdown-arrow-proportion-2026-08-13/`.
 
+## 2026-08-14 Campus-card live-data recovery
+
+- Campus-card balance and transactions now start from the persisted IDS session directly; hidden Web authentication is only a fallback.
+- GET requests no longer send empty `extraData`; overview and transaction requests refresh OpenID once, and the transaction page is opened before its AJAX query to establish the service cookie.
+- Final HAP build and foreground launch passed. Populated live validation remains `BLOCKED_EXTERNAL` because the stored Ehall session expired during verification. Electricity/water was intentionally unchanged.
+- Follow-up fixed the observed infinite campus-card query cycle: service Web authentication can no longer report ready without a real OpenID, and the detail page remounts the Web fallback at most once. Build/install/launch passed; re-login is still required for populated verification.
+- Campus-card authentication now starts with its browser SSO chain and waits for OpenID before API calls. The range calendar's month/year Builder reads live state; emulator capture verified `Aug 2026 -> Sep 2026`. Current live-row validation is blocked by Ehall initialization HTTP 500.
+
 ## Campus-card dropdown arrow 14vp follow-up (2026-08-13)
 
 - Increased the compact month/year arrow from 12vp to 14vp without changing its 1vp label spacing; final HAP build passed.
@@ -217,3 +225,9 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Fixed the reported week-7/week-9 mismatch between 5×5 dot colors and visible course cards. Parameterized day builders no longer derive transient lists from `chosenWeek`; switching weeks materializes seven direct `@State` day lists and rebuilds the dot previews from the same course snapshot.
 - Course render keys now include the selected week and day, preventing ArkUI from retaining course-card nodes belonging to the previously selected week.
 - Final HAP built, was freshly installed, and launched as PID `31689`; bounded logs contain 0 app FATAL. Genuine week-7/week-9 screenshot comparison is `IN_PROGRESS` because the explicitly requested uninstall cleared the retained login session. Evidence: `evidence/classtable-week-card-sync-2026-08-14/`.
+
+## Campus-card Android-chain correction (2026-08-14)
+
+- Captured the successful Flutter chain from the running Android emulator: `openXDOAuth2Page -> xxcapp OAuth -> openHomePage?code -> queryCardSelfTradeList`.
+- Removed the unsupported `/selftrade/openSelfTrade` preflight that produced HTTP 404, matched the source request headers/body, restored direct OpenID SSO as the primary path, and retained one hidden-Web fallback instead of repeated refreshes.
+- Final HAP build and replacement install passed. The final emulator launch reported an expired Ehall/IDS session, so populated balance/rows remain `BLOCKED_EXTERNAL` until login is renewed; no mock campus-card values were added.

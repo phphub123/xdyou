@@ -28,7 +28,8 @@ public class SchoolCardPage {
     @State var calendarYear: Int64 = 0
     @State var calendarMonth: Int64 = 0
     @State var calendarSelector: Int64 = 0
-    var authorized: Bool = false
+    @State var authorized: Bool = true
+    @State var authFallbackUsed: Bool = false
 
     protected override func aboutToAppear(): Unit {
         this.useCurrentMonth()
@@ -68,6 +69,11 @@ public class SchoolCardPage {
             message => launch {
                 this.loading = false
                 this.status = message
+                if (!this.authFallbackUsed) {
+                    this.authFallbackUsed = true
+                    this.authorized = false
+                    this.status = "正在完成校园卡认证…"
+                }
             }
         })
     }
@@ -291,11 +297,12 @@ public class SchoolCardPage {
     }
 
     @Builder
-    func dropdownHeader(title: String, opened: Bool, stableId: String, action: () -> Unit) {
+    func dropdownHeader(isMonth: Bool, stableId: String, action: () -> Unit) {
         Button {
             Row {
-                Text(title).fontSize(12.vp).fontColor(0xFF4C5059)
-                Text(if (opened) { "▴" } else { "▾" })
+                Text(if (isMonth) { this.monthName() } else { this.calendarYear.toString() })
+                    .fontSize(12.vp).fontColor(0xFF4C5059)
+                Text(if ((isMonth && this.calendarSelector == 1) || (!isMonth && this.calendarSelector == 2)) { "▴" } else { "▾" })
                     .width(14.vp)
                     .height(20.vp)
                     .fontSize(14.vp)
@@ -415,13 +422,16 @@ public class SchoolCardPage {
                 .padding(left: 12.vp, right: 12.vp, top: 12.vp)
                 .backgroundColor(0xFFFFFFFF)
                 .alignItems(HorizontalAlign.Center)
-            ServiceAuthWeb(
-                url: "https://v8scan.xidian.edu.cn/home/openXDOAuth2Page",
-                cookieUrl: "https://v8scan.xidian.edu.cn",
-                stableId: "schoolCardAuthWeb",
-                onReady: { url: String, payload: String, cookies: String => this.authorizeResponse(url, payload, cookies) },
-                onFailure: { message: String => this.loading = false; this.status = message }
-            )
+            if (!this.authorized) {
+                ServiceAuthWeb(
+                    url: "https://v8scan.xidian.edu.cn/home/openXDOAuth2Page",
+                    cookieUrl: "https://v8scan.xidian.edu.cn",
+                    stableId: "schoolCardAuthWeb",
+                    requireOpenId: true,
+                    onReady: { url: String, payload: String, cookies: String => this.authorizeResponse(url, payload, cookies) },
+                    onFailure: { message: String => this.loading = false; this.status = message }
+                )
+            }
             if (this.showQr) {
                 Column {
                     Text("校园卡实时付款码").fontSize(20.vp).fontWeight(FontWeight.Bold)
@@ -462,8 +472,8 @@ public class SchoolCardPage {
                     .onClick({_ => this.showDateRange = false}).id("schoolCardDateScrim")
                 Column {
                     Row {
-                        this.dropdownHeader(this.monthName(), this.calendarSelector == 1, "schoolCardMonthDropdown", {=> this.showMonthSelector()})
-                        this.dropdownHeader(this.calendarYear.toString(), this.calendarSelector == 2, "schoolCardYearDropdown", {=> this.showYearSelector()})
+                        this.dropdownHeader(true, "schoolCardMonthDropdown", {=> this.showMonthSelector()})
+                        this.dropdownHeader(false, "schoolCardYearDropdown", {=> this.showYearSelector()})
                         Blank().layoutWeight(1)
                         if (this.calendarSelector == 0) {
                             Button("‹").width(38.vp).height(38.vp).fontSize(23.vp).fontColor(0xFF30343C)
