@@ -5,10 +5,12 @@ import kit.ArkWeb.*
 import ohos.arkui.state_macro_manage.*
 import ohos.business_exception.*
 import ohos.resource.*
+import std.collection.ArrayList
 import std.sync.*
 import std.time.*
 import ohos_app_cangjie_entry.repository.*
 import ohos_app_cangjie_entry.repository.xidian_ids.*
+import ohos_app_cangjie_entry.model.xidian_ids.*
 import ohos_app_cangjie_entry.controller.*
 import ohos_app_cangjie_entry.components.*
 import ohos_app_cangjie_entry.components.*
@@ -216,7 +218,13 @@ public class AlignedNavItem {
 @Component
 public class AlignedCampusPage {
     @State var scheduleCount: Int64 = 0
+    @State var scheduleTitle: String = "今日安排"
     @State var scheduleStatus: String = "正在加载真实课表"
+    @State var scheduleBottomText: String = "正在加载真实课表"
+    @State var scheduleLoaded: Bool = false
+    @State var scheduleCourses: ArrayList<CourseSlot> = ArrayList<CourseSlot>()
+    @State var scheduleTermStartDay: String = ""
+    @State var scheduleSemesterLength: Int64 = 1
     @State var energyValue: String = "水电信息需连接校园网"
     @State var energyStatus: String = "连接校园网后进入详情页刷新"
     @State var libraryValue: String = "正在获取借书信息"
@@ -242,6 +250,7 @@ public class AlignedCampusPage {
     let onExperiment: () -> Unit
     let onEnergy: () -> Unit
     @State var editMode: Bool = false
+    var scheduleTimer: ?Timer = None
     @StorageProp["xdyouThemePreference"]
     let themePreference: String = "System"
     @StorageProp["colorMode"]
@@ -255,6 +264,10 @@ public class AlignedCampusPage {
             this.scheduleStatus = "预览数据"
             return
         }
+        this.stopScheduleTimer()
+        this.scheduleTimer = Some(Timer.repeat(Duration.second * 60, Duration.second * 60, { => launch {
+            if (this.scheduleLoaded) { this.updateScheduleDisplay() }
+        }}))
         Timer.once(Duration.second * 22, { => launch {
             this.libraryAuthStarted = true
         }})
@@ -272,10 +285,131 @@ public class AlignedCampusPage {
         AcademicSession().loadCurrentSemester({ semester => launch {
             SessionStore().saveSetting("semester", semester)
             this.classTableController.reloadClassTable(semester, { data => launch {
-                this.scheduleCount = data.courses.size
-                this.scheduleStatus = if (data.courses.size == 0) { "本学期暂无课程" } else { "已同步 ${data.courses.size} 条课程安排" }
-            } }, { message => launch { this.scheduleStatus = message } })
-        } }, { message => launch { this.scheduleStatus = message } })
+                this.scheduleCourses = data.courses
+                this.scheduleTermStartDay = data.termStartDay
+                this.scheduleSemesterLength = data.semesterLength
+                this.scheduleLoaded = true
+                this.updateScheduleDisplay()
+            } }, { message => launch {
+                this.scheduleLoaded = false
+                this.scheduleTitle = "今日安排"
+                this.scheduleStatus = "加载失败"
+                this.scheduleBottomText = message
+            } })
+        } }, { message => launch {
+            this.scheduleLoaded = false
+            this.scheduleTitle = "今日安排"
+            this.scheduleStatus = "加载失败"
+            this.scheduleBottomText = message
+        } })
+    }
+
+    protected override func aboutToDisappear(): Unit {
+        this.stopScheduleTimer()
+    }
+
+    func stopScheduleTimer(): Unit {
+        match (this.scheduleTimer) {
+            case Some(timer) => timer.cancel()
+            case None => ()
+        }
+        this.scheduleTimer = None
+    }
+
+    func weekdayNumber(value: DateTime): Int64 {
+        return match (value.dayOfWeek) {
+            case Monday => 1
+            case Tuesday => 2
+            case Wednesday => 3
+            case Thursday => 4
+            case Friday => 5
+            case Saturday => 6
+            case Sunday => 7
+        }
+    }
+
+    func weekdayLabel(value: DateTime): String {
+        return match (value.dayOfWeek) {
+            case Monday => "周一"
+            case Tuesday => "周二"
+            case Wednesday => "周三"
+            case Thursday => "周四"
+            case Friday => "周五"
+            case Saturday => "周六"
+            case Sunday => "周日"
+        }
+    }
+
+    func monthNumber(value: DateTime): Int64 {
+        return match (value.month) {
+            case January => 1
+            case February => 2
+            case March => 3
+            case April => 4
+            case May => 5
+            case June => 6
+            case July => 7
+            case August => 8
+            case September => 9
+            case October => 10
+            case November => 11
+            case December => 12
+        }
+    }
+
+    func currentScheduleWeek(value: DateTime): Int64 {
+        if (this.scheduleTermStartDay == "" || this.scheduleSemesterLength < 1) { return -1 }
+        try {
+            let start = DateTime.parse(this.scheduleTermStartDay, "yyyy-MM-dd")
+            let diffDays = (value.toUnixTimeStamp().toSeconds() - start.toUnixTimeStamp().toSeconds()) / 86400
+            if (diffDays < 0) { return -1 }
+            let week = diffDays / 7 + 1
+            return if (week > this.scheduleSemesterLength) { -1 } else { week }
+        } catch (_) {
+            return -1
+        }
+    }
+
+    func courseEndMinutes(stop: Int64): Int64 {
+        return match (stop) {
+            case 1 => 9 * 60 + 15
+            case 2 => 10 * 60 + 5
+            case 3 => 11 * 60 + 10
+            case 4 => 12 * 60
+            case 5 => 14 * 60 + 45
+            case 6 => 15 * 60 + 35
+            case 7 => 16 * 60 + 40
+            case 8 => 17 * 60 + 30
+            case 9 => 19 * 60 + 45
+            case 10 => 20 * 60 + 35
+            case _ => 21 * 60 + 25
+        }
+    }
+
+    func updateScheduleDisplay(): Unit {
+        let now = DateTime.now()
+        let showTomorrow = now.hour * 60 + now.minute > 21 * 60 + 25
+        let displayTime = if (showTomorrow) { now.addDays(1) } else { now }
+        let week = this.currentScheduleWeek(displayTime)
+        let active = if (week < 1) {
+            ArrayList<CourseSlot>()
+        } else {
+            this.classTableController.arrangements(this.scheduleCourses, this.weekdayNumber(displayTime), week)
+        }
+        var remaining: Int64 = 0
+        let currentMinutes = now.hour * 60 + now.minute
+        for (course in active) {
+            if (showTomorrow || this.courseEndMinutes(course.stop) > currentMinutes) { remaining += 1 }
+        }
+        this.scheduleCount = remaining
+        this.scheduleTitle = if (showTomorrow) {
+            if (remaining == 0) { "明日没有安排" } else { "明日有 ${remaining} 个安排" }
+        } else {
+            if (remaining == 0) { "今日安排完成" } else { "今日还有 ${remaining} 个日程" }
+        }
+        let weekText = if (week < 1) { "假期中" } else { "第 ${week} 周" }
+        this.scheduleStatus = "${this.monthNumber(displayTime)}月${displayTime.dayOfMonth}日 ${this.weekdayLabel(displayTime)} ${weekText}"
+        this.scheduleBottomText = if (remaining == 0) { "暂无日程" } else { "${remaining} 个日程待完成" }
     }
 
     func loadLibraryWeb(raw: String, cookies: String): Unit {
@@ -326,38 +460,45 @@ public class AlignedCampusPage {
                         .id("mockPreviewBanner")
                     Column {
                         Row {
-                            Text("部分加載中")
+                            Text(if (this.previewMode) { "物理实验加载失败" } else { "部分加載中" })
                                 .fontSize(12.vp)
                                 .fontWeight(FontWeight.Bold)
-                                .fontColor(0xFFD6E4FF)
+                                .fontColor(if (this.previewMode) { 0xFFFFFFFF } else { 0xFFD6E4FF })
                                 .padding(left: 15.vp, right: 15.vp, top: 8.vp, bottom: 8.vp)
-                                .backgroundColor(0xFF476FA9)
-                                .borderRadius(12.vp)
-                            Text("其他實驗加載失敗")
+                                .backgroundColor(if (this.previewMode) { 0xFFD51F1F } else { 0xFF476FA9 })
+                                .borderRadius(16.vp)
+                            Text(if (this.previewMode) { "其他实验加载失败" } else { "其他實驗加載失敗" })
                                 .fontSize(12.vp)
                                 .fontWeight(FontWeight.Bold)
                                 .fontColor(0xFFFFFFFF)
                                 .padding(left: 15.vp, right: 15.vp, top: 8.vp, bottom: 8.vp)
                                 .margin(left: 9.vp)
                                 .backgroundColor(0xFFD51F1F)
-                                .borderRadius(12.vp)
+                                .borderRadius(16.vp)
                         }.width(100.percent).height(48.vp).justifyContent(FlexAlign.Center)
                         Row {
                             Image(@r(app.media.home_calendar))
-                                .width(30.vp)
-                                .height(30.vp)
+                                .width(32.vp)
+                                .height(32.vp)
                                 .fillColor(0xFF41699F)
-                                .margin(left: 16.vp, right: 15.vp)
+                                .margin(left: 16.vp, right: 18.vp)
                             Column {
-                                Text(if (this.scheduleCount > 0) { "本学期课程 ${this.scheduleCount} 项" } else { "今日安排" }).fontSize(20.vp).fontColor(0xFF474B55)
-                                Text(this.scheduleStatus).fontSize(13.vp).fontColor(0xFF454953).margin(top: 1.vp)
+                                Text(if (this.previewMode) {
+                                    "今日安排完成"
+                                } else {
+                                    this.scheduleTitle
+                                }).fontSize(20.vp).fontColor(0xFF474B55)
+                                Text(if (this.previewMode) { "8月11日 周二 假期中" } else { this.scheduleStatus })
+                                    .fontSize(14.vp)
+                                    .fontColor(0xFF454953)
+                                    .margin(top: 1.vp)
                             }.layoutWeight(1).alignItems(HorizontalAlign.Start)
                         }.width(100.percent).height(55.vp).onClick({_ => this.onSchedule()})
-                        Text(this.scheduleStatus)
+                        Text(if (this.previewMode) { "暂无日程" } else { this.scheduleBottomText })
                             .width(100.percent)
                             .height(34.vp)
                             .textAlign(TextAlign.Center)
-                            .fontSize(14.vp)
+                            .fontSize(16.vp)
                             .fontWeight(FontWeight.Medium)
                             .fontColor(0xFF41699F)
                             .backgroundColor(0xFFE1E7F4)
