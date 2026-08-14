@@ -205,3 +205,15 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Each dot is derived from genuine academic week flags/day/period ranges and persisted custom-class date/minute ranges. The source opacity semantics are represented with stable pre-mixed solid colors: active/upcoming `RGB(65,105,159)`, completed `RGB(142,167,198)`, and vacant `RGB(209,218,231)`.
 - The semester-start parser now accepts the service's `yyyy-MM-dd HH:mm:ss` response by extracting its date portion, and preview generation consumes the reload callback payload directly so reactive state timing cannot leave stale all-vacant cells.
 - Final HAP built successfully and was reinstalled into the correct XDYOU bundle as PID `28237`. The real-data capture contains 145 visible Circle nodes; center-pixel validation found 53 completed occupied dots and 92 vacant dots in two exact colors, and the bounded target log contains 0 app FATAL. Evidence: `evidence/classtable-week-dot-colors-final-v5-2026-08-14/`.
+
+## Class-table noon/supper breaks and periods 9–11 (2026-08-14)
+
+- Extended the timetable from eight to all eleven source periods, including `午休` and `晚休` rows at the Flutter source's three-block height.
+- Added the exact evening times `19:00–19:45`, `19:55–20:35`, and `20:40–21:25`; course-card top and height calculations now include both break offsets so afternoon, evening, and cross-break arrangements stay aligned.
+- Final HAP built, installed, and launched in the correct XDYOU bundle as PID `13288`. The lower-timetable swipe scenario passed 5/5 for both breaks and all three evening periods; bounded target logs contain 0 app FATAL. Evidence: `evidence/classtable-evening-periods-2026-08-14/`.
+
+## Class-table week/card reactive synchronization (2026-08-14)
+
+- Fixed the reported week-7/week-9 mismatch between 5×5 dot colors and visible course cards. Parameterized day builders no longer derive transient lists from `chosenWeek`; switching weeks materializes seven direct `@State` day lists and rebuilds the dot previews from the same course snapshot.
+- Course render keys now include the selected week and day, preventing ArkUI from retaining course-card nodes belonging to the previously selected week.
+- Final HAP built, was freshly installed, and launched as PID `31689`; bounded logs contain 0 app FATAL. Genuine week-7/week-9 screenshot comparison is `IN_PROGRESS` because the explicitly requested uninstall cleared the retained login session. Evidence: `evidence/classtable-week-card-sync-2026-08-14/`.

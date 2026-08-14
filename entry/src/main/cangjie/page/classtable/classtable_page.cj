@@ -40,6 +40,13 @@ public class ClassTablePage {
     @State var termStartDay: String = ""
     @State var semesterLength: Int64 = 1
     @State var courses: ArrayList<CourseSlot> = ArrayList<CourseSlot>()
+    @State var visibleDay1: ArrayList<CourseSlot> = ArrayList<CourseSlot>()
+    @State var visibleDay2: ArrayList<CourseSlot> = ArrayList<CourseSlot>()
+    @State var visibleDay3: ArrayList<CourseSlot> = ArrayList<CourseSlot>()
+    @State var visibleDay4: ArrayList<CourseSlot> = ArrayList<CourseSlot>()
+    @State var visibleDay5: ArrayList<CourseSlot> = ArrayList<CourseSlot>()
+    @State var visibleDay6: ArrayList<CourseSlot> = ArrayList<CourseSlot>()
+    @State var visibleDay7: ArrayList<CourseSlot> = ArrayList<CourseSlot>()
     @State var customClasses: ArrayList<CustomClass> = ArrayList<CustomClass>()
     @State var notArranged: ArrayList<NotArrangedCourse> = ArrayList<NotArrangedCourse>()
     @State var chosenDay: Int64 = 1
@@ -87,7 +94,7 @@ public class ClassTablePage {
             this.semesterLength = data.semesterLength
             // 直接使用本次请求返回的数据生成缩略图，避免同一 UI 任务中读取到 @State 的旧值。
             this.rebuildWeekPreviews(data.courses, this.customClasses, data.termStartDay, data.semesterLength)
-            this.selectCurrentDate(data.termStartDay, data.semesterLength)
+            this.selectCurrentDate(data.termStartDay, data.semesterLength, data.courses)
             this.loading = false
             this.status = if (data.courses.size == 0) { "本学期暂无已排课程。" } else { "已同步 ${data.courses.size} 条课程安排" }
         } }, { message => launch {
@@ -98,34 +105,52 @@ public class ClassTablePage {
 
     func dateOnly(value: String): String { return if (value.size >= 10) { value[0..10] } else { value } }
 
-    func selectCurrentDate(sourceTermStartDay: String, sourceSemesterLength: Int64): Unit {
-        if (sourceTermStartDay == "") { return }
-        try {
-            let now = DateTime.now()
-            let start = DateTime.parse(this.dateOnly(sourceTermStartDay), "yyyy-MM-dd")
-            let diffDays = (now.toUnixTimeStamp().toSeconds() - start.toUnixTimeStamp().toSeconds()) / 86400
-            if (diffDays >= 0) {
-                let week = diffDays / 7 + 1
-                this.chosenWeek = if (week > sourceSemesterLength) { sourceSemesterLength } else { week }
-            }
-            this.chosenDay = match (now.dayOfWeek) {
-                case Monday => 1
-                case Tuesday => 2
-                case Wednesday => 3
-                case Thursday => 4
-                case Friday => 5
-                case Saturday => 6
-                case Sunday => 7
-            }
-            Timer.once(Duration.millisecond * 80, { => launch { this.centerChosenWeek(false) }})
-        } catch (_) { () }
+    func selectCurrentDate(sourceTermStartDay: String, sourceSemesterLength: Int64,
+        sourceCourses: ArrayList<CourseSlot>): Unit {
+        let now = DateTime.now()
+        var selectedWeek = this.chosenWeek
+        if (sourceTermStartDay != "") {
+            try {
+                let start = DateTime.parse(this.dateOnly(sourceTermStartDay), "yyyy-MM-dd")
+                let diffDays = (now.toUnixTimeStamp().toSeconds() - start.toUnixTimeStamp().toSeconds()) / 86400
+                if (diffDays >= 0) {
+                    let week = diffDays / 7 + 1
+                    selectedWeek = if (week > sourceSemesterLength) { sourceSemesterLength } else { week }
+                }
+            } catch (_) { () }
+        }
+        this.chosenWeek = selectedWeek
+        this.rebuildVisibleCourses(sourceCourses, selectedWeek)
+        this.chosenDay = match (now.dayOfWeek) {
+            case Monday => 1
+            case Tuesday => 2
+            case Wednesday => 3
+            case Thursday => 4
+            case Friday => 5
+            case Saturday => 6
+            case Sunday => 7
+        }
+        Timer.once(Duration.millisecond * 80, { => launch { this.centerChosenWeek(false) }})
     }
 
     func chooseWeek(value: Int64): Unit {
         if (value >= 1 && value <= this.semesterLength) {
             this.chosenWeek = value
+            // 点阵与课程列必须在同一次切周中使用同一份课程快照，且通过 revision 淘汰旧点阵节点。
+            this.rebuildWeekPreviews(this.courses, this.customClasses, this.termStartDay, this.semesterLength)
+            this.rebuildVisibleCourses(this.courses, value)
             this.centerChosenWeek(true)
         }
+    }
+
+    func rebuildVisibleCourses(sourceCourses: ArrayList<CourseSlot>, week: Int64): Unit {
+        this.visibleDay1 = this.controller.arrangements(sourceCourses, 1, week)
+        this.visibleDay2 = this.controller.arrangements(sourceCourses, 2, week)
+        this.visibleDay3 = this.controller.arrangements(sourceCourses, 3, week)
+        this.visibleDay4 = this.controller.arrangements(sourceCourses, 4, week)
+        this.visibleDay5 = this.controller.arrangements(sourceCourses, 5, week)
+        this.visibleDay6 = this.controller.arrangements(sourceCourses, 6, week)
+        this.visibleDay7 = this.controller.arrangements(sourceCourses, 7, week)
     }
 
     func centerChosenWeek(animated: Bool): Unit {
@@ -146,8 +171,6 @@ public class ClassTablePage {
         }
         return result
     }
-
-    func dayCourses(day: Int64): ArrayList<CourseSlot> { return this.controller.arrangements(this.courses, day, this.chosenWeek) }
 
     func previewSlotStart(block: Int64): Int64 {
         return match (block) {
@@ -333,10 +356,28 @@ public class ClassTablePage {
             .id("classtableWeek_${preview.week}")
     }
 
-    func courseTop(course: CourseSlot): Float64 { return Float64(course.start - 1) * 64.0 }
+    // 每节课对应源码中的 5 个布局块，午休和晚休各占 3 个布局块。
+    func periodTop(period: Int64): Float64 {
+        let restHeight = 64.0 * 3.0 / 5.0
+        if (period <= 4) { return Float64(period - 1) * 64.0 }
+        if (period <= 8) { return Float64(period - 1) * 64.0 + restHeight }
+        return Float64(period - 1) * 64.0 + restHeight * 2.0
+    }
+
+    func periodBottom(period: Int64): Float64 {
+        let restHeight = 64.0 * 3.0 / 5.0
+        if (period <= 4) { return Float64(period) * 64.0 }
+        if (period <= 8) { return Float64(period) * 64.0 + restHeight }
+        return Float64(period) * 64.0 + restHeight * 2.0
+    }
+
+    func courseTop(course: CourseSlot): Float64 { return this.periodTop(course.start) }
     func courseHeight(course: CourseSlot): Float64 {
-        let slots = if (course.stop >= course.start) { course.stop - course.start + 1 } else { 1 }
-        return Float64(slots) * 64.0 - 4.0
+        return if (course.stop >= course.start) {
+            this.periodBottom(course.stop) - this.periodTop(course.start) - 4.0
+        } else {
+            60.0
+        }
     }
 
     @Builder
@@ -352,7 +393,18 @@ public class ClassTablePage {
         Column {
             Text("${index}").fontSize(11.vp).fontWeight(FontWeight.Medium)
             Text(value).fontSize(7.vp).fontColor(0xFF65738A).textAlign(TextAlign.Center).maxLines(2)
-        }.width(42.vp).height(64.vp).justifyContent(FlexAlign.Start)
+        }.width(42.vp).height(64.vp).justifyContent(FlexAlign.Start).id("classtablePeriod_${index}")
+    }
+
+    @Builder
+    func restCell(label: String, cellId: String) {
+        Text(label)
+            .width(42.vp)
+            .height((64.0 * 3.0 / 5.0).vp)
+            .fontSize(9.vp)
+            .fontColor(0xFF30343B)
+            .textAlign(TextAlign.Center)
+            .id(cellId)
     }
 
     @Builder
@@ -362,26 +414,97 @@ public class ClassTablePage {
             this.timeCell(2, "09:20\n10:05")
             this.timeCell(3, "10:25\n11:10")
             this.timeCell(4, "11:15\n12:00")
+            this.restCell("午休", "classtableNoonBreak")
             this.timeCell(5, "14:00\n14:45")
             this.timeCell(6, "14:50\n15:35")
             this.timeCell(7, "15:55\n16:40")
             this.timeCell(8, "16:45\n17:30")
-        }.width(42.vp).height(512.vp)
+            this.restCell("晚休", "classtableSupperBreak")
+            this.timeCell(9, "19:00\n19:45")
+            this.timeCell(10, "19:55\n20:35")
+            this.timeCell(11, "20:40\n21:25")
+        }.width(42.vp).height((64.0 * 11.0 + 64.0 * 6.0 / 5.0).vp)
+    }
+
+    func tableBodyHeight(): Float64 { return 64.0 * 11.0 + 64.0 * 6.0 / 5.0 }
+
+    func courseRenderKey(course: CourseSlot, day: Int64, index: Int64): String {
+        return "${this.chosenWeek}-${day}-${course.code}-${course.number}-${course.start}-${course.stop}-${index}"
     }
 
     @Builder
-    func dayColumn(day: Int64) {
+    func courseCard(course: CourseSlot, day: Int64, index: Int64) {
+        Column {
+            Text(course.name).fontSize(8.vp).fontWeight(FontWeight.Medium).maxLines(4)
+            Text(course.room).fontSize(7.vp).maxLines(2).margin(top: 2.vp)
+            Text("${course.start}-${course.stop}节").fontSize(7.vp).margin(top: 2.vp)
+        }.width(100.percent).height(this.courseHeight(course).vp).padding(3.vp)
+            .backgroundColor(0xFFEAF3D5).border(width: 1.vp, color: 0xFF86B56A).borderRadius(5.vp)
+            .position(x: 0.vp, y: this.courseTop(course).vp)
+            .id("classtableCourseCard_${this.chosenWeek}_${day}_${index}")
+    }
+
+    @Builder
+    func dayColumn1() {
         Stack(alignContent: Alignment.TopStart) {
-            ForEach(this.dayCourses(day), itemGenerator: { course: CourseSlot, _: Int64 =>
-                Column {
-                    Text(course.name).fontSize(8.vp).fontWeight(FontWeight.Medium).maxLines(4)
-                    Text(course.room).fontSize(7.vp).maxLines(2).margin(top: 2.vp)
-                    Text("${course.start}-${course.stop}节").fontSize(7.vp).margin(top: 2.vp)
-                }.width(100.percent).height(this.courseHeight(course).vp).padding(3.vp)
-                    .backgroundColor(0xFFEAF3D5).border(width: 1.vp, color: 0xFF86B56A).borderRadius(5.vp)
-                    .position(x: 0.vp, y: this.courseTop(course).vp).id("classtableCourseCard")
-            })
-        }.layoutWeight(1).height(512.vp).padding(left: 1.vp, right: 1.vp)
+            ForEach(this.visibleDay1, itemGenerator: { course: CourseSlot, index: Int64 =>
+                this.courseCard(course, 1, index)
+            }, keyGenerator: { course: CourseSlot, index: Int64 => this.courseRenderKey(course, 1, index) })
+        }.layoutWeight(1).height(this.tableBodyHeight().vp).padding(left: 1.vp, right: 1.vp)
+    }
+
+    @Builder
+    func dayColumn2() {
+        Stack(alignContent: Alignment.TopStart) {
+            ForEach(this.visibleDay2, itemGenerator: { course: CourseSlot, index: Int64 =>
+                this.courseCard(course, 2, index)
+            }, keyGenerator: { course: CourseSlot, index: Int64 => this.courseRenderKey(course, 2, index) })
+        }.layoutWeight(1).height(this.tableBodyHeight().vp).padding(left: 1.vp, right: 1.vp)
+    }
+
+    @Builder
+    func dayColumn3() {
+        Stack(alignContent: Alignment.TopStart) {
+            ForEach(this.visibleDay3, itemGenerator: { course: CourseSlot, index: Int64 =>
+                this.courseCard(course, 3, index)
+            }, keyGenerator: { course: CourseSlot, index: Int64 => this.courseRenderKey(course, 3, index) })
+        }.layoutWeight(1).height(this.tableBodyHeight().vp).padding(left: 1.vp, right: 1.vp)
+    }
+
+    @Builder
+    func dayColumn4() {
+        Stack(alignContent: Alignment.TopStart) {
+            ForEach(this.visibleDay4, itemGenerator: { course: CourseSlot, index: Int64 =>
+                this.courseCard(course, 4, index)
+            }, keyGenerator: { course: CourseSlot, index: Int64 => this.courseRenderKey(course, 4, index) })
+        }.layoutWeight(1).height(this.tableBodyHeight().vp).padding(left: 1.vp, right: 1.vp)
+    }
+
+    @Builder
+    func dayColumn5() {
+        Stack(alignContent: Alignment.TopStart) {
+            ForEach(this.visibleDay5, itemGenerator: { course: CourseSlot, index: Int64 =>
+                this.courseCard(course, 5, index)
+            }, keyGenerator: { course: CourseSlot, index: Int64 => this.courseRenderKey(course, 5, index) })
+        }.layoutWeight(1).height(this.tableBodyHeight().vp).padding(left: 1.vp, right: 1.vp)
+    }
+
+    @Builder
+    func dayColumn6() {
+        Stack(alignContent: Alignment.TopStart) {
+            ForEach(this.visibleDay6, itemGenerator: { course: CourseSlot, index: Int64 =>
+                this.courseCard(course, 6, index)
+            }, keyGenerator: { course: CourseSlot, index: Int64 => this.courseRenderKey(course, 6, index) })
+        }.layoutWeight(1).height(this.tableBodyHeight().vp).padding(left: 1.vp, right: 1.vp)
+    }
+
+    @Builder
+    func dayColumn7() {
+        Stack(alignContent: Alignment.TopStart) {
+            ForEach(this.visibleDay7, itemGenerator: { course: CourseSlot, index: Int64 =>
+                this.courseCard(course, 7, index)
+            }, keyGenerator: { course: CourseSlot, index: Int64 => this.courseRenderKey(course, 7, index) })
+        }.layoutWeight(1).height(this.tableBodyHeight().vp).padding(left: 1.vp, right: 1.vp)
     }
 
     @Builder
@@ -426,13 +549,13 @@ public class ClassTablePage {
                     }.width(100.percent)
                     Row {
                         this.timeAxis()
-                        this.dayColumn(1)
-                        this.dayColumn(2)
-                        this.dayColumn(3)
-                        this.dayColumn(4)
-                        this.dayColumn(5)
-                        this.dayColumn(6)
-                        this.dayColumn(7)
+                        this.dayColumn1()
+                        this.dayColumn2()
+                        this.dayColumn3()
+                        this.dayColumn4()
+                        this.dayColumn5()
+                        this.dayColumn6()
+                        this.dayColumn7()
                     }.width(100.percent).alignItems(VerticalAlign.Top).id("classtableWeekGrid")
                     if (!this.loading && this.courses.size == 0) {
                         Text("本学期没有课程").fontSize(15.vp).fontColor(0xFF7A8797).margin(top: 32.vp)
