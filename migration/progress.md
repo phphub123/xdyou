@@ -192,3 +192,16 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Ported the Flutter homepage/controller decision chain instead of showing semester totals: local time, 21:25 tomorrow rollover, term-start week calculation, holiday bounds, weekday/week filtering and elapsed-course removal.
 - The card now recomputes every minute and cancels its timer on disappearance. Empty remaining arrangements produce the source strings `今日安排完成` and `暂无日程`; the date line includes the real month/day, weekday and either the current week or `假期中`.
 - Final HAP built and installed successfully. The retained real session rendered `今日安排完成 / 8月14日 周五 假期中 / 暂无日程` on PID `7456`. Evidence: `evidence/home-course-real-time-2026-08-14/`.
+
+## Class-table horizontal week selector (2026-08-14)
+
+- Removed the previous/next week buttons and the redundant centered week label from `我的日程表`.
+- Replaced the five fixed offset choices with a complete, horizontally draggable semester strip. The current week uses the reference rounded capsule/dot treatment and is centered after genuine timetable loading; tapping any week updates the timetable and smoothly recenters it.
+- Final HAP built, installed and launched on `127.0.0.1:5555`; the real-data open/wait/swipe scenario passed 5/5, and target runtime logs contain 0 FATAL. Evidence: `evidence/classtable-week-scroll-2026-08-14/`.
+
+## Class-table 5×5 week occupancy previews (2026-08-14)
+
+- Replaced each week cell's static 4×4 bullet placeholder with the Flutter source's 5×5 structure: Monday–Friday across five coarse timetable blocks.
+- Each dot is derived from genuine academic week flags/day/period ranges and persisted custom-class date/minute ranges. The source opacity semantics are represented with stable pre-mixed solid colors: active/upcoming `RGB(65,105,159)`, completed `RGB(142,167,198)`, and vacant `RGB(209,218,231)`.
+- The semester-start parser now accepts the service's `yyyy-MM-dd HH:mm:ss` response by extracting its date portion, and preview generation consumes the reload callback payload directly so reactive state timing cannot leave stale all-vacant cells.
+- Final HAP built successfully and was reinstalled into the correct XDYOU bundle as PID `28237`. The real-data capture contains 145 visible Circle nodes; center-pixel validation found 53 completed occupied dots and 92 vacant dots in two exact colors, and the bounded target log contains 0 app FATAL. Evidence: `evidence/classtable-week-dot-colors-final-v5-2026-08-14/`.
