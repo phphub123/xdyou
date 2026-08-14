@@ -2,8 +2,8 @@ package ohos_app_cangjie_entry.controller
 
 import std.collection.*
 import std.sort.*
-import ohos_app_cangjie_entry.model.xidian_ids.*
-import ohos_app_cangjie_entry.repository.xidian_ids.*
+import ohos_app_cangjie_entry.model.classtable.*
+import ohos_app_cangjie_entry.repository.classtable.*
 
 public class ClassTableController {
     var refreshing: Bool = false

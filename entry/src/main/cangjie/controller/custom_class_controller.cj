@@ -4,8 +4,8 @@ import std.collection.*
 import std.convert.*
 import std.time.*
 import std.sort.*
-import ohos_app_cangjie_entry.model.pda_service.*
-import ohos_app_cangjie_entry.repository.*
+import ohos_app_cangjie_entry.model.custom_class.*
+import ohos_app_cangjie_entry.repository.custom_class.*
 
 public class CustomClassController {
     let repository = CustomClassRepository()

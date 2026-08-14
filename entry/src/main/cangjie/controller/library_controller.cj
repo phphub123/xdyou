@@ -1,8 +1,8 @@
 package ohos_app_cangjie_entry.controller
 
 import std.collection.*
-import ohos_app_cangjie_entry.model.xidian_ids.*
-import ohos_app_cangjie_entry.repository.xidian_ids.*
+import ohos_app_cangjie_entry.model.library.*
+import ohos_app_cangjie_entry.repository.library.*
 
 public class LibraryController {
     public static var cachedBorrowCount: Int64 = -1

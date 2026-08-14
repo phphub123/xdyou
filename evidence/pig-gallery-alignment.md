@@ -3,7 +3,7 @@
 - Date: 2026-08-04
 - Reference: `UI截图/6.png`
 - Source: `source/lib/page/pig/pig_page.dart`, `source/lib/repository/pighub_session.dart`
-- Implementation: `entry/src/main/cangjie/aligned_home_page.cj`, `entry/src/main/cangjie/repository/pighub_session.cj`
+- Implementation: `entry/src/main/cangjie/aligned_home_page.cj`, `entry/src/main/cangjie/repository/pig/pighub_session.cj`
 - Real endpoint: `https://www.pighub.top/api/images?sort=0`
 
 ## Build and deployment

@@ -4,8 +4,9 @@ import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import ohos.resource.*
 import std.collection.*
-import ohos_app_cangjie_entry.repository.xidian_ids.*
-import ohos_app_cangjie_entry.model.xidian_ids.*
+import ohos_app_cangjie_entry.repository.academic.*
+import ohos_app_cangjie_entry.model.exam.*
+import ohos_app_cangjie_entry.model.score.*
 import ohos_app_cangjie_entry.controller.*
 import ohos_app_cangjie_entry.components.*
 

@@ -12,7 +12,7 @@ raw server body `Request method 'POST' not supported`.
 therefore be replayed at the redirected Ehall route, which only accepts GET. The final callback
 saw Ehall's 405 response and previously labelled it as an IDS failure.
 
-The repair in `entry/src/main/cangjie/repository/ids_session.cj`:
+The repair in `entry/src/main/cangjie/repository/auth/ids_session.cj`:
 
 - percent-encodes the nested IDS `service` query parameter;
 - captures and merges `Set-Cookie` values from every response header event in the automatic

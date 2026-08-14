@@ -3,8 +3,8 @@ package ohos_app_cangjie_entry.page.academic
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import std.collection.ArrayList
-import ohos_app_cangjie_entry.repository.xidian_ids.*
-import ohos_app_cangjie_entry.model.xidian_ids.*
+import ohos_app_cangjie_entry.repository.*
+import ohos_app_cangjie_entry.model.*
 import ohos_app_cangjie_entry.controller.*
 import ohos_app_cangjie_entry.page.score.*
 import ohos_app_cangjie_entry.page.exam.*

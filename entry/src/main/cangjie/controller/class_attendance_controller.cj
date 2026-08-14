@@ -1,8 +1,8 @@
 package ohos_app_cangjie_entry.controller
 
 import std.collection.*
-import ohos_app_cangjie_entry.model.xidian_ids.*
-import ohos_app_cangjie_entry.repository.xidian_ids.*
+import ohos_app_cangjie_entry.model.class_attendance.*
+import ohos_app_cangjie_entry.repository.class_attendance.*
 
 public class AttendanceGroups {
     public let ineligible = ArrayList<ClassAttendance>()

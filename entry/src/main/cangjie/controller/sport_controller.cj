@@ -1,8 +1,8 @@
 package ohos_app_cangjie_entry.controller
 
 import std.collection.*
-import ohos_app_cangjie_entry.model.xidian_sport.*
-import ohos_app_cangjie_entry.repository.*
+import ohos_app_cangjie_entry.model.sport.*
+import ohos_app_cangjie_entry.repository.sport.*
 
 public class SportController {
     private let session: SportSession = SportSession()

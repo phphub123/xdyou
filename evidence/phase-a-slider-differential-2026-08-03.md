@@ -15,7 +15,7 @@
 
 ## Corrective changes
 
-`entry/src/main/cangjie/repository/slider_captcha_solver.cj` now matches the Flutter image package and source behavior for:
+`entry/src/main/cangjie/repository/auth/slider_captcha_solver.cj` now matches the Flutter image package and source behavior for:
 
 - luminance coefficients: `0.299 R + 0.587 G + 0.114 B`;
 - opaque-pixel test: alpha equals 255;

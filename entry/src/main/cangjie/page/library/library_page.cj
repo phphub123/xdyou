@@ -6,7 +6,7 @@ import std.collection.*
 import std.time.*
 import ohos.resource.*
 import ohos_app_cangjie_entry.controller.*
-import ohos_app_cangjie_entry.model.xidian_ids.*
+import ohos_app_cangjie_entry.model.library.*
 import ohos_app_cangjie_entry.components.*
 
 @Component

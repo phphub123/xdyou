@@ -5,7 +5,7 @@
 - Workspace: `C:\Users\21768\Desktop\XDYou-Cangjie-Codex-Workspace`.
 - Phase 1 is `BLOCKED_EXTERNAL`: the live school IDS rejected two manual slider-verification attempts. Do not claim real login, session restoration, logout, clear-data-after-login, or any real academic data as PASS unless a real IDS login succeeds.
 - Never recover credentials from prior screenshots; no account, password, Cookie, token, or captcha payload is stored in the workspace.
-- Existing Cangjie entry: `entry/src/main/cangjie/page/login/login_page.cj`; sessions: `repository/ids_session.cj`, `ids_password_cipher.cj`, `session_store.cj`.
+- Existing Cangjie entry: `entry/src/main/cangjie/page/login/login_page.cj`; sessions: `repository/auth/ids_session.cj`, `repository/auth/ids_password_cipher.cj`, `repository/auth/session_store.cj`.
 - Existing HomePage is only an authenticated five-tab shell.
 
 ## Read before coding
@@ -27,7 +27,7 @@ Read fully:
 - `source/lib/page/classtable/**`, including `class_table_view/**`, `class_page/**`, `arrangement_detail/**`, `class_add/**`
 - `source/lib/page/homepage/info_widget/classtable_card.dart`
 
-Preserve names where practical under `entry/src/main/cangjie/controller/`, `model/xidian_ids/`, `repository/xidian_ids/`, and `page/classtable/`.
+Preserve names where practical under `entry/src/main/cangjie/controller/`, feature-grouped `model/` and `repository/` directories, and `page/classtable/`.
 
 ### 2. Scores
 

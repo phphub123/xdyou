@@ -97,7 +97,7 @@ Continue Phase C with campus card balance/transactions/QR while keeping QR paylo
 - Real campus-card SSO verification is `BLOCKED_EXTERNAL`; no QR payload or authenticated response was saved.
 ## 2026-08-04 sports continuation
 
-- Added `model/xidian_sport/sport.cj`, `repository/xidian_sport_session.cj`, `controller/sport_controller.cj` and `sport_page.cj`.
+- Added `model/sport/sport.cj`, `repository/sport/xidian_sport_session.cj`, `controller/sport_controller.cj` and `sport_page.cj`.
 - The real sport protocol uses the upstream public key with RSA-PKCS1, MD5-signed form requests and the independent sport password encrypted at rest with HUKS.
 - Physical-test summary/year details and sport-class records are wired from the campus sport card; no fake score or empty-list success exists.
 - User reported successful DevEco Studio build and emulator launch of the current tree. Real credential/data parity is `BLOCKED_EXTERNAL`.

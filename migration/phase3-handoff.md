@@ -11,8 +11,8 @@
 ## Current Cangjie layout
 
 - App entry and authenticated shell: `entry/src/main/cangjie/page/login/login_page.cj` and `entry/src/main/cangjie/page/homepage/aligned_home_page.cj`.
-- Real IDS/session persistence: `entry/src/main/cangjie/repository/ids_session.cj`, `repository/session_store.cj`.
-- Phase 2 models and Ehall client: `model/xidian_ids/academic.cj`, `repository/xidian_ids/academic_session.cj`.
+- Real IDS/session persistence: `entry/src/main/cangjie/repository/auth/ids_session.cj`, `repository/auth/session_store.cj`.
+- Phase 2 academic client: `repository/academic/academic_session.cj`; models are grouped under their business features.
 - Phase 2 UI: `classtable_page.cj`, `academic_pages.cj`; the existing **Tools** tab opens `AcademicHub`.
 - `entry/cjpm.toml` includes both Ohos ABIs and local stdx `1.1.0.1` dynamic library paths. Preserve both ABI targets.
 
@@ -28,14 +28,14 @@
 
 | Requested slice | Start with source paths |
 | --- | --- |
-| Attendance | `controller/class_attendance_controller.dart`, `repository/xidian_ids/class_attendance_session.dart`, `page/class_attendance/**` |
-| Empty rooms | `controller/empty_classroom_controller.dart`, `repository/xidian_ids/empty_classroom_session.dart`, `page/empty_classroom/**` |
+| Attendance | `controller/class_attendance_controller.dart`, `repository/class_attendance/learning_session.cj`, `page/class_attendance/**` |
+| Empty rooms | `controller/empty_classroom_controller.dart`, `repository/empty_classroom/empty_classroom_session.cj`, `page/empty_classroom/**` |
 | Dorm energy/water | `controller/energy_controller.dart`, `repository/aircon_session.dart`, `repository/dorm_water_session.dart`, `page/energy/**`, `page/dorm_water/**` |
-| Library | `controller/library_controller.dart`, `repository/xidian_ids/library_session.dart`, `page/library/**` |
-| Campus card | `controller/school_card_controller.dart`, `repository/xidian_ids/school_card_session.dart`, `page/schoolcard/**` |
+| Library | `controller/library_controller.dart`, `repository/library/library_session.cj`, `page/library/**` |
+| Campus card | `controller/school_card_controller.dart`, `repository/school_card/school_card_session.cj`, `page/schoolcard/**` |
 | Campus network | `repository/schoolnet_session.dart`, `page/schoolnet/**` |
 | Sport | `repository/xidian_sport_session.dart`, `page/sport/**`, sport password settings dialog |
-| Physics/experiment | `controller/physics_experiment_controller.dart`, `controller/other_experiment_controller.dart`, `repository/physics_experiment_session.dart`, `repository/experiment_score/**`, `page/experiment/**` |
+| Physics/experiment | `controller/physics_experiment_controller.dart`, `controller/other_experiment_controller.dart`, `repository/experiment/**`, `page/experiment/**` |
 | Custom courses/clubs/tools | `controller/custom_class_controller.dart`, `page/classtable/class_add/**`, `page/club_suggestion/**`, `page/homepage/toolbox/**` |
 
 ## Phase 3 capability lookup guidance

@@ -9,8 +9,7 @@ import std.collection.ArrayList
 import std.sync.*
 import std.time.*
 import ohos_app_cangjie_entry.repository.*
-import ohos_app_cangjie_entry.repository.xidian_ids.*
-import ohos_app_cangjie_entry.model.xidian_ids.*
+import ohos_app_cangjie_entry.model.*
 import ohos_app_cangjie_entry.controller.*
 import ohos_app_cangjie_entry.components.*
 import ohos_app_cangjie_entry.components.*

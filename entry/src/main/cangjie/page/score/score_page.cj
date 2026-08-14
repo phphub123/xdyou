@@ -3,7 +3,7 @@ package ohos_app_cangjie_entry.page.score
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import std.collection.*
-import ohos_app_cangjie_entry.model.xidian_ids.*
+import ohos_app_cangjie_entry.model.score.*
 import ohos_app_cangjie_entry.controller.*
 import ohos_app_cangjie_entry.components.*
 

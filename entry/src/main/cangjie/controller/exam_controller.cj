@@ -3,8 +3,8 @@ package ohos_app_cangjie_entry.controller
 import std.collection.*
 import std.sort.*
 import std.time.*
-import ohos_app_cangjie_entry.model.xidian_ids.*
-import ohos_app_cangjie_entry.repository.xidian_ids.*
+import ohos_app_cangjie_entry.model.exam.*
+import ohos_app_cangjie_entry.repository.academic.*
 
 public class ExamGroups {
     public let upcoming: ArrayList<ExamItem>

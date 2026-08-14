@@ -21,7 +21,7 @@ Valid login, authenticated page interaction, restart restoration, role detection
 
 ## First unfinished slice
 
-Exam migration. Read source files already identified in `source/lib/model/xidian_ids/exam.dart`, `source/lib/controller/exam_controller.dart`, `source/lib/repository/xidian_ids/exam_session.dart`, and `source/lib/page/exam/`. Next implementation must split `ExamItem` into `model/xidian_ids/exam.cj`, add the `cxyxkwapkwdkc` unarranged endpoint, implement arranged/unarranged/completed grouping and time sorting, then rebuild/install/capture.
+Exam migration. Read source files already identified in `source/lib/model/xidian_ids/exam.dart`, `source/lib/controller/exam_controller.dart`, `source/lib/repository/xidian_ids/exam_session.dart`, and `source/lib/page/exam/`. Next implementation must split `ExamItem` into `model/exam/exam.cj`, add the `cxyxkwapkwdkc` unarranged endpoint, implement arranged/unarranged/completed grouping and time sorting, then rebuild/install/capture.
 
 ## Later required work
 

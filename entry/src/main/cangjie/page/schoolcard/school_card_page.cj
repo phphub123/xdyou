@@ -6,7 +6,7 @@ import std.collection.ArrayList
 import std.convert.*
 import std.time.*
 import ohos_app_cangjie_entry.controller.*
-import ohos_app_cangjie_entry.model.xidian_ids.*
+import ohos_app_cangjie_entry.model.school_card.*
 import ohos_app_cangjie_entry.components.*
 
 @Component

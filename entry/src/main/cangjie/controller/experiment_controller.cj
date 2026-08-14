@@ -1,9 +1,8 @@
 package ohos_app_cangjie_entry.controller
 
 import std.collection.*
-import ohos_app_cangjie_entry.model.xidian_ids.*
-import ohos_app_cangjie_entry.repository.*
-import ohos_app_cangjie_entry.repository.xidian_ids.*
+import ohos_app_cangjie_entry.model.experiment.*
+import ohos_app_cangjie_entry.repository.experiment.*
 
 public class ExperimentController {
     let physics = PhysicsExperimentSession()

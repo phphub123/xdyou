@@ -1,8 +1,8 @@
 package ohos_app_cangjie_entry.controller
 
 import std.collection.*
-import ohos_app_cangjie_entry.model.xidian_ids.*
-import ohos_app_cangjie_entry.repository.xidian_ids.*
+import ohos_app_cangjie_entry.model.school_card.*
+import ohos_app_cangjie_entry.repository.school_card.*
 
 public class SchoolCardController {
     public static var cachedBalance: String = ""

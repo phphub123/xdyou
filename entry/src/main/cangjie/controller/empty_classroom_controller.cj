@@ -2,8 +2,8 @@ package ohos_app_cangjie_entry.controller
 
 import std.collection.*
 import std.convert.*
-import ohos_app_cangjie_entry.model.xidian_ids.*
-import ohos_app_cangjie_entry.repository.xidian_ids.*
+import ohos_app_cangjie_entry.model.empty_classroom.*
+import ohos_app_cangjie_entry.repository.empty_classroom.*
 
 public class EmptyClassroomController {
     var refreshing: Bool = false

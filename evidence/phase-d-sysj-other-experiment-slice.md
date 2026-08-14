@@ -4,7 +4,7 @@ Date: 2026-08-04
 
 ## Implemented boundary
 
-- Added `repository/xidian_ids/sysj_session.cj`, porting the Flutter Sysj entry chain without manufacturing a session: it requires the HUKS-restored IDS Cookie, follows redirect responses with merged in-memory cookies, recognizes an expired IDS login page, completes the Sysj OAuth callback, and posts the short-lived callback credential to the Sysj login endpoint.
+- Added `repository/experiment/sysj_session.cj`, porting the Flutter Sysj entry chain without manufacturing a session: it requires the HUKS-restored IDS Cookie, follows redirect responses with merged in-memory cookies, recognizes an expired IDS login page, completes the Sysj OAuth callback, and posts the short-lived callback credential to the Sysj login endpoint.
 - The session requests `StudentCurrWeekTimetable` for weeks 1–25. It validates the second timetable table and all seven dates, recognizes only the source `course`/`lab`/`teacher` markers, merges contiguous periods and records with equal experiment/lab/teacher fields, then orders groups by their first start time.
 - `ExperimentController` now has separate physics and other-experiment request guards. `ExperimentPage` invokes the real other-experiment chain, preserves stable IDs, and renders authentic loading, empty and failure states. No static success or timetable data was added.
 

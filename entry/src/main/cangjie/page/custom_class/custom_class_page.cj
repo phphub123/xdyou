@@ -4,7 +4,7 @@ import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import std.collection.*
 import ohos_app_cangjie_entry.controller.*
-import ohos_app_cangjie_entry.model.pda_service.*
+import ohos_app_cangjie_entry.model.custom_class.*
 import ohos_app_cangjie_entry.components.*
 
 @Component

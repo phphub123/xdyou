@@ -4,7 +4,7 @@ import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import std.collection.*
 import ohos_app_cangjie_entry.controller.*
-import ohos_app_cangjie_entry.model.xidian_ids.*
+import ohos_app_cangjie_entry.model.class_attendance.*
 import ohos_app_cangjie_entry.components.*
 
 @Component
