@@ -231,3 +231,10 @@ Valid IDS/Ehall acceptance still needs one manual no-echo credential entry. Auto
 - Captured the successful Flutter chain from the running Android emulator: `openXDOAuth2Page -> xxcapp OAuth -> openHomePage?code -> queryCardSelfTradeList`.
 - Removed the unsupported `/selftrade/openSelfTrade` preflight that produced HTTP 404, matched the source request headers/body, restored direct OpenID SSO as the primary path, and retained one hidden-Web fallback instead of repeated refreshes.
 - Final HAP build and replacement install passed. The final emulator launch reported an expired Ehall/IDS session, so populated balance/rows remain `BLOCKED_EXTERNAL` until login is renewed; no mock campus-card values were added.
+
+## Energy real electricity/water chain and homepage reading (2026-08-14)
+
+- Matched the Flutter source's complete OAuth/signature/AES/login/meter flow and tightened hidden-Web completion so an actual OAuth `code` is required.
+- Loaded live electricity balance/history and the independent yearly water-meter history. The homepage now reuses the verified detail result to display the live balance and final read date.
+- Final HAP build/install/runtime verification passed: detail showed `-62.70 kWh` dated `2026-08-14`, the water table contained four genuine rows, and the homepage showed `余额 -62.70 度 / 最后一次读表：2026-08-14`. Target runtime log contained 0 FATAL. Evidence: `acceptance/runtime/energy-detail-real-chain.json`, `energy-bottom.json`, and `energy-home-after-back.json`.
+- Water rows now use the source application's compact date and one-decimal numeric presentation. The follow-up build completed successfully in `1 min 29 s 794 ms` and the replacement HAP installed/launched successfully.

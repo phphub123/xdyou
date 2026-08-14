@@ -428,6 +428,7 @@ public class SchoolCardPage {
                     cookieUrl: "https://v8scan.xidian.edu.cn",
                     stableId: "schoolCardAuthWeb",
                     requireOpenId: true,
+                    requireCode: false,
                     onReady: { url: String, payload: String, cookies: String => this.authorizeResponse(url, payload, cookies) },
                     onFailure: { message: String => this.loading = false; this.status = message }
                 )

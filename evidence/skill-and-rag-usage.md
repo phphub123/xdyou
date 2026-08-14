@@ -316,3 +316,13 @@
 - Dependency rule: leaf repository packages import only the required feature packages (`auth`, `academic`, or model facade); the root `model/package.cj` and `repository/package.cj` remain one-way public re-export facades for aggregate consumers. `IDSSession.loginUrl` and `browserUserAgent` were made public because energy and library are now separate packages and legitimately consume those shared authentication constants.
 - Build diagnosis: the first build exposed the expected cross-package visibility errors for `IDSSession.loginUrl` and `browserUserAgent`; `build_analyzer.py` identified those as the first stable error block. After the minimal visibility fix, `SyncCangjieResource` reported `BUILD SUCCESSFUL in 634 ms` and `assembleHap` reported `BUILD SUCCESSFUL in 25 s 422 ms`.
 - Structural verification: every `.cj` package declaration matches its directory; no old technical-package import remains; `find entry/src/main/cangjie/model entry/src/main/cangjie/repository -type d -empty` returns no directories; `git diff --check` passes. HAP: `entry/build/default/outputs/default/entry-default-unsigned.hap`.
+
+## 2026-08-14 — 水电真实数据与首页读表
+
+- Skills: `harmonyos-cangjie-dev`、`harmonyos-build-run-diagnose`；同时完整读取了工作流要求的基础说明与 `cangjie-essentials.md`。
+- Source chain: 对照 `source_2.0/lib/repository/ids_session/energy_session.dart` 和 Android 模拟器，采用 `xxcapp OAuth code -> GetSignature -> OauthGetUserInfo -> H5UserIDLogIn -> H5QueryMeterList -> GetMetRead`，签名请求继续使用源应用相同的 AES-CBC 数据、显式 Cookie 与请求头。
+- RAG: `cjdocs.py doctor` 与 query `ArkUI Button TextInput state onClick` 因本机索引 `OperationalError: unable to open database file` 未返回命中；随后直接阅读 `docs/API/NetworkKit/cj-apis-net-http.md` 的 `request`、`HttpRequestOptions`、`extraData`、headers 与 response 小节。采用结论：GET 不附带空 body，表单 POST 通过 `extraData` 并显式设置 Content-Type/Cookie。
+- Implementation: Web 授权必须取得非空 `code` 才允许回调；同时请求电表月记录和水表年记录；详情成功结果写入静态控制器缓存，首页直接读取余额和最后读表日期。
+- Verification: 独立 Hvigor 缓存下 `BUILD SUCCESSFUL in 2 min 49 s 372 ms`，HAP 替换安装并启动。真实运行得到电量 `-62.70 kWh`、最后读表 `2026-08-14`；水表表格存在 4 条真实记录（包括 `2026-07-09 / 17.0 / 220.0 / 203.0`）；返回首页显示 `余额 -62.70 度` 和 `最后一次读表：2026-08-14`。目标进程日志 0 FATAL。
+- Runtime evidence: `acceptance/runtime/energy-detail-real-chain.json`、`energy-bottom.json`、`energy-home-after-back.json`，日志目录 `evidence/energy-real-runtime-2026-08-14/`。
+- UI follow-up: 水表时间压缩为日期、三项读数统一为 1 位小数，避免源数据的 6 位小数导致窄列换行。补齐 `std.convert` 后最终复验 `BUILD SUCCESSFUL in 1 min 29 s 794 ms`，HAP 替换安装并启动成功。

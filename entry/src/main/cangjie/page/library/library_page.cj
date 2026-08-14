@@ -231,6 +231,7 @@ public class LibraryPage {
                 cookieUrl: "https://mfindxidian.libsp.cn",
                 stableId: "libraryAuthWeb",
                 requireOpenId: false,
+                requireCode: false,
                 onReady: { url: String, payload: String, cookies: String => this.authRaw = url + "|" + payload; this.authCookies = cookies; this.reloadBorrows() },
                 onFailure: { message: String => this.loading = false; this.status = message }
             )

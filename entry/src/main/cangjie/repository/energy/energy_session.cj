@@ -6,6 +6,7 @@ import ohos.callback_invoke.*
 import std.collection.*
 import std.regex.*
 import std.convert.*
+import std.time.*
 import stdx.encoding.json.*
 import ohos_app_cangjie_entry.model.*
 import ohos_app_cangjie_entry.repository.auth.*
@@ -224,12 +225,25 @@ public class EnergySession {
                 if (rows.size() > 1 && this.field(rows[0].asObject(), "MediumCode") != "2") { electricIndex = 1 }
                 let electric = rows[electricIndex].asObject(); let remain = this.field(electric, "LastNum")
                 let meterId = this.field(electric, "MetID"); let lastDate = this.field(electric, "LastReadDate")
+                let waterMeterId = if (rows.size() > 1) {
+                    let waterIndex: Int64 = if (electricIndex == 0) { 1 } else { 0 }
+                    this.field(rows[waterIndex].asObject(), "MetID")
+                } else { "" }
                 let range = this.previousMonth(lastDate)
                 let query = "{\"MetID\":${this.jsonQuoteEnergy(meterId)},\"ReadTimeS\":${this.jsonQuoteEnergy(range)}," +
                     "\"ReadTimeE\":${this.jsonQuoteEnergy(lastDate)},\"ReadNum\":\"\"}"
                 this.signedRequest(EnergySession.energyBase + "/estManage/api/WeChat/V2/GetMetRead", query, true, { historyText =>
-                    try { success(EnergyInfo(lastDate, remain, this.parseReadings(historyText), ArrayList<MeterReading>())) }
-                    catch (error: Exception) { failure("电量历史解析失败：${error.message}") }
+                    try {
+                        let electricity = this.parseReadings(historyText)
+                        if (waterMeterId == "") { success(EnergyInfo(lastDate, remain, electricity, ArrayList<MeterReading>())); return }
+                        let today = DateTime.now().format("yyyy-MM-dd")
+                        let waterQuery = "{\"MetID\":${this.jsonQuoteEnergy(waterMeterId)},\"ReadTimeS\":${this.jsonQuoteEnergy(this.previousYear(today))}," +
+                            "\"ReadTimeE\":${this.jsonQuoteEnergy(today)},\"ReadNum\":\"\"}"
+                        this.signedRequest(EnergySession.energyBase + "/estManage/api/WeChat/V2/GetMetRead", waterQuery, true, { waterText =>
+                            try { success(EnergyInfo(lastDate, remain, electricity, this.parseReadings(waterText))) }
+                            catch (_) { success(EnergyInfo(lastDate, remain, electricity, ArrayList<MeterReading>())) }
+                        }, { _ => success(EnergyInfo(lastDate, remain, electricity, ArrayList<MeterReading>())) })
+                    } catch (error: Exception) { failure("电量历史解析失败：${error.message}") }
                 }, failure)
             } catch (error: Exception) { failure("电表列表解析失败：${error.message}") }
         }, failure)
@@ -244,6 +258,10 @@ public class EnergySession {
         try { var year = Int64.parse(pieces[0]); var month = Int64.parse(pieces[1]); if (month <= 1) { year -= 1; month = 12 } else { month -= 1 }
             return "${year}-${if (month < 10) { "0${month}" } else { month.toString() }}-${pieces[2]}"
         } catch (_) { return date }
+    }
+    func previousYear(date: String): String {
+        let pieces = Regex("-").split(date); if (pieces.size < 3) { return date }
+        try { return "${Int64.parse(pieces[0]) - 1}-${pieces[1]}-${pieces[2]}" } catch (_) { return date }
     }
     func jsonQuoteEnergy(value: String): String { return "\"" + value.replace("\\","\\\\").replace("\"","\\\"").replace("\n","\\n") + "\"" }
     func stringOf(value: JsonValue): String { match (value.kind()) { case JsString => value.asString().getValue(); case JsInt => value.asInt().getValue().toString(); case JsFloat => value.asFloat().getValue().toString(); case _ => "" } }

@@ -16,6 +16,7 @@ public class ServiceAuthWeb {
     let cookieUrl: String
     let stableId: String
     let requireOpenId: Bool
+    let requireCode: Bool
     let onReady: (String, String, String) -> Unit
     let onFailure: (String) -> Unit
     let controller: WebviewController = WebviewController()
@@ -85,6 +86,7 @@ public class ServiceAuthWeb {
                                     let tokenReady = !value.contains("|code=|") || !value.contains("|openid=|") || !value.contains("|jwt=|")
                                     let cookieFallbackReady = allowCookieFallback && this.inspectAttempts >= 4
                                     let ready = if (this.requireOpenId) { !value.contains("|openid=|") }
+                                        else if (this.requireCode) { !value.contains("|code=|") }
                                         else { tokenReady || cookieFallbackReady }
                                     if (!ready) { return }
                                     let idsCookies = WebCookieManager.fetchCookie("https://ids.xidian.edu.cn/authserver/login")

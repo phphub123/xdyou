@@ -226,6 +226,7 @@ public class AlignedCampusPage {
     @State var scheduleSemesterLength: Int64 = 1
     @State var energyValue: String = "水电信息需连接校园网"
     @State var energyStatus: String = "连接校园网后进入详情页刷新"
+    @State var energyAuthStarted: Bool = false
     @State var libraryValue: String = "正在获取借书信息"
     @State var libraryStatus: String = "正在查询借阅信息"
     @State var schoolCardValue: String = "正在获取校园卡信息"
@@ -233,6 +234,7 @@ public class AlignedCampusPage {
     let classTableController = ClassTableController()
     let libraryController = LibraryController()
     let schoolCardController = SchoolCardController()
+    let energyController = EnergyController()
     let previewMode: Bool
     @State var libraryAuthStarted: Bool = false
     @State var cardAuthStarted: Bool = false
@@ -272,6 +274,9 @@ public class AlignedCampusPage {
         Timer.once(Duration.second * 22, { => launch {
             this.libraryAuthStarted = true
         }})
+        Timer.once(Duration.second * 8, { => launch {
+            if (EnergyController.cachedRemain == "") { this.energyAuthStarted = true }
+        }})
         if (LibraryController.cachedBorrowCount >= 0) {
             this.libraryValue = "借书 ${LibraryController.cachedBorrowCount} 本"
             this.libraryStatus = "待归还 ${LibraryController.cachedBorrowCount} 本书籍"
@@ -279,6 +284,10 @@ public class AlignedCampusPage {
         if (SchoolCardController.cachedBalance != "") {
             this.schoolCardValue = "卡里 ${SchoolCardController.cachedBalance} 元"
             this.schoolCardStatus = "查询一卡通流水"
+        }
+        if (EnergyController.cachedRemain != "") {
+            this.energyValue = "余额 ${EnergyController.cachedRemain} 度"
+            this.energyStatus = "最后一次读表：${EnergyController.cachedLastReadDate}"
         }
         AcademicSession().loadCurrentSemester({ semester => launch {
             SessionStore().saveSetting("semester", semester)
@@ -431,6 +440,16 @@ public class AlignedCampusPage {
         } }, { message => launch {
             this.schoolCardStatus = message
             this.cardAuthStarted = true
+        } })
+    }
+    func loadEnergyWeb(raw: String, cookies: String): Unit {
+        this.energyController.reloadEnergyAuthorized(raw, cookies, { value => launch {
+            this.energyValue = "余额 ${value.electricityRemain} 度"
+            this.energyStatus = "最后一次读表：${value.lastReadDate}"
+            this.energyAuthStarted = false
+        } }, { message => launch {
+            this.energyValue = "水电信息需连接校园网"
+            this.energyStatus = message
         } })
     }
     func build() {
@@ -604,6 +623,7 @@ public class AlignedCampusPage {
                 cookieUrl: "https://mfindxidian.libsp.cn",
                 stableId: "homeLibraryAuthWeb",
                 requireOpenId: false,
+                requireCode: false,
                 onReady: { url: String, payload: String, cookies: String => this.loadLibraryWeb(url + "|" + payload, cookies) },
                 onFailure: { message: String => this.libraryValue = "借书信息暂不可用"; this.libraryStatus = message }
             )
@@ -614,8 +634,20 @@ public class AlignedCampusPage {
                 cookieUrl: "https://v8scan.xidian.edu.cn",
                 stableId: "homeCardAuthWeb",
                 requireOpenId: true,
+                requireCode: false,
                 onReady: { url: String, payload: String, cookies: String => this.loadCardWeb(url + "|" + payload, cookies) },
                 onFailure: { message: String => this.schoolCardValue = "校园卡信息暂不可用"; this.schoolCardStatus = message }
+            )
+            }
+            if (this.energyAuthStarted) {
+            ServiceAuthWeb(
+                url: "https://xxcapp.xidian.edu.cn/uc/api/oauth/index?redirect=https://ignypt.xidian.edu.cn/revenueH5/login?opcode=MPAY&appid=200260318155520600&state=12312312312312&qrcode=0",
+                cookieUrl: "https://ignypt.xidian.edu.cn",
+                stableId: "homeEnergyAuthWeb",
+                requireOpenId: false,
+                requireCode: true,
+                onReady: { url: String, payload: String, cookies: String => this.loadEnergyWeb(url + "|" + payload, cookies) },
+                onFailure: { message: String => this.energyValue = "水电信息需连接校园网"; this.energyStatus = message }
             )
             }
         }.width(100.percent).height(100.percent).backgroundColor(ThemePalette.pageBackground(this.darkMode()))
