@@ -119,7 +119,7 @@ public class ClassAttendancePage {
             case AttendanceStatus.Ineligible => 0xFFC33C54
             case AttendanceStatus.Warning => 0xFFE58B2B
             case AttendanceStatus.Eligible => 0xFF2D8B66
-            case AttendanceStatus.Unknown => 0xFF75829A
+            case AttendanceStatus.Unknown => 0xFF46699D
         }
     }
 
@@ -245,11 +245,11 @@ public class ClassAttendancePage {
             Column {
                 if (this.courses.size > 0) {
                     Row {
-                        Text("●").fontSize(13.vp).fontColor(0xFF476FA9).margin(right: 7.vp)
+                        Text("●").fontSize(13.vp).fontColor(0xFF46699D).margin(right: 7.vp)
                         Text("未知")
                             .fontSize(13.vp)
                             .fontWeight(FontWeight.Normal)
-                            .fontColor(0xFF476FA9)
+                            .fontColor(0xFF46699D)
                             .id("attendanceGroupUnknown")
                     }
                     .width(100.percent)
@@ -269,6 +269,22 @@ public class ClassAttendancePage {
         .layoutWeight(1)
         .scrollBar(BarState.Auto)
     }
+
+    func revivalText(course: ClassAttendance): String {
+        return match (course.attendanceStatus()) {
+            case AttendanceStatus.Unknown => "无法对应已有课程"
+            case _ => "— 次 / — 总课程"
+        }
+    }
+
+    @Builder
+    func infoRow(label: String, value: String) {
+        Row {
+            Text(label).width(72.vp).fontSize(11.vp).fontWeight(FontWeight.Bold)
+            Text(value).layoutWeight(1).fontSize(11.vp)
+        }.width(100.percent).margin(top: 6.vp).alignItems(VerticalAlign.Top)
+    }
+
     @Builder
     func courseCard(course: ClassAttendance, index: Int64) {
         Column {
@@ -289,28 +305,17 @@ public class ClassAttendancePage {
                 .backgroundColor(this.statusColor(course))
 
             Column {
-                Text(course.className)
-                    .fontSize(11.vp)
-                    .fontColor(0xFF65738A)
-                Row {
-                    Text("签到次数　${course.checkInCount}").fontSize(11.vp).layoutWeight(1)
-                    Text("应签　${course.requiredCheckIn}").fontSize(11.vp).layoutWeight(1)
-                }.width(100.percent).margin(top: 6.vp)
-                Row {
-                    Text("最近状态　${course.attendanceRate}").fontSize(11.vp).layoutWeight(1)
-                    Text("旷课　${course.absenceCount}").fontSize(11.vp).layoutWeight(1)
-                }.width(100.percent).margin(top: 5.vp)
-                Text("请假：事假 ${course.personalLeave} / 病假 ${course.sickLeave} / 公假 ${course.officialLeave}")
-                    .fontSize(10.vp).fontColor(0xFF65738A).margin(top: 5.vp)
-                Text("学习进度　任务 ${course.taskProgress} / 作业 ${course.homeworkProgress} / 考试 ${course.examProgress}")
-                    .fontSize(10.vp).fontColor(0xFF65738A).margin(top: 4.vp)
+                this.infoRow("签到次数", "${course.checkInCount} 已签 / ${course.absenceCount} 缺勤 / ${course.requiredCheckIn} 应签")
+                this.infoRow("复活次数", this.revivalText(course))
+                this.infoRow("请假次数", "事假 ${course.personalLeave} / 病假 ${course.sickLeave} / 公假 ${course.officialLeave}")
+                this.infoRow("学习进度", "任务点 ${course.taskProgress} / 作业 ${course.homeworkProgress} / 考试 ${course.examProgress}")
             }
                 .width(100.percent)
-                .padding(left: 12.vp, right: 12.vp, top: 8.vp, bottom: 10.vp)
+                .padding(left: 12.vp, right: 12.vp, top: 5.vp, bottom: 11.vp)
                 .alignItems(HorizontalAlign.Start)
         }
-            .width(100.percent)
-            .margin(top: 8.vp)
+            .width(93.percent)
+            .margin(left: 22.vp, top: 8.vp)
             .backgroundColor(0xFFF0F1F8)
             .borderRadius(9.vp)
             .onClick({ _ => this.openDetail(this.indexOf(course)) })

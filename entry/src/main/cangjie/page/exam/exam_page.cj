@@ -86,8 +86,8 @@ public class ExamPage {
     @Builder
     func sectionTitle(title: String, stableId: String) {
         Row {
-            Text("●").fontSize(11.vp).fontColor(0xFF476FA9).margin(right: 8.vp)
-            Text(title).fontSize(13.vp).fontColor(0xFF476FA9).id(stableId)
+            Text("●").fontSize(11.vp).fontColor(0xFF46699D).margin(right: 8.vp)
+            Text(title).fontSize(13.vp).fontColor(0xFF46699D).id(stableId)
         }.width(100.percent).height(42.vp)
     }
 
@@ -100,12 +100,17 @@ public class ExamPage {
                 Text(this.examKind(item)).width(72.vp).fontSize(10.vp).fontColor(0xFFFFFFFF)
                     .textAlign(TextAlign.End).maxLines(1)
             }.width(100.percent).height(36.vp).padding(left: 12.vp, right: 10.vp)
-                .backgroundColor(if (finished) { 0xFF476FA9 } else { 0xFF476FA9 })
+                .backgroundColor(0xFF46699D)
             Column {
-                Text("●  ${item.time}").width(100.percent).fontSize(11.vp).maxLines(1)
                 Row {
-                    Text("●  ${item.room}").fontSize(11.vp).layoutWeight(1).maxLines(1)
-                    Text("座位  ${item.seat}").width(68.vp).fontSize(11.vp).textAlign(TextAlign.End).maxLines(1)
+                    Image(@r(app.media.exam_time)).width(13.vp).height(13.vp).margin(right: 5.vp)
+                    Text(item.time).fontSize(11.vp).maxLines(1)
+                }.width(100.percent)
+                Row {
+                    Image(@r(app.media.exam_location)).width(13.vp).height(13.vp).margin(right: 5.vp)
+                    Text(item.room).width(126.vp).fontSize(11.vp).maxLines(1)
+                    Image(@r(app.media.exam_seat)).width(15.vp).height(15.vp).margin(left: 7.vp, right: 4.vp)
+                    Text(item.seat).fontSize(11.vp).maxLines(1)
                 }.width(100.percent).margin(top: 5.vp)
             }.width(100.percent).padding(left: 12.vp, right: 12.vp, top: 9.vp, bottom: 10.vp)
                 .alignItems(HorizontalAlign.Start)
@@ -117,7 +122,7 @@ public class ExamPage {
     func unarrangedCard(item: ExamItem, index: Int64) {
         Column {
             Text(item.subject).width(100.percent).fontSize(13.vp).fontWeight(FontWeight.Medium)
-                .fontColor(0xFFFFFFFF).padding(12.vp).backgroundColor(0xFF476FA9).maxLines(1)
+                .fontColor(0xFFFFFFFF).padding(12.vp).backgroundColor(0xFF46699D).maxLines(1)
             Text(if (item.courseId == "") { "考试时间、地点待安排" } else { "课程号 ${item.courseId} · 时间、地点待安排" })
                 .width(100.percent).fontSize(11.vp).fontColor(0xFF65738A).padding(12.vp)
         }.width(100.percent).margin(top: 8.vp).backgroundColor(0xFFF0F1F8)
@@ -127,7 +132,7 @@ public class ExamPage {
     @Builder
     func emptyCard(text: String) {
         Text(text).width(93.percent).height(50.vp).margin(left: 22.vp, top: 8.vp)
-            .textAlign(TextAlign.Center).fontSize(14.vp).fontColor(0xFF476FA9)
+            .textAlign(TextAlign.Center).fontSize(14.vp).fontColor(0xFF46699D)
             .backgroundColor(0xFFE9EDF5).borderRadius(9.vp)
     }
 

@@ -85,10 +85,10 @@ public class ScorePage {
                 Text(item.name).fontSize(13.vp).fontWeight(FontWeight.Medium)
                     .fontColor(0xFFFFFFFF).layoutWeight(1).maxLines(1)
                 Text(item.classStatus).fontSize(10.vp).fontColor(0xFFFFFFFF).maxLines(1)
-            }.width(100.percent).height(36.vp).padding(left: 12.vp, right: 10.vp).backgroundColor(0xFF476FA9)
+            }.width(100.percent).height(36.vp).padding(left: 12.vp, right: 10.vp).backgroundColor(0xFF46699D)
             Row {
-                Text("学分: ${item.credit}").fontSize(11.vp).layoutWeight(2)
-                Text("GPA: ${item.gpa()}").fontSize(11.vp).layoutWeight(2)
+                Text("学分: ${item.displayCredit()}").fontSize(11.vp).layoutWeight(2)
+                Text("GPA: ${item.displayGpa()}").fontSize(11.vp).layoutWeight(2)
                 Text("成绩: ${item.displayScore()}").fontSize(11.vp).layoutWeight(2)
             }.width(100.percent).padding(left: 12.vp, right: 12.vp, top: 10.vp, bottom: 10.vp)
         }.width(100.percent).margin(top: 9.vp).backgroundColor(0xFFF0F1F8)
@@ -106,18 +106,14 @@ public class ScorePage {
                 Button("学期 ${this.semesterFilter}").height(34.vp).fontSize(11.vp)
                     .padding(left: 14.vp, right: 14.vp).borderRadius(8.vp)
                     .buttonStyle(ButtonStyleMode.Normal)
-                    .backgroundColor(0xFF476FA9).fontColor(0xFFFFFFFF)
+                    .backgroundColor(0xFF46699D).fontColor(0xFFFFFFFF)
                     .onClick({_ => this.nextSemester()}).id("scoreSemesterFilter")
                 Button("类型 ${this.typeFilter}").height(34.vp).fontSize(11.vp).margin(left: 8.vp)
                     .padding(left: 14.vp, right: 14.vp).borderRadius(8.vp)
                     .buttonStyle(ButtonStyleMode.Normal)
-                    .backgroundColor(0xFF476FA9).fontColor(0xFFFFFFFF)
+                    .backgroundColor(0xFF46699D).fontColor(0xFFFFFFFF)
                     .onClick({_ => this.nextType()}).id("scoreTypeFilter")
             }.width(100.percent).margin(top: 8.vp).justifyContent(FlexAlign.Start)
-            if (this.scores.size > 0) {
-                Text("计入 ${this.summary().count} 门 · ${this.summary().credit} 学分 · 加权均分 ${this.summary().average} · GPA ${this.summary().gpa}")
-                    .fontSize(10.vp).fontColor(0xFF65738A).margin(top: 7.vp).id("scoreSummary")
-            }
             if (this.loading || this.scores.size == 0) {
                 Text(this.status).fontSize(11.vp).fontColor(0xFF65738A).margin(top: 7.vp).id("scoreStatus")
             }

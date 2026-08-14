@@ -28,9 +28,16 @@ public class ScoreItem {
     }
     public func isFinished(): Bool { return this.score != "" && this.isPassedValue != "" && this.isPassedValue != "null" }
     public func isPassed(): Bool { return this.isPassedValue == "1" }
+    public func oneDecimal(value: Float64): String {
+        let scaled = Int64(value * 10.0 + 0.5)
+        return "${scaled / 10}.${scaled % 10}"
+    }
+    public func displayCredit(): String { return this.oneDecimal(this.numericCredit()) }
+    public func displayGpa(): String { return this.oneDecimal(this.gpa()) }
     public func displayScore(): String {
         if ((this.scoreTypeCode == 1 || this.scoreTypeCode == 2 || this.scoreTypeCode == 3) && this.level != "") { return this.level }
-        return if (this.score == "") { "暂无" } else { this.score }
+        if (this.score == "") { return "暂无" }
+        try { return Int64(Float64.parse(this.score)).toString() } catch (_) { return this.score }
     }
     public func gpa(): Float64 {
         if (!this.isFinished()) { return 0.0 }

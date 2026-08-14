@@ -1,0 +1,26 @@
+{
+  "name": "Real-account detail UI alignment",
+  "steps": [
+    {"action": "click", "target": {"key": "homeScore"}, "wait_after": 4},
+    {"action": "snapshot", "label": "01-score"},
+    {"action": "click", "target": {"key": "scoreBack"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "homeExam"}, "wait_after": 4},
+    {"action": "snapshot", "label": "02-exam"},
+    {"action": "click", "target": {"key": "examBack"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "homeAttendance"}, "wait_after": 5},
+    {"action": "snapshot", "label": "03-attendance"},
+    {"action": "click", "target": {"key": "attendanceBack"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "homeEmptyClassroom"}, "wait_after": 5},
+    {"action": "snapshot", "label": "04-empty-classroom"},
+    {"action": "click", "target": {"key": "emptyClassroomDateInput"}, "wait_after": 1},
+    {"action": "snapshot", "label": "05-date-calendar"},
+    {"action": "click", "target": {"key": "emptyClassroomDateCancel"}, "wait_after": 1},
+    {"action": "click", "target": {"key": "emptyClassroomBuildingPicker"}, "wait_after": 1},
+    {"action": "snapshot", "label": "06-building-list"}
+  ],
+  "assertions": [
+    {"type": "exists", "target": {"key": "emptyClassroomBuildingPicker"}, "message": "Building selector entry should remain available"},
+    {"type": "not_exists", "target": {"key": "emptyClassroomBuildingWheel"}, "message": "Legacy wheel selector should be absent"},
+    {"type": "not_exists", "target": {"key": "navTo_home"}, "message": "Detail page should not show bottom navigation"}
+  ]
+}

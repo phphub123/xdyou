@@ -20,7 +20,7 @@ public class EmptyClassroomPage {
     @State var semester: String = ""
     @State var filter: String = ""
     @State var showBuildingPicker: Bool = false
-    @State var pickerIndex: UInt32 = 0
+    @State var showDatePicker: Bool = false
     @State var places: ArrayList<EmptyClassroomPlace> = ArrayList<EmptyClassroomPlace>()
     @State var rooms: ArrayList<EmptyClassroomData> = ArrayList<EmptyClassroomData>()
     let controller = EmptyClassroomController()
@@ -124,53 +124,38 @@ public class EmptyClassroomPage {
             .fontSize(10.vp)
             .fontWeight(FontWeight.Medium)
             .textAlign(TextAlign.Center)
-            .fontColor(if (used) { 0xFFFFFFFF } else { 0xFF41699F })
-            .backgroundColor(if (used) { 0xFF476FA9 } else { 0x00FFFFFF })
-            .border(width: 1.vp, color: 0xFF476FA9)
+            .fontColor(if (used) { 0xFFFFFFFF } else { 0xFF46699D })
+            .backgroundColor(if (used) { 0xFF46699D } else { 0x00FFFFFF })
+            .border(width: 1.vp, color: 0xFF46699D)
             .borderRadius(5.vp)
             .margin(left: 2.vp)
     }
 
-    func buildingNames(): Array<String> {
-        return Array<String>(this.places.size, { index => this.places[index].name })
-    }
-
-    func currentBuildingIndex(): UInt32 {
-        var index: Int64 = 0
-        while (index < this.places.size) {
-            if (this.places[index].code == this.building) { return UInt32(index) }
-            index += 1
-        }
-        return 0
-    }
-
     func openBuildingPicker(): Unit {
         if (this.places.size == 0) { this.loadBuildings(); return }
-        this.pickerIndex = this.currentBuildingIndex()
         this.showBuildingPicker = true
     }
 
-    func confirmBuilding(): Unit {
-        this.showBuildingPicker = false
-        this.chooseBuilding(Int64(this.pickerIndex))
-    }
+    func selectBuilding(index: Int64): Unit { this.showBuildingPicker = false; this.chooseBuilding(index) }
+    func confirmDate(value: String): Unit { this.showDatePicker = false; this.date = value; this.search() }
 
     @Builder
     func buildingPickerDialog() {
         Column {
-            Text("选择教学楼").fontSize(17.vp).fontWeight(FontWeight.Medium).margin(bottom: 6.vp)
-            TextPicker(range: this.buildingNames(), selected: this.pickerIndex)
-                .height(250.vp).canLoop(false).defaultPickerItemHeight(42.vp)
-                .onChange({ _: String, index: UInt32 => this.pickerIndex = index })
-                .id("emptyClassroomBuildingWheel")
-            Row {
-                Button("取消").layoutWeight(1).height(36.vp).backgroundColor(0xFFE9EDF5)
-                    .fontColor(0xFF476FA9).onClick({_ => this.showBuildingPicker = false})
-                    .id("emptyClassroomBuildingCancel")
-                Button("确定").layoutWeight(1).height(36.vp).margin(left: 10.vp)
-                    .onClick({_ => this.confirmBuilding()}).id("emptyClassroomBuildingConfirm")
-            }.width(100.percent)
-        }.width(86.percent).padding(18.vp).backgroundColor(0xFFFFFFFF).borderRadius(14.vp)
+            Scroll {
+                Column {
+                    ForEach(this.places, itemGenerator: { place: EmptyClassroomPlace, index: Int64 =>
+                        Row {
+                            Text(if (place.code == this.building) { "●" } else { "○" })
+                                .width(36.vp).fontSize(22.vp).fontColor(0xFF46699D).textAlign(TextAlign.Center)
+                            Text(place.name).fontSize(14.vp).margin(left: 12.vp)
+                        }.width(100.percent).height(48.vp).padding(left: 10.vp, right: 10.vp)
+                            .onClick({_ => this.selectBuilding(index)}).id("emptyClassroomBuilding_${index}")
+                    })
+                }.width(100.percent).alignItems(HorizontalAlign.Start)
+            }.width(100.percent).layoutWeight(1).align(Alignment.TopStart)
+        }.width(284.vp).height(680.vp).padding(left: 10.vp, right: 10.vp, top: 12.vp, bottom: 12.vp)
+            .backgroundColor(0xFFF8F8FF).borderRadius(12.vp)
             .align(Alignment.Center).id("emptyClassroomBuildingDialog")
     }
 
@@ -186,13 +171,15 @@ public class EmptyClassroomPage {
                 }.width(100.percent).margin(top: 8.vp)
 
                 Row {
-                    TextInput(placeholder: "yyyy-MM-dd", text: this.date)
-                        .width(128.vp).height(34.vp).fontSize(11.vp).fontColor(0xFFFFFFFF)
-                        .backgroundColor(0xFF476FA9).borderRadius(8.vp)
-                        .onChange({ value => this.date = value }).id("emptyClassroomDateInput")
+                    Button("日期 ${this.date}")
+                        .width(128.vp).height(34.vp).fontSize(11.vp)
+                        .buttonStyle(ButtonStyleMode.Normal).backgroundColor(0xFF46699D)
+                        .fontColor(0xFFFFFFFF).borderRadius(8.vp)
+                        .onClick({_ => this.showDatePicker = true}).id("emptyClassroomDateInput")
                     Button("教学楼：${this.selectedBuildingName()}")
                         .height(34.vp).fontSize(11.vp).margin(left: 8.vp).padding(left: 13.vp, right: 13.vp)
-                        .backgroundColor(0xFF476FA9).onClick({_ => this.openBuildingPicker()})
+                        .buttonStyle(ButtonStyleMode.Normal).backgroundColor(0xFF46699D).fontColor(0xFFFFFFFF)
+                        .onClick({_ => this.openBuildingPicker()})
                         .id("emptyClassroomBuildingPicker")
                 }.width(100.percent).margin(top: 10.vp).justifyContent(FlexAlign.Center)
 
@@ -230,6 +217,11 @@ public class EmptyClassroomPage {
                 Column {}.width(100.percent).height(100.percent).backgroundColor(0x66000000)
                     .onClick({_ => this.showBuildingPicker = false})
                 this.buildingPickerDialog()
+            }
+            if (this.showDatePicker) {
+                SingleDateCalendarDialog(initialDate: this.date,
+                    onCancel: {=> this.showDatePicker = false},
+                    onConfirm: { value => this.confirmDate(value) }, idPrefix: "emptyClassroomDate")
             }
         }.width(100.percent).height(100.percent)
     }

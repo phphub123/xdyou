@@ -195,6 +195,14 @@
 - RAG query `ArkUI Button Image TextInput Row layout` failed with `OperationalError: unable to open database file`; raw ref `docs/API/arkui-cj/cj-button-picker-button.md#enum-buttonstylemode` was read instead.
 - Adopted conclusion: use `ButtonStyleMode.Normal` for explicitly colored filter/search buttons and do not apply `Image.fillColor` to outline SVG icons.
 
+## 2026-08-14 real-data detail UI refinement
+
+- Skills: `harmonyos-cangjie-dev`, `cangjie-harmonyos-knowledge`, `cangjie-core-reference`, `harmonyos-build-run-diagnose`, and `harmonyos-evolution`.
+- Compared real-account score, exam, and attendance HarmonyOS captures with their source-app pairs; also compared the empty-classroom controls and calendar reference.
+- RAG `doctor` and query `ArkUI Grid calendar dialog TextPicker Button` returned `OperationalError: unable to open database file`; reused the already compiled pure-Cangjie `Grid`/`DateTime` calendar implementation from `school_card_page.cj` and the source Flutter page semantics.
+- Implemented shared single-date calendar, source-shaped building list, one-decimal credit/GPA and integer numeric scores, exam time/location/seat icons with compact seating layout, deep-blue `0xFF46699D`, and four-row attendance details including revival count.
+- Verification: HAP builds succeeded; the final incremental build reported `BUILD SUCCESSFUL in 1 min 41 s 911 ms`. Replacement install and Ability launch succeeded as PID `31149`. The calendar opened in runtime capture without fatal logs. Ehall subsequently reported an expired session, so populated score/exam/attendance and building-list runtime comparison remains account-session gated.
+
 ## 2026-08-13 — campus-card calendar-range dialog alignment
 
 - Skills: `harmonyos-cangjie-dev`, `cangjie-harmonyos-knowledge`, and `harmonyos-build-run-diagnose`.
