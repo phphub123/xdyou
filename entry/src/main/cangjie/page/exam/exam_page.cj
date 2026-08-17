@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.exam
 
+// 考试安排页面，按学期加载并展示考场、座位和时间信息。
+
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import ohos.resource.*

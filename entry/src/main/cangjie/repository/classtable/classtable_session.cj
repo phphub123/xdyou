@@ -1,11 +1,14 @@
 package ohos_app_cangjie_entry.repository.classtable
 
+// 课表仓储，从教务接口加载学期、课程时间槽及未排课程数据。
+
 import std.collection.*
 import std.convert.*
 import ohos_app_cangjie_entry.model.*
 import ohos_app_cangjie_entry.repository.academic.*
 import ohos_app_cangjie_entry.repository.auth.*
 
+// 课表响应解析必须同时产出学期信息和课程列表，避免页面状态错配。
 public class ClassTableSession {
     static let termUrl = "https://ehall.xidian.edu.cn/jwapp/sys/wdkb/modules/jshkcb/cxjcs.do"
     static let classUrl = "https://ehall.xidian.edu.cn/jwapp/sys/wdkb/modules/xskcb/xskcb.do"

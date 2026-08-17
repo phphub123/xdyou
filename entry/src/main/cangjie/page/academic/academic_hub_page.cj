@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.academic
 
+// 教务功能聚合页，负责把成绩、考试、课表等入口接入统一导航。
+
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import std.collection.ArrayList

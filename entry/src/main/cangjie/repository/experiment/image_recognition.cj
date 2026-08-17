@@ -1,11 +1,14 @@
 package ohos_app_cangjie_entry.repository.experiment
 
+// 实验图片识别服务，把报告图片转换为可核验的识别结果。
+
 import kit.ImageKit.*
 import std.collection.*
 import ohos_app_cangjie_entry.model.*
 
 // Source parity: hashes the RGB bytes of opaque pixels in the score service's
 // 50x20 image with unsigned 32-bit FNV-1a. No OCR or inferred score is used.
+// 识别结果仅来自实际图片内容，解析失败不得返回硬编码实验结论。
 public class ImageRecognitionService {
     static let scoreHashes: HashMap<String, UInt64> = ImageRecognitionService.makeHashes()
 

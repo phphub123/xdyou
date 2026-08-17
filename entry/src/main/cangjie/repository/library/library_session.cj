@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.repository.library
 
+// 图书馆仓储，复用 IDS 会话完成 SSO，并解析借阅、位置和续借状态。
+
 import kit.NetworkKit.*
 import ohos.business_exception.*
 import std.collection.*
@@ -16,6 +18,7 @@ class LibraryHeadersCb <: Callback1Argument<HashMap<String, String>> {
     public open func invoke(err: ?BusinessException, value: HashMap<String, String>): Unit { this.action(value) }
 }
 
+// 图书检索与个人借阅共享认证上下文，但返回各自独立的领域模型。
 public class LibrarySession {
     static let baseUrl = "https://mfindxidian.libsp.cn"
     static let defaultGroupCode = "200755"

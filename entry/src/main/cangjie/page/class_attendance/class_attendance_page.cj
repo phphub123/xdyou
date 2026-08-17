@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.class_attendance
 
+// 课堂考勤页面，呈现加载、空、错误和真实签到明细状态。
+
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import std.collection.*

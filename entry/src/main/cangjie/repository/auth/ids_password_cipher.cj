@@ -1,10 +1,13 @@
 package ohos_app_cangjie_entry.repository.auth
 
+// IDS 密码提交加密器，严格复现源应用登录协议要求的密文格式。
+
 import kit.CryptoArchitectureKit.*
 import std.collection.*
 
 // Xidian IDS encrypts a prefixed UTF-8 password with AES-128-CBC and PKCS#7.
 // The salt is supplied by the live login form and is never persisted.
+// 仅负责协议规定的密码变换，不负责保存或记录原始密码。
 public class IDSPasswordCipher {
     static let prefix: String = "xidianscriptsxduxidianscriptsxduxidianscriptsxduxidianscriptsxdu"
     static let ivText: String = "xidianscriptsxdu"

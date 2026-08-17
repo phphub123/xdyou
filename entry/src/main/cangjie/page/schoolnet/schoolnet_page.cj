@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.schoolnet
 
+// 校园网页面，展示账户用量并提供真实查询的加载与错误反馈。
+
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import ohos_app_cangjie_entry.controller.*

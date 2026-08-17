@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.components
 
+// 隐藏式服务认证 Web 组件：只负责完成跨站授权并把结果回传给业务层。
+
 import kit.ArkUI.*
 import kit.ArkWeb.*
 import ohos.arkui.state_macro_manage.*

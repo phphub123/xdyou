@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.repository.experiment
 
+// “其他实验”仓储，通过 IDS OAuth 获取实验课程和周次安排。
+
 import kit.NetworkKit.*
 import ohos.business_exception.*
 import std.collection.*
@@ -10,6 +12,7 @@ import ohos_app_cangjie_entry.repository.auth.*
 
 // Other-experiment service. It never synthesizes an IDS session: the redirect
 // chain must consume the genuine HUKS-restored cookie and reach Sysj itself.
+// 通过 IDS OAuth 取得 Sysj 会话后再加载 25 周实验安排。
 public class SysjSession {
     static let baseUrl = "https://sysj.xidian.edu.cn"
     static let timeList: Array<String> = ["08:30","09:15","09:20","10:05","10:25","11:10","11:15","12:00","14:00","14:45","14:50","15:35","15:55","16:40","16:45","17:30","19:00","19:45","19:55","20:35","20:40","21:25"]

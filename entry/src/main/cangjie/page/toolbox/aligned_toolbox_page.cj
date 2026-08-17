@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.toolbox
 
+// 对齐版工具箱页面，集中维护外部工具入口及其导航元数据。
+
 import kit.ArkUI.*
 import kit.ArkWeb.*
 import ohos.arkui.state_macro_manage.*
@@ -7,6 +9,7 @@ import ohos.business_exception.*
 import ohos.resource.*
 import ohos_app_cangjie_entry.repository.*
 
+// 工具列表页负责导航，具体 Web 生命周期由 ToolboxWebPage 管理。
 @Component
 public class AlignedToolboxPage {
     @State var showWeb: Bool = false
@@ -89,6 +92,7 @@ public class AlignedToolboxPage {
     }
 }
 
+// 单个工具入口的通用展示与点击组件。
 @Component
 public class AlignedToolRow {
     let icon: AppResource

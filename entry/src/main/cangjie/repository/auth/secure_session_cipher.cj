@@ -1,11 +1,14 @@
 package ohos_app_cangjie_entry.repository.auth
 
+// 会话持久化加密边界，避免账号凭据和 Cookie 以明文写入本地存储。
+
 import kit.CryptoArchitectureKit.*
 import kit.UniversalKeystoreKit.*
 import std.collection.*
 
 // Keeps the AES key inside HUKS. Preferences only receives a random nonce and
 // authenticated ciphertext, never the Ehall cookie header in plaintext.
+// 加解密失败必须由调用方视为不可恢复会话，不能降级为明文存储。
 public class SecureSessionCipher {
     static let keyAlias: String = "xdyou.ehall.session.v1"
     static let associatedData: Array<UInt8> = "XDYou:EhallSession:v1".toArray()

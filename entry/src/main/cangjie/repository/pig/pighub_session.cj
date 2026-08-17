@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.repository.pig
 
+// PigHub 图片仓储，获取远端图片元数据并保留网络错误边界。
+
 import kit.NetworkKit.*
 import ohos.business_exception.*
 import std.collection.*
@@ -18,6 +20,7 @@ public class PigHubImage {
     }
 }
 
+// 只转换服务端图片元数据，下载与显示生命周期由页面负责。
 public class PigHubSession {
     private static let baseUrl: String = "https://www.pighub.top"
     private let random: Random = Random()

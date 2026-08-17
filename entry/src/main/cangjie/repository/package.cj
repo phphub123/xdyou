@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.repository
 
+// 仓储聚合门面：重导出各业务数据源，保持控制器的依赖入口稳定。
+
 public import ohos_app_cangjie_entry.repository.academic.*
 public import ohos_app_cangjie_entry.repository.auth.*
 public import ohos_app_cangjie_entry.repository.class_attendance.*

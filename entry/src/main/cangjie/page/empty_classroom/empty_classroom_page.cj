@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.empty_classroom
 
+// 空闲教室查询页，组合日期、校区、教学楼和节次筛选条件。
+
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import std.collection.ArrayList

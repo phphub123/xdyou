@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.repository.energy
 
+// 空调电量仓储，按设备标识查询独立计量系统，区别于宿舍水电表链路。
+
 import kit.NetworkKit.*
 import ohos.business_exception.*
 import std.collection.*
@@ -9,6 +11,7 @@ import std.time.*
 import stdx.encoding.json.*
 import ohos_app_cangjie_entry.model.*
 
+// 空调系统使用独立设备标识，不能复用宿舍电表的余额语义。
 public class AirconSession {
     static let endpoint = "https://gxkt.juhaolian.cn/api/device/direct/state"
 

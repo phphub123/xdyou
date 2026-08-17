@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.repository.dorm_water
 
+// 宿舍水机会话，管理验证码令牌并请求真实设备和消费状态。
+
 import kit.ArkData.*
 import kit.CryptoArchitectureKit.*
 import kit.NetworkKit.*
@@ -34,6 +36,7 @@ class DormWaterTokenStore {
     }
 }
 
+// 验证码令牌与设备查询绑定，过期后必须重新获取挑战。
 public class DormWaterSession {
     static let baseUrl: String = "https://i.ilife798.com"
     static let userAgent: String = "Android_ilife798_2.0.11"

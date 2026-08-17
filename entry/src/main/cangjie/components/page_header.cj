@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.components
 
+// 页面通用标题栏、刷新动作与搜索输入组件，统一子页面的导航和交互样式。
+
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import ohos.resource.*
@@ -7,6 +9,7 @@ import ohos.resource.*
 @Builder
 public func EmptyPageHeaderTrailing() {}
 
+// 标题栏右侧的标准刷新按钮；actionId 供自动化验收稳定定位。
 @Component
 public class HeaderRefreshAction {
     let onRefresh: () -> Unit
@@ -30,6 +33,7 @@ public class HeaderRefreshAction {
     }
 }
 
+// 受控搜索框：文本状态由调用页面持有，组件只转发输入变化。
 @Component
 public class PageSearchField {
     let placeholder: String
@@ -57,6 +61,7 @@ public class PageSearchField {
     }
 }
 
+// 子页面统一标题栏；trailing 允许调用方注入刷新等附加动作。
 @Component
 public class PageHeader {
     let title: String

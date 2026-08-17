@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.experiment
 
+// 实验信息页面，协调不同实验来源、报告入口和识别结果展示。
+
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import std.collection.ArrayList

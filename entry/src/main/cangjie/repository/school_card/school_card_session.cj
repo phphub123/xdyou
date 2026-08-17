@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.repository.school_card
 
+// 校园卡仓储，完成 SSO/OpenID 交换并请求真实余额和交易流水。
+
 import kit.NetworkKit.*
 import ohos.business_exception.*
 import ohos.callback_invoke.*
@@ -9,6 +11,7 @@ import stdx.encoding.json.*
 import ohos_app_cangjie_entry.model.*
 import ohos_app_cangjie_entry.repository.auth.*
 
+// 单次 SSO 重定向的临时响应头，不写入持久化存储。
 class SchoolCardHeaderCapture {
     var cookies: String = ""
     var location: String = ""

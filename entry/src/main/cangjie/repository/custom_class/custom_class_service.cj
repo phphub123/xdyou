@@ -1,11 +1,14 @@
 package ohos_app_cangjie_entry.repository.custom_class
 
+// 自定义课程本地仓储，负责持久化用户配置并生成日期发生项。
+
 import kit.ArkData.*
 import std.collection.*
 import stdx.encoding.json.*
 import ohos_app_cangjie_entry.common.*
 import ohos_app_cangjie_entry.model.*
 
+// 本地数据写入后重新读取同一格式，保证课表消费端看到稳定快照。
 public class CustomClassRepository {
     static let storeName = "xdyou_custom_classes"
     static let dataKey = "classesJson"

@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.homepage
 
+// 旧版校园信息页，仅保留兼容入口；新界面由 AlignedCampusPage 承担。
+
 import kit.ArkUI.*
 import kit.ArkWeb.*
 import std.collection.ArrayList

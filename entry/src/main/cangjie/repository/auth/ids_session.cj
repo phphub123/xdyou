@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.repository.auth
 
+// IDS/Ehall 认证核心：管理 Cookie、滑块、短信二次验证和跨服务会话续接。
+
 import kit.NetworkKit.*
 import kit.ArkWeb.*
 import kit.PerformanceAnalysisKit.Hilog
@@ -10,6 +12,7 @@ import std.convert.*
 import std.regex.*
 import std.time.*
 
+// HeadersReceive 回调跨异步阶段共享 Set-Cookie 的最小可变容器。
 class IDSCookieCapture {
     var value: String = ""
 }
@@ -44,6 +47,7 @@ public class SliderCaptcha {
     }
 }
 
+// 已登录账号的短信二次认证流程，成功后更新同一条 IDS Cookie 链。
 public class IDSReAuthSession {
     public let challengeLocation: String
     public let username: String
@@ -310,6 +314,7 @@ public class IDSReAuthSession {
     }
 }
 
+// IDS 主登录会话；所有网络回调必须以 onReady/onError 结束，禁止伪造成功态。
 public class IDSSession {
     public static let loginUrl: String = "https://ids.xidian.edu.cn/authserver/login"
     static let sliderUrl: String = "https://ids.xidian.edu.cn/authserver/common/openSliderCaptcha.htl"
@@ -1062,6 +1067,7 @@ public class IDSSession {
     }
 }
 
+// Ehall 仅复用 IDS 会话和固定落地页，不维护第二份账号凭据。
 public class EhallSession {
     public static let landingUrl: String = "https://ehall.xidian.edu.cn/login?service=https://ehall.xidian.edu.cn/new/index.html"
     public let ids: IDSSession = IDSSession()

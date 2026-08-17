@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.toolbox
 
+// 工具箱兼容页面，负责把工具列表接入现有页面导航。
+
 import kit.ArkUI.*
 import kit.ArkWeb.*
 import ohos.arkui.state_macro_manage.*

@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.login
 
+// 登录页面，驱动 IDS 密码登录、滑块挑战和短信二次验证流程。
+
 import kit.ArkUI.*
 import kit.ArkWeb.*
 import std.collection.ArrayList

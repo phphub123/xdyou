@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.setting
 
+// 旧版设置页兼容入口；新功能优先维护 AlignedSettingsPage。
+
 import kit.ArkUI.*
 import kit.ArkWeb.*
 import std.collection.ArrayList

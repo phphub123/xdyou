@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.repository.schoolnet
 
+// 校园网仓储，查询当前账号的余额、流量和在线状态。
+
 import kit.NetworkKit.*
 import ohos.business_exception.*
 import std.collection.*
@@ -8,6 +10,7 @@ import std.time.*
 import stdx.encoding.json.*
 import ohos_app_cangjie_entry.model.*
 
+// 校园网接口的认证、请求和响应解析统一收敛在此会话中。
 public class SchoolnetSession {
     public func loadCurrent(success: (CurrentUserNetInfo) -> Unit, failure: (String) -> Unit): Unit {
         this.get("https://notice.xidian.edu.cn", { body =>

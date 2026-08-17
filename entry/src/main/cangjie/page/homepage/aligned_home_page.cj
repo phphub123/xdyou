@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.homepage
 
+// 主页面与五栏导航壳，聚合课表、水电、图书馆和校园卡实时摘要。
+
 import kit.ArkUI.*
 import kit.ArkWeb.*
 import ohos.arkui.state_macro_manage.*
@@ -30,6 +32,7 @@ import ohos_app_cangjie_entry.page.toolbox.*
 import ohos_app_cangjie_entry.page.pig.*
 import ohos_app_cangjie_entry.page.setting.*
 
+// 五栏页面容器，只持有导航选择状态，不承载业务数据。
 @Component
 public class AlignedHomePage {
     let account: String
@@ -159,6 +162,7 @@ public class AlignedHomePage {
     }
 }
 
+// 底部导航项，selectedIndex 直接接收父级状态以保持响应式选中效果。
 @Component
 public class AlignedNavItem {
     let icon: AppResource
@@ -214,6 +218,7 @@ public class AlignedNavItem {
     }
 }
 
+// 校园信息主页，异步摘要均回到主线程后写入本组件状态。
 @Component
 public class AlignedCampusPage {
     @State var scheduleCount: Int64 = 0
@@ -654,6 +659,7 @@ public class AlignedCampusPage {
     }
 }
 
+// 首页大卡片的通用视觉组件。
 @Component
 public class AlignedInfoCard {
     let icon: AppResource
@@ -690,6 +696,7 @@ public class AlignedInfoCard {
     }
 }
 
+// 首页宫格入口的通用视觉组件。
 @Component
 public class AlignedSmallCard {
     let icon: AppResource
@@ -713,6 +720,7 @@ public class AlignedSmallCard {
     }
 }
 
+// 睿思页面占位容器，导航职责仍由外层主页统一管理。
 @Component
 public class AlignedRuisiPage {
     let onOpenToolbox: () -> Unit

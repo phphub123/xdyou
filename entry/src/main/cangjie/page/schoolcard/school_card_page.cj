@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.schoolcard
 
+// 校园卡页面，协调 SSO 授权、余额概览、交易日期范围和流水展示。
+
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import std.collection.ArrayList

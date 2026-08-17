@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.repository.experiment
 
+// 物理实验仓储，使用独立账号会话加载实验安排和报告图片。
+
 import kit.NetworkKit.*
 import ohos.business_exception.*
 import std.collection.*
@@ -8,6 +10,7 @@ import std.time.*
 import ohos_app_cangjie_entry.model.*
 import ohos_app_cangjie_entry.repository.auth.*
 
+// 物理实验系统使用独立登录信息，与 IDS/Ehall 会话严格隔离。
 public class PhysicsExperimentSession {
     static let baseUrl = "http://wlsy.xidian.edu.cn/PhyEws"
     static let passwordKey = "physicsExperimentPasswordEncrypted"

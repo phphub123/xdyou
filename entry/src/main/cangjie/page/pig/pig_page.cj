@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.pig
 
+// 猪图鉴赏页面，加载远端图片并处理刷新、空态和错误态。
+
 import kit.ArkUI.*
 import kit.ArkWeb.*
 import ohos.arkui.state_macro_manage.*

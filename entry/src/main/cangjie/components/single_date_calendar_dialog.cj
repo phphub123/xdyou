@@ -1,11 +1,14 @@
 package ohos_app_cangjie_entry.components
 
+// 单日期选择弹层，封装月份切换、日期网格和确认/取消回调。
+
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import std.collection.ArrayList
 import std.convert.*
 import std.time.*
 
+// 日期以 yyyy-MM-dd 字符串作为输入输出边界，避免页面依赖日历内部状态。
 @Component
 public class SingleDateCalendarDialog {
     let initialDate: String
@@ -51,6 +54,7 @@ public class SingleDateCalendarDialog {
         } catch (_) { return 0 }
     }
     func cells(): ArrayList<Int64> {
+        // 固定生成 6×7 网格；0 表示当前月份之外的占位单元。
         let result = ArrayList<Int64>(); let offset = this.firstWeekday()
         for (index in 0..42) {
             let value = index - offset + 1

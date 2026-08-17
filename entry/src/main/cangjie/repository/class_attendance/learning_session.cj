@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.repository.class_attendance
 
+// 学习平台考勤仓储，负责认证请求、课程映射和签到明细解析。
+
 import kit.NetworkKit.*
 import kit.PerformanceAnalysisKit.Hilog
 import ohos.business_exception.*
@@ -22,6 +24,7 @@ class LearningCourseInfo {
     }
 }
 
+// 对外提供课程汇总与活动明细两类真实查询。
 public class LearningSession {
     static let loginUrl = "https://xdspoc.fanya.chaoxing.com/sso/xdspoc"
     static let idsLearningLoginUrl = "https://ids.xidian.edu.cn/authserver/login?service=https%3A%2F%2Fxdspoc.fanya.chaoxing.com%2Fsso%2Fxdspoc"

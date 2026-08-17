@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.score
 
+// 成绩查询页面，呈现课程成绩、统计摘要及认证失败边界。
+
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import std.collection.*

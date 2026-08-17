@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.repository.academic
 
+// 教务会话门面，复用 IDS/Ehall 凭据并为成绩、考试等仓储提供认证上下文。
+
 import kit.NetworkKit.*
 import kit.PerformanceAnalysisKit.Hilog
 import ohos.business_exception.*
@@ -12,6 +14,7 @@ import ohos_app_cangjie_entry.repository.auth.*
 
 // Ehall business APIs require an app-specific SSO bootstrap through appShow.
 // Only the encrypted real IDS/Ehall session is used; response bodies are never logged or persisted here.
+// 对外只暴露认证后的教务请求能力，不让页面直接拼接 Cookie 或服务地址。
 public class AcademicSession {
     static let scoreUrl = "https://ehall.xidian.edu.cn/jwapp/sys/cjcx/modules/cjcx/xscjcx.do"
     static let examUrl = "https://ehall.xidian.edu.cn/jwapp/sys/studentWdksapApp/modules/wdksap/wdksap.do"

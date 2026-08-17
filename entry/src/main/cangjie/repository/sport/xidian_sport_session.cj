@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.repository.sport
 
+// 体育系统仓储，复用认证会话并解析课程成绩与体测数据。
+
 import kit.NetworkKit.*
 import ohos.business_exception.*
 import std.collection.*
@@ -15,6 +17,7 @@ import ohos_app_cangjie_entry.repository.auth.*
 
 // Real Xidian sport-service implementation. Credentials are never logged and
 // Preferences only receives HUKS-authenticated ciphertext.
+// 体育系统查询入口，服务端失败时保持真实错误而不生成演示成绩。
 public class SportSession {
     static let baseUrl: String = "http://tybjxgl.xidian.edu.cn/app"
     static let publicKeyPem: String = """

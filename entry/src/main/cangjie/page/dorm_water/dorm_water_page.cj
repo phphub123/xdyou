@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.dorm_water
 
+// 宿舍水机页面，处理验证码、设备查询和异常恢复交互。
+
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import std.collection.*

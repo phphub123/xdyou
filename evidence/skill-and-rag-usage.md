@@ -326,3 +326,28 @@
 - Verification: 独立 Hvigor 缓存下 `BUILD SUCCESSFUL in 2 min 49 s 372 ms`，HAP 替换安装并启动。真实运行得到电量 `-62.70 kWh`、最后读表 `2026-08-14`；水表表格存在 4 条真实记录（包括 `2026-07-09 / 17.0 / 220.0 / 203.0`）；返回首页显示 `余额 -62.70 度` 和 `最后一次读表：2026-08-14`。目标进程日志 0 FATAL。
 - Runtime evidence: `acceptance/runtime/energy-detail-real-chain.json`、`energy-bottom.json`、`energy-home-after-back.json`，日志目录 `evidence/energy-real-runtime-2026-08-14/`。
 - UI follow-up: 水表时间压缩为日期、三项读数统一为 1 位小数，避免源数据的 6 位小数导致窄列换行。补齐 `std.convert` 后最终复验 `BUILD SUCCESSFUL in 1 min 29 s 794 ms`，HAP 替换安装并启动成功。
+
+## 2026-08-17 — components/page/repository comment coverage
+
+- Skills: `harmonyos-cangjie-dev`, `cangjie-core-reference`, and `harmonyos-build-run-diagnose`; `cangjie-essentials.md` was read before editing.
+- Reference: read `references/cangjie-lang-features/REFERENCE.md` and searched its routed language handbook for comment/documentation-comment rules. No special documentation-comment syntax was required; the project-proven `//` form was used.
+- Scope: the initial pass covered `components/`, `model/`, `page/`, and `repository/`; at the user's direction, every added comment under `model/` was then removed. The final scope is 148 comment-only lines across 51 `.cj` files under `components/`, `page/`, and `repository/`. `model/` has 0 comment lines and no diff from its baseline.
+- Guardrail: no executable statement, declaration signature, import, resource, navigation target, or build configuration was changed. Obvious fields, getters, colors, and layout chains were intentionally not narrated line by line.
+- Verification: `git diff --check` passed; final `SyncCangjieResource` reported `BUILD SUCCESSFUL in 785 ms`, `CompileCangjie` completed in `24 s 886 ms`, and `assembleHap` reported `BUILD SUCCESSFUL in 26 s 237 ms`.
+- Runtime: the final HAP replacement install on `127.0.0.1:5555` succeeded; `EntryAbility` launched as PID `32360`. The foreground XDYou window was captured and the bounded 5-second hilog contains 0 app-line FATAL, ERROR, and WARN. Evidence: `evidence/comment-coverage-2026-08-17-final/`.
+
+## 2026-08-17 — device cache and login-data clear
+
+- Skill: `harmonyos-build-run-diagnose`.
+- Target: device `127.0.0.1:5555`, bundle `io.github.benderblog.traintime_pda.harmonyos` only.
+- Commands: `bm clean -n <bundle> -c` returned `clean bundle cache files successfully`; a separate `bm clean -n <bundle> -d` returned `clean bundle data files successfully`. The separate data command was required because the combined invocation only reported cache cleanup.
+- Effect: device-side XDYou cache, local settings, stored session, cookies, and login state were deleted. The application was not uninstalled and no other bundle was targeted.
+- Verification: the installed HAP launched as PID `12989`; the foreground XDYou login page contains `loginAccountInput`, `loginPasswordInput`, and `loginSubmitButton`, with both account and password inputs empty. Evidence: `evidence/device-cache-clear-2026-08-17-final/`.
+
+## 2026-08-17 — feature migration status document
+
+- Skill: `harmonyos-cangjie-dev`; its acceptance/evidence closure rules were used to distinguish implemented code from verified behavior and externally blocked validation.
+- Sources reviewed: `migration/progress.md`, `migration/feature-plan.md`, `migration/phase-cd-handoff.md`, `migration/file-name-map.csv`, `migration/arkts-interop-map.csv`, `acceptance/acceptance-matrix.csv`, the relevant UI/system evidence files, and representative current Cangjie pages including the Ruisi placeholder.
+- Adopted conclusion: the 74 acceptance records comprise 33 `PASS`, 31 `IN_PROGRESS`, and 10 `BLOCKED_EXTERNAL` records; these counts are not presented as a completion percentage. Genuine academic/energy results are separated from UI-shell-only completion, and missing Ruisi, widget, QR, settings, credential-gated, and paired-Android acceptance work is stated explicitly.
+- Follow-up: at the user's direction, the developer-oriented draft was replaced by the root-level `功能迁移说明.md`. The new version is written for application users, removes SDK, acceptance-record, source-path, and implementation terminology from the main document, and describes availability, account/network requirements, and missing features in plain language.
+- Output: `功能迁移说明.md`. This was documentation-only work, so no application source or build artifact was changed and no new ArkUI/API RAG query was required.

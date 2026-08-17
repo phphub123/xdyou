@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.repository.energy
 
+// 宿舍水电仓储，完成 OAuth、签名登录、表计查询和历史读数解析。
+
 import kit.NetworkKit.*
 import ohos.business_exception.*
 import ohos.callback_invoke.*
@@ -17,11 +19,13 @@ class EnergyHeadersCb <: Callback1Argument<HashMap<String, String>> {
     public open func invoke(err: ?BusinessException, value: HashMap<String, String>): Unit { this.action(value) }
 }
 
+// 在多次重定向间暂存服务 Cookie 与 OAuth code，生命周期仅限单次查询。
 class EnergyHeaderCapture {
     var cookies: String = ""
     var code: String = ""
 }
 
+// 真实水电查询入口；任一认证或解析失败都通过错误回调返回。
 public class EnergySession {
     static let energyBase = "https://ignypt.xidian.edu.cn"
     static let key = "1234567812345678"

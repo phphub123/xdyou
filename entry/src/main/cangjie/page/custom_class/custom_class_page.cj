@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.custom_class
 
+// 自定义课程页面，管理本地课程并把配置转换为可显示的日期日程。
+
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import std.collection.*

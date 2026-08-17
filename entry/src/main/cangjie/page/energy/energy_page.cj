@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.energy
 
+// 水电信息页面，展示真实余额、抄表历史与校园网访问边界。
+
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import std.collection.*

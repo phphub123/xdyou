@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.sport
 
+// 体育信息页面，按类别展示课程成绩与体测数据。
+
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import std.collection.ArrayList

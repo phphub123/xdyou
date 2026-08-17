@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.repository.auth
 
+// 滑块验证码求解器，从挑战图片估算缺口位置；失败必须回到真实认证流程。
+
 import kit.ImageKit.*
 import kit.PerformanceAnalysisKit.Hilog
 import std.random.*
@@ -20,6 +22,7 @@ class DecodedCaptchaImage {
 
 // Mirrors the Flutter client's invisible NCC solver. The manual slider remains
 // only as a fallback after the automatic attempts are exhausted.
+// 返回估算轨迹而非认证结果；服务端校验仍是唯一成功判据。
 public class SliderCaptchaAutoSolver {
     static let trackRandom = Random()
     public static func solveMove(captcha: SliderCaptcha): Int64 {

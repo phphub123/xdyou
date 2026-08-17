@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.repository.experiment
 
+// 实验报告仓储，维护报告系统登录态并获取报告与附件信息。
+
 import kit.NetworkKit.*
 import ohos.business_exception.*
 import std.collection.*
@@ -13,6 +15,7 @@ class ReportLoginState {
     var cookie: String = ""
 }
 
+// 报告系统登录态与 IDS 会话分离，避免把独立凭据误写入通用会话。
 public class ExperimentReportSession {
     static let baseUrl = "http://wlsy.xidian.edu.cn/wgyreport/wgyreport.dll"
     let recognizer = ImageRecognitionService()

@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.setting
 
+// 对齐版设置页，集中管理界面、账户、课表和缓存相关偏好。
+
 import kit.ArkUI.*
 import kit.ArkWeb.*
 import ohos.arkui.state_macro_manage.*
@@ -8,6 +10,7 @@ import ohos.resource.*
 import ohos_app_cangjie_entry.repository.*
 import ohos_app_cangjie_entry.themes.*
 
+// 设置值由 SessionStore 读写，页面状态只负责当前渲染和交互反馈。
 @Component
 public class AlignedSettingsPage {
     let account: String
@@ -282,6 +285,7 @@ public class AlignedSettingsPage {
     }
 }
 
+// 设置分组标题。
 @Component
 public class AlignedSettingsSectionHeader {
     let title: String
@@ -304,6 +308,7 @@ public class AlignedSettingsSectionHeader {
     }
 }
 
+// 可点击的普通设置行，尾部文案用于显示当前值或跳转提示。
 @Component
 public class AlignedSettingRow {
     let title: String
@@ -349,6 +354,7 @@ public class AlignedSettingRow {
     }
 }
 
+// 带开关的设置行，状态变更通过回调交给页面持久化。
 @Component
 public class AlignedSettingToggleRow {
     let title: String
@@ -395,6 +401,7 @@ public class AlignedSettingToggleRow {
     }
 }
 
+// 亮度调节行，仅产生新数值，不直接操作系统亮度能力。
 @Component
 public class AlignedBrightnessRow {
     @Prop

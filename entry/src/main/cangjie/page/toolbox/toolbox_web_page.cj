@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.toolbox
 
+// 工具 Web 页面，封装加载进度、返回历史、超时重试和错误边界。
+
 import kit.ArkUI.*
 import kit.ArkWeb.*
 import ohos.arkui.state_macro_manage.*

@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.classtable
 
+// 学期课表页面，同步周选择预览、每日课程卡片和当前时间状态。
+
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import std.collection.ArrayList
@@ -12,6 +14,7 @@ import ohos_app_cangjie_entry.repository.academic.*
 import ohos_app_cangjie_entry.repository.auth.*
 import ohos_app_cangjie_entry.components.*
 
+// 某周 5×5 预览点阵的不可变快照；revision 用于强制区分重建批次。
 public class WeekPreviewData {
     public let week: Int64
     public let revision: Int64
@@ -143,6 +146,7 @@ public class ClassTablePage {
         }
     }
 
+    // 七列课程与周预览必须由同一 sourceCourses 快照重建，防止切周后卡片和圆点错位。
     func rebuildVisibleCourses(sourceCourses: ArrayList<CourseSlot>, week: Int64): Unit {
         this.visibleDay1 = this.controller.arrangements(sourceCourses, 1, week)
         this.visibleDay2 = this.controller.arrangements(sourceCourses, 2, week)

@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.homepage
 
+// 旧版主页导航壳，用于兼容既有调用并逐步迁移到对齐版主页。
+
 import kit.ArkUI.*
 import kit.ArkWeb.*
 import std.collection.ArrayList

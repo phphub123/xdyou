@@ -1,9 +1,12 @@
 package ohos_app_cangjie_entry.repository.auth
 
+// 会话存储仓储，负责序列化、加密和恢复可复用的登录快照。
+
 import kit.ArkData.*
 import ohos_app_cangjie_entry.common.*
 import ohos_app_cangjie_entry.model.*
 
+// 本地存储的唯一会话入口，统一处理字段版本和加密边界。
 public class SessionStore {
     static let storeName: String = "xdyou_session"
     static let accountKey: String = "idsAccount"

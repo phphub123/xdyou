@@ -1,5 +1,7 @@
 package ohos_app_cangjie_entry.page.library
 
+// 图书馆页面，展示借阅列表、空态、续借状态和服务认证过程。
+
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
 import std.collection.*

@@ -1,10 +1,13 @@
 package ohos_app_cangjie_entry.repository.empty_classroom
 
+// 空闲教室仓储，将页面筛选条件编码为教务查询并解析教室列表。
+
 import std.collection.*
 import stdx.encoding.json.*
 import ohos_app_cangjie_entry.model.*
 import ohos_app_cangjie_entry.repository.academic.*
 
+// 查询参数在仓储层完成编码，页面不直接接触教务接口格式。
 public class EmptyClassroomSession {
     static let baseUrl = "https://ehall.xidian.edu.cn/jwapp/sys/kxjas/modules/kxjas"
     func stringOf(value: JsonValue): String {
