@@ -1,0 +1,42 @@
+package ohos_app_cangjie_entry.page.academic
+
+// 教务功能聚合页，负责把成绩、考试、课表等入口接入统一导航。
+
+import kit.ArkUI.*
+import ohos.arkui.state_macro_manage.*
+import std.collection.ArrayList
+import ohos_app_cangjie_entry.repository.*
+import ohos_app_cangjie_entry.model.*
+import ohos_app_cangjie_entry.controller.*
+import ohos_app_cangjie_entry.page.score.*
+import ohos_app_cangjie_entry.page.exam.*
+import ohos_app_cangjie_entry.page.classtable.*
+import ohos_app_cangjie_entry.page.custom_class.*
+import ohos_app_cangjie_entry.page.empty_classroom.*
+
+@Component
+public class AcademicHub {
+    @State var tab: Int64 = 0
+    func build() {
+        Column {
+            Row {
+                Button("Timetable").layoutWeight(1).onClick({_ => this.tab = 0}).id("academicTabTimetable")
+                Button("自定义").layoutWeight(1).onClick({_ => this.tab = 4}).id("academicTabCustomClass")
+                Button("空教室").layoutWeight(1).onClick({_ => this.tab = 3}).id("academicTabEmptyClassroom")
+                Button("Scores").layoutWeight(1).onClick({_ => this.tab = 1}).id("academicTabScores")
+                Button("Exams").layoutWeight(1).onClick({_ => this.tab = 2}).id("academicTabExams")
+            }.width(100.percent).padding(8.vp)
+            if (this.tab == 0) {
+                ClassTablePage(onBack: {=> ()})
+            } else if (this.tab == 1) {
+                ScorePage(onBack: {=> this.tab = 0})
+            } else if (this.tab == 2) {
+                ExamPage(onBack: {=> this.tab = 0})
+            } else if (this.tab == 4) {
+                CustomClassPage(onBack: {=> this.tab = 0})
+            } else {
+                EmptyClassroomPage(onBack: {=> this.tab = 0})
+            }
+        }.width(100.percent).height(100.percent)
+    }
+}
