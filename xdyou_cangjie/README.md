@@ -203,12 +203,47 @@ entry/src/main/resources/base/
 - 声明 `INTERNET`、`READ_CALENDAR`、`WRITE_CALENDAR` 权限。
 - Ability 的仓颉入口为 `ohos_app_cangjie_entry.MainAbility`。
 
-## 8. 命令行构建与模拟器运行
+### 7.5 跨机器构建前调整 `stdx` 路径
+
+`entry/cjpm.toml` 中的 `stdx` 路径当前指向：
+
+```text
+/Users/niu/.portage/stdx/1.1.0.1/...
+```
+
+接收方机器如果没有相同目录，必须先将 `entry/cjpm.toml` 中两处
+`path-option` 改为该机器 SDK/Portage 实际安装的 `stdx` 路径，再执行
+依赖同步或构建。必须同时保留以下两个编译目标，不要为了适配当前
+模拟器而删除其中任意一个：
+
+- `[target.aarch64-linux-ohos]`：HarmonyOS 真机。
+- `[target.x86_64-linux-ohos]`：HarmonyOS 模拟器。
+
+## 8. 构建与运行
+
+提供两种运行方式。优先使用 DevEco Studio 直接构建和启动；需要自动化、
+排错或验证产物时，再使用命令行。
+
+### 8.1 方式一：使用 DevEco Studio 直接启动（推荐）
+
+1. 用 DevEco Studio 打开本工程根目录，不要只打开 `entry/` 子目录。
+2. 确认已安装 HarmonyOS SDK `6.1.0(23)` 和匹配的仓颉 SDK。
+3. 按照第 7.5 节检查 `entry/cjpm.toml` 中的 `stdx` 路径，等待 DevEco
+   Studio 完成 OHPM 依赖同步。
+4. 打开 Device Manager，启动 `x86_64` HarmonyOS 模拟器。
+5. 在运行配置中选择 `entry` 模块和已启动的模拟器，点击 **Run**。
+6. 等待日志显示 `BUILD SUCCESSFUL`，并确认 XDYou 在模拟器前台启动。
+
+当前工程未配置签名，DevEco Studio 在模拟器上可使用 unsigned HAP。如需在
+真机运行，还需在 `entry/build-profile.json5` 中加入 ARM ABI，并配置调试
+签名。
+
+### 8.2 方式二：使用命令行构建和运行
 
 以下流程不使用项目 Skill 中的 Python 脚本，直接使用 `ohpm`、`hvigorw` 和
 `hdc`。
 
-### 8.1 准备环境
+#### 8.2.1 准备环境
 
 确保已安装 DevEco Studio、HarmonyOS SDK `6.1.0(23)` 和仓颉 SDK 6.1，然后直接
 进入工程根目录：
@@ -235,7 +270,7 @@ export NODE_HOME="/Applications/DevEco-Studio.app/Contents/tools/node"
 
 只需补这两项，不需要重复配置整套 SDK、Java、PATH 和动态库变量。
 
-### 8.2 构建 HAP
+#### 8.2.2 构建 HAP
 
 安装 OHPM 依赖：
 
@@ -293,7 +328,7 @@ ls -lh entry/build/default/outputs/default/entry-default-unsigned.hap
 `Will skip sign 'hos_hap'` 表示工程未配置签名。当前模拟器可安装 unsigned HAP，
 真机调试或发布时需要另行配置签名。
 
-### 8.3 启动并连接模拟器
+#### 8.2.3 启动并连接模拟器
 
 先在 DevEco Studio Device Manager 中启动模拟器，然后查看 HDC 目标：
 
@@ -322,7 +357,7 @@ hdc list targets
 
 部分模拟器使用 `5557`、`5554` 或 `5559`，必须以 `list targets` 实际输出为准。
 
-### 8.4 安装并启动 XDYou
+#### 8.2.4 安装并启动 XDYou
 
 覆盖安装 HAP：
 
@@ -361,9 +396,7 @@ hdc -t "$TARGET" shell aa dump -a
 
 ## 9. 跨机器交付注意事项
 
-1. `entry/cjpm.toml` 中的 `stdx` 路径当前指向
-   `/Users/niu/.portage/stdx/1.1.0.1/...`。接收方机器如果没有相同目录，应改为其
-   SDK/Portage 的实际 `stdx` 路径；同时保留 aarch64 和 x86_64 目标。
+1. 跨机器构建前必须先按第 7.5 节调整 `stdx` 路径。
 2. 当前只打包 `x86_64`，可用于模拟器；真机交付需要补充 ARM ABI。
 3. 根配置没有 `signingConfigs`，产物是 `entry-default-unsigned.hap`；真机或正式发布需要配置签名。
 4. 校园网、水电、IDS、校园卡等真实数据依赖网络环境、有效账号和服务端会话；
